@@ -1,12 +1,50 @@
 {
   "name": "pm-tool-api",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "description": "Building pm-tool-api",
+  "main": "server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "npm run compiler && node build/server.js",
+    "compiler": "rimraf ./build && babel . --ignore node_modules --out-dir build",
+    "build": "rimraf ./build && babel . --ignore node_modules --out-dir build",
+    "deploy:dev": "sls deploy --stage dev --verbose",
+    "deploy:prod": "npm run lint:check && sls deploy --stage production --verbose",
+    "deploy:func": "sls deploy --stage dev --verbose -f",
+    "deploy:clean": "sls remove --stage dev --region",
+    "deploy:local": "sls offline start",
+    "lint:check": "eslint --color --ext .js,.ts,.tsx \"./src/**/*.{js,ts,tsx}\" \"./handlers/**/*.{js,ts,tsx}\""
   },
   "keywords": [],
-  "author": "",
-  "license": "ISC"
+  "author": "Minh Nguyen",
+  "license": "ISC",
+  "dependencies": {
+    "aws-sdk": "^2.1216.0",
+    "body-parser": "^1.20.1",
+    "cors": "^2.8.5",
+    "dotenv": "^16.0.3",
+    "dotenv-expand": "^9.0.0",
+    "express": "^4.18.2",
+    "lodash": "^4.17.21",
+    "mocha": "^10.0.0",
+    "serverless-http": "^3.0.3",
+    "source-map-support": "^0.5.21"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.18.10",
+    "@babel/core": "^7.19.1",
+    "@babel/node": "^7.19.1",
+    "@babel/preset-env": "^7.19.1",
+    "babel-loader": "^8.2.5",
+    "babel-plugin-source-map-support": "^2.2.0",
+    "eslint": "^7.29.0",
+    "eslint-config-standard": "^16.0.3",
+    "eslint-plugin-import": "^2.23.4",
+    "eslint-plugin-node": "^11.1.0",
+    "eslint-plugin-promise": "^5.1.0",
+    "rimraf": "^3.0.2",
+    "serverless-webpack": "^5.9.1",
+    "webpack": "^5.74.0",
+    "webpack-node-externals": "^3.0.0",
+    "netlify-cli": "^12.0.7"
+  }
 }
