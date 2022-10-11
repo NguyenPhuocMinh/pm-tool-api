@@ -1,0 +1,16 @@
+version: "3.8"
+
+services:
+  pm-tool:
+    build:
+      context: .
+    ports:
+      - 8080:8080
+    environment:
+      - APP_PORT=8080
+    volumes:
+      - ./:/app
+    command: npm run start
+
+  
+
