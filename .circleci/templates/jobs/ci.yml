@@ -32,6 +32,7 @@ jobs:
           name: Install Dependencies
           command: npm install
 
+      - run: echo Hello Word!
       # - run:
       #     name: Run Tests
       #     command: npm run test

@@ -5,13 +5,9 @@
   "main": "server.js",
   "scripts": {
     "start": "npm run compiler && node build/server.js",
-    "compiler": "rimraf ./build && babel . --ignore node_modules --out-dir build",
+    "compiler": "npm run lint:check && rimraf ./build && babel . --ignore node_modules --out-dir build",
     "build": "rimraf ./build && babel . --ignore node_modules --out-dir build",
-    "deploy:dev": "sls deploy --stage dev --verbose",
-    "deploy:prod": "npm run lint:check && sls deploy --stage production --verbose",
-    "deploy:func": "sls deploy --stage dev --verbose -f",
-    "deploy:clean": "sls remove --stage dev --region",
-    "deploy:local": "sls offline start",
+    "test": "mocha ./**/*.js",
     "lint:check": "eslint --color --ext .js,.ts,.tsx \"./src/**/*.{js,ts,tsx}\" \"./handlers/**/*.{js,ts,tsx}\""
   },
   "keywords": [],
