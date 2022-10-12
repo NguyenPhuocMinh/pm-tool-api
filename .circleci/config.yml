@@ -15,19 +15,20 @@ jobs:
     executor: docker/docker
     steps:
       - run: echo $APP_DOCKER_USER
-      # - setup_remote_docker
-      # - checkout
-      # - docker/check
-      # - docker/build:
-      #     image: $DOCKER_IMAGE
-      #     tag: $DOCKER_TAG
-      # - docker/push:
-      #     digest-path: /tmp/digest.txt
-      #     image: $DOCKER_IMAGE
-      #     tag: $DOCKER_TAG
-      # - run:
-      #     command: |
-      #       echo "Digest is: $(</tmp/digest.txt)"
+      - setup_remote_docker
+      - checkout
+      - docker/check:
+          docker-username: $APP_DOCKER_USER
+      - docker/build:
+          image: $DOCKER_IMAGE
+          tag: $DOCKER_TAG
+      - docker/push:
+          digest-path: /tmp/digest.txt
+          image: $DOCKER_IMAGE
+          tag: $DOCKER_TAG
+      - run:
+          command: |
+            echo "Digest is: $(</tmp/digest.txt)"
       # Download and cache dependencies
       # - restore_cache:
       #     keys:
