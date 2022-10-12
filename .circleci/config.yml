@@ -10,7 +10,7 @@ orbs:
 jobs:
   build:
     environment:
-      DOCKER_IMAGE: pm-tool-api
+      DOCKER_IMAGE: docker/pm-tool-api
       DOCKER_TAG: latest
     executor: docker/docker
     steps:
@@ -19,7 +19,7 @@ jobs:
       - checkout
       - docker/check:
           docker-username: $DOCKER_USERNAME
-          docker-password: DOCKER_PASSWORD
+          docker-password: $DOCKER_PASSWORD
       - docker/build:
           image: $DOCKER_IMAGE
           tag: $DOCKER_TAG
