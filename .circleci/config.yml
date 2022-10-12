@@ -5,7 +5,7 @@ version: 2.1
 # Define a job to be invoked later in a workflow.
 # See: https://circleci.com/docs/2.0/configuration-reference/#jobs
 jobs:
-  deploy:
+  build:
     docker:
       - image: cimg/node:14.18.0
     steps:
@@ -41,7 +41,7 @@ jobs:
 # Invoke jobs via workflows
 # See: https://circleci.com/docs/2.0/configuration-reference/#workflows
 workflows:
-  deploy-workflow:
+  pipelines:
     jobs:
       - deploy:
           filters:
