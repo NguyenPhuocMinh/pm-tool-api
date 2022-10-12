@@ -9,21 +9,23 @@ orbs:
 # See: https://circleci.com/docs/2.0/configuration-reference/#jobs
 jobs:
   build:
+    environment:
+      DOCKER_IMAGE: docker/pm-tool-api
+      DOCKER_TAG: latest
     executor: docker/docker
-    # environment:
-    #   DOCKER_IMAGE: docker/pm-tool-api
-    #   DOCKER_TAG: latest
     steps:
       - setup_remote_docker
       - checkout
-      - docker/check
+      - docker/check:
+          docker-username: $APP_DOCKER_USER
+          docker-password: $APP_DOCKER_PASSWORD
       - docker/build:
-          image: docker/pm-tool-api
-          tag: latest
+          image: $DOCKER_IMAGE
+          tag: $DOCKER_TAG
       - docker/push:
           digest-path: /tmp/digest.txt
-          image: docker/pm-tool-api
-          tag: latest
+          image: $DOCKER_IMAGE
+          tag: $DOCKER_TAG
       - run:
           command: |
             echo "Digest is: $(</tmp/digest.txt)"
