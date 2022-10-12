@@ -43,7 +43,7 @@ jobs:
 workflows:
   pipelines:
     jobs:
-      - deploy:
+      - build:
           filters:
             branches:
               only:
