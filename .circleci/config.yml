@@ -15,7 +15,6 @@ jobs:
       DOCKER_TAG: latest
     executor: docker/docker
     steps:
-      # build and push docker image
       - setup_remote_docker
       - checkout
       - docker/check:
@@ -31,43 +30,6 @@ jobs:
       - run:
           command: |
             echo "Digest is: $(</tmp/digest.txt)"
-      # Download and cache dependencies
-      # - restore_cache:
-      #     keys:
-      #       # Find a cache corresponding to this specific package.json checksum
-      #       # when this file is changed, this key will fail
-      #       - v1-dependencies-{{ checksum "package-lock.json" }}
-      #       # Find the most recently generated cache used from any branch
-      #       - v1-dependencies-
-
-      # - run:
-      #     name: Install Dependencies
-      #     command: npm install
-
-      # - run:
-      #     name: Run Tests
-      #     command: npm run test
-
-      # - run:
-      #     name: Run Build
-      #     command: npm run build
-
-      # - save_cache:
-      #     paths:
-      #       - node_modules
-      #       - ./build
-      #     key: v1-dependencies-{{ checksum "package-lock.json" }}
-
-      # - run:
-      #     name: Deploy at Netlify
-      #     command: ./node_modules/.bin/netlify deploy --site $APP_NETLIFY_SITE_ID --auth $APP_NETLIFY_ACCESS_TOKEN --prod --dir=build
-  deploy:
-    docker:
-      - image: cimg/node:14.18.0
-    steps:
-      - run:
-          name: Deploy on EC2
-          command: echo Deploy
 # Invoke jobs via workflows
 # See: https://circleci.com/docs/2.0/configuration-reference/#workflows
 workflows:
@@ -77,10 +39,14 @@ workflows:
       - build:
           requires:
             - node/test
-      - deploy:
-          requires:
-            - build
           filters:
             branches:
               only:
                 - master
+      # - deploy:
+      #     requires:
+      #       - build
+      #     filters:
+      #       branches:
+      #         only:
+      #           - master
