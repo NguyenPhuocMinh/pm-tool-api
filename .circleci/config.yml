@@ -3,7 +3,6 @@
 version: 2.1
 
 orbs:
-  node: circleci/node@5.0.3
   docker: circleci/docker@2.1.4
 
 # Define a job to be invoked later in a workflow.
@@ -35,7 +34,6 @@ jobs:
 workflows:
   pipelines:
     jobs:
-      - node/test
       - build:
           requires:
             - node/test
