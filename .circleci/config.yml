@@ -10,9 +10,9 @@ orbs:
 jobs:
   build:
     executor: docker/docker
-    environment:
-      DOCKER_IMAGE: docker/pm-tool-api
-      DOCKER_TAG: latest
+    # environment:
+    #   DOCKER_IMAGE: docker/pm-tool-api
+    #   DOCKER_TAG: latest
     steps:
       - setup_remote_docker
       - checkout
@@ -20,12 +20,12 @@ jobs:
           docker-password: $DOCKER_PASSWORD
           docker-username: $DOCKER_USERNAME
       - docker/build:
-          image: $DOCKER_IMAGE
-          tag: $DOCKER_TAG
+          image: docker/pm-tool-api
+          tag: latest
       - docker/push:
           digest-path: /tmp/digest.txt
-          image: $DOCKER_IMAGE
-          tag: $DOCKER_TAG
+          image: docker/pm-tool-api
+          tag: latest
       - run:
           command: |
             echo "Digest is: $(</tmp/digest.txt)"
