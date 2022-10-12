@@ -16,9 +16,7 @@ jobs:
     steps:
       - setup_remote_docker
       - checkout
-      - docker/check:
-          docker-password: $DOCKER_PASSWORD
-          docker-username: $DOCKER_USERNAME
+      - docker/check
       - docker/build:
           image: docker/pm-tool-api
           tag: latest
