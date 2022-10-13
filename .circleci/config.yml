@@ -9,9 +9,6 @@ orbs:
 # See: https://circleci.com/docs/2.0/configuration-reference/#jobs
 jobs:
   build:
-    environment:
-      DOCKER_IMAGE: minhnguyen55/pm-tool-api
-      DOCKER_TAG: latest
     executor: docker/docker
     steps:
       - setup_remote_docker
@@ -20,12 +17,12 @@ jobs:
           docker-username: APP_DOCKER_USERNAME # get from context env
           docker-password: APP_DOCKER_PASSWORD # get from context env
       - docker/build:
-          image: $DOCKER_IMAGE
-          tag: $DOCKER_TAG
+          image: $APP_DOCKER_IMAGE
+          tag: $APP_DOCKER_TAG
       - docker/push:
           digest-path: /tmp/digest.txt
-          image: $DOCKER_IMAGE
-          tag: $DOCKER_TAG
+          image: $APP_DOCKER_IMAGE
+          tag: $APP_DOCKER_TAG
       - run:
           command: |
             echo "Digest is: $(</tmp/digest.txt)"
@@ -55,9 +52,10 @@ jobs:
     steps:
       - add_ssh_keys:
           fingerprints:
-            - "39:cf:75:be:9a:77:6a:64:f0:8b:3f:a4:c1:a9:6a:db"
+            - "$APP_SSH_FINGERPRINT"
       - run:
           name: Deploy to EC2
+          no_output_timeout: "30m"
           command: |
             ssh -o StrictHostKeyChecking=no -v $APP_DEPLOYED_USER@$APP_HOST_NAME
             chmod -R 777 .
