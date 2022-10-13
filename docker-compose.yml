@@ -2,15 +2,8 @@ version: "3.8"
 
 services:
   pm-tool:
-    build:
-      context: .
+    image: minhnguyen55/pm-tool-api:latest
     ports:
-      - 8080:8080
+      - 8080:80
     environment:
       - APP_PORT=8080
-    volumes:
-      - ./:/app
-    command: npm run start
-
-  
-
