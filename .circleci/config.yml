@@ -65,15 +65,11 @@ jobs:
 workflows:
   pipelines:
     jobs:
-      - build:
+      - build
+      - deploy:
+          requires:
+            - build
           filters:
             branches:
               only:
                 - master
-      # - deploy:
-      #     requires:
-      #       - build
-      #     filters:
-      #       branches:
-      #         only:
-      #           - master
