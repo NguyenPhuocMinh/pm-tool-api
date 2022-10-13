@@ -10,7 +10,7 @@ orbs:
 jobs:
   build:
     environment:
-      DOCKER_IMAGE: docker/pm-tool-api
+      DOCKER_IMAGE: minhnguyen55/pm-tool-api
       DOCKER_TAG: latest
     executor: docker/docker
     steps:
