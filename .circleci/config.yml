@@ -99,7 +99,8 @@ jobs:
 workflows:
   pipelines:
     jobs:
-      - ci
+      - ci:
+          context: pm-tool-api-context
       - cd:
           context: pm-tool-api-context
           requires:
