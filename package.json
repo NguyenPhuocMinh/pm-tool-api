@@ -7,7 +7,7 @@
     "start-esm": "npm run build-esm && node build/server.js",
     "build-esm": "rimraf ./build && babel . --ignore node_modules --out-dir build",
     "lint:check": "eslint --color --ext .js,.ts,.tsx \"./src/**/*.{js,ts,tsx}\"",
-    "test": "mocha build/tests/**/*.js"
+    "unit:test": "mocha build/tests/**/*.js"
   },
   "keywords": [],
   "author": "Minh Nguyen",
