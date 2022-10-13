@@ -32,5 +32,7 @@
     - sudo service nginx restart
   - Go to <SERVER_IP>
 
-- **Setup SSH key CircleCI**:
-  - 
+- **Setup CircleCI**:
+  - Setup context pm-tool-api-context
+    - APP_DOCKER_USERNAME
+    - APP_DOCKER_PASSWORD
