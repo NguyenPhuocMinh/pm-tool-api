@@ -3,12 +3,53 @@
 version: 2.1
 
 orbs:
+  gh: circleci/github-cli@2.0
   docker: circleci/docker@2.1.4
+
+parameters:
+  nodeVersion:
+    description: Version node
+    type: string
+    default: "14.18.0"
 
 # Define a job to be invoked later in a workflow.
 # See: https://circleci.com/docs/2.0/configuration-reference/#jobs
 jobs:
-  build:
+  ci:
+    docker:
+      - image: cimg/node:<< pipeline.parameters.nodeVersion >>
+    steps:
+      # Clone github
+      - gh/setup:
+          token: APP_GITHUB_TOKEN # get from context env
+      - gh/clone:
+          repo: $APP_REPO_URL
+      # Download and cache dependencies
+      - restore_cache:
+          keys:
+            # Find a cache corresponding to this specific package.json checksum
+            # when this file is changed, this key will fail
+            - v1-dependencies-{{ checksum "package-lock.json" }}
+            # Find the most recently generated cache used from any branch
+            - v1-dependencies-
+      - run:
+          name: Install Dependencies
+          command: npm install
+      - save_cache:
+          paths:
+            - node_modules
+          key: v1-dependencies-{{ checksum "package-lock.json" }}
+      - run:
+          name: Run Build Esm
+          command: npm run build-esm
+      - run:
+          name: Run Check Linter
+          command: npm run lint:check
+      - run:
+          name: Run UnitTest
+          command: npm run unit:test
+
+  cd:
     executor: docker/docker
     steps:
       - setup_remote_docker
@@ -26,50 +67,50 @@ jobs:
       - run:
           command: |
             echo "Digest is: $(</tmp/digest.txt)"
-      # Download and cache dependencies
-      # - restore_cache:
-      #     keys:
-      #       # Find a cache corresponding to this specific package.json checksum
-      #       # when this file is changed, this key will fail
-      #       - v1-dependencies-{{ checksum "package-lock.json" }}
-      #       # Find the most recently generated cache used from any branch
-      #       - v1-dependencies-
 
-      # - run:
-      #     name: Install Dependencies
-      #     command: npm install
-
-      # - save_cache:
-      #     paths:
-      #       - node_modules
-      #     key: v1-dependencies-{{ checksum "package-lock.json" }}
-
-      # - run:
-      #     name: Run Build
-      #     command: npm run build
   deploy:
     executor: docker/docker
     steps:
       - add_ssh_keys:
           fingerprints:
             - "$APP_SSH_FINGERPRINT"
+      - setup_remote_docker
+      - run:
+          name: Install Docker Compose
+          environment:
+            COMPOSE_VERSION: "1.29.2"
+          command: |
+            curl -L "https://github.com/docker/compose/releases/download/${COMPOSE_VERSION}/docker-compose-$(uname -s)-$(uname -m)" -o ~/docker-compose
+            chmod +x ~/docker-compose
+            sudo mv ~/docker-compose /usr/local/bin/docker-compose
+      
       - run:
           name: Deploy to EC2
-          no_output_timeout: "30m"
           command: |
             ssh -o StrictHostKeyChecking=no -v $APP_DEPLOYED_USER@$APP_HOST_NAME
-            chmod -R 777 .
-            './deploy.sh'
+            ls -la
+            docker-compose stop
+            docker-compose rm -f
+            docker-compose pull
+            docker-compose up -d --build
+
 # Invoke jobs via workflows
 # See: https://circleci.com/docs/2.0/configuration-reference/#workflows
 workflows:
   pipelines:
     jobs:
-      - build:
+      - ci
+      - cd:
           context: pm-tool-api-context
+          requires:
+            - ci
+          filters:
+            branches:
+              only:
+                - dev
       - deploy:
           requires:
-            - build
+            - cd
           filters:
             branches:
               only:
