@@ -51,18 +51,29 @@ jobs:
       #     name: Run Build
       #     command: npm run build
 
-      # - run:
-      #     name: Deploy at Netlify
-      #     command: ./node_modules/.bin/netlify deploy --site $APP_NETLIFY_SITE_ID --auth $APP_NETLIFY_ACCESS_TOKEN --prod --dir=build
-
-# Invoke jobs via workflows
-# See: https://circleci.com/docs/2.0/configuration-reference/#workflows
+  # Invoke jobs via workflows
+  # See: https://circleci.com/docs/2.0/configuration-reference/#workflows
+  # deploy:
+  #   executor: docker/docker
+  #   steps:
+  #     - add_ssh_keys:
+  #         fingerprints:
+  #           - "39:cf:75:be:9a:77:6a:64:f0:8b:3f:a4:c1:a9:6a:db"
+  #     - run:
+  #         name: Deploy to EC2
+  #         command: ssh -o StrictHostKeyChecking=no -v ubuntu@APP_HOST_NAME 
 workflows:
   pipelines:
     jobs:
       - build:
-          context: pm-tool-api-context
           filters:
             branches:
               only:
                 - master
+      # - deploy:
+      #     requires:
+      #       - build
+      #     filters:
+      #       branches:
+      #         only:
+      #           - master
