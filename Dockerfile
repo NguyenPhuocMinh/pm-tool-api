@@ -1,4 +1,4 @@
-FROM node:14-alpine
+FROM node:lts-alpine3.15
 
 # Create directory containing source code
 WORKDIR /usr/src/app
@@ -9,4 +9,4 @@ RUN npm install
 
 COPY . .
 
-CMD [ "npm", "start-esm" ]
+CMD [ "npm", "run", "start-esm" ]

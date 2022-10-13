@@ -1,5 +1,6 @@
 'use strict';
 
+import http from 'http';
 import express from 'express';
 import configs from './configs';
 
@@ -11,6 +12,8 @@ app.get('/', (req, res) => {
 
 const APP_PORT = configs.port;
 
-app.listen(APP_PORT, () => {
+const server = http.createServer(app);
+
+server.listen(APP_PORT, () => {
   console.log(`App listening on port ${APP_PORT}`);
 });
