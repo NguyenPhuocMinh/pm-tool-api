@@ -65,7 +65,8 @@ jobs:
 workflows:
   pipelines:
     jobs:
-      - build
+      - build:
+          context: pm-tool-api-context
       # - deploy:
       #     requires:
       #       - build
