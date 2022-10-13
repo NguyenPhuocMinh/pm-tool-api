@@ -19,11 +19,14 @@ jobs:
     docker:
       - image: cimg/node:<< pipeline.parameters.nodeVersion >>
     steps:
-      # Clone github
+      # Clone repo on github
       - gh/setup:
           token: APP_GITHUB_TOKEN # get from context env
       - gh/clone:
           repo: $APP_REPO_URL
+      - run:
+          name: Install Dependencies
+          command: npm install
       # Download and cache dependencies
       - restore_cache:
           keys:
@@ -32,9 +35,6 @@ jobs:
             - v1-dependencies-{{ checksum "package-lock.json" }}
             # Find the most recently generated cache used from any branch
             - v1-dependencies-
-      - run:
-          name: Install Dependencies
-          command: npm install
       - save_cache:
           paths:
             - node_modules
@@ -67,6 +67,18 @@ jobs:
       - run:
           command: |
             echo "Digest is: $(</tmp/digest.txt)"
+      
+      - run:
+          name: Creating Dummy Artifacts
+          command: |
+            echo "my artifact file" > /tmp/art-1;
+            mkdir /tmp/artifacts;
+            echo "my artifact files in a dir" > /tmp/artifacts/art-2;
+      - store_artifacts:
+          path: /tmp/art-1
+          destination: artifact-file
+      - store_artifacts:
+          path: /tmp/artifacts
 
   deploy:
     executor: docker/docker
