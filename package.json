@@ -5,10 +5,10 @@
   "main": "server.js",
   "scripts": {
     "start": "npm run compiler && node build/server.js",
-    "compiler": "npm run lint:check && rimraf ./build && babel . --ignore node_modules --out-dir build",
+    "compiler": "rimraf ./build && babel . --ignore node_modules --out-dir build",
     "build": "rimraf ./build && babel . --ignore node_modules --out-dir build",
     "test": "mocha ./**/*.js",
-    "lint:check": "eslint --color --ext .js,.ts,.tsx \"./src/**/*.{js,ts,tsx}\" \"./handlers/**/*.{js,ts,tsx}\""
+    "lint:check": "eslint --color --ext .js,.ts,.tsx \"./src/**/*.{js,ts,tsx}\""
   },
   "keywords": [],
   "author": "Minh Nguyen",
