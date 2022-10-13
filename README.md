@@ -36,3 +36,12 @@
   - Setup context pm-tool-api-context
     - APP_DOCKER_USERNAME
     - APP_DOCKER_PASSWORD
+  - Setup env:
+    - APP_DEPLOYED_USER
+    - APP_HOST_NAME
+  - Setup ssh key:
+    - cat pm-tool.pem
+    - copy and paste to SSH key circle
+  - Setup script deploy
+    - chmod -R 777 .
+    - ./deploy.sh
