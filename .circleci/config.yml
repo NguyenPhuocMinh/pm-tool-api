@@ -14,12 +14,11 @@ jobs:
       DOCKER_TAG: latest
     executor: docker/docker
     steps:
-      - run: echo $APP_DOCKER_USER
       - setup_remote_docker
       - checkout
       - docker/check:
-          docker-username: echo $APP_DOCKER_USERNAME
-          docker-password: echo $APP_DOCKER_PASSWORD
+          docker-username: APP_DOCKER_USERNAME
+          docker-password: APP_DOCKER_PASSWORD
       - docker/build:
           image: $DOCKER_IMAGE
           tag: $DOCKER_TAG
