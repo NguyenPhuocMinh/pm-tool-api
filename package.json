@@ -4,10 +4,10 @@
   "description": "Building pm-tool-api",
   "main": "server.js",
   "scripts": {
-    "start-esm": "npm run build-esm && node build/server.js",
-    "build-esm": "rimraf ./build && babel . --ignore node_modules --out-dir build",
+    "start-esm": "npm run build-esm && node dist/server.js",
+    "build-esm": "rimraf ./dist && babel . --ignore node_modules --out-dir dist",
     "lint:check": "eslint --color --ext .js,.ts,.tsx \"./src/**/*.{js,ts,tsx}\"",
-    "unit:test": "mocha build/tests/**/*.js"
+    "unit:test": "mocha dist/tests/**/*.js"
   },
   "keywords": [],
   "author": "Minh Nguyen",

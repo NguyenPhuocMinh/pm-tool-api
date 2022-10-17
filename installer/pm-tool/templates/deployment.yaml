@@ -1,0 +1,16 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: node-server-deployment
+spec:
+  replicas: 3
+  template:
+    metadata:
+      labels: # labels to select/identify the deployment
+        app: pm-tool
+    spec:     # pod spec                  
+      containers: 
+      - name: pm-tool-api
+        image: minhnguyen55/pm-tool-api
+        ports:
+        - containerPort: 8080

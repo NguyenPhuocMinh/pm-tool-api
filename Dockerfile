@@ -7,6 +7,9 @@ COPY package*.json ./
 # Run install dependencies
 RUN npm install
 
+ENV APP_PORT=8080
+ENV APP_HOST=0.0.0.0
+
 COPY . .
 
 CMD [ "npm", "run", "start-esm" ]

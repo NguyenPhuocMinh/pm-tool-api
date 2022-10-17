@@ -52,6 +52,7 @@ jobs:
   cd:
     executor: docker/docker
     steps:
+      ## Build and push image to docker hub
       - setup_remote_docker
       - checkout
       - docker/check:
@@ -80,31 +81,31 @@ jobs:
       - store_artifacts:
           path: /tmp/artifacts
 
-  deploy:
-    executor: docker/docker
-    steps:
-      - add_ssh_keys:
-          fingerprints:
-            - "$APP_SSH_FINGERPRINT"
-      - setup_remote_docker
-      - run:
-          name: Install Docker Compose
-          environment:
-            COMPOSE_VERSION: "1.29.2"
-          command: |
-            curl -L "https://github.com/docker/compose/releases/download/${COMPOSE_VERSION}/docker-compose-$(uname -s)-$(uname -m)" -o ~/docker-compose
-            chmod +x ~/docker-compose
-            sudo mv ~/docker-compose /usr/local/bin/docker-compose
+  # deploy:
+  #   executor: docker/docker
+  #   steps:
+  #     - add_ssh_keys:
+  #         fingerprints:
+  #           - $APP_SSH_FINGERPRINT
+  #     - setup_remote_docker
+  #     - run:
+  #         name: Install Docker Compose
+  #         environment:
+  #           COMPOSE_VERSION: "1.29.2"
+  #         command: |
+  #           curl -L "https://github.com/docker/compose/releases/download/${COMPOSE_VERSION}/docker-compose-$(uname -s)-$(uname -m)" -o ~/docker-compose
+  #           chmod +x ~/docker-compose
+  #           sudo mv ~/docker-compose /usr/local/bin/docker-compose
       
-      - run:
-          name: Deploy to EC2
-          command: |
-            ssh -o StrictHostKeyChecking=no -v $APP_DEPLOYED_USER@$APP_HOST_NAME
-            ls -la
-            docker-compose stop
-            docker-compose rm -f
-            docker-compose pull
-            docker-compose up -d --build
+  #     - run:
+  #         name: Deploy to EC2
+  #         command: |
+  #           ssh -o StrictHostKeyChecking=no -v $APP_DEPLOYED_USER@$APP_HOST_NAME
+  #           ls -la
+  #           docker-compose stop
+  #           docker-compose rm -f
+  #           docker-compose pull
+  #           docker-compose up -d --build
 
 # Invoke jobs via workflows
 # See: https://circleci.com/docs/2.0/configuration-reference/#workflows
@@ -122,10 +123,10 @@ workflows:
               only:
                 - master
                 - dev
-      - deploy:
-          requires:
-            - cd
-          filters:
-            branches:
-              only:
-                - master
+      # - deploy:
+      #     requires:
+      #       - cd
+      #     filters:
+      #       branches:
+      #         only:
+      #           - master
