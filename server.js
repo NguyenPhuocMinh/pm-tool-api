@@ -9,8 +9,8 @@ app.get('/', (req, res) => {
   res.send({ msg: 'Hello' });
 });
 
-app.get('/health', (req, res) => {
-  res.send('Health check success');
+app.get('/devops', (req, res) => {
+  res.send({ msg: 'Hello devops' });
 });
 
 const APP_PORT = configs.port;

@@ -2,44 +2,42 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   labels:
-    app: webapp
-  name: webapp
+    app: pm-tool-api
+  name: pm-tool-api
 spec:
   replicas: 2
   selector:
     matchLabels:
-      app: webapp
+      app: pm-tool-api
   template:
     metadata:
       labels:
-        app: webapp
+        app: pm-tool-api
     spec:
       containers:
-      - image: minhnguyen55/pm-tool-api:latest
-        name: webapp
-        imagePullPolicy: Always
-        resources:
-          limits:
-            cpu: 300m
-            memory: 512Mi
-          requests:
-            cpu: 100m
-            memory: 128Mi
-        ports:
-          - containerPort: 8080 
+        - image: minhnguyen55/pm-tool-api:latest
+          name: pm-tool-api
+          imagePullPolicy: Always
+          resources:
+            limits:
+              cpu: 300m
+              memory: 512Mi
+            requests:
+              cpu: 100m
+              memory: 128Mi
+          ports:
+            - containerPort: 8080
 
 ---
-
 apiVersion: v1
 kind: Service
 metadata:
-  name: webapp
+  name: pm-tool-api
   labels:
-    run: webapp
+    run: pm-tool-api
 spec:
   ports:
-  - port: 8080
-    protocol: TCP
+    - port: 8080
+      protocol: TCP
   selector:
-    app: webapp
-  type: NodePort
+    app: pm-tool-api
