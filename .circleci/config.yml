@@ -100,8 +100,8 @@ workflows:
       #           - master
       #           - dev
       - deploy:
-          requires:
-            - cd
+          # requires:
+          #   - cd
           filters:
             branches:
               only:
