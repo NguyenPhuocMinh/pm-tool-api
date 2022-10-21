@@ -1,4 +1,4 @@
-FROM node:lts-alpine3.15
+FROM node:lts-alpine3.15 AS developement
 
 # Create directory containing source code
 WORKDIR /usr/src/app
@@ -8,10 +8,25 @@ COPY package*.json ./
 RUN npm install
 
 ENV APP_PORT=8080
-ENV APP_HOST=localhost
+ENV APP_HOST=0.0.0.0
 
 COPY . .
 
-EXPOSE 8080
+RUN npm run build-esm
 
-CMD [ "npm", "run", "start-esm" ]
+FROM node:lts-alpine3.15 AS production
+
+WORKDIR /usr/src/app
+
+COPY package*.json ./
+
+ENV APP_PORT=8080
+ENV APP_HOST=0.0.0.0
+
+RUN npm install --only=production
+
+COPY . .
+
+COPY --from=developement /usr/src/app/dist ./dist
+
+CMD [ "node", "dist/server" ]

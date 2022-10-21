@@ -4,7 +4,7 @@
   "description": "Building pm-tool-api",
   "main": "server.js",
   "scripts": {
-    "start-esm": "npm run build-esm && node dist/server.js",
+    "start": "npm run build-esm && node dist/server.js",
     "build-esm": "rimraf ./dist && babel . --ignore node_modules --out-dir dist",
     "lint:check": "eslint --color --ext .js,.ts,.tsx \"./src/**/*.{js,ts,tsx}\"",
     "unit:test": "mocha dist/tests/**/*.js"
@@ -22,6 +22,7 @@
     "express": "^4.18.2",
     "lodash": "^4.17.21",
     "mocha": "^10.0.0",
+    "morgan": "^1.10.0",
     "serverless-http": "^3.0.3",
     "source-map-support": "^0.5.21"
   },

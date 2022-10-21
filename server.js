@@ -1,12 +1,15 @@
 'use strict';
 
 import express from 'express';
+import morgan from 'morgan';
 import configs from './configs';
 
 const app = express();
 
+app.use(morgan('combined'));
+
 app.get('/', (req, res) => {
-  res.send({ msg: 'Hello' });
+  res.send({ msg: 'Hello eks with ec2' });
 });
 
 app.get('/devops', (req, res) => {

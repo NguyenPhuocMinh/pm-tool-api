@@ -36,9 +36,6 @@ Common labels
 {{- define "pm-tool-api.labels" -}}
 helm.sh/chart: {{ include "pm-tool-api.chart" . }}
 {{ include "pm-tool-api.selectorLabels" . }}
-{{- if .Chart.AppVersion }}
-app.kubernetes.io/version: {{ .Chart.AppVersion | quote }}
-{{- end }}
 app.kubernetes.io/managed-by: {{ .Release.Service }}
 {{- end }}
 
@@ -48,15 +45,4 @@ Selector labels
 {{- define "pm-tool-api.selectorLabels" -}}
 app.kubernetes.io/name: {{ include "pm-tool-api.name" . }}
 app.kubernetes.io/instance: {{ .Release.Name }}
-{{- end }}
-
-{{/*
-Create the name of the service account to use
-*/}}
-{{- define "pm-tool-api.serviceAccountName" -}}
-{{- if .Values.serviceAccount.create }}
-{{- default (include "pm-tool-api.fullname" .) .Values.serviceAccount.name }}
-{{- else }}
-{{- default "default" .Values.serviceAccount.name }}
-{{- end }}
 {{- end }}

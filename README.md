@@ -3,14 +3,19 @@
 ## Setup
 
 - **Build and push docker image to DockerHub:**
+
   - Run docker manual:
-    - docker build -t pm-tool .
-    - docker run -d -p 8080:8080 pm-tool
+
+    - docker build -t <username>/pm-tool-api:<version> .
+    - docker run -d -p 8080:8080 pm-tool-api
+    - docker login
+    - docker push <username>/pm-tool-api:<version>
 
   - https://circleci.com/developer/orbs/orb/circleci/docker
   - https://circleci.com/developer/orbs/orb/circleci/docker#commands-check
 
 - **Setup Nginx**:
+
   - Install nginx ubuntu:
     - sudo apt update
     - sudo apt install nginx
@@ -36,6 +41,7 @@
   - Go to <SERVER_IP>
 
 - **Setup CircleCI**:
+
   - Setup context pm-tool-api-context
     - APP_DOCKER_USERNAME
     - APP_DOCKER_PASSWORD
@@ -63,9 +69,9 @@
   - Install cert manager:
     - helm repo add jetstack https://charts.jetstack.io
     - helm install cert-manager --namespace cert-manager --create-namespace jetstack/cert-manager --version v1.5.3 --set installCRDs=true
+    - kubectl get pods -n cert-manager
   - Create issuer:
     - kubectl apply -f issuer.yml
-    - kubectl get clusterissuer
+    - kubectl get issuer
   - Create new ingress
     - kubectl apply -f new-ingress.yml
-    - kubectl get challenges

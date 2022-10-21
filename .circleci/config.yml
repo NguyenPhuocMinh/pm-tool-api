@@ -68,44 +68,19 @@ jobs:
       - run:
           command: |
             echo "Digest is: $(</tmp/digest.txt)"
-      
-      - run:
-          name: Creating Dummy Artifacts
-          command: |
-            echo "my artifact file" > /tmp/art-1;
-            mkdir /tmp/artifacts;
-            echo "my artifact files in a dir" > /tmp/artifacts/art-2;
-      - store_artifacts:
-          path: /tmp/art-1
-          destination: artifact-file
-      - store_artifacts:
-          path: /tmp/artifacts
 
-  # deploy:
-  #   executor: docker/docker
-  #   steps:
-  #     - add_ssh_keys:
-  #         fingerprints:
-  #           - $APP_SSH_FINGERPRINT
-  #     - setup_remote_docker
-  #     - run:
-  #         name: Install Docker Compose
-  #         environment:
-  #           COMPOSE_VERSION: "1.29.2"
-  #         command: |
-  #           curl -L "https://github.com/docker/compose/releases/download/${COMPOSE_VERSION}/docker-compose-$(uname -s)-$(uname -m)" -o ~/docker-compose
-  #           chmod +x ~/docker-compose
-  #           sudo mv ~/docker-compose /usr/local/bin/docker-compose
-      
-  #     - run:
-  #         name: Deploy to EC2
-  #         command: |
-  #           ssh -o StrictHostKeyChecking=no -v $APP_DEPLOYED_USER@$APP_HOST_NAME
-  #           ls -la
-  #           docker-compose stop
-  #           docker-compose rm -f
-  #           docker-compose pull
-  #           docker-compose up -d --build
+  deploy:
+    executor: docker/docker
+    steps:
+      - add_ssh_keys:
+          fingerprints:
+            - $APP_SSH_FINGERPRINT
+      - setup_remote_docker
+      - run:
+          name: Deploy to EC2
+          command: |
+            # SSH to the EC2 ubuntu to deploy
+            ssh -o StrictHostKeyChecking=no -v $APP_DEPLOYED_USER@$APP_HOST_NAME './deploy.sh'
 
 # Invoke jobs via workflows
 # See: https://circleci.com/docs/2.0/configuration-reference/#workflows
@@ -123,10 +98,10 @@ workflows:
               only:
                 - master
                 - dev
-      # - deploy:
-      #     requires:
-      #       - cd
-      #     filters:
-      #       branches:
-      #         only:
-      #           - master
+      - deploy:
+          requires:
+            - cd
+          filters:
+            branches:
+              only:
+                - master
