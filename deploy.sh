@@ -1,10 +1,15 @@
 #!/usr/bin/env bash
 
+# halt if any error occurs
+set -e  
+
 # Acess permission when run .sh file
 sudo chmod +x deploy.sh
 
 ls
 
 helm list
-echo $APP_DEPLOYED_USER
-# create helm chart
+
+echo "${CIRCLE_BRANCH}"
+
+printenv

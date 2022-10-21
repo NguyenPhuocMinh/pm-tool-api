@@ -88,17 +88,17 @@ jobs:
 workflows:
   pipelines:
     jobs:
-      - ci:
-          context: pm-tool-api-context
-      - cd:
-          context: pm-tool-api-context
-          requires:
-            - ci
-          filters:
-            branches:
-              only:
-                - master
-                - dev
+      # - ci:
+      #     context: pm-tool-api-context
+      # - cd:
+      #     context: pm-tool-api-context
+      #     requires:
+      #       - ci
+      #     filters:
+      #       branches:
+      #         only:
+      #           - master
+      #           - dev
       - deploy:
           requires:
             - cd
