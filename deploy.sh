@@ -6,10 +6,15 @@ set -e
 # Acess permission when run .sh file
 sudo chmod +x deploy.sh
 
-ls
 
-helm list
+AWS_ACCESS_KEY_ID=${APP_AWS_ACCESS_KEY}
+AWS_SECRET_ACCESS_KEY=${APP_AWS_SECRET_KEY}
 
-echo "${CIRCLE_BRANCH}"
+echo "Secret run======"
 
-printenv
+echo "AWS_ACCESS_KEY_ID====$AWS_ACCESS_KEY_ID"
+
+echo "AWS_SECRET_ACCESS_KEY====$AWS_ACCESS_KEY_ID"
+
+echo "end build"
+
