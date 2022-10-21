@@ -5,6 +5,7 @@ version: 2.1
 orbs:
   gh: circleci/github-cli@2.0
   docker: circleci/docker@2.1.4
+  aws-cli: circleci/aws-cli@3.1
 
 parameters:
   nodeVersion:
@@ -68,7 +69,7 @@ jobs:
       - run:
           command: |
             echo "Digest is: $(</tmp/digest.txt)"
-
+  
   deploy:
     executor: docker/docker
     steps:
