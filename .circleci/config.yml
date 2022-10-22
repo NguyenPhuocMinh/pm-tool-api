@@ -65,6 +65,8 @@ jobs:
 
   cd:
     executor: docker/docker
+    environment:
+      APP_DOCKER_TAG: v1.0.1
     steps:
       ## Build and push image to docker hub
       - setup_remote_docker
@@ -103,6 +105,13 @@ jobs:
             sudo ./aws/install
             # Check version aws
             aws --version
+
+      - run:
+          name: Aws configure
+          command: |
+            aws configure set aws_access_key_id $APP_AWS_ACCESS_KEY
+            aws configure set aws_secret_access_key $APP_AWS_SECRET_KEY
+            aws configure set default.region $APP_AWS_REGION
 
       - run:
           name: Store helm chart to ECR
