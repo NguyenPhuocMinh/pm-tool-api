@@ -9,7 +9,10 @@ sudo chmod +x deploy.sh
 # echo "export AWS_ACCESS_KEY_ID=${APP_AWS_ACCESS_KEY}"
 # echo "export AWS_SECRET_ACCESS_KEY=${APP_AWS_SECRET_KEY}"
 
-echo ${MY_ENV_VAR}
+if [ -z "${APP_AWS_ACCESS_KEY:-}" ]; then
+  echo "You must set APP_AWS_ACCESS_KEY!"
+fi
+
 echo ${APP_AWS_ACCESS_KEY}
 
 echo "Circle branch===$CIRCLE_BRANCH"
