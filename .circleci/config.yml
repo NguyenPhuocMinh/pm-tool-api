@@ -79,7 +79,13 @@ jobs:
       - run:
           name: Setup env
           command: |
-            echo 'export MYVAR="$APP_DEPLOYED_USER"' >> "$BASH_ENV"
+            echo 'export MY_ENV_VAR="FOO"' >> "$BASH_ENV"
+      - run: # print the name of the branch we're on
+          name: "What branch am I on?"
+          command: echo ${CIRCLE_BRANCH}
+      - run:
+          name: "What was my custom environment variable?"
+          command: echo ${MY_ENV_VAR}
       - run:
           name: Deploy to EC2
           command: |
