@@ -76,12 +76,13 @@ jobs:
       - add_ssh_keys:
           fingerprints:
             - $APP_SSH_FINGERPRINT
-      - setup_remote_docker
       - run:
           name: Deploy to EC2
           command: |
             # SSH to the EC2 ubuntu to deploy
-            ssh -o StrictHostKeyChecking=no -v $APP_DEPLOYED_USER@$APP_HOST_NAME './deploy.sh'
+            ssh -o StrictHostKeyChecking=no -v $APP_DEPLOYED_USER@$APP_HOST_NAME \
+            echo $CIRCLE_BRANCH \
+            bash ./deploy.sh
 
 # Invoke jobs via workflows
 # See: https://circleci.com/docs/2.0/configuration-reference/#workflows
