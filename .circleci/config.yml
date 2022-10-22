@@ -85,7 +85,6 @@ jobs:
       - run:
           command: |
             echo "Digest is: $(</tmp/digest.txt)"
-            sleep 10
 
       - run:
           name: Install helm
@@ -94,11 +93,14 @@ jobs:
             chmod 700 get_helm.sh
             ./get_helm.sh
             helm version --short | cut -d + -f 1
+
       - run:
-          name: Store helm chart to ECR
+          name: Install aws cli
           command: |
-            cd deploy
-            ls -la
+            curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
+            unzip awscliv2.zip
+            sudo ./aws/install
+            aws --version
   deploy:
     executor: docker/docker
     steps:

@@ -9,7 +9,7 @@ const app = express();
 app.use(morgan('combined'));
 
 app.get('/', (req, res) => {
-  res.send({ msg: 'Hello eks with ec2' });
+  res.send({ msg: `Hello eks with ec2 with version build ${configs.version}` });
 });
 
 app.get('/devops', (req, res) => {
