@@ -83,6 +83,9 @@ jobs:
       - run: # print the name of the branch we're on
           name: "What branch am I on?"
           command: echo ${CIRCLE_BRANCH}
+      - run: # print the name of the branch we're on
+          name: "What aws access key?"
+          command: echo ${APP_AWS_ACCESS_KEY}
       - run:
           name: "What was my custom environment variable?"
           command: echo ${MY_ENV_VAR}
