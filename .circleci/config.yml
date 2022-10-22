@@ -72,6 +72,9 @@ jobs:
 
   deploy:
     executor: docker/docker
+    shell: /bin/sh -leo pipefail
+    environment:
+      BASH_ENV: /etc/profile
     steps:
       - add_ssh_keys:
           fingerprints:
