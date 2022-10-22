@@ -75,3 +75,5 @@
     - kubectl get issuer
   - Create new ingress
     - kubectl apply -f new-ingress.yml
+  - Push helm to ECR
+    - helm push helm-test-chart-0.1.0.tgz oci://aws_account_id.dkr.ecr.region.amazonaws.com/

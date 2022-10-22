@@ -5,7 +5,6 @@ version: 2.1
 orbs:
   gh: circleci/github-cli@2.0
   docker: circleci/docker@2.1.4
-  aws-cli: circleci/aws-cli@3.1
 
 parameters:
   nodeVersion:
@@ -23,11 +22,14 @@ jobs:
       # Clone repo on github
       - gh/setup:
           token: APP_GITHUB_TOKEN # get from context env
+
       - gh/clone:
           repo: $APP_REPO_URL
+
       - run:
           name: Install Dependencies
           command: npm install
+
       # Download and cache dependencies
       - restore_cache:
           keys:
@@ -36,22 +38,28 @@ jobs:
             - v1-dependencies-{{ checksum "package-lock.json" }}
             # Find the most recently generated cache used from any branch
             - v1-dependencies-
+
       - save_cache:
           paths:
             - node_modules
           key: v1-dependencies-{{ checksum "package-lock.json" }}
+
       - run:
           name: Run Build Esm
           command: npm run build-esm
+
       - run:
           name: Run Check Linter
           command: npm run lint:check
+
       - run:
           name: Run UnitTest
           command: npm run unit:test
+
       - store_artifacts:
           path: /tmp/test-results
           destination: raw-test-output
+
       - store_test_results:
           path: /tmp/test-results
 
@@ -64,17 +72,33 @@ jobs:
       - docker/check:
           docker-username: APP_DOCKER_USERNAME # get from context env
           docker-password: APP_DOCKER_PASSWORD # get from context env
+
       - docker/build:
           image: $APP_DOCKER_IMAGE
           tag: $APP_DOCKER_TAG
+
       - docker/push:
           digest-path: /tmp/digest.txt
           image: $APP_DOCKER_IMAGE
           tag: $APP_DOCKER_TAG
+
       - run:
           command: |
             echo "Digest is: $(</tmp/digest.txt)"
+            sleep 10
 
+      - run:
+          name: Install helm
+          command: |
+            curl https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3 > get_helm.sh
+            chmod 700 get_helm.sh
+            ./get_helm.sh
+            helm version --short | cut -d + -f 1
+      - run:
+          name: Store helm chart to ECR
+          command: |
+            cd deploy
+            ls -la
   deploy:
     executor: docker/docker
     steps:
@@ -93,22 +117,22 @@ jobs:
 workflows:
   pipelines:
     jobs:
-      # - ci:
-      #     context: pm-tool-api-context
-      # - cd:
-      #     context: pm-tool-api-context
-      #     requires:
-      #       - ci
-      #     filters:
-      #       branches:
-      #         only:
-      #           - master
-      #           - dev
-      - deploy:
+      - ci:
           context: pm-tool-api-context
-          # requires:
-          #   - cd
+      - cd:
+          context: pm-tool-api-context
+          requires:
+            - ci
           filters:
             branches:
               only:
                 - master
+                - dev
+      # - deploy:
+      #     context: pm-tool-api-context
+      #     requires:
+      #       - cd
+      #     filters:
+      #       branches:
+      #         only:
+      #           - master
