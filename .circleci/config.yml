@@ -117,6 +117,7 @@ jobs:
           name: Store helm chart to ECR
           command: |
             cd helm-charts
+            ls -la
             # Create package helm chart
             helm package pm-tool-api
             # Login aws ecr
