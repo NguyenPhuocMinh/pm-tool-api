@@ -131,6 +131,10 @@ jobs:
               --repository-name pm-tool-api \
               --region $APP_AWS_REGION
 
+      - run:
+          command: |
+            echo "Store helm chart to ECR successfully!"
+
   deploy:
     executor: docker/docker
     steps:
