@@ -1,12 +1,18 @@
 'use strict';
 
 import express from 'express';
+import cors from 'cors';
+import helmet from 'helmet';
 import morgan from 'morgan';
+import bodyParser from 'body-parser';
 import configs from './configs';
 
 const app = express();
 
+app.use(cors());
+app.use(helmet());
 app.use(morgan('combined'));
+app.use(bodyParser.json({ limit: '50mb' }));
 
 app.get('/', (req, res) => {
   res.send({ msg: `Hello eks with ec2 with version build ${configs.version}` });

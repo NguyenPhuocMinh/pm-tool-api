@@ -21,4 +21,15 @@ aws ecr get-login-password --region $APP_AWS_REGION | helm registry login --user
 # install helm chart from aws ecr
 helm install pm-tool-api oci://$APP_AWS_ACCOUNT_ID.dkr.ecr.$APP_AWS_REGION.amazonaws.com/pm-tool-api --version $APP_HELM_TAG
 
+# check helm
+helm list
+
+sleep 10
+
+# set alias k to kubectl
+alias k="kubectl"
+
+# check pods
+k get pods
+
 echo "End build"
