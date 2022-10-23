@@ -164,11 +164,11 @@ workflows:
               only:
                 - master
                 - dev
-      # - deploy:
-      #     context: pm-tool-api-context
-      #     requires:
-      #       - cd
-      #     filters:
-      #       branches:
-      #         only:
-      #           - master
+      - deploy:
+          context: pm-tool-api-context
+          requires:
+            - cd
+          filters:
+            branches:
+              only:
+                - master
