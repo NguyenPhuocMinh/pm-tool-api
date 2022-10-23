@@ -131,9 +131,9 @@ jobs:
               --repository-name pm-tool-api \
               --region $APP_AWS_REGION
 
-      - run:
-          command: |
-            echo "Store helm chart to ECR successfully!"
+      # - run:
+      #     command: |
+      #       echo "Store helm chart to ECR successfully!"
 
   deploy:
     executor: docker/docker
@@ -166,11 +166,11 @@ workflows:
               only:
                 - master
                 - dev
-      - deploy:
-          context: pm-tool-api-context
-          requires:
-            - cd
-          filters:
-            branches:
-              only:
-                - master
+      # - deploy:
+      #     context: pm-tool-api-context
+      #     requires:
+      #       - cd
+      #     filters:
+      #       branches:
+      #         only:
+      #           - master
