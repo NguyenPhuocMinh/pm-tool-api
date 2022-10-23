@@ -116,7 +116,7 @@ jobs:
       - run:
           name: Store helm chart to ECR
           command: |
-            cd deploy
+            cd helm-charts
             # Create package helm chart
             helm package pm-tool-api
             # Login aws ecr
@@ -143,6 +143,7 @@ jobs:
           name: Deploy to EC2
           command: |
             ## SSH to the EC2 ubuntu to deploy
+            sleep 10
             ssh -o StrictHostKeyChecking=no -v $APP_DEPLOYED_USER@$APP_HOST_NAME "./deploy.sh '$APP_AWS_REGION' '$APP_AWS_ACCOUNT_ID' '$APP_HELM_TAG'"
 
 # Invoke jobs via workflows
