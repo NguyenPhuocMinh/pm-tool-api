@@ -103,7 +103,7 @@ jobs:
             curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
             unzip awscliv2.zip
             sudo ./aws/install
-            # Check version aws
+            # Check version aws-cli
             aws --version
 
       - run:
@@ -120,7 +120,6 @@ jobs:
             cd helm-charts
             # Create package helm chart
             helm package pm-tool-api
-            ls -la
             # Login aws ecr
             aws ecr get-login-password \
               --region $APP_AWS_REGION | helm registry login \

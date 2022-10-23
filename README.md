@@ -1,4 +1,44 @@
-# Project management tool api
+## Dev
+
+- [Dev](#dev)
+- [Clone](#clone)
+- [Install](#install)
+- [Structure](#structure)
+- [Setup](#setup)
+
+## Clone
+
+```sh
+$ git clone https://github.com/NguyenPhuocMinh/pm-tool-api.git
+```
+
+## Install
+
+```sh
+$ npm install
+```
+
+## Structure
+
+```
+.
+├── Dockerfile
+├── README.md
+├── configs.js
+├── deploy.sh
+├── docker-compose.yml
+├── helm-charts
+│   ├── cert-manager
+│   ├── ingress
+│   └── pm-tool-api
+├── package.json
+├── server.js
+├── src
+│   ├── routers
+│   └── services
+├── tests
+└── webpack.config.js
+```
 
 ## Setup
 
