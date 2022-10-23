@@ -116,8 +116,8 @@ jobs:
       - run:
           name: Store helm chart to ECR
           command: |
+            echo "Store helm chart to ECR start..."
             cd helm-charts
-            ls -la
             # Create package helm chart
             helm package pm-tool-api
             ls -la
@@ -127,14 +127,11 @@ jobs:
               --username AWS \
               --password-stdin $APP_AWS_ACCOUNT_ID.dkr.ecr.$APP_AWS_REGION.amazonaws.com
             # Push to ecr
-            helm push pm-tool-api-0.1.0.tgz oci://$APP_AWS_ACCOUNT_ID.dkr.ecr.$APP_AWS_REGION.amazonaws.com/
+            helm push pm-tool-api-$APP_HELM_TAG.tgz oci://$APP_AWS_ACCOUNT_ID.dkr.ecr.$APP_AWS_REGION.amazonaws.com/
             # Describe image helm chart
             aws ecr describe-images \
               --repository-name pm-tool-api \
               --region $APP_AWS_REGION
-
-      - run:
-          command: |
             echo "Store helm chart to ECR successfully!"
 
   deploy:
