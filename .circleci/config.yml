@@ -166,7 +166,6 @@ workflows:
             branches:
               only:
                 - master
-                - dev
       - deploy:
           context: pm-tool-api-context
           requires:
