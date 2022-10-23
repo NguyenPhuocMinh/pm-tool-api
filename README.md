@@ -4,6 +4,7 @@
 - [Clone](#clone)
 - [Install](#install)
 - [Structure](#structure)
+- [Run](#run)
 - [Setup](#setup)
 
 ## Clone
@@ -40,6 +41,22 @@ $ npm install
 └── webpack.config.js
 ```
 
+## Run
+
+- **Start local**
+```
+$ npm start
+```
+
+- **Uni Test**
+```
+$ npm run unit:test
+```
+
+- **Check Linter**
+```
+$ npm run lint:check
+```
 ## Setup
 
 - **Build and push docker image to DockerHub:**

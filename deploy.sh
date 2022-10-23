@@ -1,11 +1,11 @@
 #!/usr/bin/env bash
 
 # halt if any error occurs
-set -e  
+set -e
 
-$APP_AWS_REGION=$1
-$APP_AWS_ACCOUNT_ID=$2
-$APP_HELM_TAG=$3
+APP_AWS_REGION=$1
+APP_AWS_ACCOUNT_ID=$2
+APP_HELM_TAG=$3
 
 echo APP_AWS_REGION=$APP_AWS_REGION
 echo APP_AWS_ACCOUNT_ID=$APP_AWS_ACCOUNT_ID
