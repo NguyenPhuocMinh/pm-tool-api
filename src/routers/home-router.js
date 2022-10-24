@@ -1,9 +1,23 @@
-import express from 'express';
+'use strict';
 
-const homeRouter = express.Router();
+const { HomeController } = require('../controllers');
 
-homeRouter.get('/home', (req, res) => {
-  res.send({ msg: 'Home page' });
-});
+/**
+ * @description Home router
+ */
+const HomeRouter = [
+  {
+    pathName: '/',
+    method: 'GET',
+    methodName: 'HomePage',
+    controller: HomeController.HomePage
+  },
+  {
+    pathName: '/test',
+    method: 'GET',
+    methodName: 'Test',
+    controller: HomeController.Test
+  }
+];
 
-export default homeRouter;
+export default HomeRouter;
