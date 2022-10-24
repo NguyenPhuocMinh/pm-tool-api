@@ -14,6 +14,9 @@ echo APP_HELM_TAG=$APP_HELM_TAG
 echo "Helm uninstall old version..."
 helm uninstall pm-tool-api
 
+echo "Sleep 10s..."
+sleep 10
+
 echo "Login aws...."
 
 aws ecr get-login-password --region $APP_AWS_REGION | helm registry login --username AWS --password-stdin $APP_AWS_ACCOUNT_ID.dkr.ecr.$APP_AWS_REGION.amazonaws.com
@@ -24,13 +27,10 @@ helm install pm-tool-api oci://$APP_AWS_ACCOUNT_ID.dkr.ecr.$APP_AWS_REGION.amazo
 echo "Check helm install success..."
 helm list
 
-echo "Sleep 10s..."
-sleep 10
-
-echo "Check pods namespace default..."
-kubectl get pods
-
 echo "Check host run success..."
 curl https://dev.pmtoolcare.info
+
+echo "Determine whether you already have kubectl installed on your device..."
+kubectl version | grep Client | cut -d : -f 5
 
 echo "End build"

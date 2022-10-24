@@ -148,7 +148,6 @@ jobs:
           name: Deploy to EC2
           command: |
             ## SSH to the EC2 ubuntu to deploy
-            sleep 10
             ssh -o StrictHostKeyChecking=no -v $APP_DEPLOYED_USER@$APP_HOST_NAME "./deploy.sh '$APP_AWS_REGION' '$APP_AWS_ACCOUNT_ID' '$APP_HELM_TAG'"
 
 # Invoke jobs via workflows
