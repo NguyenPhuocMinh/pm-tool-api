@@ -1,17 +1,29 @@
 ## Dev
 
 - [Dev](#dev)
-- [- Helm and k8s](#--helm-and-k8s)
+- [Setup env](#setup-env)
 - [Clone](#clone)
 - [Install](#install)
+- [Ex .env](#ex-env)
 - [Structures](#structures)
 - [Run](#run)
 - [Docker](#docker)
 - [Build](#build)
 - [Circle CI/CD](#circle-cicd)
-- [Setup env](#setup-env)
 - [Helm and k8s](#helm-and-k8s)
+
 ---
+
+## Setup env
+
+- **Setup Eslint extension**
+- **Setup prettier extension**
+- **Setup aws cli**
+- **Setup docker**
+- **Setup CircleCI**
+- **Setup Kubernetes**
+- **Setup Helm v3**
+
 ## Clone
 
 ```sh
@@ -24,6 +36,11 @@ $ git clone https://github.com/NguyenPhuocMinh/pm-tool-api.git
 $ npm install
 ```
 
+## Ex .env
+
+- APP_PORT=8080
+- APP_HOST=0.0.0.0
+
 ## Structures
 
 ```
@@ -31,17 +48,22 @@ $ npm install
 ├── Dockerfile
 ├── README.md
 ├── configs.js
+├── core
+│   ├── common
+│   ├── conf
+│   ├── constants
+│   ├── database
+│   ├── middlewares
+│   │   
+│   └── utils
 ├── deploy.sh
 ├── docker-compose.yml
 ├── helm-charts
-│   ├── cert-manager
-│   ├── ingress
-│   └── pm-tool-api
 ├── package.json
 ├── server.js
 ├── src
 │   ├── controllers
-|   ├── orchestrators => logic code
+│   ├── orchestrators
 │   ├── routers
 │   └── services
 ├── tests
@@ -54,6 +76,12 @@ $ npm install
 
 ```sh
 $ npm start
+```
+
+or
+
+```sh
+$ node dist/server
 ```
 
 - **Uni Test**
@@ -84,7 +112,7 @@ $ docker run -d -p 8080:8080 pm-tool-api
 
 ## Build
 
-- When merge master or dev remember:
+- **When merge master so remember**:
   - **Step 1** => go to file config.yml in folder .circleci change APP_DOCKER_TAG and APP_HELM_TAG new version
   - **Step 2** => go to file values.yaml in folder /helm-charts/pm-tool-api change new version docker tag
   - **Step 3** => go to file Chart.yaml in folder /helm-charts/pm-tool-api change new version chart
@@ -109,14 +137,6 @@ $ docker run -d -p 8080:8080 pm-tool-api
   - APP_DOCKER_PASSWORD
   - APP_DOCKER_USERNAME
   - APP_GITHUB_TOKEN
-
-## Setup env
-
-- **Setup aws cli**
-- **Setup docker**
-- **Setup CircleCI**
-- **Setup Kubernetes**
-- **Setup Helm v3**
 
 ## Helm and k8s
 

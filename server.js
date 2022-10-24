@@ -5,26 +5,32 @@ import cors from 'cors';
 import helmet from 'helmet';
 import morgan from 'morgan';
 import bodyParser from 'body-parser';
+import loggerMiddleware from './core/middlewares/logger-middleware';
+import initRouters from './src/routers';
+
 import configs from './configs';
+import constants from './core/constants';
+import logUtils from './core/utils/log-util';
+
+const loggerFactory = logUtils.createLogger(
+  constants.APP_NAME,
+  constants.STRUCT_NAME_SERVER
+);
 
 const app = express();
 
 app.use(cors());
 app.use(helmet());
-app.use(morgan('combined'));
+app.use(morgan(loggerMiddleware));
 app.use(bodyParser.json({ limit: '50mb' }));
 
-app.get('/', (req, res) => {
-  res.send({ msg: `Hello eks with ec2 with version build ${configs.version}` });
-});
-
-app.get('/devops', (req, res) => {
-  res.send({ msg: 'Hello devops' });
-});
+app.use(initRouters);
 
 const APP_PORT = configs.port;
 const APP_HOST = configs.host;
 
 app.listen(APP_PORT, APP_HOST, () => {
-  console.log(`App listening on port http://${APP_HOST}:${APP_PORT}`);
+  loggerFactory.http(`The server is running on`, {
+    args: `[http://${APP_HOST}:${APP_PORT}]`
+  });
 });

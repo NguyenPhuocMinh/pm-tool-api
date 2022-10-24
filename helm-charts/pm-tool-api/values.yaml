@@ -7,7 +7,7 @@ replicaCount: 1
 image:
   repository: minhnguyen55/pm-tool-api
   pullPolicy: IfNotPresent
-  tag: v1.0.1
+  tag: v1.0.2
 
 nameOverride: ""
 fullnameOverride: ""
