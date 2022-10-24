@@ -27,11 +27,8 @@ helm list
 echo "Sleep 10s..."
 sleep 10
 
-# set alias k to kubectl
-alias k="kubectl"
-
 echo "Check pods namespace default..."
-k get pods
+kubectl get pods
 
 echo "Check host run success..."
 curl https://dev.pmtoolcare.info
