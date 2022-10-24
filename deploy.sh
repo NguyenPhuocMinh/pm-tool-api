@@ -6,6 +6,7 @@ set -e
 APP_AWS_REGION=$1
 APP_AWS_ACCOUNT_ID=$2
 APP_HELM_TAG=$3
+APP_BASE_PATH_REST_API=$4
 
 echo APP_AWS_REGION=$APP_AWS_REGION
 echo APP_AWS_ACCOUNT_ID=$APP_AWS_ACCOUNT_ID
@@ -27,10 +28,10 @@ helm install pm-tool-api oci://$APP_AWS_ACCOUNT_ID.dkr.ecr.$APP_AWS_REGION.amazo
 echo "Check helm install success..."
 helm list
 
-echo "Check host run success..."
-curl https://dev.pmtoolcare.info
+echo "Sleep 20s..."
+sleep 20
 
-echo "Determine whether you already have kubectl installed on your device..."
-kubectl version | grep Client | cut -d : -f 5
+echo "Check host run success..."
+curl $APP_BASE_PATH_REST_API
 
 echo "End build"
