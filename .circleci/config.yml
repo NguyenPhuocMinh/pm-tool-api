@@ -128,16 +128,12 @@ jobs:
       #         --password-stdin $APP_AWS_ACCOUNT_ID.dkr.ecr.$APP_AWS_REGION.amazonaws.com
       #       # Push to ecr
       #       helm push pm-tool-api-$APP_HELM_TAG.tgz oci://$APP_AWS_ACCOUNT_ID.dkr.ecr.$APP_AWS_REGION.amazonaws.com/
-      #       # Describe image helm chart
-      #       aws ecr describe-images \
-      #         --repository-name pm-tool-api \
-      #         --region $APP_AWS_REGION
       #       echo "Store helm chart to ECR successfully!"
 
   deploy:
     executor: docker/docker
     environment:
-      APP_HELM_TAG: 0.1.0
+      APP_HELM_TAG: 0.1.1
     steps:
       - setup_remote_docker
       - add_ssh_keys:
