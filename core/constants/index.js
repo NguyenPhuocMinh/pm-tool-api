@@ -4,6 +4,7 @@ const APP_NAME = 'pm-tool-api';
 
 const STRUCT_NAME_SERVER = 'server';
 const STRUCT_NAME_ROUTER = 'router';
+const STRUCT_NAME_DB_MANAGER = 'db-manager';
 const STRUCT_NAME_ORCHESTRATOR = 'orchestrator';
 
 /**
@@ -43,11 +44,13 @@ const STRUCT_ORCHESTRATORS = {
 const ERROR_COMMON = 'error-common';
 const RESPONSE_COMMON = 'response-common';
 const TEMPLATE_COMMON = 'template-common';
+const LOOKUP_COMMON = 'lookup-common';
 
 const STRUCT_COMMON = {
   ERROR_COMMON,
   RESPONSE_COMMON,
-  TEMPLATE_COMMON
+  TEMPLATE_COMMON,
+  LOOKUP_COMMON
 };
 
 const DATE_TIMESTAMP_FORMAT = 'YYYY-MM-DD HH:mm:ss';
@@ -93,6 +96,7 @@ const constants = {
   APP_NAME,
   STRUCT_NAME_SERVER,
   STRUCT_NAME_ROUTER,
+  STRUCT_NAME_DB_MANAGER,
   STRUCT_NAME_ORCHESTRATOR,
   STRUCT_COMMON,
   STRUCT_MIDDLEWARES,

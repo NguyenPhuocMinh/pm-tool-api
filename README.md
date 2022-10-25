@@ -40,6 +40,7 @@ $ npm install
 
 - APP_PORT=8080
 - APP_HOST=0.0.0.0
+- APP_DB_URI
 - APP_SENTRY_DSN=https://
 
 ## Structures
