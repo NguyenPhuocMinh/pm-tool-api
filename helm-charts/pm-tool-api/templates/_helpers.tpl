@@ -46,3 +46,16 @@ Selector labels
 app.kubernetes.io/name: {{ include "pm-tool-api.name" . }}
 app.kubernetes.io/instance: {{ .Release.Name }}
 {{- end }}
+
+{{/*
+Variables env
+*/}}
+{{- define "pm-tool-api.variables"}}
+{{- range $key, $val := .Values.secret.env }}
+- name: {{ $key }}
+  valueFrom:
+    secretKeyRef:
+      key: {{ $key }}
+      name: secret-var-auth
+{{- end}}
+{{- end }}
