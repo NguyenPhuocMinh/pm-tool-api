@@ -28,8 +28,8 @@ helm install pm-tool-api oci://$APP_AWS_ACCOUNT_ID.dkr.ecr.$APP_AWS_REGION.amazo
 echo "Check helm install success..."
 helm list
 
-echo "Sleep 20s..."
-sleep 20
+echo "Sleep 100s..."
+sleep 100
 
 echo "Check host run success..."
 curl $APP_BASE_PATH_REST_API
