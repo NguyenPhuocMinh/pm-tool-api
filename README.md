@@ -40,6 +40,7 @@ $ npm install
 
 - APP_PORT=8080
 - APP_HOST=0.0.0.0
+- APP_SENTRY_DSN=https://
 
 ## Structures
 
@@ -54,7 +55,7 @@ $ npm install
 │   ├── constants
 │   ├── database
 │   ├── middlewares
-│   │   
+│   │  
 │   └── utils
 ├── deploy.sh
 ├── docker-compose.yml
