@@ -63,31 +63,31 @@ jobs:
       - store_test_results:
           path: /tmp/test-results
 
-  cd:
-    executor: docker/docker
-    environment:
-      APP_DOCKER_TAG: v1.0.2
-      APP_HELM_TAG: 0.1.1
-    steps:
-      ## Build and push image to docker hub
-      - setup_remote_docker
-      - checkout
-      - docker/check:
-          docker-username: APP_DOCKER_USERNAME # get from context env
-          docker-password: APP_DOCKER_PASSWORD # get from context env
+  # cd:
+  #   executor: docker/docker
+  #   environment:
+  #     APP_DOCKER_TAG: v1.0.2
+  #     APP_HELM_TAG: 0.1.1
+  #   steps:
+  #     ## Build and push image to docker hub
+  #     - setup_remote_docker
+  #     - checkout
+  #     - docker/check:
+  #         docker-username: APP_DOCKER_USERNAME # get from context env
+  #         docker-password: APP_DOCKER_PASSWORD # get from context env
 
-      - docker/build:
-          image: $APP_DOCKER_IMAGE
-          tag: $APP_DOCKER_TAG
+  #     - docker/build:
+  #         image: $APP_DOCKER_IMAGE
+  #         tag: $APP_DOCKER_TAG
 
-      - docker/push:
-          digest-path: /tmp/digest.txt
-          image: $APP_DOCKER_IMAGE
-          tag: $APP_DOCKER_TAG
+  #     - docker/push:
+  #         digest-path: /tmp/digest.txt
+  #         image: $APP_DOCKER_IMAGE
+  #         tag: $APP_DOCKER_TAG
 
-      - run:
-          command: |
-            echo "Digest is: $(</tmp/digest.txt)"
+  #     - run:
+  #         command: |
+  #           echo "Digest is: $(</tmp/digest.txt)"
 
       # - run:
       #     name: Install helm
@@ -153,14 +153,14 @@ workflows:
     jobs:
       - ci:
           context: pm-tool-api-context
-      - cd:
-          context: pm-tool-api-context
-          requires:
-            - ci
-          filters:
-            branches:
-              only:
-                - master
+      # - cd:
+      #     context: pm-tool-api-context
+      #     requires:
+      #       - ci
+      #     filters:
+      #       branches:
+      #         only:
+      #           - master
       # - deploy:
       #     context: pm-tool-api-context
       #     requires:
