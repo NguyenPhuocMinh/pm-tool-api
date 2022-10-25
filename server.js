@@ -38,14 +38,14 @@ const server = async () => {
   /**
    * Database
    */
-  await mongoose.connect(configs.dbURI, {
+  await mongoose.connect(configs.mongoURI, {
     maxPoolSize: 5,
     useNewUrlParser: true,
     useUnifiedTopology: true
   });
 
   loggerFactory.info(`The database is running on`, {
-    args: `[${configs.dbURI}]`
+    args: `[${configs.mongoURI}]`
   });
 
   app.listen(APP_PORT, APP_HOST, () => {

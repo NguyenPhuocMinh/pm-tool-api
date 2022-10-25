@@ -257,3 +257,12 @@ $ aws ecr describe-images \
      --repository-name <chart-name> \
      --region <region>
 ```
+
+- Mounting Environment Variables in a Kubernetes Deployment
+  - Add the following lines to the values.yaml file in your Helm chart
+  - Create a new file called secret.yaml and add it to the template folder
+  - Edit the env section of your Kubernetes deployment to include the new variables defined in the secret.yaml file
+  - Set the environment variables to your desired values. For example, set the USERNAME variable to hello_user:
+    - ```sh
+    - $ export USERNAME=hello_user
+    - ```
