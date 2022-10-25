@@ -18,6 +18,8 @@ spec:
         - name: {{ .Chart.Name }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
+          env:
+            {{- include "pm-tool-api.variables" . | indent 12 }}
           ports:
             - name: http
               containerPort: {{ .Values.service.targetPort }}
