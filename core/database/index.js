@@ -44,7 +44,7 @@ const Init = async () => {
     });
   } catch (err) {
     loggerFactory.error('Connect database has error', {
-      args: returnUtils(err)
+      args: returnUtils.returnErrorMessage(err)
     });
 
     const operation = retry.operation(options.retryOptions);
@@ -75,7 +75,7 @@ const FindOne = async ({ type, filter = {}, projection = {}, populates }) => {
     return data;
   } catch (err) {
     loggerFactory.error('FindOne has been error', {
-      args: returnUtils(err)
+      args: returnUtils.returnErrorMessage(err)
     });
     throw err;
   }
