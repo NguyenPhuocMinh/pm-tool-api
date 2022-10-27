@@ -4,8 +4,8 @@ import { assign, get } from 'lodash';
 
 import templateCommon from './template-common';
 
-import constants from '../constants';
-import logUtils from '../utils/log-util';
+import constants from '../../constants';
+import logUtils from '../../utils/log-util';
 
 const loggerFactory = logUtils.createLogger(
   constants.APP_NAME,

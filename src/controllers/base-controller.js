@@ -4,8 +4,8 @@ import { isFunction } from 'lodash';
 
 import baseOrchestrators from '../orchestrators/base-orchestrator';
 
-import constants from '../../core/constants';
-import logUtils from '../../core/utils/log-util';
+import constants from '../../constants';
+import logUtils from '../../utils/log-util';
 import errorCommon from '../../core/common/error-common';
 import responseCommon from '../../core/common/response-common';
 

@@ -1,26 +1,26 @@
 'use strict';
 
 import chalk from 'chalk';
-import logConf from '../conf/log-conf';
+import options from '../conf/options';
 
-const symbolInfo = logConf.symbols.info;
-const symbolWarn = logConf.symbols.warn;
-const symbolDebug = logConf.symbols.debug;
-const symbolError = logConf.symbols.error;
-const symbolHttp = logConf.symbols.http;
-const symbolVerbose = logConf.symbols.verbose;
-const symbolSilly = logConf.symbols.silly;
-const symbolData = logConf.symbols.data;
+const symbolInfo = options.loggerOptions.symbols.info;
+const symbolWarn = options.loggerOptions.symbols.warn;
+const symbolDebug = options.loggerOptions.symbols.debug;
+const symbolError = options.loggerOptions.symbols.error;
+const symbolHttp = options.loggerOptions.symbols.http;
+const symbolVerbose = options.loggerOptions.symbols.verbose;
+const symbolSilly = options.loggerOptions.symbols.silly;
+const symbolData = options.loggerOptions.symbols.data;
 
-const colorInfo = logConf.colors.info;
-const colorWarn = logConf.colors.warn;
-const colorDebug = logConf.colors.debug;
-const colorError = logConf.colors.error;
-const colorHttp = logConf.colors.http;
-const colorVerbose = logConf.colors.verbose;
-const colorSilly = logConf.colors.silly;
-const colorData = logConf.colors.data;
-const colorDefault = logConf.colors.default;
+const colorInfo = options.loggerOptions.colors.info;
+const colorWarn = options.loggerOptions.colors.warn;
+const colorDebug = options.loggerOptions.colors.debug;
+const colorError = options.loggerOptions.colors.error;
+const colorHttp = options.loggerOptions.colors.http;
+const colorVerbose = options.loggerOptions.colors.verbose;
+const colorSilly = options.loggerOptions.colors.silly;
+const colorData = options.loggerOptions.colors.data;
+const colorDefault = options.loggerOptions.colors.default;
 
 const convertLogMessage = (level, label, message, timestamp) => {
   switch (level) {

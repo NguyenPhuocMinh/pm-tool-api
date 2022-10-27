@@ -1,5 +1,7 @@
 'use strict';
 
+import uuid from 'uuid';
+
 import constants from '../constants';
 import logUtils from '../utils/log-util';
 
@@ -21,7 +23,7 @@ const loggerMiddleware = (tokens, req, res) => {
   const resTime = tokens['response-time'](req, res) || '-';
   const referrer = tokens.referrer(req) || '-';
   const userAgent = tokens['user-agent'](req) || '-';
-  const requestID = req.requestID || '-';
+  const requestID = req.requestID || uuid.v4();
 
   const messageLog = `[${requestID}] - ${remoteAddr} - ${remoteUser} [${dateClf}] "${method} ${url} ${protocol}/${httpVersion}" ${status} ${contentLength} "${referrer}" "${userAgent}" - ${resTime} ms`;
 

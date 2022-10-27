@@ -3,8 +3,8 @@
 import mongoose from 'mongoose';
 import lodash from 'lodash';
 
-import constants from '../constants';
-import logUtils from '../utils/log-util';
+import constants from '../../constants';
+import logUtils from '../../utils/log-util';
 
 const { models } = mongoose;
 const { includes } = lodash;

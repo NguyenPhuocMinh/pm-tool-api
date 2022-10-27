@@ -1,0 +1,209 @@
+openapi: 3.0.1
+info:
+  title: REST API Standard Template
+  summary: REST API docs
+  description: This is a sample REST API has been produced to allow for easy access to a standard method for documenting a REST API
+  termsOfService: http://swagger.io/terms/
+  contact:
+    name: API Docs
+    url: https://github.com/OAI/OpenAPI-Specification/blob/main/versions/3.0.1.md
+    email: support@example.com
+  version: 1.0.0
+servers:
+  - url: "{protocol}://{host}:{port}{basePath}"
+    description: The deployment API Server
+    variables:
+      protocol:
+        enum:
+          - http
+          - https
+        default: http
+      host:
+        default: localhost
+      port:
+        default: "8080"
+      basePath:
+        default: /
+## paths
+paths:
+  /:
+    get:
+      tags:
+        - home
+      security:
+        - X-Access-Token: []
+      summary: Home page
+      description: Home page pm tool
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/commonResponse"
+        400:
+          $ref: "#/components/responses/BadRequest"
+        404:
+          $ref: "#/components/responses/NotFound"
+        500:
+          $ref: "#/components/responses/ServerError"
+
+  /health:
+    get:
+      tags:
+        - health
+      security: []
+      summary: Health check
+      description: Health check
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/commonResponse"
+        400:
+          $ref: "#/components/responses/BadRequest"
+        401:
+          $ref: "#/components/responses/UnAuthorization"
+        403:
+          $ref: "#/components/responses/Forbidden"
+        404:
+          $ref: "#/components/responses/NotFound"
+        500:
+          $ref: "#/components/responses/ServerError"
+
+  /login:
+    post:
+      tags:
+        - admin
+      security: []
+      summary: Login admin
+      description: Login pm tool
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/adminLogin"
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/commonResponse"
+        400:
+          $ref: "#/components/responses/BadRequest"
+        404:
+          $ref: "#/components/responses/NotFound"
+        500:
+          $ref: "#/components/responses/ServerError"
+
+  /logout:
+    post:
+      tags:
+        - admin
+      security:
+        - X-Access-Token: []
+      summary: Logout admin
+      description: Logout admin pm tool
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/adminLogin"
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/commonResponse"
+        400:
+          $ref: "#/components/responses/BadRequest"
+        404:
+          $ref: "#/components/responses/NotFound"
+        500:
+          $ref: "#/components/responses/ServerError"
+
+## components
+components:
+  # security
+  securitySchemes:
+    X-Access-Token:
+      type: apiKey
+      name: X-Access-Token
+      in: header
+  # responses
+  responses:
+    ServerError:
+      description: ServerError
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/commonResponse"
+    BadRequest:
+      description: BadRequest
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/commonResponse"
+    NotFound:
+      description: NotFound
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/commonResponse"
+    UnAuthorization:
+      description: UnAuthorization
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/commonResponse"
+    Forbidden:
+      description: Forbidden
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/commonResponse"
+  # schemas
+  schemas:
+    commonResponse:
+      type: object
+      properties:
+        result:
+          type: object
+          properties: {}
+        method:
+          type: string
+          example: GET/POST/PUT/DELETE/...
+        endpoint:
+          type: string
+          example: /api/v1/...
+        name:
+          type: string
+          example: Return name message
+        message:
+          type: string
+          example: Return message
+        returnCode:
+          type: integer
+          example: 200/400/500/...
+        statusCode:
+          type: integer
+          example: 200/400/500/...
+
+    adminLogin:
+      type: object
+      required:
+        - email
+        - password
+      properties:
+        email:
+          type: string
+          default: admin
+        password:
+          type: string
+          default: admin

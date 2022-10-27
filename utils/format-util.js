@@ -17,9 +17,17 @@ const formatInfoLog = (info) => {
   return `${labelLog} [${timestampLog}] [${levelLog}]: ${messageLog} ${argsLog}`;
 };
 
+const formatErrorMessage = (error) => {
+  return {
+    name: error.name,
+    message: error.message
+  };
+};
+
 const formatUtils = {
   formatLabelLog,
-  formatInfoLog
+  formatInfoLog,
+  formatErrorMessage
 };
 
 export default formatUtils;

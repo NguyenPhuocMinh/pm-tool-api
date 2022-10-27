@@ -2,9 +2,9 @@
 
 import Promise from 'bluebird';
 
-import configs from '../../configs';
-import constants from '../../core/constants';
-import logUtils from '../../core/utils/log-util';
+import profiles from '../../conf/profiles';
+import constants from '../../constants';
+import logUtils from '../../utils/log-util';
 
 const loggerFactory = logUtils.createLogger(
   constants.APP_NAME,
@@ -16,7 +16,7 @@ const HomePage = async (toolBox) => {
     loggerFactory.info(`Function HomePage has been start`);
     return {
       result: {
-        data: `Welcome to homepage with version ${configs.version}`
+        data: `Welcome to homepage with version ${profiles.version}`
       },
       msg: 'GetHomePageSuccess'
     };
@@ -28,26 +28,8 @@ const HomePage = async (toolBox) => {
   }
 };
 
-const Test = async (toolBox) => {
-  try {
-    loggerFactory.info(`Function Test has been start`);
-    return {
-      result: {
-        data: `Welcome to homepage with version ${configs.version}`
-      },
-      msg: 'GetTestPageSuccess'
-    };
-  } catch (err) {
-    loggerFactory.info(`Function Test has error`, {
-      args: err.message
-    });
-    return Promise.reject(err);
-  }
-};
-
 const HomeOrchestrator = {
-  HomePage,
-  Test
+  HomePage
 };
 
 export default HomeOrchestrator;

@@ -1,6 +1,6 @@
 'use strict';
 
-import constants from '../../core/constants';
+import constants from '../../constants';
 
 import HomeOrchestrator from './home-orchestrator';
 

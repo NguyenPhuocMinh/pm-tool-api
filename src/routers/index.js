@@ -3,8 +3,8 @@
 import express from 'express';
 import { get, toLower } from 'lodash';
 
-import constants from '../../core/constants';
-import logUtils from '../../core/utils/log-util';
+import constants from '../../constants';
+import logUtils from '../../utils/log-util';
 
 import HomeRouter from './home-router';
 
@@ -15,13 +15,13 @@ const loggerFactory = logUtils.createLogger(
   constants.STRUCT_NAME_ROUTER
 );
 
-const Routes = [...HomeRouter];
+const routes = [...HomeRouter];
 
 /**
  * @description Init layer router
  * @returns {Array}
  */
-const initRouters = Routes.map((route) => {
+const routers = routes.map((route) => {
   try {
     loggerFactory.data(`Layer route`, {
       args: route
@@ -35,10 +35,13 @@ const initRouters = Routes.map((route) => {
     return router;
   } catch (err) {
     loggerFactory.error(`Layer route has error`, {
-      args: err.message
+      args: {
+        name: err.name,
+        message: err.message
+      }
     });
     throw err;
   }
 });
 
-export default initRouters;
+export default routers;

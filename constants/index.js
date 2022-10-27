@@ -4,7 +4,7 @@ const APP_NAME = 'pm-tool-api';
 
 const STRUCT_NAME_SERVER = 'server';
 const STRUCT_NAME_ROUTER = 'router';
-const STRUCT_NAME_DB_MANAGER = 'db-manager';
+const STRUCT_NAME_DATABASE = 'database';
 const STRUCT_NAME_ORCHESTRATOR = 'orchestrator';
 
 /**
@@ -96,7 +96,7 @@ const constants = {
   APP_NAME,
   STRUCT_NAME_SERVER,
   STRUCT_NAME_ROUTER,
-  STRUCT_NAME_DB_MANAGER,
+  STRUCT_NAME_DATABASE,
   STRUCT_NAME_ORCHESTRATOR,
   STRUCT_COMMON,
   STRUCT_MIDDLEWARES,

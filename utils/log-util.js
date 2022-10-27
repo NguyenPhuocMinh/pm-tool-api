@@ -1,13 +1,14 @@
 'use strict';
 
 import winston from 'winston';
-import logConf from '../conf/log-conf';
+
+import options from '../conf/options';
 import constants from '../constants';
 import formatUtils from './format-util';
 
 const createLogger = (appName = '-', structName = '-') => {
   const logger = winston.createLogger({
-    levels: logConf.levels,
+    levels: options.loggerOptions.levels,
     format: winston.format.combine(
       winston.format((info) => ({
         ...info,
