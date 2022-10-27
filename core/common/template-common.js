@@ -1,9 +1,10 @@
 'use strict';
 
 import lodash from 'lodash';
-import constants from '../constants';
-import logUtils from '../utils/log-util';
-import successCodes from '../conf/success-codes';
+
+import constants from '../../constants';
+import logUtils from '../../utils/log-util';
+import successCodes from '../../config/success-codes';
 
 const { isEmpty } = lodash;
 

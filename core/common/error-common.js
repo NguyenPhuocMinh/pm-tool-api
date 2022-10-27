@@ -1,9 +1,8 @@
 'use strict';
 
-import constants from '../constants';
-import logUtils from '../utils/log-util';
-
-import errorCodes from '../conf/error-codes';
+import constants from '../../constants';
+import logUtils from '../../utils/log-util';
+import errorCodes from '../../config/error-codes';
 
 const loggerFactory = logUtils.createLogger(
   constants.APP_NAME,

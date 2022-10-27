@@ -5,8 +5,8 @@ import { get } from 'lodash';
 
 import orchestrators from './index';
 
-import constants from '../../core/constants';
-import logUtils from '../../core/utils/log-util';
+import constants from '../../constants';
+import logUtils from '../../utils/log-util';
 
 const loggerFactory = logUtils.createLogger(
   constants.APP_NAME,

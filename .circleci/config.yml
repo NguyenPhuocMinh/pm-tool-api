@@ -118,7 +118,7 @@ jobs:
   #     name: Store helm chart to ECR
   #     command: |
   #       echo "Store helm chart to ECR start..."
-  #       cd helm-charts
+  #       cd charts
   #       # Create package helm chart
   #       helm package pm-tool-api
   #       # Login aws ecr
