@@ -29,7 +29,6 @@ const app = express();
 const APP_PORT = profiles.APP_PORT;
 const APP_HOST = profiles.APP_HOST;
 const APP_DOCS_PATH = profiles.APP_DOCS_PATH;
-const APP_MONGO_URI = profiles.APP_MONGO_URI;
 
 const server = async () => {
   app.use(cors());
