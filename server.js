@@ -1,6 +1,5 @@
 'use strict';
 
-import path from 'path';
 import express from 'express';
 import cors from 'cors';
 import helmet from 'helmet';
@@ -8,6 +7,7 @@ import morgan from 'morgan';
 import bodyParser from 'body-parser';
 import swaggerUI from 'swagger-ui-express';
 import YAML from 'yamljs';
+import path from 'path';
 
 import loggerMiddleware from './middlewares/logger-middleware';
 
