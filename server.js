@@ -23,6 +23,7 @@ const app = express();
 
 const APP_PORT = configs.port;
 const APP_HOST = configs.host;
+const APP_MONGO_URI = configs.mongoURI;
 
 const server = async () => {
   app.use(cors());
@@ -38,14 +39,13 @@ const server = async () => {
   /**
    * Database
    */
-  await mongoose.connect(configs.mongoURI, {
-    maxPoolSize: 5,
+  await mongoose.connect(APP_MONGO_URI, {
     useNewUrlParser: true,
     useUnifiedTopology: true
   });
 
   loggerFactory.info(`The database is running on`, {
-    args: `[${configs.mongoURI}]`
+    args: `[${APP_MONGO_URI}]`
   });
 
   app.listen(APP_PORT, APP_HOST, () => {
@@ -56,7 +56,11 @@ const server = async () => {
 };
 
 server().catch((err) => {
+  console.error('🚀 ~ file: server.js ~ line 60 ~ err', err);
   loggerFactory.error(`The server has been error`, {
-    args: err
+    args: {
+      name: err.name,
+      message: err.message
+    }
   });
 });

@@ -263,6 +263,10 @@ $ aws ecr describe-images \
   - Create a new file called secret.yaml and add it to the template folder
   - Edit the env section of your Kubernetes deployment to include the new variables defined in the secret.yaml file
   - Set the environment variables to your desired values. For example, set the USERNAME variable to hello_user:
-    - ```sh
-    - $ export USERNAME=hello_user
-    - ```
+    ```sh
+    $ export USERNAME=hello_user
+    ```
+  - Apply the variables to the Helm chart by combining them with the helm install command:
+    ```sh
+    $ helm install --set username=$USERNAME [chart name] [chart path]
+    ```

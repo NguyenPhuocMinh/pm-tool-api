@@ -7,7 +7,7 @@ replicaCount: 1
 image:
   repository: minhnguyen55/pm-tool-api
   pullPolicy: IfNotPresent
-  tag: v1.0.2
+  tag: v1.0.4
 
 nameOverride: ""
 fullnameOverride: ""
@@ -56,4 +56,4 @@ affinity: {}
 secret:
   name: secret-var-auth
   env:
-    MONGO_URI: XXXX
+    APP_MONGO_URI: XXXX

@@ -57,5 +57,5 @@ Variables env
     secretKeyRef:
       key: {{ $key }}
       name: secret-var-auth
-{{- end}}
+{{- end }}
 {{- end }}
