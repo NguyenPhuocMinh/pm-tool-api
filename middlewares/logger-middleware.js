@@ -1,6 +1,6 @@
 'use strict';
 
-import uuid from 'uuid';
+import * as uuid from 'uuid';
 
 import constants from '../constants';
 import logUtils from '../utils/log-util';
