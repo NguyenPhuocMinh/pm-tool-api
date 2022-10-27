@@ -76,6 +76,6 @@ const server = async () => {
 
 server().catch((err) => {
   loggerFactory.error(`The server has been error`, {
-    args: returnUtils(err)
+    args: returnUtils.returnErrorMessage(err)
   });
 });
