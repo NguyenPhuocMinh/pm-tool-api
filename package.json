@@ -5,10 +5,9 @@
   "main": "server.js",
   "scripts": {
     "start": "npm run build-esm && node dist/server.js",
-    "build-esm": "rimraf ./dist && babel . --ignore node_modules --out-dir dist",
+    "build-esm": "rm -rf ./dist && babel . --ignore node_modules --out-dir dist",
     "lint:check": "eslint --color --ext .js,.ts,.tsx \"./src/**/*.{js,ts,tsx}\"",
-    "unit:test": "mocha dist/tests/**/*.js",
-    "rimraf": "./node_modules/rimraf/bin.js"
+    "unit:test": "mocha dist/tests/**/*.js"
   },
   "keywords": [],
   "author": "Minh Nguyen",
