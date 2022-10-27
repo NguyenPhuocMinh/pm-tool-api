@@ -4,7 +4,7 @@
   "description": "Building pm-tool-api",
   "main": "server.js",
   "scripts": {
-    "start": "npm install && npm run build-esm && node dist/server.js",
+    "start": "npm install -save-dev rimraf && npm run build-esm && node dist/server.js",
     "dev": "npm run build-esm && node dist/server.js",
     "build-esm": "rimraf ./dist && babel . --ignore node_modules --out-dir dist",
     "lint:check": "eslint --color --ext .js,.ts,.tsx \"./src/**/*.{js,ts,tsx}\"",
