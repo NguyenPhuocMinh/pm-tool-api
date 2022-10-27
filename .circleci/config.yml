@@ -26,10 +26,6 @@ jobs:
       - gh/clone:
           repo: $APP_REPO_URL
 
-      - run:
-          name: Install Dependencies
-          command: npm install
-
       # Download and cache dependencies
       - restore_cache:
           keys:
@@ -38,6 +34,10 @@ jobs:
             - v1-dependencies-{{ checksum "package-lock.json" }}
             # Find the most recently generated cache used from any branch
             - v1-dependencies-
+
+      - run:
+          name: Install Dependencies
+          command: npm install
 
       - save_cache:
           paths:
