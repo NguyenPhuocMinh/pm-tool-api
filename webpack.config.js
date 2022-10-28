@@ -1,8 +1,14 @@
 const nodeExternals = require('webpack-node-externals');
+const path = require('path');
 
 module.exports = {
-  entry: 'server.js',
+  entry: './server.js',
   target: 'node',
+  output: {
+    path: path.resolve(__dirname, 'dist'),
+    filename: 'bundle.js',
+    publicPath: '/'
+  },
   // Generate sourcemaps for proper error messages
   devtool: 'source-map',
   // Since 'aws-sdk' is not compatible with webpack,
