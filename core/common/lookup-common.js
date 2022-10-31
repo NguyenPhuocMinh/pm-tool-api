@@ -23,7 +23,9 @@ const BuildFindModel = (schemas, type) => {
     model = models[type];
 
     loggerFactory.info(`BuildSuccessResponse has been end with find model`, {
-      args: `[${model}]`
+      args: {
+        model: type
+      }
     });
 
     return model;

@@ -7,6 +7,8 @@ import constants from '../../constants';
 import logUtils from '../../utils/log-util';
 
 import HomeRouter from './home-router';
+import OrganizationRouter from './organization-router';
+import ProjectRouter from './project-router';
 
 const router = express.Router();
 
@@ -15,7 +17,7 @@ const loggerFactory = logUtils.createLogger(
   constants.STRUCT_NAME_ROUTER
 );
 
-const routes = [...HomeRouter];
+const routes = [...HomeRouter, ...OrganizationRouter, ...ProjectRouter];
 
 /**
  * @description Init layer router

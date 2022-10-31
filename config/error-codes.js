@@ -20,6 +20,21 @@ const errorCodes = {
     message: 'common.notifications.errors.orchestratorHandlerNotFound',
     returnCode: 3003,
     statusCode: 400
+  },
+  SchemaNotFound: {
+    message: 'common.notifications.errors.schemaNotFound',
+    returnCode: 3004,
+    statusCode: 400
+  },
+  DuplicateNameOrganization: {
+    message: 'resources.organizations.notifications.errors.duplicateName',
+    returnCode: 3005,
+    statusCode: 400
+  },
+  DuplicateNameProject: {
+    message: 'resources.projects.notifications.errors.duplicateName',
+    returnCode: 3006,
+    statusCode: 400
   }
 };
 

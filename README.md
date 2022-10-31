@@ -7,6 +7,7 @@
 - [Ex .env](#ex-env)
 - [Structures](#structures)
 - [Run](#run)
+- [Docs](#docs)
 - [Docker](#docker)
 - [Build](#build)
 - [Circle CI/CD](#circle-cicd)
@@ -49,19 +50,21 @@ $ npm install
 .
 ├── Dockerfile
 ├── README.md
-├── configs.js
+├── charts
+├── conf
+├── config
+├── constants
 ├── core
 │   ├── common
-│   ├── conf
-│   ├── constants
 │   ├── database
-│   ├── middlewares
-│   │  
-│   └── utils
+│   └── models
 ├── deploy.sh
 ├── docker-compose.yml
-├── helm-charts
+├── middlewares
 ├── package.json
+├── public
+│   └── docs
+│       └── swagger.yaml
 ├── server.js
 ├── src
 │   ├── controllers
@@ -69,6 +72,7 @@ $ npm install
 │   ├── routers
 │   └── services
 ├── tests
+├── utils
 └── webpack.config.js
 ```
 
@@ -98,6 +102,11 @@ $ npm run unit:test
 $ npm run lint:check
 ```
 
+## Docs
+
+```sh
+$ http://localhost:8080/docs
+```
 ## Docker
 
 - **Run build docker images**

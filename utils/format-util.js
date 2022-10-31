@@ -1,5 +1,6 @@
 'use strict';
 
+import slugify from 'slugify';
 import convertUtils from './convert-util';
 
 const formatLabelLog = (appName, structName) => {
@@ -24,10 +25,15 @@ const formatErrorMessage = (error) => {
   };
 };
 
+const formatSlug = (input, locale = 'en') => {
+  return slugify(input, { locale });
+};
+
 const formatUtils = {
   formatLabelLog,
   formatInfoLog,
-  formatErrorMessage
+  formatErrorMessage,
+  formatSlug
 };
 
 export default formatUtils;

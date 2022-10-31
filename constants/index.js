@@ -21,10 +21,14 @@ const STRUCT_MIDDLEWARES = {
  */
 const BASE_CONTROLLER = 'base-controller';
 const HOME_CONTROLLER = 'home-controller';
+const ORGANIZATION_CONTROLLER = 'organization-controller';
+const PROJECT_CONTROLLER = 'project-controller';
 
 const STRUCT_CONTROLLERS = {
   BASE_CONTROLLER,
-  HOME_CONTROLLER
+  HOME_CONTROLLER,
+  ORGANIZATION_CONTROLLER,
+  PROJECT_CONTROLLER
 };
 
 /**
@@ -32,10 +36,26 @@ const STRUCT_CONTROLLERS = {
  */
 const BASE_ORCHESTRATOR = 'base-orchestrator';
 const HOME_ORCHESTRATOR = 'home-orchestrator';
+const ORGANIZATION_ORCHESTRATOR = 'organization-orchestrator';
+const PROJECT_ORCHESTRATOR = 'project-orchestrator';
 
 const STRUCT_ORCHESTRATORS = {
   BASE_ORCHESTRATOR,
-  HOME_ORCHESTRATOR
+  HOME_ORCHESTRATOR,
+  ORGANIZATION_ORCHESTRATOR,
+  PROJECT_ORCHESTRATOR
+};
+
+/**
+ * @description DTOS
+ */
+
+const ORGANIZATION_DTO = 'organization-dto';
+const PROJECT_DTO = 'project-dto';
+
+const STRUCT_DTO = {
+  ORGANIZATION_DTO,
+  PROJECT_DTO
 };
 
 /**
@@ -45,15 +65,23 @@ const ERROR_COMMON = 'error-common';
 const RESPONSE_COMMON = 'response-common';
 const TEMPLATE_COMMON = 'template-common';
 const LOOKUP_COMMON = 'lookup-common';
+const CONFIGURE_COMMON = 'configure-common';
+const VALIDATE_COMMON = 'validate-common';
 
 const STRUCT_COMMON = {
   ERROR_COMMON,
   RESPONSE_COMMON,
   TEMPLATE_COMMON,
-  LOOKUP_COMMON
+  LOOKUP_COMMON,
+  CONFIGURE_COMMON,
+  VALIDATE_COMMON
 };
 
 const DATE_TIMESTAMP_FORMAT = 'YYYY-MM-DD HH:mm:ss';
+const TIMEZONE_DEFAULT = 'Asia/Ho_Chi_Minh';
+const DEFAULT_SYSTEM = 'system';
+const DEFAULT_SKIP = 0;
+const DEFAULT_LIMIT = 1000;
 
 const HTTP_STATUS = {
   SUCCESS: '200',
@@ -73,31 +101,57 @@ const HTTP_STATUS = {
  */
 const types = {
   MsgTypeHome: 'HOME',
-  MsgTypeTest: 'TEST'
+  MsgTypeOrganization: 'ORGANIZATION',
+  MsgTypeProject: 'PROJECT'
 };
 
 /**
  * @description HOME ACTIONS
  */
 const homeActions = {
-  MsgActionHomePage: 'HOME_PAGE',
-  MsgActionTest: 'GET_TEST'
+  MsgActionHomePage: 'HOME_PAGE'
+};
+
+/**
+ * @description ORGANIZATION ACTIONS
+ */
+const organizationActions = {
+  MsgActionOrganizationGetList: 'ORGANIZATION_GET_LIST',
+  MsgActionOrganizationCreate: 'ORGANIZATION_CREATE',
+  MsgActionOrganizationGetID: 'ORGANIZATION_GET_ID',
+  MsgActionOrganizationEdit: 'ORGANIZATION_EDIT',
+  MsgActionOrganizationDelete: 'ORGANIZATION_DELETE'
+};
+
+/**
+ * @description PROJECT ACTIONS
+ */
+const projectActions = {
+  MsgActionProjectGetList: 'PROJECT_GET_LIST',
+  MsgActionProjectCreate: 'PROJECT_CREATE'
 };
 
 const actions = {
-  ...homeActions
+  ...homeActions,
+  ...organizationActions,
+  ...projectActions
 };
 
 const constants = {
   types,
   actions,
   DATE_TIMESTAMP_FORMAT,
+  TIMEZONE_DEFAULT,
+  DEFAULT_SYSTEM,
+  DEFAULT_SKIP,
+  DEFAULT_LIMIT,
   HTTP_STATUS,
   APP_NAME,
   STRUCT_NAME_SERVER,
   STRUCT_NAME_ROUTER,
   STRUCT_NAME_DATABASE,
   STRUCT_NAME_ORCHESTRATOR,
+  STRUCT_DTO,
   STRUCT_COMMON,
   STRUCT_MIDDLEWARES,
   STRUCT_CONTROLLERS,
