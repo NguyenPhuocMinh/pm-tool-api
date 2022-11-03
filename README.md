@@ -51,6 +51,9 @@ $ npm install
 ├── Dockerfile
 ├── README.md
 ├── charts
+│   ├── cert-manager
+│   ├── ingress
+│   └── pm-tool-api
 ├── conf
 ├── config
 ├── constants
@@ -68,6 +71,7 @@ $ npm install
 ├── server.js
 ├── src
 │   ├── controllers
+│   ├── dtos
 │   ├── orchestrators
 │   ├── routers
 │   └── services
@@ -127,7 +131,7 @@ $ docker run -d -p 8080:8080 pm-tool-api
   - **Step 1** => go to file config.yml in folder .circleci change APP_DOCKER_TAG and APP_HELM_TAG new version
   - **Step 2** => go to file values.yaml in folder /helm-charts/pm-tool-api change new version docker tag
   - **Step 3** => go to file Chart.yaml in folder /helm-charts/pm-tool-api change new version chart
-  - **Step 4** => go to file configs.js change new version
+  - **Step 4** => go to file profiles.js in folder conf change new version
 
 ## Circle CI/CD
 
