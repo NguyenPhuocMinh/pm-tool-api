@@ -14,6 +14,7 @@ import loggerMiddleware from './middlewares/logger-middleware';
 import database from './core/database';
 import routers from './src/routers';
 
+import options from './conf/options';
 import profiles from './conf/profiles';
 import constants from './constants';
 import logUtils from './utils/log-util';
@@ -31,9 +32,10 @@ const APP_HOST = profiles.APP_HOST;
 const APP_DOCS_PATH = profiles.APP_DOCS_PATH;
 
 const server = async () => {
-  app.use(cors());
+  app.use(cors(options.corsOptions));
   app.use(helmet());
-  app.use(bodyParser.json({ limit: '50mb' }));
+  app.use(bodyParser.json({ limit: '100mb' }));
+  app.use(bodyParser.urlencoded({ limit: '100mb', extended: true }));
   app.use(morgan(loggerMiddleware));
 
   /**
@@ -56,7 +58,10 @@ const server = async () => {
   /**
    * Not found
    */
-  app.use((req, res, next) => {
+  app.use('*', (req, res, next) => {
+    loggerFactory.warn(`Router not found with path`, {
+      args: `${req.baseUrl}`
+    });
     return res.status(404).send({
       error: 'Not Found Router'
     });

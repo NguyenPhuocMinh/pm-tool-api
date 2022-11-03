@@ -17,12 +17,13 @@ const organizationDTO = (data) => {
   if (!isEmpty(data)) {
     data = data.toJSON();
 
-    const { _id, name, activated, createdAt } = data;
+    const { _id, name, activated, createdAt, updatedAt } = data;
 
     response.id = _id;
     response.name = name;
     response.activated = activated;
     response.createdAt = createdAt;
+    response.updatedAt = updatedAt;
 
     loggerFactory.data('Func organizationDTO has data');
 

@@ -5,6 +5,7 @@ import { get, toLower } from 'lodash';
 
 import constants from '../../constants';
 import logUtils from '../../utils/log-util';
+import returnUtils from '../../utils/return-util';
 
 import HomeRouter from './home-router';
 import OrganizationRouter from './organization-router';
@@ -37,10 +38,7 @@ const routers = routes.map((route) => {
     return router;
   } catch (err) {
     loggerFactory.error(`Layer route has error`, {
-      args: {
-        name: err.name,
-        message: err.message
-      }
+      args: returnUtils.returnErrorMessage(err)
     });
     throw err;
   }

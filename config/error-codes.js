@@ -26,14 +26,19 @@ const errorCodes = {
     returnCode: 3004,
     statusCode: 400
   },
+  OrganizationNameIsRequired: {
+    message: 'resources.organizations.notifications.errors.requiredName',
+    returnCode: 3005,
+    statusCode: 400
+  },
   DuplicateNameOrganization: {
     message: 'resources.organizations.notifications.errors.duplicateName',
-    returnCode: 3005,
+    returnCode: 3006,
     statusCode: 400
   },
   DuplicateNameProject: {
     message: 'resources.projects.notifications.errors.duplicateName',
-    returnCode: 3006,
+    returnCode: 3007,
     statusCode: 400
   }
 };

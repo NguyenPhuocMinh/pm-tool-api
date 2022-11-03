@@ -1,5 +1,12 @@
 'use strict';
 
+import profiles from './profiles';
+
+const corsOptions = {
+  origin: profiles.APP_DOMAIN_PATH,
+  credentials: true
+};
+
 const loggerOptions = {
   symbols: {
     info: '\x1B[32mINFO\x1B[39m',
@@ -48,6 +55,7 @@ const retryOptions = {
 };
 
 const options = {
+  corsOptions,
   loggerOptions,
   mongooseOptions,
   retryOptions

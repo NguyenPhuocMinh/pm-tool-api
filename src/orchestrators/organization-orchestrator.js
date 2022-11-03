@@ -1,7 +1,7 @@
 'use strict';
 
 import Promise from 'bluebird';
-import { assign } from 'lodash';
+import { assign, isEmpty } from 'lodash';
 
 import constants from '../../constants';
 
@@ -34,9 +34,7 @@ const GetList = async (toolBox) => {
       filter: query,
       projection: {
         __v: 0,
-        createdAt: 0,
         createdBy: 0,
-        updatedAt: 0,
         updatedBy: 0
       },
       options: {
@@ -78,6 +76,10 @@ const Create = async (toolBox) => {
 
     const { name } = req.body;
 
+    if (isEmpty(name)) {
+      throw errorCommon.BuildNewError('OrganizationNameIsRequired');
+    }
+
     const slug = formatUtils.formatSlug(name);
 
     // check duplicate slug
@@ -118,14 +120,31 @@ const Create = async (toolBox) => {
 };
 
 const GetID = async (toolBox) => {
+  const { req } = toolBox;
   try {
     loggerFactory.info(`Function GetID has been start`);
 
+    const id = req.params.id;
+
+    if (isEmpty(id)) {
+      throw errorCommon.BuildNewError('IDNotFound');
+    }
+
+    const organization = await database.Get({
+      type: 'OrganizationModel',
+      id,
+      projection: {
+        __v: 0
+      }
+    });
+
+    const result = organizationDTO(organization);
+
     return {
       result: {
-        data: {}
+        data: result
       },
-      msg: 'OrganizationCreateSuccess'
+      msg: 'OrganizationGetIDSuccess'
     };
   } catch (err) {
     loggerFactory.info(`Function GetID has error`, {
@@ -136,14 +155,52 @@ const GetID = async (toolBox) => {
 };
 
 const Edit = async (toolBox) => {
+  const { req } = toolBox;
   try {
     loggerFactory.info(`Function Edit has been start`);
+    const { id } = req.params;
+    const { name } = req.body;
+
+    if (isEmpty(id)) {
+      throw errorCommon.BuildNewError('OrganizationIDNotFound');
+    }
+
+    if (isEmpty(name)) {
+      throw errorCommon.BuildNewError('OrganizationNameIsRequired');
+    }
+
+    const slug = formatUtils.formatSlug(name);
+    // check duplicate slug
+    const isDuplicate = await configureCommon.CheckDuplicate(
+      'OrganizationModel',
+      { slug, _id: { $ne: id } }
+    );
+
+    if (isDuplicate) {
+      throw errorCommon.BuildNewError('DuplicateNameOrganization');
+    }
+
+    let doc = assign(req.body, {
+      slug: slug
+    });
+
+    doc = configureCommon.AttributeFilter(doc);
+
+    const data = await database.Update({
+      type: 'OrganizationModel',
+      filter: {
+        id
+      },
+      doc
+    });
+
+    const result = organizationDTO(data);
 
     return {
       result: {
-        data: {}
+        data: result
       },
-      msg: 'OrganizationCreateSuccess'
+      msg: 'OrganizationEditSuccess'
     };
   } catch (err) {
     loggerFactory.info(`Function Edit has error`, {
@@ -154,14 +211,25 @@ const Edit = async (toolBox) => {
 };
 
 const Delete = async (toolBox) => {
+  const { req } = toolBox;
   try {
     loggerFactory.info(`Function Delete has been start`);
+    const { id } = req.params;
+
+    if (isEmpty(id)) {
+      throw errorCommon.BuildNewError('OrganizationIDNotFound');
+    }
+
+    const result = await database.Delete({
+      type: 'OrganizationModel',
+      id
+    });
 
     return {
       result: {
-        data: {}
+        data: result
       },
-      msg: 'OrganizationCreateSuccess'
+      msg: 'OrganizationDeleteSuccess'
     };
   } catch (err) {
     loggerFactory.info(`Function Delete has error`, {

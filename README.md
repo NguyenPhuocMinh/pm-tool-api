@@ -42,8 +42,8 @@ $ npm install
 - APP_PORT=8080
 - APP_HOST=0.0.0.0
 - APP_DOCS_PATH=/docs
-- APP_DB_URI=mongodb://localhost:27017/pm-tool
-
+- APP_MONGO_URI=mongodb://127.0.0.1:27017/pm-tool
+- APP_DOMAIN_PATH=http://localhost:3500
 ## Structures
 
 ```

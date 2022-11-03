@@ -40,7 +40,8 @@ const orchestratorOrganization = [
   {
     type: constants.types.MsgTypeOrganization,
     action: constants.actions.MsgActionOrganizationEdit,
-    orchestrator: OrganizationOrchestrator.Edit
+    orchestrator: OrganizationOrchestrator.Edit,
+    schema: 'organizationSchema'
   },
   {
     type: constants.types.MsgTypeOrganization,

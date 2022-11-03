@@ -32,7 +32,7 @@ const BuildNewValidateSchema = async (schema, data) => {
         });
         errors.name = validate.errors[0].keyword;
         errors.message = validate.errors[0].message;
-        errors.returnCode = 0;
+        errors.returnCode = 9999;
         errors.statusCode = 400;
       }
     } else {

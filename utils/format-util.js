@@ -26,7 +26,7 @@ const formatErrorMessage = (error) => {
 };
 
 const formatSlug = (input, locale = 'en') => {
-  return slugify(input, { locale });
+  return slugify(input, { locale, lower: true });
 };
 
 const formatUtils = {
