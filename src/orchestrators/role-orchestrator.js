@@ -13,11 +13,11 @@ import errorCommon from '../../core/common/error-common';
 import configureCommon from '../../core/common/configure-common';
 
 import database from '../../core/database';
-import { organizationDTO } from '../dtos';
+import { roleDTO } from '../dtos';
 
 const loggerFactory = logUtils.createLogger(
   constants.APP_NAME,
-  constants.STRUCT_ORCHESTRATORS.ORGANIZATION_ORCHESTRATOR
+  constants.STRUCT_ORCHESTRATORS.ROLE_ORCHESTRATOR
 );
 
 const GetList = async (toolBox) => {
@@ -29,8 +29,8 @@ const GetList = async (toolBox) => {
     const query = configureCommon.CreateFindQuery(req.query);
     const sort = configureCommon.CreateSortOrderQuery(req.query);
 
-    const organizations = await database.FindAll({
-      type: 'OrganizationModel',
+    const roles = await database.FindAll({
+      type: 'RoleModel',
       filter: query,
       projection: {
         __v: 0,
@@ -45,20 +45,18 @@ const GetList = async (toolBox) => {
     });
 
     const total = await database.Count({
-      type: 'OrganizationModel',
+      type: 'RoleModel',
       filter: query
     });
 
-    const response = await configureCommon.ConvertDataResponseMap(
-      organizations
-    );
+    const response = await configureCommon.ConvertDataResponseMap(roles);
 
     return {
       result: {
         data: response,
         total
       },
-      msg: 'OrganizationGetListSuccess'
+      msg: 'RoleGetListSuccess'
     };
   } catch (err) {
     loggerFactory.info(`Function GetList has error`, {
@@ -77,39 +75,38 @@ const Create = async (toolBox) => {
     const { name } = req.body;
 
     if (isEmpty(name)) {
-      throw errorCommon.BuildNewError('OrganizationNameIsRequired');
+      throw errorCommon.BuildNewError('RoleNameIsRequired');
     }
 
     const slug = formatUtils.formatSlug(name);
 
     // check duplicate slug
-    const isDuplicate = await configureCommon.CheckDuplicate(
-      'OrganizationModel',
-      { slug }
-    );
+    const isDuplicate = await configureCommon.CheckDuplicate('RoleModel', {
+      slug
+    });
 
     if (isDuplicate) {
-      throw errorCommon.BuildNewError('DuplicateNameOrganization');
+      throw errorCommon.BuildNewError('DuplicateNameRole');
     }
 
-    let organization = assign(req.body, {
+    let role = assign(req.body, {
       slug: slug
     });
 
-    organization = configureCommon.AttributeFilter(organization, 'create');
+    role = configureCommon.AttributeFilter(role, 'create');
 
     const data = await database.Create({
-      type: 'OrganizationModel',
-      doc: organization
+      type: 'RoleModel',
+      doc: role
     });
 
-    const result = organizationDTO(data);
+    const result = roleDTO(data);
 
     return {
       result: {
         data: result
       },
-      msg: 'OrganizationCreateSuccess'
+      msg: 'RoleCreateSuccess'
     };
   } catch (err) {
     loggerFactory.info(`Function Create has error`, {
@@ -130,21 +127,21 @@ const GetID = async (toolBox) => {
       throw errorCommon.BuildNewError('IDNotFound');
     }
 
-    const organization = await database.Get({
-      type: 'OrganizationModel',
+    const role = await database.Get({
+      type: 'RoleModel',
       id,
       projection: {
         __v: 0
       }
     });
 
-    const result = organizationDTO(organization);
+    const result = roleDTO(role);
 
     return {
       result: {
         data: result
       },
-      msg: 'OrganizationGetIDSuccess'
+      msg: 'RoleGetIDSuccess'
     };
   } catch (err) {
     loggerFactory.info(`Function GetID has error`, {
@@ -162,43 +159,43 @@ const Edit = async (toolBox) => {
     const { name } = req.body;
 
     if (isEmpty(id)) {
-      throw errorCommon.BuildNewError('OrganizationIDNotFound');
+      throw errorCommon.BuildNewError('RoleIDNotFound');
     }
 
     if (isEmpty(name)) {
-      throw errorCommon.BuildNewError('OrganizationNameIsRequired');
+      throw errorCommon.BuildNewError('RoleNameIsRequired');
     }
 
     const slug = formatUtils.formatSlug(name);
     // check duplicate slug
-    const isDuplicate = await configureCommon.CheckDuplicate(
-      'OrganizationModel',
-      { slug, _id: { $ne: id } }
-    );
+    const isDuplicate = await configureCommon.CheckDuplicate('RoleModel', {
+      slug,
+      _id: { $ne: id }
+    });
 
     if (isDuplicate) {
-      throw errorCommon.BuildNewError('DuplicateNameOrganization');
+      throw errorCommon.BuildNewError('DuplicateNameRole');
     }
 
-    let organization = assign(req.body, {
+    let role = assign(req.body, {
       slug: slug
     });
 
-    organization = configureCommon.AttributeFilter(organization);
+    role = configureCommon.AttributeFilter(role);
 
     const data = await database.Update({
-      type: 'OrganizationModel',
+      type: 'RoleModel',
       id,
-      organization
+      doc: role
     });
 
-    const result = organizationDTO(data);
+    const result = roleDTO(data);
 
     return {
       result: {
         data: result
       },
-      msg: 'OrganizationEditSuccess'
+      msg: 'RoleEditSuccess'
     };
   } catch (err) {
     loggerFactory.info(`Function Edit has error`, {
@@ -215,11 +212,11 @@ const Delete = async (toolBox) => {
     const { id } = req.params;
 
     if (isEmpty(id)) {
-      throw errorCommon.BuildNewError('OrganizationIDNotFound');
+      throw errorCommon.BuildNewError('RoleIDNotFound');
     }
 
     const result = await database.Delete({
-      type: 'OrganizationModel',
+      type: 'RoleModel',
       id
     });
 
@@ -227,7 +224,7 @@ const Delete = async (toolBox) => {
       result: {
         data: result
       },
-      msg: 'OrganizationDeleteSuccess'
+      msg: 'RoleDeleteSuccess'
     };
   } catch (err) {
     loggerFactory.info(`Function Delete has error`, {
@@ -237,7 +234,7 @@ const Delete = async (toolBox) => {
   }
 };
 
-const OrganizationOrchestrator = {
+const RoleOrchestrator = {
   GetList,
   Create,
   GetID,
@@ -245,4 +242,4 @@ const OrganizationOrchestrator = {
   Delete
 };
 
-export default OrganizationOrchestrator;
+export default RoleOrchestrator;

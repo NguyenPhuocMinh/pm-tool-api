@@ -23,12 +23,16 @@ const BASE_CONTROLLER = 'base-controller';
 const HOME_CONTROLLER = 'home-controller';
 const ORGANIZATION_CONTROLLER = 'organization-controller';
 const PROJECT_CONTROLLER = 'project-controller';
+const ROLE_CONTROLLER = 'role-controller';
+const PERMISSION_CONTROLLER = 'permission-controller';
 
 const STRUCT_CONTROLLERS = {
   BASE_CONTROLLER,
   HOME_CONTROLLER,
   ORGANIZATION_CONTROLLER,
-  PROJECT_CONTROLLER
+  PROJECT_CONTROLLER,
+  ROLE_CONTROLLER,
+  PERMISSION_CONTROLLER
 };
 
 /**
@@ -38,12 +42,16 @@ const BASE_ORCHESTRATOR = 'base-orchestrator';
 const HOME_ORCHESTRATOR = 'home-orchestrator';
 const ORGANIZATION_ORCHESTRATOR = 'organization-orchestrator';
 const PROJECT_ORCHESTRATOR = 'project-orchestrator';
+const ROLE_ORCHESTRATOR = 'role-orchestrator';
+const PERMISSION_ORCHESTRATOR = 'permission-orchestrator';
 
 const STRUCT_ORCHESTRATORS = {
   BASE_ORCHESTRATOR,
   HOME_ORCHESTRATOR,
   ORGANIZATION_ORCHESTRATOR,
-  PROJECT_ORCHESTRATOR
+  PROJECT_ORCHESTRATOR,
+  ROLE_ORCHESTRATOR,
+  PERMISSION_ORCHESTRATOR
 };
 
 /**
@@ -52,10 +60,14 @@ const STRUCT_ORCHESTRATORS = {
 
 const ORGANIZATION_DTO = 'organization-dto';
 const PROJECT_DTO = 'project-dto';
+const ROLE_DTO = 'role-dto';
+const PERMISSION_DTO = 'permission-dto';
 
 const STRUCT_DTO = {
   ORGANIZATION_DTO,
-  PROJECT_DTO
+  PROJECT_DTO,
+  ROLE_DTO,
+  PERMISSION_DTO
 };
 
 /**
@@ -102,7 +114,9 @@ const HTTP_STATUS = {
 const types = {
   MsgTypeHome: 'HOME',
   MsgTypeOrganization: 'ORGANIZATION',
-  MsgTypeProject: 'PROJECT'
+  MsgTypeProject: 'PROJECT',
+  MsgTypeRole: 'ROLE',
+  MsgTypePermission: 'PERMISSION'
 };
 
 /**
@@ -131,10 +145,34 @@ const projectActions = {
   MsgActionProjectCreate: 'PROJECT_CREATE'
 };
 
+/**
+ * @description ROLE ACTIONS
+ */
+const roleActions = {
+  MsgActionRoleGetList: 'ROLE_GET_LIST',
+  MsgActionRoleCreate: 'ROLE_CREATE',
+  MsgActionRoleGetID: 'ROLE_GET_ID',
+  MsgActionRoleEdit: 'ROLE_EDIT',
+  MsgActionRoleDelete: 'ROLE_DELETE'
+};
+
+/**
+ * @description PERMISSION ACTIONS
+ */
+const permissionActions = {
+  MsgActionPermissionGetList: 'PERMISSION_GET_LIST',
+  MsgActionPermissionCreate: 'PERMISSION_CREATE',
+  MsgActionPermissionGetID: 'PERMISSION_GET_ID',
+  MsgActionPermissionEdit: 'PERMISSION_EDIT',
+  MsgActionPermissionDelete: 'PERMISSION_DELETE'
+};
+
 const actions = {
   ...homeActions,
   ...organizationActions,
-  ...projectActions
+  ...projectActions,
+  ...roleActions,
+  ...permissionActions
 };
 
 const constants = {

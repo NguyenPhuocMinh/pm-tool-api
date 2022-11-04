@@ -13,11 +13,11 @@ import errorCommon from '../../core/common/error-common';
 import configureCommon from '../../core/common/configure-common';
 
 import database from '../../core/database';
-import { organizationDTO } from '../dtos';
+import { permissionDTO } from '../dtos';
 
 const loggerFactory = logUtils.createLogger(
   constants.APP_NAME,
-  constants.STRUCT_ORCHESTRATORS.ORGANIZATION_ORCHESTRATOR
+  constants.STRUCT_ORCHESTRATORS.PERMISSION_ORCHESTRATOR
 );
 
 const GetList = async (toolBox) => {
@@ -29,8 +29,8 @@ const GetList = async (toolBox) => {
     const query = configureCommon.CreateFindQuery(req.query);
     const sort = configureCommon.CreateSortOrderQuery(req.query);
 
-    const organizations = await database.FindAll({
-      type: 'OrganizationModel',
+    const permissions = await database.FindAll({
+      type: 'PermissionModel',
       filter: query,
       projection: {
         __v: 0,
@@ -45,20 +45,18 @@ const GetList = async (toolBox) => {
     });
 
     const total = await database.Count({
-      type: 'OrganizationModel',
+      type: 'PermissionModel',
       filter: query
     });
 
-    const response = await configureCommon.ConvertDataResponseMap(
-      organizations
-    );
+    const response = await configureCommon.ConvertDataResponseMap(permissions);
 
     return {
       result: {
         data: response,
         total
       },
-      msg: 'OrganizationGetListSuccess'
+      msg: 'PermissionGetListSuccess'
     };
   } catch (err) {
     loggerFactory.info(`Function GetList has error`, {
@@ -77,39 +75,39 @@ const Create = async (toolBox) => {
     const { name } = req.body;
 
     if (isEmpty(name)) {
-      throw errorCommon.BuildNewError('OrganizationNameIsRequired');
+      throw errorCommon.BuildNewError('PermissionNameIsRequired');
     }
 
     const slug = formatUtils.formatSlug(name);
 
     // check duplicate slug
     const isDuplicate = await configureCommon.CheckDuplicate(
-      'OrganizationModel',
+      'PermissionModel',
       { slug }
     );
 
     if (isDuplicate) {
-      throw errorCommon.BuildNewError('DuplicateNameOrganization');
+      throw errorCommon.BuildNewError('DuplicateNamePermission');
     }
 
-    let organization = assign(req.body, {
+    let permission = assign(req.body, {
       slug: slug
     });
 
-    organization = configureCommon.AttributeFilter(organization, 'create');
+    permission = configureCommon.AttributeFilter(permission, 'create');
 
     const data = await database.Create({
-      type: 'OrganizationModel',
-      doc: organization
+      type: 'PermissionModel',
+      doc: permission
     });
 
-    const result = organizationDTO(data);
+    const result = permissionDTO(data);
 
     return {
       result: {
         data: result
       },
-      msg: 'OrganizationCreateSuccess'
+      msg: 'PermissionCreateSuccess'
     };
   } catch (err) {
     loggerFactory.info(`Function Create has error`, {
@@ -131,20 +129,20 @@ const GetID = async (toolBox) => {
     }
 
     const organization = await database.Get({
-      type: 'OrganizationModel',
+      type: 'PermissionModel',
       id,
       projection: {
         __v: 0
       }
     });
 
-    const result = organizationDTO(organization);
+    const result = permissionDTO(organization);
 
     return {
       result: {
         data: result
       },
-      msg: 'OrganizationGetIDSuccess'
+      msg: 'PermissionGetIDSuccess'
     };
   } catch (err) {
     loggerFactory.info(`Function GetID has error`, {
@@ -162,43 +160,43 @@ const Edit = async (toolBox) => {
     const { name } = req.body;
 
     if (isEmpty(id)) {
-      throw errorCommon.BuildNewError('OrganizationIDNotFound');
+      throw errorCommon.BuildNewError('PermissionIDNotFound');
     }
 
     if (isEmpty(name)) {
-      throw errorCommon.BuildNewError('OrganizationNameIsRequired');
+      throw errorCommon.BuildNewError('PermissionNameIsRequired');
     }
 
     const slug = formatUtils.formatSlug(name);
     // check duplicate slug
     const isDuplicate = await configureCommon.CheckDuplicate(
-      'OrganizationModel',
+      'PermissionModel',
       { slug, _id: { $ne: id } }
     );
 
     if (isDuplicate) {
-      throw errorCommon.BuildNewError('DuplicateNameOrganization');
+      throw errorCommon.BuildNewError('DuplicateNamePermission');
     }
 
-    let organization = assign(req.body, {
+    let permission = assign(req.body, {
       slug: slug
     });
 
-    organization = configureCommon.AttributeFilter(organization);
+    permission = configureCommon.AttributeFilter(permission);
 
     const data = await database.Update({
-      type: 'OrganizationModel',
+      type: 'PermissionModel',
       id,
-      organization
+      doc: permission
     });
 
-    const result = organizationDTO(data);
+    const result = permissionDTO(data);
 
     return {
       result: {
         data: result
       },
-      msg: 'OrganizationEditSuccess'
+      msg: 'PermissionEditSuccess'
     };
   } catch (err) {
     loggerFactory.info(`Function Edit has error`, {
@@ -215,11 +213,11 @@ const Delete = async (toolBox) => {
     const { id } = req.params;
 
     if (isEmpty(id)) {
-      throw errorCommon.BuildNewError('OrganizationIDNotFound');
+      throw errorCommon.BuildNewError('PermissionIDNotFound');
     }
 
     const result = await database.Delete({
-      type: 'OrganizationModel',
+      type: 'PermissionModel',
       id
     });
 
@@ -227,7 +225,7 @@ const Delete = async (toolBox) => {
       result: {
         data: result
       },
-      msg: 'OrganizationDeleteSuccess'
+      msg: 'PermissionDeleteSuccess'
     };
   } catch (err) {
     loggerFactory.info(`Function Delete has error`, {
@@ -237,7 +235,7 @@ const Delete = async (toolBox) => {
   }
 };
 
-const OrganizationOrchestrator = {
+const PermissionOrchestrator = {
   GetList,
   Create,
   GetID,
@@ -245,4 +243,4 @@ const OrganizationOrchestrator = {
   Delete
 };
 
-export default OrganizationOrchestrator;
+export default PermissionOrchestrator;

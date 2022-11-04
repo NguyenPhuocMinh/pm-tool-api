@@ -290,13 +290,13 @@ const Update = async ({ type, id, doc, options = { new: true } }) => {
  * @see https://mongoosejs.com/docs/api/model.html#model_Model-findByIdAndRemove
  * @returns
  */
-const Delete = async ({ type, filter, options }) => {
+const Delete = async ({ type, id, options }) => {
   try {
     loggerFactory.data('Function Delete has been start');
 
     const model = lookupCommon.BuildFindModel(schemaModels, type);
 
-    const data = await model.findByIdAndRemove(filter, options).exec();
+    const data = await model.findByIdAndRemove(id, options).exec();
 
     loggerFactory.data('Function Delete has been start');
     return data;

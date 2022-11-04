@@ -16,9 +16,27 @@ const projectSchema = {
   required: ['name']
 };
 
+const roleSchema = {
+  type: 'object',
+  properties: {
+    name: { type: 'string' }
+  },
+  required: ['name']
+};
+
+const permissionSchema = {
+  type: 'object',
+  properties: {
+    name: { type: 'string' }
+  },
+  required: ['name']
+};
+
 const schemaCommon = {
   organizationSchema,
-  projectSchema
+  projectSchema,
+  roleSchema,
+  permissionSchema
 };
 
 export default schemaCommon;

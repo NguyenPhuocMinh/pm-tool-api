@@ -3,14 +3,14 @@
 import { Schema } from 'mongoose';
 
 export default {
-  name: 'RoleModel',
+  name: 'PermissionModel',
   attributes: {
     name: { type: String },
     description: { type: String },
-    permissions: [{ type: Schema.Types.ObjectId, ref: 'PermissionModel' }],
+    activated: { type: Boolean, default: true },
+    roles: [{ type: Schema.Types.ObjectId, ref: 'RoleModel' }],
     // filter
     slug: { type: String },
-    activated: { type: Boolean, default: true },
     deleted: { type: Boolean, default: false },
     createdAt: { type: Date },
     createdBy: { type: String },
@@ -18,6 +18,6 @@ export default {
     updatedBy: { type: String }
   },
   options: {
-    collection: 'roles'
+    collection: 'permissions'
   }
 };

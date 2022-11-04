@@ -10,6 +10,8 @@ import returnUtils from '../../utils/return-util';
 import HomeRouter from './home-router';
 import OrganizationRouter from './organization-router';
 import ProjectRouter from './project-router';
+import RoleRouter from './role-router';
+import PermissionRouter from './permission-router';
 
 const router = express.Router();
 
@@ -18,7 +20,13 @@ const loggerFactory = logUtils.createLogger(
   constants.STRUCT_NAME_ROUTER
 );
 
-const routes = [...HomeRouter, ...OrganizationRouter, ...ProjectRouter];
+const routes = [
+  ...HomeRouter,
+  ...OrganizationRouter,
+  ...ProjectRouter,
+  ...RoleRouter,
+  ...PermissionRouter
+];
 
 /**
  * @description Init layer router
