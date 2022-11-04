@@ -128,6 +128,116 @@ paths:
         500:
           $ref: "#/components/responses/ServerError"
 
+  /organizations:
+    get:
+      tags:
+        - organization
+      security: []
+      summary: Organization List
+      description: Organization List
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/commonResponse"
+        400:
+          $ref: "#/components/responses/BadRequest"
+        401:
+          $ref: "#/components/responses/UnAuthorization"
+        403:
+          $ref: "#/components/responses/Forbidden"
+        404:
+          $ref: "#/components/responses/NotFound"
+        500:
+          $ref: "#/components/responses/ServerError"
+
+    post:
+      tags:
+        - organization
+      security: []
+      summary: Organization Create
+      description: Organization Create
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/organizationCreate"
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/commonResponse"
+        400:
+          $ref: "#/components/responses/BadRequest"
+        401:
+          $ref: "#/components/responses/UnAuthorization"
+        403:
+          $ref: "#/components/responses/Forbidden"
+        404:
+          $ref: "#/components/responses/NotFound"
+        500:
+          $ref: "#/components/responses/ServerError"
+  
+  /projects:
+    get:
+      tags:
+        - project
+      security: []
+      summary: project List
+      description: project List
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/commonResponse"
+        400:
+          $ref: "#/components/responses/BadRequest"
+        401:
+          $ref: "#/components/responses/UnAuthorization"
+        403:
+          $ref: "#/components/responses/Forbidden"
+        404:
+          $ref: "#/components/responses/NotFound"
+        500:
+          $ref: "#/components/responses/ServerError"
+
+    post:
+      tags:
+        - project
+      security: []
+      summary: project Create
+      description: project Create
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/organizationCreate"
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/commonResponse"
+        400:
+          $ref: "#/components/responses/BadRequest"
+        401:
+          $ref: "#/components/responses/UnAuthorization"
+        403:
+          $ref: "#/components/responses/Forbidden"
+        404:
+          $ref: "#/components/responses/NotFound"
+        500:
+          $ref: "#/components/responses/ServerError"
+
 ## components
 components:
   # security
@@ -195,15 +305,30 @@ components:
           type: integer
           example: 200/400/500/...
 
-    adminLogin:
+    organizationCreate:
       type: object
       required:
-        - email
-        - password
+        - name
       properties:
-        email:
+        name:
           type: string
-          default: admin
-        password:
+          default: organization name
+        activated:
+          type: boolean
+          default: true
+    
+    projectCreate:
+      type: object
+      required:
+        - name
+      properties:
+        name:
           type: string
-          default: admin
+          default: organization name
+        startDay:
+          type: string
+        endDay:
+          type: string
+        activated:
+          type: boolean
+          default: true

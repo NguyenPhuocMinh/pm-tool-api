@@ -5,8 +5,13 @@ import { get, toLower } from 'lodash';
 
 import constants from '../../constants';
 import logUtils from '../../utils/log-util';
+import returnUtils from '../../utils/return-util';
 
 import HomeRouter from './home-router';
+import OrganizationRouter from './organization-router';
+import ProjectRouter from './project-router';
+import RoleRouter from './role-router';
+import PermissionRouter from './permission-router';
 
 const router = express.Router();
 
@@ -15,7 +20,13 @@ const loggerFactory = logUtils.createLogger(
   constants.STRUCT_NAME_ROUTER
 );
 
-const routes = [...HomeRouter];
+const routes = [
+  ...HomeRouter,
+  ...OrganizationRouter,
+  ...ProjectRouter,
+  ...RoleRouter,
+  ...PermissionRouter
+];
 
 /**
  * @description Init layer router
@@ -35,10 +46,7 @@ const routers = routes.map((route) => {
     return router;
   } catch (err) {
     loggerFactory.error(`Layer route has error`, {
-      args: {
-        name: err.name,
-        message: err.message
-      }
+      args: returnUtils.returnErrorMessage(err)
     });
     throw err;
   }

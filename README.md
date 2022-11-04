@@ -7,6 +7,7 @@
 - [Ex .env](#ex-env)
 - [Structures](#structures)
 - [Run](#run)
+- [Docs](#docs)
 - [Docker](#docker)
 - [Build](#build)
 - [Circle CI/CD](#circle-cicd)
@@ -41,34 +42,41 @@ $ npm install
 - APP_PORT=8080
 - APP_HOST=0.0.0.0
 - APP_DOCS_PATH=/docs
-- APP_DB_URI=mongodb://localhost:27017/pm-tool
-
+- APP_MONGO_URI=mongodb://127.0.0.1:27017/pm-tool
+- APP_DOMAIN_PATH=http://localhost:3500
 ## Structures
 
 ```
 .
 ├── Dockerfile
 ├── README.md
-├── configs.js
+├── charts
+│   ├── cert-manager
+│   ├── ingress
+│   └── pm-tool-api
+├── conf
+├── config
+├── constants
 ├── core
 │   ├── common
-│   ├── conf
-│   ├── constants
 │   ├── database
-│   ├── middlewares
-│   │  
-│   └── utils
+│   └── models
 ├── deploy.sh
 ├── docker-compose.yml
-├── helm-charts
+├── middlewares
 ├── package.json
+├── public
+│   └── docs
+│       └── swagger.yaml
 ├── server.js
 ├── src
 │   ├── controllers
+│   ├── dtos
 │   ├── orchestrators
 │   ├── routers
 │   └── services
 ├── tests
+├── utils
 └── webpack.config.js
 ```
 
@@ -98,6 +106,11 @@ $ npm run unit:test
 $ npm run lint:check
 ```
 
+## Docs
+
+```sh
+$ http://localhost:8080/docs
+```
 ## Docker
 
 - **Run build docker images**
@@ -118,7 +131,7 @@ $ docker run -d -p 8080:8080 pm-tool-api
   - **Step 1** => go to file config.yml in folder .circleci change APP_DOCKER_TAG and APP_HELM_TAG new version
   - **Step 2** => go to file values.yaml in folder /helm-charts/pm-tool-api change new version docker tag
   - **Step 3** => go to file Chart.yaml in folder /helm-charts/pm-tool-api change new version chart
-  - **Step 4** => go to file configs.js change new version
+  - **Step 4** => go to file profiles.js in folder conf change new version
 
 ## Circle CI/CD
 

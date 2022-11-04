@@ -21,10 +21,18 @@ const STRUCT_MIDDLEWARES = {
  */
 const BASE_CONTROLLER = 'base-controller';
 const HOME_CONTROLLER = 'home-controller';
+const ORGANIZATION_CONTROLLER = 'organization-controller';
+const PROJECT_CONTROLLER = 'project-controller';
+const ROLE_CONTROLLER = 'role-controller';
+const PERMISSION_CONTROLLER = 'permission-controller';
 
 const STRUCT_CONTROLLERS = {
   BASE_CONTROLLER,
-  HOME_CONTROLLER
+  HOME_CONTROLLER,
+  ORGANIZATION_CONTROLLER,
+  PROJECT_CONTROLLER,
+  ROLE_CONTROLLER,
+  PERMISSION_CONTROLLER
 };
 
 /**
@@ -32,10 +40,34 @@ const STRUCT_CONTROLLERS = {
  */
 const BASE_ORCHESTRATOR = 'base-orchestrator';
 const HOME_ORCHESTRATOR = 'home-orchestrator';
+const ORGANIZATION_ORCHESTRATOR = 'organization-orchestrator';
+const PROJECT_ORCHESTRATOR = 'project-orchestrator';
+const ROLE_ORCHESTRATOR = 'role-orchestrator';
+const PERMISSION_ORCHESTRATOR = 'permission-orchestrator';
 
 const STRUCT_ORCHESTRATORS = {
   BASE_ORCHESTRATOR,
-  HOME_ORCHESTRATOR
+  HOME_ORCHESTRATOR,
+  ORGANIZATION_ORCHESTRATOR,
+  PROJECT_ORCHESTRATOR,
+  ROLE_ORCHESTRATOR,
+  PERMISSION_ORCHESTRATOR
+};
+
+/**
+ * @description DTOS
+ */
+
+const ORGANIZATION_DTO = 'organization-dto';
+const PROJECT_DTO = 'project-dto';
+const ROLE_DTO = 'role-dto';
+const PERMISSION_DTO = 'permission-dto';
+
+const STRUCT_DTO = {
+  ORGANIZATION_DTO,
+  PROJECT_DTO,
+  ROLE_DTO,
+  PERMISSION_DTO
 };
 
 /**
@@ -45,15 +77,23 @@ const ERROR_COMMON = 'error-common';
 const RESPONSE_COMMON = 'response-common';
 const TEMPLATE_COMMON = 'template-common';
 const LOOKUP_COMMON = 'lookup-common';
+const CONFIGURE_COMMON = 'configure-common';
+const VALIDATE_COMMON = 'validate-common';
 
 const STRUCT_COMMON = {
   ERROR_COMMON,
   RESPONSE_COMMON,
   TEMPLATE_COMMON,
-  LOOKUP_COMMON
+  LOOKUP_COMMON,
+  CONFIGURE_COMMON,
+  VALIDATE_COMMON
 };
 
 const DATE_TIMESTAMP_FORMAT = 'YYYY-MM-DD HH:mm:ss';
+const TIMEZONE_DEFAULT = 'Asia/Ho_Chi_Minh';
+const DEFAULT_SYSTEM = 'system';
+const DEFAULT_SKIP = 0;
+const DEFAULT_LIMIT = 1000;
 
 const HTTP_STATUS = {
   SUCCESS: '200',
@@ -73,31 +113,83 @@ const HTTP_STATUS = {
  */
 const types = {
   MsgTypeHome: 'HOME',
-  MsgTypeTest: 'TEST'
+  MsgTypeOrganization: 'ORGANIZATION',
+  MsgTypeProject: 'PROJECT',
+  MsgTypeRole: 'ROLE',
+  MsgTypePermission: 'PERMISSION'
 };
 
 /**
  * @description HOME ACTIONS
  */
 const homeActions = {
-  MsgActionHomePage: 'HOME_PAGE',
-  MsgActionTest: 'GET_TEST'
+  MsgActionHomePage: 'HOME_PAGE'
+};
+
+/**
+ * @description ORGANIZATION ACTIONS
+ */
+const organizationActions = {
+  MsgActionOrganizationGetList: 'ORGANIZATION_GET_LIST',
+  MsgActionOrganizationCreate: 'ORGANIZATION_CREATE',
+  MsgActionOrganizationGetID: 'ORGANIZATION_GET_ID',
+  MsgActionOrganizationEdit: 'ORGANIZATION_EDIT',
+  MsgActionOrganizationDelete: 'ORGANIZATION_DELETE'
+};
+
+/**
+ * @description PROJECT ACTIONS
+ */
+const projectActions = {
+  MsgActionProjectGetList: 'PROJECT_GET_LIST',
+  MsgActionProjectCreate: 'PROJECT_CREATE'
+};
+
+/**
+ * @description ROLE ACTIONS
+ */
+const roleActions = {
+  MsgActionRoleGetList: 'ROLE_GET_LIST',
+  MsgActionRoleCreate: 'ROLE_CREATE',
+  MsgActionRoleGetID: 'ROLE_GET_ID',
+  MsgActionRoleEdit: 'ROLE_EDIT',
+  MsgActionRoleDelete: 'ROLE_DELETE'
+};
+
+/**
+ * @description PERMISSION ACTIONS
+ */
+const permissionActions = {
+  MsgActionPermissionGetList: 'PERMISSION_GET_LIST',
+  MsgActionPermissionCreate: 'PERMISSION_CREATE',
+  MsgActionPermissionGetID: 'PERMISSION_GET_ID',
+  MsgActionPermissionEdit: 'PERMISSION_EDIT',
+  MsgActionPermissionDelete: 'PERMISSION_DELETE'
 };
 
 const actions = {
-  ...homeActions
+  ...homeActions,
+  ...organizationActions,
+  ...projectActions,
+  ...roleActions,
+  ...permissionActions
 };
 
 const constants = {
   types,
   actions,
   DATE_TIMESTAMP_FORMAT,
+  TIMEZONE_DEFAULT,
+  DEFAULT_SYSTEM,
+  DEFAULT_SKIP,
+  DEFAULT_LIMIT,
   HTTP_STATUS,
   APP_NAME,
   STRUCT_NAME_SERVER,
   STRUCT_NAME_ROUTER,
   STRUCT_NAME_DATABASE,
   STRUCT_NAME_ORCHESTRATOR,
+  STRUCT_DTO,
   STRUCT_COMMON,
   STRUCT_MIDDLEWARES,
   STRUCT_CONTROLLERS,

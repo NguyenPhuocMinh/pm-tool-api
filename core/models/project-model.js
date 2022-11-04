@@ -1,23 +1,21 @@
 'use strict';
 
-import { Schema } from 'mongoose';
-
 export default {
-  name: 'RoleModel',
+  name: 'ProjectModel',
   attributes: {
     name: { type: String },
-    description: { type: String },
-    permissions: [{ type: Schema.Types.ObjectId, ref: 'PermissionModel' }],
+    startDay: { type: Date },
+    endDay: { type: Date },
     // filter
     slug: { type: String },
-    activated: { type: Boolean, default: true },
     deleted: { type: Boolean, default: false },
+    activated: { type: Boolean, default: true },
     createdAt: { type: Date },
     createdBy: { type: String },
     updatedAt: { type: Date },
     updatedBy: { type: String }
   },
   options: {
-    collection: 'roles'
+    collection: 'projects'
   }
 };

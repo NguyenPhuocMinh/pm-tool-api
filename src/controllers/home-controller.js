@@ -27,20 +27,8 @@ const HomePage = (req, res, next) => {
   loggerFactory.info(`Function HomePage Controller has been end`);
 };
 
-const Test = (req, res, next) => {
-  loggerFactory.info(`Function Test Controller has been start`);
-  const toolBox = { req, res, next };
-  baseController(
-    toolBox,
-    constants.types.MsgTypeTest,
-    constants.actions.MsgActionTest
-  );
-  loggerFactory.info(`Function Test Controller has been end`);
-};
-
 const HomeController = {
-  HomePage,
-  Test
+  HomePage
 };
 
 export default HomeController;

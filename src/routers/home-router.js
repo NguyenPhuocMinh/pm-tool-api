@@ -11,12 +11,6 @@ const HomeRouter = [
     method: 'GET',
     methodName: 'HomePage',
     controller: HomeController.HomePage
-  },
-  {
-    pathName: '/test',
-    method: 'GET',
-    methodName: 'Test',
-    controller: HomeController.Test
   }
 ];
 

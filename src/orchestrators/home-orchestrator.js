@@ -16,7 +16,7 @@ const HomePage = async (toolBox) => {
     loggerFactory.info(`Function HomePage has been start`);
     return {
       result: {
-        data: `Welcome to homepage with version ${profiles.version}`
+        data: `Welcome to homepage with version ${profiles.VERSION}`
       },
       msg: 'GetHomePageSuccess'
     };
