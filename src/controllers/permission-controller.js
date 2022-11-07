@@ -11,96 +11,118 @@ const loggerFactory = logUtils.createLogger(
 );
 
 /**
- * @description Get List Controller
+ * @description Get All Permission Controller
  * @param {*} req
  * @param {*} res
  * @param {*} next
  */
-const GetList = (req, res, next) => {
-  loggerFactory.info(`Function GetList Controller has been start`);
+const getAllPermission = (req, res, next) => {
+  loggerFactory.info(`Function getAllPermission Controller has been start`);
   const toolBox = { req, res, next };
   baseController(
     toolBox,
     constants.types.MsgTypePermission,
-    constants.actions.MsgActionPermissionGetList
+    constants.actions.MsgActionPermissionGetAll
   );
-  loggerFactory.info(`Function GetList Controller has been end`);
+  loggerFactory.info(`Function getAllPermission Controller has been end`);
 };
 
 /**
- * @description Create Controller
+ * @description Create Permission Controller
  * @param {*} req
  * @param {*} res
  * @param {*} next
  */
-const Create = (req, res, next) => {
-  loggerFactory.info(`Function Create Controller has been start`);
+const createPermission = (req, res, next) => {
+  loggerFactory.info(`Function createPermission Controller has been start`);
   const toolBox = { req, res, next };
   baseController(
     toolBox,
     constants.types.MsgTypePermission,
     constants.actions.MsgActionPermissionCreate
   );
-  loggerFactory.info(`Function Create Controller has been end`);
+  loggerFactory.info(`Function createPermission Controller has been end`);
 };
 
 /**
- * @description GetID Controller
+ * @description Get Permission By ID Controller
  * @param {*} req
  * @param {*} res
  * @param {*} next
  */
-const GetID = (req, res, next) => {
-  loggerFactory.info(`Function GetID Controller has been start`);
+const getPermissionByID = (req, res, next) => {
+  loggerFactory.info(`Function getPermissionByID Controller has been start`);
   const toolBox = { req, res, next };
   baseController(
     toolBox,
     constants.types.MsgTypePermission,
     constants.actions.MsgActionPermissionGetID
   );
-  loggerFactory.info(`Function GetID Controller has been end`);
+  loggerFactory.info(`Function getPermissionByID Controller has been end`);
 };
 
 /**
- * @description Edit Controller
+ * @description Edit Permission By ID Controller
  * @param {*} req
  * @param {*} res
  * @param {*} next
  */
-const Edit = (req, res, next) => {
-  loggerFactory.info(`Function GetID Controller has been start`);
+const editPermissionByID = (req, res, next) => {
+  loggerFactory.info(`Function editPermissionByID Controller has been start`);
   const toolBox = { req, res, next };
   baseController(
     toolBox,
     constants.types.MsgTypePermission,
     constants.actions.MsgActionPermissionEdit
   );
-  loggerFactory.info(`Function Edit Controller has been end`);
+  loggerFactory.info(`Function editPermissionByID Controller has been end`);
 };
 
 /**
- * @description Edit Controller
+ * @description Delete Permission By ID Controller
  * @param {*} req
  * @param {*} res
  * @param {*} next
  */
-const Delete = (req, res, next) => {
-  loggerFactory.info(`Function Delete Controller has been start`);
+const deletePermissionByID = (req, res, next) => {
+  loggerFactory.info(`Function deletePermissionByID Controller has been start`);
   const toolBox = { req, res, next };
   baseController(
     toolBox,
     constants.types.MsgTypePermission,
     constants.actions.MsgActionPermissionDelete
   );
-  loggerFactory.info(`Function Delete Controller has been end`);
+  loggerFactory.info(`Function deletePermissionByID Controller has been end`);
 };
 
-const PermissionController = {
-  GetList,
-  Create,
-  GetID,
-  Edit,
-  Delete
+/**
+ * @description Add Roles To Permission By ID Controller
+ * @param {*} req
+ * @param {*} res
+ * @param {*} next
+ */
+const addRolesToPermissionByID = (req, res, next) => {
+  loggerFactory.info(
+    `Function addRolesToPermissionByID Controller has been start`
+  );
+  const toolBox = { req, res, next };
+  baseController(
+    toolBox,
+    constants.types.MsgTypePermission,
+    constants.actions.MsgActionPermissionAddRoles
+  );
+  loggerFactory.info(
+    `Function addRolesToPermissionByID Controller has been end`
+  );
 };
 
-export default PermissionController;
+const permissionController = {
+  getAllPermission,
+  createPermission,
+  getPermissionByID,
+  editPermissionByID,
+  deletePermissionByID,
+  addRolesToPermissionByID
+};
+
+export default permissionController;

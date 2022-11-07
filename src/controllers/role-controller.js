@@ -11,96 +11,138 @@ const loggerFactory = logUtils.createLogger(
 );
 
 /**
- * @description Get List Controller
+ * @description Get All Role Controller
  * @param {*} req
  * @param {*} res
  * @param {*} next
  */
-const GetList = (req, res, next) => {
-  loggerFactory.info(`Function GetList Controller has been start`);
+const getAllRole = (req, res, next) => {
+  loggerFactory.info(`Function getAllRole Controller has been start`);
   const toolBox = { req, res, next };
   baseController(
     toolBox,
     constants.types.MsgTypeRole,
-    constants.actions.MsgActionRoleGetList
+    constants.actions.MsgActionRoleGetAll
   );
-  loggerFactory.info(`Function GetList Controller has been end`);
+  loggerFactory.info(`Function getAllRole Controller has been end`);
 };
 
 /**
- * @description Create Controller
+ * @description Create Role Controller
  * @param {*} req
  * @param {*} res
  * @param {*} next
  */
-const Create = (req, res, next) => {
-  loggerFactory.info(`Function Create Controller has been start`);
+const createRole = (req, res, next) => {
+  loggerFactory.info(`Function createRole Controller has been start`);
   const toolBox = { req, res, next };
   baseController(
     toolBox,
     constants.types.MsgTypeRole,
     constants.actions.MsgActionRoleCreate
   );
-  loggerFactory.info(`Function Create Controller has been end`);
+  loggerFactory.info(`Function createRole Controller has been end`);
 };
 
 /**
- * @description GetID Controller
+ * @description Get Role By ID Controller
  * @param {*} req
  * @param {*} res
  * @param {*} next
  */
-const GetID = (req, res, next) => {
-  loggerFactory.info(`Function GetID Controller has been start`);
+const getRolByID = (req, res, next) => {
+  loggerFactory.info(`Function getRolByID Controller has been start`);
   const toolBox = { req, res, next };
   baseController(
     toolBox,
     constants.types.MsgTypeRole,
     constants.actions.MsgActionRoleGetID
   );
-  loggerFactory.info(`Function GetID Controller has been end`);
+  loggerFactory.info(`Function getRolByID Controller has been end`);
 };
 
 /**
- * @description Edit Controller
+ * @description Edit Role By ID Controller
  * @param {*} req
  * @param {*} res
  * @param {*} next
  */
-const Edit = (req, res, next) => {
-  loggerFactory.info(`Function GetID Controller has been start`);
+const editRoleByID = (req, res, next) => {
+  loggerFactory.info(`Function editRoleByID Controller has been start`);
   const toolBox = { req, res, next };
   baseController(
     toolBox,
     constants.types.MsgTypeRole,
     constants.actions.MsgActionRoleEdit
   );
-  loggerFactory.info(`Function Edit Controller has been end`);
+  loggerFactory.info(`Function editRoleByID Controller has been end`);
 };
 
 /**
- * @description Edit Controller
+ * @description Delete Role By ID Controller
  * @param {*} req
  * @param {*} res
  * @param {*} next
  */
-const Delete = (req, res, next) => {
-  loggerFactory.info(`Function Delete Controller has been start`);
+const deleteRoleByID = (req, res, next) => {
+  loggerFactory.info(`Function deleteRoleByID Controller has been start`);
   const toolBox = { req, res, next };
   baseController(
     toolBox,
     constants.types.MsgTypeRole,
     constants.actions.MsgActionRoleDelete
   );
-  loggerFactory.info(`Function Delete Controller has been end`);
+  loggerFactory.info(`Function deleteRoleByID Controller has been end`);
 };
 
-const RoleController = {
-  GetList,
-  Create,
-  GetID,
-  Edit,
-  Delete
+/**
+ * @description Get Permission In Role By Role ID Controller
+ * @param {*} req
+ * @param {*} res
+ * @param {*} next
+ */
+const getPermissionsByRoleID = (req, res, next) => {
+  loggerFactory.info(
+    `Function getPermissionsByRoleID Controller has been start`
+  );
+  const toolBox = { req, res, next };
+  baseController(
+    toolBox,
+    constants.types.MsgTypeRole,
+    constants.actions.MsgActionRoleGetPermissions
+  );
+  loggerFactory.info(`Function getPermissionsByRoleID Controller has been end`);
 };
 
-export default RoleController;
+/**
+ * @description Add Permission To Role By Role ID Controller
+ * @param {*} req
+ * @param {*} res
+ * @param {*} next
+ */
+const addPermissionsToRoleByRoleID = (req, res, next) => {
+  loggerFactory.info(
+    `Function addPermissionsToRoleByRoleID Controller has been start`
+  );
+  const toolBox = { req, res, next };
+  baseController(
+    toolBox,
+    constants.types.MsgTypeRole,
+    constants.actions.MsgActionRoleAddPermissions
+  );
+  loggerFactory.info(
+    `Function addPermissionsToRoleByRoleID Controller has been end`
+  );
+};
+
+const roleController = {
+  getAllRole,
+  createRole,
+  getRolByID,
+  editRoleByID,
+  deleteRoleByID,
+  getPermissionsByRoleID,
+  addPermissionsToRoleByRoleID
+};
+
+export default roleController;

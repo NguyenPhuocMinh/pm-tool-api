@@ -10,25 +10,30 @@ import logUtils from '../../utils/log-util';
 import returnUtils from '../../utils/return-util';
 import formatUtils from '../../utils/format-util';
 
-import database from '../database';
+import dbManager from '../database';
 
 const loggerFactory = logUtils.createLogger(
   constants.APP_NAME,
   constants.STRUCT_COMMON.CONFIGURE_COMMON
 );
 
-const CheckDuplicate = async (type, filter = {}) => {
-  const isDuplicate = await database.Count({
+const checkDuplicate = async (type, filter = {}) => {
+  loggerFactory.info(`Function checkDuplicate has been start`);
+
+  const isDuplicate = await dbManager.count({
     type,
     filter
   });
 
+  loggerFactory.info(`Function checkDuplicate has been end`);
+
   return isDuplicate >= 1;
 };
 
-const AttributeFilter = (data = {}, action) => {
+const attributeFilter = (data = {}, action) => {
   try {
-    loggerFactory.info(`AttributeFilter has been start`);
+    loggerFactory.info(`Function checkDuplicate has been start`);
+
     const nowMoment = moment()
       .add(7, 'hours')
       .tz(constants.TIMEZONE_DEFAULT)
@@ -45,17 +50,19 @@ const AttributeFilter = (data = {}, action) => {
     data.updatedAt = nowMoment;
     data.updatedBy = constants.DEFAULT_SYSTEM;
 
-    loggerFactory.info(`AttributeFilter has been end`);
+    loggerFactory.info(`Function attributeFilter has been end`);
     return data;
   } catch (err) {
-    loggerFactory.error(`AttributeFilter has error`, {
+    loggerFactory.error(`Function attributeFilter has error`, {
       args: returnUtils.returnErrorMessage(err)
     });
     throw err;
   }
 };
 
-const CreateFilterPagination = (query = {}) => {
+const createFilterPagination = (query = {}) => {
+  loggerFactory.info(`Function createFilterPagination has been start`);
+
   const _start = query._start || constants.DEFAULT_SKIP;
   const _end = query._end || constants.DEFAULT_LIMIT;
 
@@ -64,13 +71,17 @@ const CreateFilterPagination = (query = {}) => {
 
   limit = limit - skip;
 
+  loggerFactory.info(`Function createFilterPagination has been end`);
+
   return {
     skip,
     limit
   };
 };
 
-const CreateFindQuery = (query = {}, attributes = []) => {
+const createFindQuery = (query = {}, attributes = []) => {
+  loggerFactory.info(`Function createFindQuery has been start`);
+
   const { search } = query;
 
   const _query = {
@@ -100,16 +111,32 @@ const CreateFindQuery = (query = {}, attributes = []) => {
     _query['$and'].push(querySearch);
   }
 
+  loggerFactory.info(`Function createFindQuery has been end`);
+
   return _query;
 };
 
-const CreateSortOrderQuery = (query = {}) => {
+const createSortOrderQuery = (query = {}) => {
+  loggerFactory.info(`Function createSortOrderQuery has been start`);
+
   const { _sort, _order } = query;
 
   const sort = isEmpty(_sort) ? 'createdAt' : _sort;
   const order = isEmpty(_order) ? -1 : _order === 'asc' ? 1 : -1;
 
+  loggerFactory.info(`Function createSortOrderQuery has been end`);
+
   return { [sort]: order };
+};
+
+const convertDataResponseMap = async (responses = []) => {
+  return Promise.map(
+    responses,
+    (data) => {
+      return convertDataResponse(data);
+    },
+    { concurrency: 5 }
+  );
 };
 
 const convertDataResponse = async (data = {}) => {
@@ -127,24 +154,14 @@ const convertDataResponse = async (data = {}) => {
   return Promise.resolve();
 };
 
-const ConvertDataResponseMap = async (responses = []) => {
-  return Promise.map(
-    responses,
-    (data) => {
-      return convertDataResponse(data);
-    },
-    { concurrency: 5 }
-  );
-};
-
 const configureCommon = {
-  CheckDuplicate,
-  AttributeFilter,
-  CreateFindQuery,
-  CreateSortOrderQuery,
-  CreateFilterPagination,
-  ConvertDataResponseMap,
-  ConvertDataResponse: convertDataResponse
+  checkDuplicate,
+  attributeFilter,
+  createFindQuery,
+  createSortOrderQuery,
+  createFilterPagination,
+  convertDataResponseMap,
+  convertDataResponse
 };
 
 export default configureCommon;

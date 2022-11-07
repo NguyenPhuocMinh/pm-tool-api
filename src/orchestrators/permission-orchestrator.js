@@ -12,7 +12,7 @@ import formatUtils from '../../utils/format-util';
 import errorCommon from '../../core/common/error-common';
 import configureCommon from '../../core/common/configure-common';
 
-import database from '../../core/database';
+import dbManager from '../../core/database';
 import { permissionDTO } from '../dtos';
 
 const loggerFactory = logUtils.createLogger(
@@ -20,21 +20,25 @@ const loggerFactory = logUtils.createLogger(
   constants.STRUCT_ORCHESTRATORS.PERMISSION_ORCHESTRATOR
 );
 
-const GetList = async (toolBox) => {
+/**
+ * @description Get All Permission Orchestrator
+ * @param {*} toolBox { req, res, next }
+ */
+const getAllPermission = async (toolBox) => {
   const { req } = toolBox;
   try {
-    loggerFactory.info(`Function GetList has been start`);
+    loggerFactory.info(`Function getAllPermission has been start`);
 
-    const { skip, limit } = configureCommon.CreateFilterPagination(req.query);
-    const query = configureCommon.CreateFindQuery(req.query);
-    const sort = configureCommon.CreateSortOrderQuery(req.query);
+    const { skip, limit } = configureCommon.createFilterPagination(req.query);
+    const query = configureCommon.createFindQuery(req.query);
+    const sort = configureCommon.createSortOrderQuery(req.query);
 
-    const permissions = await database.FindAll({
+    const permissions = await dbManager.findAll({
       type: 'PermissionModel',
       filter: query,
       projection: {
         __v: 0,
-        createdBy: 0,
+        CreatedBy: 0,
         updatedBy: 0
       },
       options: {
@@ -44,33 +48,39 @@ const GetList = async (toolBox) => {
       }
     });
 
-    const total = await database.Count({
+    const total = await dbManager.count({
       type: 'PermissionModel',
       filter: query
     });
 
-    const response = await configureCommon.ConvertDataResponseMap(permissions);
+    const response = await configureCommon.convertDataResponseMap(permissions);
+
+    loggerFactory.info(`Function getAllPermission has been end`);
 
     return {
       result: {
         data: response,
         total
       },
-      msg: 'PermissionGetListSuccess'
+      msg: 'PermissionGetAllSuccess'
     };
   } catch (err) {
-    loggerFactory.info(`Function GetList has error`, {
+    loggerFactory.info(`Function getAllPermission has error`, {
       args: returnUtils.returnErrorMessage(err)
     });
     return Promise.reject(err);
   }
 };
 
-const Create = async (toolBox) => {
+/**
+ * @description Create Permission Orchestrator
+ * @param {*} toolBox { req, res, next }
+ */
+const createPermission = async (toolBox) => {
   const { req } = toolBox;
 
   try {
-    loggerFactory.info(`Function Create has been start`);
+    loggerFactory.info(`Function createPermission has been start`);
 
     const { name } = req.body;
 
@@ -81,7 +91,7 @@ const Create = async (toolBox) => {
     const slug = formatUtils.formatSlug(name);
 
     // check duplicate slug
-    const isDuplicate = await configureCommon.CheckDuplicate(
+    const isDuplicate = await configureCommon.checkDuplicate(
       'PermissionModel',
       { slug }
     );
@@ -94,14 +104,16 @@ const Create = async (toolBox) => {
       slug: slug
     });
 
-    permission = configureCommon.AttributeFilter(permission, 'create');
+    permission = configureCommon.attributeFilter(permission, 'create');
 
-    const data = await database.Create({
+    const data = await dbManager.createOne({
       type: 'PermissionModel',
       doc: permission
     });
 
-    const result = permissionDTO(data);
+    const result = await permissionDTO(data);
+
+    loggerFactory.info(`Function createPermission has been end`);
 
     return {
       result: {
@@ -110,33 +122,47 @@ const Create = async (toolBox) => {
       msg: 'PermissionCreateSuccess'
     };
   } catch (err) {
-    loggerFactory.info(`Function Create has error`, {
+    loggerFactory.info(`Function createPermission has error`, {
       args: returnUtils.returnErrorMessage(err)
     });
     return Promise.reject(err);
   }
 };
 
-const GetID = async (toolBox) => {
+/**
+ * @description Get Permission By ID Orchestrator
+ * @param {*} toolBox { req, res, next }
+ */
+const getPermissionByID = async (toolBox) => {
   const { req } = toolBox;
   try {
-    loggerFactory.info(`Function GetID has been start`);
+    loggerFactory.info(`Function getPermissionByID has been start`);
 
-    const id = req.params.id;
+    const { id } = req.params;
 
     if (isEmpty(id)) {
-      throw errorCommon.BuildNewError('IDNotFound');
+      throw errorCommon.BuildNewError('PermissionIDNotFound');
     }
 
-    const organization = await database.Get({
+    const permission = await dbManager.getOne({
       type: 'PermissionModel',
       id,
       projection: {
         __v: 0
+      },
+      options: {
+        populate: [
+          {
+            path: 'roles',
+            select: 'id name'
+          }
+        ]
       }
     });
 
-    const result = permissionDTO(organization);
+    const result = await permissionDTO(permission);
+
+    loggerFactory.info(`Function getPermissionByID has been end`);
 
     return {
       result: {
@@ -145,19 +171,23 @@ const GetID = async (toolBox) => {
       msg: 'PermissionGetIDSuccess'
     };
   } catch (err) {
-    loggerFactory.info(`Function GetID has error`, {
+    loggerFactory.info(`Function getPermissionByID has error`, {
       args: returnUtils.returnErrorMessage(err)
     });
     return Promise.reject(err);
   }
 };
 
-const Edit = async (toolBox) => {
+/**
+ * @description Edit Permission By ID Orchestrator
+ * @param {*} toolBox { req, res, next }
+ */
+const editPermissionByID = async (toolBox) => {
   const { req } = toolBox;
   try {
-    loggerFactory.info(`Function Edit has been start`);
+    loggerFactory.info(`Function editPermissionByID has been start`);
     const { id } = req.params;
-    const { name } = req.body;
+    const { name, activated } = req.body;
 
     if (isEmpty(id)) {
       throw errorCommon.BuildNewError('PermissionIDNotFound');
@@ -169,7 +199,7 @@ const Edit = async (toolBox) => {
 
     const slug = formatUtils.formatSlug(name);
     // check duplicate slug
-    const isDuplicate = await configureCommon.CheckDuplicate(
+    const isDuplicate = await configureCommon.checkDuplicate(
       'PermissionModel',
       { slug, _id: { $ne: id } }
     );
@@ -182,15 +212,43 @@ const Edit = async (toolBox) => {
       slug: slug
     });
 
-    permission = configureCommon.AttributeFilter(permission);
+    permission = configureCommon.attributeFilter(permission);
 
-    const data = await database.Update({
+    let data = await dbManager.updateOne({
       type: 'PermissionModel',
       id,
-      doc: permission
+      doc: permission,
+      options: {
+        populate: [
+          {
+            path: 'roles',
+            select: '_id name'
+          }
+        ]
+      }
     });
 
-    const result = permissionDTO(data);
+    if (!activated) {
+      if (!isEmpty(data.roles)) {
+        data = await dbManager.updateOne({
+          type: 'PermissionModel',
+          id,
+          doc: {
+            roles: []
+          }
+        });
+
+        await removePermissionsInRoles(
+          id,
+          permission.updatedAt,
+          permission.updatedBy
+        );
+      }
+    }
+
+    const result = await permissionDTO(data);
+
+    loggerFactory.info(`Function editPermissionByID has been end`);
 
     return {
       result: {
@@ -199,27 +257,38 @@ const Edit = async (toolBox) => {
       msg: 'PermissionEditSuccess'
     };
   } catch (err) {
-    loggerFactory.info(`Function Edit has error`, {
+    loggerFactory.info(`Function editPermissionByID has error`, {
       args: returnUtils.returnErrorMessage(err)
     });
     return Promise.reject(err);
   }
 };
 
-const Delete = async (toolBox) => {
+/**
+ * @description Delete Permission By ID Orchestrator
+ * @param {*} toolBox { req, res, next }
+ */
+const deletePermissionByID = async (toolBox) => {
   const { req } = toolBox;
   try {
-    loggerFactory.info(`Function Delete has been start`);
+    loggerFactory.info(`Function deletePermissionByID has been start`);
+
     const { id } = req.params;
+    req.body = configureCommon.attributeFilter(req.body);
+    const { updatedAt, updatedBy } = req.body;
 
     if (isEmpty(id)) {
       throw errorCommon.BuildNewError('PermissionIDNotFound');
     }
 
-    const result = await database.Delete({
+    const result = await dbManager.deleteOne({
       type: 'PermissionModel',
       id
     });
+
+    await removePermissionsInRoles(id, updatedAt, updatedBy);
+
+    loggerFactory.info(`Function deletePermissionByID has been end`);
 
     return {
       result: {
@@ -228,19 +297,137 @@ const Delete = async (toolBox) => {
       msg: 'PermissionDeleteSuccess'
     };
   } catch (err) {
-    loggerFactory.info(`Function Delete has error`, {
+    loggerFactory.info(`Function deletePermissionByID has error`, {
       args: returnUtils.returnErrorMessage(err)
     });
     return Promise.reject(err);
   }
 };
 
-const PermissionOrchestrator = {
-  GetList,
-  Create,
-  GetID,
-  Edit,
-  Delete
+/**
+ * @description Add Roles To Permission By ID Orchestrator
+ * @param {*} toolBox { req, res, next }
+ */
+const addRolesToPermissionByID = async (toolBox) => {
+  const { req } = toolBox;
+  try {
+    loggerFactory.info(`Function addRolesToPermissionByID has been start`);
+
+    const { id } = req.params;
+
+    req.body = configureCommon.attributeFilter(req.body);
+    const { availableRoles, assignedRoles, updatedAt, updatedBy } = req.body;
+
+    const idsAssignedRoles = assignedRoles.map((e) => e.id);
+    const idsUnAssignedRoles = availableRoles.map((e) => e.id);
+
+    // add role to permission
+    const permission = await dbManager.updateOne({
+      type: 'PermissionModel',
+      id,
+      doc: {
+        roles: idsAssignedRoles,
+        updatedAt,
+        updatedBy
+      },
+      options: {
+        populate: [
+          {
+            path: 'roles',
+            select: 'id name'
+          }
+        ]
+      }
+    });
+
+    // add permission to role
+    await dbManager.bulkWrite({
+      type: 'RoleModel',
+      pipelines: [
+        {
+          updateMany: {
+            filter: {
+              _id: {
+                $in: idsAssignedRoles
+              }
+            },
+            update: {
+              $addToSet: {
+                permissions: id
+              },
+              updatedAt,
+              updatedBy
+            }
+          }
+        },
+        {
+          updateMany: {
+            filter: {
+              _id: {
+                $in: idsUnAssignedRoles
+              }
+            },
+            update: {
+              $pull: {
+                permissions: id
+              },
+              updatedAt,
+              updatedBy
+            }
+          }
+        }
+      ]
+    });
+
+    const result = await permissionDTO(permission);
+
+    loggerFactory.info(`Function addRolesToPermissionByID has been end`);
+
+    return {
+      result: {
+        data: result
+      },
+      msg: 'PermissionAddRolesSuccess'
+    };
+  } catch (err) {
+    loggerFactory.error(`Function addRolesToPermissionByID has error`, {
+      args: returnUtils.returnErrorMessage(err)
+    });
+    return Promise.reject(err);
+  }
 };
 
-export default PermissionOrchestrator;
+const removePermissionsInRoles = async (id, updatedAt, updatedBy) => {
+  loggerFactory.info(`Function removePermissionsInRoles has been start`);
+
+  await dbManager.updateMany({
+    type: 'RoleModel',
+    filter: {
+      permissions: {
+        $elemMatch: {
+          $eq: id
+        }
+      }
+    },
+    doc: {
+      $pull: {
+        permissions: id
+      },
+      updatedAt,
+      updatedBy
+    }
+  });
+
+  loggerFactory.info(`Function removePermissionsInRoles has been end`);
+};
+
+const permissionOrchestrator = {
+  getAllPermission,
+  createPermission,
+  getPermissionByID,
+  editPermissionByID,
+  deletePermissionByID,
+  addRolesToPermissionByID
+};
+
+export default permissionOrchestrator;

@@ -1,41 +1,41 @@
 'use strict';
 
-const { OrganizationController } = require('../controllers');
+const { organizationController } = require('../controllers');
 
 /**
  * @description Organization router
  */
-const OrganizationRouter = [
+const organizationRouter = [
   {
     pathName: '/organizations',
     method: 'GET',
-    methodName: 'GetList',
-    controller: OrganizationController.GetList
+    methodName: 'getAllOrganization',
+    controller: organizationController.getAllOrganization
   },
   {
     pathName: '/organizations',
     method: 'POST',
-    methodName: 'Create',
-    controller: OrganizationController.Create
+    methodName: 'createOrganization',
+    controller: organizationController.createOrganization
   },
   {
     pathName: '/organizations/:id',
     method: 'GET',
-    methodName: 'GetID',
-    controller: OrganizationController.GetID
+    methodName: 'getOrganizationByID',
+    controller: organizationController.getOrganizationByID
   },
   {
     pathName: '/organizations/:id',
     method: 'PATCH',
-    methodName: 'Edit',
-    controller: OrganizationController.Edit
+    methodName: 'editOrganizationByID',
+    controller: organizationController.editOrganizationByID
   },
   {
     pathName: '/organizations/:id',
     method: 'DELETE',
-    methodName: 'Delete',
-    controller: OrganizationController.Delete
+    methodName: 'deleteOrganizationByID',
+    controller: organizationController.deleteOrganizationByID
   }
 ];
 
-export default OrganizationRouter;
+export default organizationRouter;

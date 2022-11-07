@@ -1,23 +1,26 @@
 'use strict';
 
-import { isEmpty } from 'lodash';
+import { isEmpty, differenceBy, toString } from 'lodash';
 
 import constants from '../../constants';
 import logUtils from '../../utils/log-util';
+
+import database from '../../core/database';
 
 const loggerFactory = logUtils.createLogger(
   constants.APP_NAME,
   constants.STRUCT_DTO.PERMISSION_DTO
 );
 
-const permissionDTO = (data) => {
+const permissionDTO = async (data) => {
   loggerFactory.data('Func permissionDTO has been start');
   const response = {};
 
   if (!isEmpty(data)) {
     data = data.toJSON();
 
-    const { _id, name, description, activated, createdAt, updatedAt } = data;
+    const { _id, name, description, roles, activated, createdAt, updatedAt } =
+      data;
 
     response.id = _id;
     response.name = name;
@@ -25,6 +28,35 @@ const permissionDTO = (data) => {
     response.activated = activated;
     response.createdAt = createdAt;
     response.updatedAt = updatedAt;
+
+    const listRole = await database.findAll({
+      type: 'RoleModel',
+      filter: {
+        deleted: false,
+        activated: true
+      },
+      projection: {
+        _id: 1,
+        name: 1
+      }
+    });
+
+    const roleMap = roles.map((r) => {
+      return {
+        id: toString(r._id),
+        name: r.name
+      };
+    });
+
+    const listRoleMap = listRole.map((e) => {
+      return {
+        id: toString(e._id),
+        name: e.name
+      };
+    });
+
+    response.availableRoles = differenceBy(listRoleMap, roleMap, 'id');
+    response.assignedRoles = roleMap;
 
     loggerFactory.data('Func permissionDTO has data');
 

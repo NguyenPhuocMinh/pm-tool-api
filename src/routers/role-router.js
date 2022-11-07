@@ -1,41 +1,53 @@
 'use strict';
 
-const { RoleController } = require('../controllers');
+const { roleController } = require('../controllers');
 
 /**
  * @description Role router
  */
-const RoleRouter = [
+const roleRouter = [
   {
     pathName: '/roles',
     method: 'GET',
-    methodName: 'GetList',
-    controller: RoleController.GetList
+    methodName: 'getAllRole',
+    controller: roleController.getAllRole
   },
   {
     pathName: '/roles',
     method: 'POST',
-    methodName: 'Create',
-    controller: RoleController.Create
+    methodName: 'createRole',
+    controller: roleController.createRole
   },
   {
     pathName: '/roles/:id',
     method: 'GET',
-    methodName: 'GetID',
-    controller: RoleController.GetID
+    methodName: 'getRolByID',
+    controller: roleController.getRolByID
   },
   {
     pathName: '/roles/:id',
     method: 'PATCH',
-    methodName: 'Edit',
-    controller: RoleController.Edit
+    methodName: 'editRoleByID',
+    controller: roleController.editRoleByID
   },
   {
     pathName: '/roles/:id',
     method: 'DELETE',
-    methodName: 'Delete',
-    controller: RoleController.Delete
+    methodName: 'deleteRoleByID',
+    controller: roleController.deleteRoleByID
+  },
+  {
+    pathName: '/roles/:id/permissions',
+    method: 'GET',
+    methodName: 'getPermissionsByRoleID',
+    controller: roleController.getPermissionsByRoleID
+  },
+  {
+    pathName: '/roles/:id/add-permissions',
+    method: 'PATCH',
+    methodName: 'addPermissionsToRoleByRoleID',
+    controller: roleController.addPermissionsToRoleByRoleID
   }
 ];
 
-export default RoleRouter;
+export default roleRouter;
