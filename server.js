@@ -11,7 +11,7 @@ import path from 'path';
 
 import loggerMiddleware from './middlewares/logger-middleware';
 
-import database from './core/database';
+import dbManager from './core/database';
 import routers from './src/routers';
 
 import options from './conf/options';
@@ -32,8 +32,8 @@ const APP_HOST = profiles.APP_HOST;
 const APP_DOCS_PATH = profiles.APP_DOCS_PATH;
 
 const server = async () => {
-  app.use(cors(options.corsOptions));
   app.use(helmet());
+  app.use(cors(options.corsOptions));
   app.use(bodyParser.json({ limit: '100mb' }));
   app.use(bodyParser.urlencoded({ limit: '100mb', extended: true }));
   app.use(morgan(loggerMiddleware));
@@ -70,7 +70,7 @@ const server = async () => {
   /**
    * Database
    */
-  await database.Init();
+  await dbManager.Init();
 
   app.listen(APP_PORT, APP_HOST, () => {
     loggerFactory.http(`The server is running on`, {

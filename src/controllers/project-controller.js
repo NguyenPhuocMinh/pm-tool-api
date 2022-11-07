@@ -11,42 +11,42 @@ const loggerFactory = logUtils.createLogger(
 );
 
 /**
- * @description Get List Controller
+ * @description Get All Project Controller
  * @param {*} req
  * @param {*} res
  * @param {*} next
  */
-const GetList = (req, res, next) => {
-  loggerFactory.info(`Function GetList Controller has been start`);
+const getAllProject = (req, res, next) => {
+  loggerFactory.info(`Function getAllProject Controller has been start`);
   const toolBox = { req, res, next };
   baseController(
     toolBox,
     constants.types.MsgTypeProject,
-    constants.actions.MsgActionProjectGetList
+    constants.actions.MsgActionProjectGetAll
   );
-  loggerFactory.info(`Function GetList Controller has been end`);
+  loggerFactory.info(`Function getAllProject Controller has been end`);
 };
 
 /**
- * @description Create Controller
+ * @description Create Project Controller
  * @param {*} req
  * @param {*} res
  * @param {*} next
  */
-const Create = (req, res, next) => {
-  loggerFactory.info(`Function Create Controller has been start`);
+const createProject = (req, res, next) => {
+  loggerFactory.info(`Function createProject Controller has been start`);
   const toolBox = { req, res, next };
   baseController(
     toolBox,
     constants.types.MsgTypeProject,
     constants.actions.MsgActionProjectCreate
   );
-  loggerFactory.info(`Function Create Controller has been end`);
+  loggerFactory.info(`Function createProject Controller has been end`);
 };
 
-const ProjectController = {
-  GetList,
-  Create
+const projectController = {
+  getAllProject,
+  createProject
 };
 
-export default ProjectController;
+export default projectController;

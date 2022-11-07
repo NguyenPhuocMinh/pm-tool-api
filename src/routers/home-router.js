@@ -1,17 +1,17 @@
 'use strict';
 
-const { HomeController } = require('../controllers');
+const { homeController } = require('../controllers');
 
 /**
  * @description Home router
  */
-const HomeRouter = [
+const homeRouter = [
   {
     pathName: '/',
     method: 'GET',
-    methodName: 'HomePage',
-    controller: HomeController.HomePage
+    methodName: 'homePage',
+    controller: homeController.homePage
   }
 ];
 
-export default HomeRouter;
+export default homeRouter;

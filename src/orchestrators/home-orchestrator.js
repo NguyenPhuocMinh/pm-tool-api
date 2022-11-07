@@ -11,7 +11,7 @@ const loggerFactory = logUtils.createLogger(
   constants.STRUCT_ORCHESTRATORS.HOME_ORCHESTRATOR
 );
 
-const HomePage = async (toolBox) => {
+const homePage = async (toolBox) => {
   try {
     loggerFactory.info(`Function HomePage has been start`);
     return {
@@ -21,15 +21,15 @@ const HomePage = async (toolBox) => {
       msg: 'GetHomePageSuccess'
     };
   } catch (err) {
-    loggerFactory.info(`Function HomePage has error`, {
+    loggerFactory.info(`Function homePage has error`, {
       args: err.message
     });
     return Promise.reject(err);
   }
 };
 
-const HomeOrchestrator = {
-  HomePage
+const homeOrchestrator = {
+  homePage
 };
 
-export default HomeOrchestrator;
+export default homeOrchestrator;

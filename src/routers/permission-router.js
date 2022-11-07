@@ -1,41 +1,47 @@
 'use strict';
 
-const { PermissionController } = require('../controllers');
+const { permissionController } = require('../controllers');
 
 /**
  * @description Permission router
  */
-const PermissionRouter = [
+const permissionRouter = [
   {
     pathName: '/permissions',
     method: 'GET',
-    methodName: 'GetList',
-    controller: PermissionController.GetList
+    methodName: 'getAllPermission',
+    controller: permissionController.getAllPermission
   },
   {
     pathName: '/permissions',
     method: 'POST',
-    methodName: 'Create',
-    controller: PermissionController.Create
+    methodName: 'createPermission',
+    controller: permissionController.createPermission
   },
   {
     pathName: '/permissions/:id',
     method: 'GET',
-    methodName: 'GetID',
-    controller: PermissionController.GetID
+    methodName: 'getPermissionByID',
+    controller: permissionController.getPermissionByID
   },
   {
     pathName: '/permissions/:id',
     method: 'PATCH',
-    methodName: 'Edit',
-    controller: PermissionController.Edit
+    methodName: 'editPermissionByID',
+    controller: permissionController.editPermissionByID
   },
   {
     pathName: '/permissions/:id',
     method: 'DELETE',
-    methodName: 'Delete',
-    controller: PermissionController.Delete
+    methodName: 'deletePermissionByID',
+    controller: permissionController.deletePermissionByID
+  },
+  {
+    pathName: '/permissions/:id/add-roles',
+    method: 'PATCH',
+    methodName: 'addRolesToPermission',
+    controller: permissionController.addRolesToPermissionByID
   }
 ];
 
-export default PermissionRouter;
+export default permissionRouter;

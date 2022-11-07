@@ -11,96 +11,98 @@ const loggerFactory = logUtils.createLogger(
 );
 
 /**
- * @description Get List Controller
+ * @description Get All Organization Controller
  * @param {*} req
  * @param {*} res
  * @param {*} next
  */
-const GetList = (req, res, next) => {
-  loggerFactory.info(`Function GetList Controller has been start`);
+const getAllOrganization = (req, res, next) => {
+  loggerFactory.info(`Function getAllOrganization Controller has been start`);
   const toolBox = { req, res, next };
   baseController(
     toolBox,
     constants.types.MsgTypeOrganization,
-    constants.actions.MsgActionOrganizationGetList
+    constants.actions.MsgActionOrganizationGetAll
   );
-  loggerFactory.info(`Function GetList Controller has been end`);
+  loggerFactory.info(`Function getAllOrganization Controller has been end`);
 };
 
 /**
- * @description Create Controller
+ * @description Create Organization Controller
  * @param {*} req
  * @param {*} res
  * @param {*} next
  */
-const Create = (req, res, next) => {
-  loggerFactory.info(`Function Create Controller has been start`);
+const createOrganization = (req, res, next) => {
+  loggerFactory.info(`Function createOrganization Controller has been start`);
   const toolBox = { req, res, next };
   baseController(
     toolBox,
     constants.types.MsgTypeOrganization,
     constants.actions.MsgActionOrganizationCreate
   );
-  loggerFactory.info(`Function Create Controller has been end`);
+  loggerFactory.info(`Function createOrganization Controller has been end`);
 };
 
 /**
- * @description GetID Controller
+ * @description Get Organization By ID Controller
  * @param {*} req
  * @param {*} res
  * @param {*} next
  */
-const GetID = (req, res, next) => {
-  loggerFactory.info(`Function GetID Controller has been start`);
+const getOrganizationByID = (req, res, next) => {
+  loggerFactory.info(`Function getOrganizationByID Controller has been start`);
   const toolBox = { req, res, next };
   baseController(
     toolBox,
     constants.types.MsgTypeOrganization,
     constants.actions.MsgActionOrganizationGetID
   );
-  loggerFactory.info(`Function GetID Controller has been end`);
+  loggerFactory.info(`Function getOrganizationByID Controller has been end`);
 };
 
 /**
- * @description Edit Controller
+ * @description Edit Organization By ID Controller
  * @param {*} req
  * @param {*} res
  * @param {*} next
  */
-const Edit = (req, res, next) => {
-  loggerFactory.info(`Function GetID Controller has been start`);
+const editOrganizationByID = (req, res, next) => {
+  loggerFactory.info(`Function editOrganizationByID Controller has been start`);
   const toolBox = { req, res, next };
   baseController(
     toolBox,
     constants.types.MsgTypeOrganization,
     constants.actions.MsgActionOrganizationEdit
   );
-  loggerFactory.info(`Function Edit Controller has been end`);
+  loggerFactory.info(`Function editOrganizationByID Controller has been end`);
 };
 
 /**
- * @description Edit Controller
+ * @description Delete Organization By ID Controller
  * @param {*} req
  * @param {*} res
  * @param {*} next
  */
-const Delete = (req, res, next) => {
-  loggerFactory.info(`Function Delete Controller has been start`);
+const deleteOrganizationByID = (req, res, next) => {
+  loggerFactory.info(
+    `Function deleteOrganizationByID Controller has been start`
+  );
   const toolBox = { req, res, next };
   baseController(
     toolBox,
     constants.types.MsgTypeOrganization,
     constants.actions.MsgActionOrganizationDelete
   );
-  loggerFactory.info(`Function Delete Controller has been end`);
+  loggerFactory.info(`Function deleteOrganizationByID Controller has been end`);
 };
 
-const OrganizationController = {
-  GetList,
-  Create,
-  GetID,
-  Edit,
-  Delete
+const organizationController = {
+  getAllOrganization,
+  createOrganization,
+  getOrganizationByID,
+  editOrganizationByID,
+  deleteOrganizationByID
 };
 
-export default OrganizationController;
+export default organizationController;

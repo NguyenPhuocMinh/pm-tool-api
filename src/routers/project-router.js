@@ -1,6 +1,6 @@
 'use strict';
 
-const { ProjectController } = require('../controllers');
+const { projectController } = require('../controllers');
 
 /**
  * @description Project router
@@ -9,14 +9,14 @@ const ProjectRouter = [
   {
     pathName: '/projects',
     method: 'GET',
-    methodName: 'GetList',
-    controller: ProjectController.GetList
+    methodName: 'getAllProject',
+    controller: projectController.getAllProject
   },
   {
     pathName: '/projects',
     method: 'POST',
-    methodName: 'Create',
-    controller: ProjectController.Create
+    methodName: 'createProject',
+    controller: projectController.createProject
   }
 ];
 

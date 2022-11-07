@@ -16,19 +16,19 @@ const loggerFactory = logUtils.createLogger(
  * @param {*} res
  * @param {*} next
  */
-const HomePage = (req, res, next) => {
-  loggerFactory.info(`Function HomePage Controller has been start`);
+const homePage = (req, res, next) => {
+  loggerFactory.info(`Function homePage Controller has been start`);
   const toolBox = { req, res, next };
   baseController(
     toolBox,
     constants.types.MsgTypeHome,
     constants.actions.MsgActionHomePage
   );
-  loggerFactory.info(`Function HomePage Controller has been end`);
+  loggerFactory.info(`Function homePage Controller has been end`);
 };
 
-const HomeController = {
-  HomePage
+const homeController = {
+  homePage
 };
 
-export default HomeController;
+export default homeController;

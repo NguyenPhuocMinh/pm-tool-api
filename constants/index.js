@@ -130,7 +130,7 @@ const homeActions = {
  * @description ORGANIZATION ACTIONS
  */
 const organizationActions = {
-  MsgActionOrganizationGetList: 'ORGANIZATION_GET_LIST',
+  MsgActionOrganizationGetAll: 'ORGANIZATION_GET_ALL',
   MsgActionOrganizationCreate: 'ORGANIZATION_CREATE',
   MsgActionOrganizationGetID: 'ORGANIZATION_GET_ID',
   MsgActionOrganizationEdit: 'ORGANIZATION_EDIT',
@@ -141,7 +141,7 @@ const organizationActions = {
  * @description PROJECT ACTIONS
  */
 const projectActions = {
-  MsgActionProjectGetList: 'PROJECT_GET_LIST',
+  MsgActionProjectGetAll: 'PROJECT_GET_ALL',
   MsgActionProjectCreate: 'PROJECT_CREATE'
 };
 
@@ -149,22 +149,25 @@ const projectActions = {
  * @description ROLE ACTIONS
  */
 const roleActions = {
-  MsgActionRoleGetList: 'ROLE_GET_LIST',
+  MsgActionRoleGetAll: 'ROLE_GET_ALL',
   MsgActionRoleCreate: 'ROLE_CREATE',
   MsgActionRoleGetID: 'ROLE_GET_ID',
   MsgActionRoleEdit: 'ROLE_EDIT',
-  MsgActionRoleDelete: 'ROLE_DELETE'
+  MsgActionRoleDelete: 'ROLE_DELETE',
+  MsgActionRoleGetPermissions: 'ROLE_GET_PERMISSIONS',
+  MsgActionRoleAddPermissions: 'ROLE_ADD_PERMISSIONS'
 };
 
 /**
  * @description PERMISSION ACTIONS
  */
 const permissionActions = {
-  MsgActionPermissionGetList: 'PERMISSION_GET_LIST',
+  MsgActionPermissionGetAll: 'PERMISSION_GET_ALL',
   MsgActionPermissionCreate: 'PERMISSION_CREATE',
   MsgActionPermissionGetID: 'PERMISSION_GET_ID',
   MsgActionPermissionEdit: 'PERMISSION_EDIT',
-  MsgActionPermissionDelete: 'PERMISSION_DELETE'
+  MsgActionPermissionDelete: 'PERMISSION_DELETE',
+  MsgActionPermissionAddRoles: 'PERMISSION_ADD_ROLES'
 };
 
 const actions = {

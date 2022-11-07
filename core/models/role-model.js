@@ -7,6 +7,7 @@ export default {
   attributes: {
     name: { type: String },
     description: { type: String },
+    users: [{ type: Schema.Types.ObjectId, ref: 'UserModel' }],
     permissions: [{ type: Schema.Types.ObjectId, ref: 'PermissionModel' }],
     // filter
     slug: { type: String },

@@ -12,7 +12,7 @@ import formatUtils from '../../utils/format-util';
 import errorCommon from '../../core/common/error-common';
 import configureCommon from '../../core/common/configure-common';
 
-import database from '../../core/database';
+import dbManager from '../../core/database';
 import { projectDTO } from '../dtos';
 
 const loggerFactory = logUtils.createLogger(
@@ -20,16 +20,16 @@ const loggerFactory = logUtils.createLogger(
   constants.STRUCT_ORCHESTRATORS.PROJECT_ORCHESTRATOR
 );
 
-const GetList = async (toolBox) => {
+const getAllProject = async (toolBox) => {
   const { req } = toolBox;
   try {
-    loggerFactory.info(`Function GetList has been start`);
+    loggerFactory.info(`Function getAllProject has been start`);
 
-    const { skip, limit } = configureCommon.CreateFilterPagination(req.query);
-    const query = configureCommon.CreateFindQuery(req.query);
-    const sort = configureCommon.CreateSortOrderQuery(req.query);
+    const { skip, limit } = configureCommon.createFilterPagination(req.query);
+    const query = configureCommon.createFindQuery(req.query);
+    const sort = configureCommon.createSortOrderQuery(req.query);
 
-    const projects = await database.FindAll({
+    const projects = await dbManager.findAll({
       type: 'ProjectModel',
       filter: query,
       projection: {
@@ -46,40 +46,42 @@ const GetList = async (toolBox) => {
       }
     });
 
-    const total = await database.Count({
+    const total = await dbManager.count({
       type: 'ProjectModel',
       filter: query
     });
 
-    const response = await configureCommon.ConvertDataResponseMap(projects);
+    const response = await configureCommon.convertDataResponseMap(projects);
+
+    loggerFactory.info(`Function getAllProject has been end`);
 
     return {
       result: {
         data: response,
         total
       },
-      msg: 'ProjectGetListSuccess'
+      msg: 'ProjectGetAllSuccess'
     };
   } catch (err) {
-    loggerFactory.info(`Function GetList has error`, {
+    loggerFactory.info(`Function getAllProject has error`, {
       args: returnUtils.returnErrorMessage(err)
     });
     return Promise.reject(err);
   }
 };
 
-const Create = async (toolBox) => {
+const createProject = async (toolBox) => {
   const { req } = toolBox;
 
   try {
-    loggerFactory.info(`Function Create has been start`);
+    loggerFactory.info(`Function CreateProject has been start`);
 
     const { name } = req.body;
 
     const slug = formatUtils.formatSlug(name);
 
     // check duplicate slug
-    const isDuplicate = await configureCommon.CheckDuplicate('ProjectModel', {
+    const isDuplicate = await configureCommon.checkDuplicate('ProjectModel', {
       slug
     });
 
@@ -91,14 +93,16 @@ const Create = async (toolBox) => {
       slug: slug
     });
 
-    doc = configureCommon.AttributeFilter(doc, 'create');
+    doc = configureCommon.attributeFilter(doc, 'create');
 
-    const data = await database.Create({
+    const data = await dbManager.createOne({
       type: 'ProjectModel',
       doc
     });
 
     const result = projectDTO(data);
+
+    loggerFactory.info(`Function CreateProject has been end`);
 
     return {
       result: {
@@ -107,16 +111,16 @@ const Create = async (toolBox) => {
       msg: 'ProjectCreateSuccess'
     };
   } catch (err) {
-    loggerFactory.info(`Function Create has error`, {
+    loggerFactory.info(`Function CreateProject has error`, {
       args: returnUtils.returnErrorMessage(err)
     });
     return Promise.reject(err);
   }
 };
 
-const ProjectOrchestrator = {
-  GetList,
-  Create
+const projectOrchestrator = {
+  getAllProject,
+  createProject
 };
 
-export default ProjectOrchestrator;
+export default projectOrchestrator;

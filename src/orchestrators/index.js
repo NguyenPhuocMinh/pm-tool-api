@@ -2,11 +2,11 @@
 
 import constants from '../../constants';
 
-import HomeOrchestrator from './home-orchestrator';
-import OrganizationOrchestrator from './organization-orchestrator';
-import ProjectOrchestrator from './project-orchestrator';
-import RoleOrchestrator from './role-orchestrator';
-import PermissionOrchestrator from './permission-orchestrator';
+import homeOrchestrator from './home-orchestrator';
+import organizationOrchestrator from './organization-orchestrator';
+import projectOrchestrator from './project-orchestrator';
+import roleOrchestrator from './role-orchestrator';
+import permissionOrchestrator from './permission-orchestrator';
 
 /**
  * HOME
@@ -15,7 +15,7 @@ const orchestratorHome = [
   {
     type: constants.types.MsgTypeHome,
     action: constants.actions.MsgActionHomePage,
-    orchestrator: HomeOrchestrator.HomePage
+    orchestrator: homeOrchestrator.homePage
   }
 ];
 
@@ -25,30 +25,30 @@ const orchestratorHome = [
 const orchestratorOrganization = [
   {
     type: constants.types.MsgTypeOrganization,
-    action: constants.actions.MsgActionOrganizationGetList,
-    orchestrator: OrganizationOrchestrator.GetList
+    action: constants.actions.MsgActionOrganizationGetAll,
+    orchestrator: organizationOrchestrator.getAllOrganization
   },
   {
     type: constants.types.MsgTypeOrganization,
     action: constants.actions.MsgActionOrganizationCreate,
-    orchestrator: OrganizationOrchestrator.Create,
+    orchestrator: organizationOrchestrator.createOrganization,
     schema: 'organizationSchema'
   },
   {
     type: constants.types.MsgTypeOrganization,
     action: constants.actions.MsgActionOrganizationGetID,
-    orchestrator: OrganizationOrchestrator.GetID
+    orchestrator: organizationOrchestrator.getOrganizationByID
   },
   {
     type: constants.types.MsgTypeOrganization,
     action: constants.actions.MsgActionOrganizationEdit,
-    orchestrator: OrganizationOrchestrator.Edit,
+    orchestrator: organizationOrchestrator.editOrganizationByID,
     schema: 'organizationSchema'
   },
   {
     type: constants.types.MsgTypeOrganization,
     action: constants.actions.MsgActionOrganizationDelete,
-    orchestrator: OrganizationOrchestrator.Delete
+    orchestrator: organizationOrchestrator.deleteOrganizationByID
   }
 ];
 
@@ -59,12 +59,12 @@ const orchestratorProject = [
   {
     type: constants.types.MsgTypeProject,
     action: constants.actions.MsgActionProjectGetList,
-    orchestrator: ProjectOrchestrator.GetList
+    orchestrator: projectOrchestrator.getAllProject
   },
   {
     type: constants.types.MsgTypeProject,
     action: constants.actions.MsgActionProjectCreate,
-    orchestrator: ProjectOrchestrator.Create,
+    orchestrator: projectOrchestrator.createProject,
     schema: 'projectSchema'
   }
 ];
@@ -75,63 +75,78 @@ const orchestratorProject = [
 const orchestratorRole = [
   {
     type: constants.types.MsgTypeRole,
-    action: constants.actions.MsgActionRoleGetList,
-    orchestrator: RoleOrchestrator.GetList
+    action: constants.actions.MsgActionRoleGetAll,
+    orchestrator: roleOrchestrator.getAllRole
   },
   {
     type: constants.types.MsgTypeRole,
     action: constants.actions.MsgActionRoleCreate,
-    orchestrator: RoleOrchestrator.Create,
+    orchestrator: roleOrchestrator.createRole,
     schema: 'roleSchema'
   },
   {
     type: constants.types.MsgTypeRole,
     action: constants.actions.MsgActionRoleGetID,
-    orchestrator: RoleOrchestrator.GetID
+    orchestrator: roleOrchestrator.getRoleByID
   },
   {
     type: constants.types.MsgTypeRole,
     action: constants.actions.MsgActionRoleEdit,
-    orchestrator: RoleOrchestrator.Edit,
+    orchestrator: roleOrchestrator.editRoleByID,
     schema: 'roleSchema'
   },
   {
     type: constants.types.MsgTypeRole,
     action: constants.actions.MsgActionRoleDelete,
-    orchestrator: RoleOrchestrator.Delete
+    orchestrator: roleOrchestrator.deleteRoleByID
+  },
+  {
+    type: constants.types.MsgTypeRole,
+    action: constants.actions.MsgActionRoleGetPermissions,
+    orchestrator: roleOrchestrator.getPermissionsByRoleID
+  },
+  {
+    type: constants.types.MsgTypeRole,
+    action: constants.actions.MsgActionRoleAddPermissions,
+    orchestrator: roleOrchestrator.addPermissionsToRoleByID
   }
 ];
 
 /**
- * ROLE
+ * PERMISSION
  */
 const orchestratorPermission = [
   {
     type: constants.types.MsgTypePermission,
-    action: constants.actions.MsgActionPermissionGetList,
-    orchestrator: PermissionOrchestrator.GetList
+    action: constants.actions.MsgActionPermissionGetAll,
+    orchestrator: permissionOrchestrator.getAllPermission
   },
   {
     type: constants.types.MsgTypePermission,
     action: constants.actions.MsgActionPermissionCreate,
-    orchestrator: PermissionOrchestrator.Create,
+    orchestrator: permissionOrchestrator.createPermission,
     schema: 'permissionSchema'
   },
   {
     type: constants.types.MsgTypePermission,
     action: constants.actions.MsgActionPermissionGetID,
-    orchestrator: PermissionOrchestrator.GetID
+    orchestrator: permissionOrchestrator.getPermissionByID
   },
   {
     type: constants.types.MsgTypePermission,
     action: constants.actions.MsgActionPermissionEdit,
-    orchestrator: PermissionOrchestrator.Edit,
+    orchestrator: permissionOrchestrator.editPermissionByID,
     schema: 'permissionSchema'
   },
   {
     type: constants.types.MsgTypePermission,
     action: constants.actions.MsgActionPermissionDelete,
-    orchestrator: PermissionOrchestrator.Delete
+    orchestrator: permissionOrchestrator.deletePermissionByID
+  },
+  {
+    type: constants.types.MsgTypePermission,
+    action: constants.actions.MsgActionPermissionAddRoles,
+    orchestrator: permissionOrchestrator.addRolesToPermissionByID
   }
 ];
 

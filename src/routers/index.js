@@ -7,11 +7,11 @@ import constants from '../../constants';
 import logUtils from '../../utils/log-util';
 import returnUtils from '../../utils/return-util';
 
-import HomeRouter from './home-router';
-import OrganizationRouter from './organization-router';
-import ProjectRouter from './project-router';
-import RoleRouter from './role-router';
-import PermissionRouter from './permission-router';
+import homeRouter from './home-router';
+import organizationRouter from './organization-router';
+import projectRouter from './project-router';
+import roleRouter from './role-router';
+import permissionRouter from './permission-router';
 
 const router = express.Router();
 
@@ -21,11 +21,11 @@ const loggerFactory = logUtils.createLogger(
 );
 
 const routes = [
-  ...HomeRouter,
-  ...OrganizationRouter,
-  ...ProjectRouter,
-  ...RoleRouter,
-  ...PermissionRouter
+  ...homeRouter,
+  ...organizationRouter,
+  ...projectRouter,
+  ...roleRouter,
+  ...permissionRouter
 ];
 
 /**

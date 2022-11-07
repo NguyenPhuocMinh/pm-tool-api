@@ -62,12 +62,8 @@ const Init = async () => {
 
 /**
  * @description Find All
- * @argument {*} type
- * @argument {*} filter
- * @argument {*} projection
- * @argument {*} options
  * @example
- * const data = await database.FindAll({
+ * const data = await database.findAll({
  *    type: 'UserModel',
  *    filter : { deleted: false },
  *    projection: { __v: 0 },
@@ -86,18 +82,18 @@ const Init = async () => {
  * @see https://mongoosejs.com/docs/api/model.html#model_Model-find
  * @returns
  */
-const FindAll = async ({ type, filter = {}, projection = {}, options }) => {
+const findAll = async ({ type, filter = {}, projection = {}, options }) => {
   try {
-    loggerFactory.data('Function FindAll has been start');
+    loggerFactory.data('Function findAll has been start');
 
     const model = lookupCommon.BuildFindModel(schemaModels, type);
 
     const data = await model.find(filter, projection, options).exec();
 
-    loggerFactory.data('Function FindAll has been start');
+    loggerFactory.data('Function findAll has been end');
     return data;
   } catch (err) {
-    loggerFactory.error('Function FindAll has been error', {
+    loggerFactory.error('Function findAll has been error', {
       args: returnUtils.returnErrorMessage(err)
     });
     throw err;
@@ -105,28 +101,35 @@ const FindAll = async ({ type, filter = {}, projection = {}, options }) => {
 };
 
 /**
- * @description Create
- * @argument {*} type
- * @argument {*} data
+ * @description Find One
  * @example
- * const data = await database.Create({
+ * const data = await database.findOne({
  *    type: 'UserModel',
- *    doc : { name: 'John Doe },
- * @see https://mongoosejs.com/docs/api/model.html#model_Model-create
+ *    filter : { deleted: false },
+ *    projection: { __v: 0 },
+ *    options: {
+ *      populates: [
+ *      {
+ *        path: 'roles',
+ *        select: 'name'
+ *     }
+ *    }
+ * })
+ * @see https://mongoosejs.com/docs/api/model.html#model_Model-findOne
  * @returns {Object} data
  */
-const Create = async ({ type, doc }) => {
+const findOne = async ({ type, filter = {}, projection = {}, options }) => {
   try {
-    loggerFactory.data('Function Create has been start');
+    loggerFactory.data('Function findOne has been start');
 
     const model = lookupCommon.BuildFindModel(schemaModels, type);
 
-    const data = await model.create(doc);
+    const data = await model.findOne(filter, projection, options).exec();
 
-    loggerFactory.data('Function Create has been start');
+    loggerFactory.data('Function findOne has been end');
     return data;
   } catch (err) {
-    loggerFactory.error('Function Create has been error', {
+    loggerFactory.error('Function findOne has been error', {
       args: returnUtils.returnErrorMessage(err)
     });
     throw err;
@@ -135,12 +138,8 @@ const Create = async ({ type, doc }) => {
 
 /**
  * @description Get
- * @argument {*} type
- * @argument {*} id
- * @argument {*} projection
- * @argument {*} options
  * @example
- * const data = await database.Get({
+ * const data = await database.getOne({
  *    type: 'UserModel',
  *    id: '123'
  *    projection: { __v: 0 },
@@ -156,18 +155,18 @@ const Create = async ({ type, doc }) => {
  * @see https://mongoosejs.com/docs/api/model.html#model_Model-findById
  * @returns
  */
-const Get = async ({ type, id, projection, options }) => {
+const getOne = async ({ type, id, projection, options }) => {
   try {
-    loggerFactory.data('Function Get has been start');
+    loggerFactory.data('Function get has been start');
 
     const model = lookupCommon.BuildFindModel(schemaModels, type);
 
     const data = await model.findById(id, projection, options).exec();
 
-    loggerFactory.data('Function Get has been start');
+    loggerFactory.data('Function get has been end');
     return data;
   } catch (err) {
-    loggerFactory.error('Function Get has been error', {
+    loggerFactory.error('Function get has been error', {
       args: returnUtils.returnErrorMessage(err)
     });
     throw err;
@@ -175,70 +174,26 @@ const Get = async ({ type, id, projection, options }) => {
 };
 
 /**
- * @description Find One
- * @argument {*} type
- * @argument {*} filter
- * @argument {*} projection
- * @argument {*} options
+ * @description Create
  * @example
- * const data = await database.FindOne({
+ * const data = await database.createOne({
  *    type: 'UserModel',
- *    filter : { deleted: false },
- *    projection: { __v: 0 },
- *    options: {
- *      populates: [
- *      {
- *        path: 'roles',
- *        select: 'name'
- *     }
- *    }
- * })
- * @see https://mongoosejs.com/docs/api/model.html#model_Model-findOne
+ *    doc : { name: 'John Doe },
+ * @see https://mongoosejs.com/docs/api/model.html#model_Model-create
  * @returns {Object} data
  */
-const FindOne = async ({ type, filter = {}, projection = {}, options }) => {
+const createOne = async ({ type, doc }) => {
   try {
-    loggerFactory.data('Function FindOne has been start');
+    loggerFactory.data('Function createOne has been start');
 
     const model = lookupCommon.BuildFindModel(schemaModels, type);
 
-    const data = await model.findOne(filter, projection, options).exec();
+    const data = await model.create(doc);
 
-    loggerFactory.data('Function FindOne has been start');
+    loggerFactory.data('Function createOne has been end');
     return data;
   } catch (err) {
-    loggerFactory.error('Function FindOne has been error', {
-      args: returnUtils.returnErrorMessage(err)
-    });
-    throw err;
-  }
-};
-
-/**
- * @description Count docs
- * @argument {*} type
- * @argument {*} filter
- * @example
- * const data = await database.Count({
- *    type: 'UserModel',
- *    filter : { deleted: false },
- * })
- *
- * @see https://mongoosejs.com/docs/api.html#model_Model-countDocuments
- * @returns
- */
-const Count = async ({ type, filter = {} }) => {
-  try {
-    loggerFactory.data('Function Count has been start');
-
-    const model = lookupCommon.BuildFindModel(schemaModels, type);
-
-    const count = await model.countDocuments(filter).exec();
-
-    loggerFactory.data('Function Count has been start');
-    return count;
-  } catch (err) {
-    loggerFactory.error('Function Count has been error', {
+    loggerFactory.error('Function createOne has been error', {
       args: returnUtils.returnErrorMessage(err)
     });
     throw err;
@@ -247,12 +202,8 @@ const Count = async ({ type, filter = {} }) => {
 
 /**
  * @description Update by id
- * @argument {*} type
- * @argument {*} id
- * @argument {*} doc
- * @argument {*} options
  * @example
- * const data = await database.Update({
+ * const data = await database.updateOne({
  *    type: 'UserModel',
  *    id: 123,
  *    docs: { name: 'John Doe },
@@ -260,18 +211,23 @@ const Count = async ({ type, filter = {} }) => {
  * @see https://mongoosejs.com/docs/api/model.html#model_Model-findByIdAndUpdate
  * @returns
  */
-const Update = async ({ type, id, doc, options = { new: true } }) => {
+const updateOne = async ({ type, id, doc, options }) => {
   try {
-    loggerFactory.data('Function Update has been start');
+    loggerFactory.data('Function updateOne has been start');
 
     const model = lookupCommon.BuildFindModel(schemaModels, type);
 
-    const data = await model.findByIdAndUpdate(id, doc, options).exec();
+    const data = await model
+      .findByIdAndUpdate(id, doc, {
+        new: true,
+        ...options
+      })
+      .exec();
 
-    loggerFactory.data('Function Update has been start');
+    loggerFactory.data('Function updateOne has been end');
     return data;
   } catch (err) {
-    loggerFactory.error('Function Update has been error', {
+    loggerFactory.error('Function updateOne has been error', {
       args: returnUtils.returnErrorMessage(err)
     });
     throw err;
@@ -280,28 +236,109 @@ const Update = async ({ type, id, doc, options = { new: true } }) => {
 
 /**
  * @description Delete by id
- * @argument {*} type
- * @argument {*} id
  * @example
- * const data = await database.Delete({
+ * const data = await database.deleteOne({
  *    type: 'UserModel',
  *    id: 123,
  * })
  * @see https://mongoosejs.com/docs/api/model.html#model_Model-findByIdAndRemove
  * @returns
  */
-const Delete = async ({ type, id, options }) => {
+const deleteOne = async ({ type, id, options }) => {
   try {
-    loggerFactory.data('Function Delete has been start');
+    loggerFactory.data('Function deleteID has been start');
 
     const model = lookupCommon.BuildFindModel(schemaModels, type);
 
     const data = await model.findByIdAndRemove(id, options).exec();
 
-    loggerFactory.data('Function Delete has been start');
+    loggerFactory.data('Function deleteID has been end');
     return data;
   } catch (err) {
-    loggerFactory.error('Function Delete has been error', {
+    loggerFactory.error('Function deleteID has been error', {
+      args: returnUtils.returnErrorMessage(err)
+    });
+    throw err;
+  }
+};
+
+/**
+ * @description Count docs
+ * @example
+ * const data = await database.count({
+ *    type: 'UserModel',
+ *    filter : { deleted: false },
+ * })
+ *
+ * @see https://mongoosejs.com/docs/api.html#model_Model-countDocuments
+ * @returns
+ */
+const count = async ({ type, filter = {} }) => {
+  try {
+    loggerFactory.data('Function count has been start');
+
+    const model = lookupCommon.BuildFindModel(schemaModels, type);
+
+    const count = await model.countDocuments(filter).exec();
+
+    loggerFactory.data('Function count has been end');
+    return count;
+  } catch (err) {
+    loggerFactory.error('Function count has been error', {
+      args: returnUtils.returnErrorMessage(err)
+    });
+    throw err;
+  }
+};
+
+/**
+ * @description Update Many
+ * @example
+ * const data = await database.UpdateMany({
+ *    type: 'UserModel',
+ *    filter: {
+ *      id: 123
+ *    },
+ *    doc: { name: "John doe" }
+ * })
+ * @see https://mongoosejs.com/docs/api/model.html#model_Model-updateMany
+ * @returns
+ */
+const updateMany = async ({ type, filter, doc, options }) => {
+  try {
+    loggerFactory.data('Function updateMany has been start');
+
+    const model = lookupCommon.BuildFindModel(schemaModels, type);
+
+    const data = await model.updateMany(filter, doc, options).exec();
+
+    loggerFactory.data('Function updateMany has been end');
+    return data;
+  } catch (err) {
+    loggerFactory.error('Function updateMany has been error', {
+      args: returnUtils.returnErrorMessage(err)
+    });
+    throw err;
+  }
+};
+
+/**
+ * @description bulkWrite
+ * @see https://mongoosejs.com/docs/api/model.html#model_Model-bulkWrite
+ * @returns
+ */
+const bulkWrite = async ({ type, pipelines = [], options }) => {
+  try {
+    loggerFactory.data('Function bulkWrite has been start');
+
+    const model = lookupCommon.BuildFindModel(schemaModels, type);
+
+    const data = model.bulkWrite(pipelines, options);
+
+    loggerFactory.data('Function bulkWrite has been end');
+    return data;
+  } catch (err) {
+    loggerFactory.error('Function bulkWrite has been error', {
       args: returnUtils.returnErrorMessage(err)
     });
     throw err;
@@ -310,13 +347,15 @@ const Delete = async ({ type, id, options }) => {
 
 const dbManager = {
   Init,
-  FindAll,
-  Create,
-  Get,
-  FindOne,
-  Count,
-  Update,
-  Delete
+  findAll,
+  findOne,
+  getOne,
+  createOne,
+  updateOne,
+  deleteOne,
+  count,
+  updateMany,
+  bulkWrite
 };
 
 export default dbManager;
