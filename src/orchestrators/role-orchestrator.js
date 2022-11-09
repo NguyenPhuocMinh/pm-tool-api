@@ -245,7 +245,7 @@ const deleteRoleByID = async (toolBox) => {
       throw errorCommon.BuildNewError('RoleIDNotFound');
     }
 
-    const result = await dbManager.Delete({
+    const result = await dbManager.deleteOne({
       type: 'RoleModel',
       id
     });

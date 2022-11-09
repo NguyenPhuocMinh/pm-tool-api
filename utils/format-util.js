@@ -29,11 +29,16 @@ const formatSlug = (input, locale = 'en') => {
   return slugify(input, { locale, lower: true });
 };
 
+const formatFullName = (firstName = '-', lastName = '-') => {
+  return `${lastName} ${firstName}`;
+};
+
 const formatUtils = {
   formatLabelLog,
   formatInfoLog,
   formatErrorMessage,
-  formatSlug
+  formatSlug,
+  formatFullName
 };
 
 export default formatUtils;

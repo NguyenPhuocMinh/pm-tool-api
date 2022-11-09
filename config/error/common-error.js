@@ -3,12 +3,12 @@
 export default {
   OrchestratorHandlerNotFound: {
     message: 'common.notifications.errors.orchestratorHandlerNotFound',
-    returnCode: 3003,
+    returnCode: 0,
     statusCode: 400
   },
   SchemaNotFound: {
     message: 'common.notifications.errors.schemaNotFound',
-    returnCode: 3004,
+    returnCode: 0,
     statusCode: 400
   }
 };

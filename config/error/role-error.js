@@ -3,17 +3,17 @@
 export default {
   RoleNameIsRequired: {
     message: 'resources.organizations.notifications.errors.requiredName',
-    returnCode: 3011,
+    returnCode: 0,
     statusCode: 400
   },
   DuplicateNameRole: {
     message: 'resources.projects.notifications.errors.duplicateName',
-    returnCode: 3012,
+    returnCode: 0,
     statusCode: 400
   },
   RoleIDNotFound: {
     message: 'resources.projects.notifications.errors.idNotFound',
-    returnCode: 3013,
+    returnCode: 0,
     statusCode: 400
   }
 };

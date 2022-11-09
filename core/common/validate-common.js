@@ -1,6 +1,8 @@
 'use strict';
 
 import Ajv from 'ajv';
+import addFormats from 'ajv-formats';
+import addErrors from 'ajv-errors';
 
 import constants from '../../constants';
 
@@ -10,7 +12,9 @@ import returnUtils from '../../utils/return-util';
 import errorCommon from './error-common';
 import schemaCommon from './schema-common';
 
-const ajv = new Ajv();
+const ajv = new Ajv({ allErrors: true, strict: false });
+addFormats(ajv, { mode: 'fast', keywords: true });
+addErrors(ajv);
 
 const loggerFactory = logUtils.createLogger(
   constants.APP_NAME,

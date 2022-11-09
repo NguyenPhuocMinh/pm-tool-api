@@ -5,6 +5,7 @@ import Promise from 'bluebird';
 import profiles from '../../conf/profiles';
 import constants from '../../constants';
 import logUtils from '../../utils/log-util';
+import returnUtils from '../../utils/return-util';
 
 const loggerFactory = logUtils.createLogger(
   constants.APP_NAME,
@@ -22,7 +23,7 @@ const homePage = async (toolBox) => {
     };
   } catch (err) {
     loggerFactory.info(`Function homePage has error`, {
-      args: err.message
+      args: returnUtils.returnErrorMessage(err)
     });
     return Promise.reject(err);
   }
