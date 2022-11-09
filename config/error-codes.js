@@ -6,6 +6,7 @@ import organizationError from './error/organization-error';
 import projectError from './error/project-error';
 import roleError from './error/role-error';
 import permissionError from './error/permission-error';
+import userError from './error/user-error';
 
 const errorCodes = {
   ...commonError,
@@ -13,7 +14,8 @@ const errorCodes = {
   ...organizationError,
   ...projectError,
   ...roleError,
-  ...permissionError
+  ...permissionError,
+  ...userError
 };
 
 export default errorCodes;

@@ -7,11 +7,14 @@ import constants from '../../constants';
 import logUtils from '../../utils/log-util';
 import returnUtils from '../../utils/return-util';
 
+import tokenMiddleware from '../../middlewares/token-middleware';
+
 import homeRouter from './home-router';
 import organizationRouter from './organization-router';
 import projectRouter from './project-router';
 import roleRouter from './role-router';
 import permissionRouter from './permission-router';
+import userRouter from './user-router';
 
 const router = express.Router();
 
@@ -25,7 +28,8 @@ const routes = [
   ...organizationRouter,
   ...projectRouter,
   ...roleRouter,
-  ...permissionRouter
+  ...permissionRouter,
+  ...userRouter
 ];
 
 /**
@@ -41,7 +45,7 @@ const routers = routes.map((route) => {
     const method = get(route, 'method');
     const controller = get(route, 'controller');
 
-    router[toLower(method)](pathName, controller);
+    router[toLower(method)](pathName, tokenMiddleware, controller);
 
     return router;
   } catch (err) {

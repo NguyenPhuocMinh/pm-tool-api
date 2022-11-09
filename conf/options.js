@@ -54,11 +54,16 @@ const retryOptions = {
   randomize: true
 };
 
+const bcryptOptions = {
+  salt: 10
+};
+
 const options = {
   corsOptions,
   loggerOptions,
   mongooseOptions,
-  retryOptions
+  retryOptions,
+  bcryptOptions
 };
 
 export default options;

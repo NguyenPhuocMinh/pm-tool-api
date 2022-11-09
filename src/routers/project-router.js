@@ -5,7 +5,7 @@ const { projectController } = require('../controllers');
 /**
  * @description Project router
  */
-const ProjectRouter = [
+const projectRouter = [
   {
     pathName: '/projects',
     method: 'GET',
@@ -20,4 +20,4 @@ const ProjectRouter = [
   }
 ];
 
-export default ProjectRouter;
+export default projectRouter;

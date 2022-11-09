@@ -3,17 +3,17 @@
 export default {
   PermissionNameIsRequired: {
     message: 'resources.organizations.notifications.errors.requiredName',
-    returnCode: 3014,
+    returnCode: 0,
     statusCode: 400
   },
   DuplicateNamePermission: {
     message: 'resources.projects.notifications.errors.duplicateName',
-    returnCode: 3015,
+    returnCode: 0,
     statusCode: 400
   },
   PermissionIDNotFound: {
     message: 'resources.projects.notifications.errors.idNotFound',
-    returnCode: 3016,
+    returnCode: 0,
     statusCode: 400
   }
 };

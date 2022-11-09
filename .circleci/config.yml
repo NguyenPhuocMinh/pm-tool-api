@@ -66,8 +66,8 @@ jobs:
   cd:
     executor: docker/docker
     environment:
-      APP_DOCKER_TAG: v0.1.3
-      APP_HELM_TAG: 0.1.1
+      APP_DOCKER_TAG: v0.1.5
+      APP_HELM_TAG: 0.1.5
     steps:
       ## Build and push image to docker hub
       - setup_remote_docker
@@ -133,7 +133,7 @@ jobs:
   deploy:
     executor: docker/docker
     environment:
-      APP_HELM_TAG: 0.1.1
+      APP_HELM_TAG: 0.1.5
     steps:
       - setup_remote_docker
       - add_ssh_keys:

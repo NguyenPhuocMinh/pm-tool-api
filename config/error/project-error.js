@@ -3,17 +3,17 @@
 export default {
   ProjectNameIsRequired: {
     message: 'resources.organizations.notifications.errors.requiredName',
-    returnCode: 3008,
+    returnCode: 0,
     statusCode: 400
   },
   DuplicateNameProject: {
     message: 'resources.projects.notifications.errors.duplicateName',
-    returnCode: 3009,
+    returnCode: 0,
     statusCode: 400
   },
   ProjectIDNotFound: {
     message: 'resources.projects.notifications.errors.idNotFound',
-    returnCode: 3010,
+    returnCode: 0,
     statusCode: 400
   }
 };

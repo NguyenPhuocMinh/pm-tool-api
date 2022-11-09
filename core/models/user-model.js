@@ -1,7 +1,6 @@
 'use strict';
 
-import mongoose from 'mongoose';
-const Schema = mongoose.Schema;
+import { Schema } from 'mongoose';
 
 export default {
   name: 'UserModel',
@@ -11,8 +10,8 @@ export default {
     email: { type: String },
     password: { type: String },
     passwordConfirm: { type: String },
-    permissions: [String],
-    roles: { type: Schema.Types.ObjectId, ref: 'RoleModel' },
+    isAdmin: { type: Boolean, default: false },
+    roles: [{ type: Schema.Types.ObjectId, ref: 'RoleModel' }],
     photoURL: { type: String },
     // filter
     slug: { type: String },

@@ -7,6 +7,7 @@ import organizationOrchestrator from './organization-orchestrator';
 import projectOrchestrator from './project-orchestrator';
 import roleOrchestrator from './role-orchestrator';
 import permissionOrchestrator from './permission-orchestrator';
+import userOrchestrator from './user-orchestrator';
 
 /**
  * HOME
@@ -151,6 +152,50 @@ const orchestratorPermission = [
 ];
 
 /**
+ * USER
+ */
+const orchestratorUser = [
+  {
+    type: constants.types.MsgTypeUser,
+    action: constants.actions.MsgActionUserGetAll,
+    orchestrator: userOrchestrator.getAllUser
+  },
+  {
+    type: constants.types.MsgTypeUser,
+    action: constants.actions.MsgActionUserCreate,
+    orchestrator: userOrchestrator.createUser,
+    schema: 'userCreateSchema'
+  },
+  {
+    type: constants.types.MsgTypeUser,
+    action: constants.actions.MsgActionUserGetID,
+    orchestrator: userOrchestrator.getUserByID
+  },
+  {
+    type: constants.types.MsgTypeUser,
+    action: constants.actions.MsgActionUserEdit,
+    orchestrator: userOrchestrator.editUserByID,
+    schema: 'userEditSchema'
+  },
+  {
+    type: constants.types.MsgTypeUser,
+    action: constants.actions.MsgActionUserDelete,
+    orchestrator: userOrchestrator.deleteUserByID
+  },
+  {
+    type: constants.types.MsgTypeUser,
+    action: constants.actions.MsgActionUserChangePass,
+    orchestrator: userOrchestrator.changePasswordUserByID,
+    schema: 'userChangePassSchema'
+  },
+  {
+    type: constants.types.MsgTypeUser,
+    action: constants.actions.MsgActionUserAddRoles,
+    orchestrator: userOrchestrator.addRolesToUserByUserID
+  }
+];
+
+/**
  * BASE
  */
 const orchestrators = [
@@ -158,7 +203,8 @@ const orchestrators = [
   ...orchestratorOrganization,
   ...orchestratorProject,
   ...orchestratorRole,
-  ...orchestratorPermission
+  ...orchestratorPermission,
+  ...orchestratorUser
 ];
 
 export default orchestrators;
