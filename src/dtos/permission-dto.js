@@ -5,7 +5,7 @@ import { isEmpty, differenceBy, toString } from 'lodash';
 import constants from '../../constants';
 import logUtils from '../../utils/log-util';
 
-import database from '../../core/database';
+import dbManager from '../../core/database';
 
 const loggerFactory = logUtils.createLogger(
   constants.APP_NAME,
@@ -29,7 +29,7 @@ const permissionDTO = async (data) => {
     response.createdAt = createdAt;
     response.updatedAt = updatedAt;
 
-    const listRole = await database.findAll({
+    const listRole = await dbManager.findAll({
       type: 'RoleModel',
       filter: {
         deleted: false,

@@ -17,7 +17,8 @@ import configureCommon from '../../core/common/configure-common';
 import {
   validateUserCreate,
   validateUserUpdate,
-  validateUserChangePass
+  validateUserChangePass,
+  validateUserSetPass
 } from '../../helpers/user-helper';
 
 import dbManager from '../../core/database';
@@ -38,7 +39,7 @@ const getAllUser = async (toolBox) => {
     loggerFactory.info(`Function getAllUser has been start`);
 
     const { skip, limit } = configureCommon.createFilterPagination(req.query);
-    const query = configureCommon.createFindQuery(req.query);
+    const query = configureCommon.createFindQuery(req.query, ['email']);
     const sort = configureCommon.createSortOrderQuery(req.query);
 
     const users = await dbManager.findAll({
@@ -50,7 +51,7 @@ const getAllUser = async (toolBox) => {
         email: 1,
         isAdmin: 1,
         createdAt: 1,
-        createdBy: 1
+        updatedAt: 1
       },
       options: {
         skip,
@@ -93,7 +94,7 @@ const createUser = async (toolBox) => {
   try {
     loggerFactory.info(`Function createUser has been start`);
 
-    const { firstName, lastName, email, password } = req.body;
+    const { firstName, lastName, email } = req.body;
     // validate inputs
     validateUserCreate(req.body);
 
@@ -115,17 +116,16 @@ const createUser = async (toolBox) => {
 
     user = configureCommon.attributeFilter(user, 'create');
 
-    const hashPass = await bcrypt.hash(password, options.bcryptOptions.salt);
-
-    user.password = hashPass;
-    user.passwordConfirm = hashPass;
+    // default password
+    user.password = constants.DEFAULT_PASSWORD;
+    user.passwordConfirm = constants.DEFAULT_PASSWORD;
 
     const data = await dbManager.createOne({
       type: 'UserModel',
       doc: user
     });
 
-    const result = userDTO(data);
+    const result = await userDTO(data);
 
     loggerFactory.info(`Function createUser has been end`);
 
@@ -163,10 +163,18 @@ const getUserByID = async (toolBox) => {
       id,
       projection: {
         __v: 0
+      },
+      options: {
+        populate: [
+          {
+            path: 'roles',
+            select: 'id name'
+          }
+        ]
       }
     });
 
-    const result = userDTO(user);
+    const result = await userDTO(user);
 
     loggerFactory.info(`Function getUserByID Orchestrator has been end`);
 
@@ -231,7 +239,7 @@ const editUserByID = async (toolBox) => {
       doc: user
     });
 
-    const result = userDTO(data);
+    const result = await userDTO(data);
 
     return {
       result: {
@@ -262,10 +270,15 @@ const deleteUserByID = async (toolBox) => {
       throw errorCommon.BuildNewError('UserIDNotFound');
     }
 
+    req.body = configureCommon.attributeFilter(req.body);
+    const { updatedAt, updatedBy } = req.body;
+
     const result = await dbManager.deleteOne({
       type: 'UserModel',
       id
     });
+
+    await removeUserInRoles(id, updatedAt, updatedBy);
 
     loggerFactory.info(`Function deleteUserByID Orchestrator has been end`);
 
@@ -335,7 +348,7 @@ const changePasswordUserByID = async (toolBox) => {
 
     await user.save();
 
-    const result = userDTO(user);
+    const result = await userDTO(user);
 
     loggerFactory.info(
       `Function changePasswordUserByID Orchestrator has been end`
@@ -400,7 +413,7 @@ const addRolesToUserByUserID = async (toolBox) => {
       }
     });
 
-    // add permission to role
+    // add users to role
     await dbManager.bulkWrite({
       type: 'RoleModel',
       pipelines: [
@@ -452,7 +465,7 @@ const addRolesToUserByUserID = async (toolBox) => {
       msg: 'UserAddRolesSuccess'
     };
   } catch (err) {
-    loggerFactory.info(
+    loggerFactory.error(
       `Function addRolesToUserByUserID Orchestrator has error`,
       {
         args: returnUtils.returnErrorMessage(err)
@@ -462,6 +475,101 @@ const addRolesToUserByUserID = async (toolBox) => {
   }
 };
 
+/**
+ * @description Set Password User By ID Orchestrator
+ * @param {*} toolBox { req, res, next }
+ */
+const setPasswordByUserID = async (toolBox) => {
+  const { req } = toolBox;
+  try {
+    loggerFactory.info(
+      `Function setPasswordByUserID Orchestrator has been start`
+    );
+
+    const { id } = req.params;
+
+    if (isEmpty(id)) {
+      throw errorCommon.BuildNewError('UserIDNotFound');
+    }
+
+    // validate inputs
+    validateUserSetPass(req.body);
+
+    req.body = configureCommon.attributeFilter(req.body);
+    const { password, updatedAt, updatedBy } = req.body;
+
+    // hash pass
+    const hashPass = await bcrypt.hash(password, options.bcryptOptions.salt);
+
+    const user = await dbManager.updateOne({
+      type: 'UserModel',
+      id,
+      doc: {
+        password: hashPass,
+        passwordConfirm: hashPass,
+        updatedAt,
+        updatedBy
+      },
+      options: {
+        populate: [
+          {
+            path: 'roles',
+            select: 'id name'
+          }
+        ]
+      }
+    });
+
+    const result = await userDTO(user);
+
+    loggerFactory.info(
+      `Function setPasswordByUserID Orchestrator has been end`
+    );
+
+    return {
+      result: {
+        data: result
+      },
+      msg: 'UserSetPasswordSuccess'
+    };
+  } catch (err) {
+    loggerFactory.error(`Function setPasswordByUserID Orchestrator has error`, {
+      args: returnUtils.returnErrorMessage(err)
+    });
+    return Promise.reject(err);
+  }
+};
+
+/**
+ * @description Helper
+ * @param {*} id
+ * @param {*} updatedAt
+ * @param {*} updatedBy
+ */
+const removeUserInRoles = async (id, updatedAt, updatedBy) => {
+  loggerFactory.info(`Function removeUserInRoles has been start`);
+
+  await dbManager.updateMany({
+    type: 'RoleModel',
+    filter: {
+      users: {
+        $elemMatch: {
+          $eq: id
+        }
+      }
+    },
+    doc: {
+      $pull: {
+        users: id
+      },
+      updatedAt,
+      updatedBy
+    }
+  });
+
+  loggerFactory.info(`Function removeUserInRoles has been end`);
+};
+
 const userOrchestrator = {
   getAllUser,
   createUser,
@@ -469,7 +577,8 @@ const userOrchestrator = {
   editUserByID,
   deleteUserByID,
   changePasswordUserByID,
-  addRolesToUserByUserID
+  addRolesToUserByUserID,
+  setPasswordByUserID
 };
 
 export default userOrchestrator;

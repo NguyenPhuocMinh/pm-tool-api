@@ -133,6 +133,23 @@ const addRolesToUserByUserID = (req, res, next) => {
   loggerFactory.info(`Function addRolesToUserByUserID Controller has been end`);
 };
 
+/**
+ * @description Set Password User By ID Controller
+ * @param {*} req
+ * @param {*} res
+ * @param {*} next
+ */
+const setPasswordByUserID = (req, res, next) => {
+  loggerFactory.info(`Function setPasswordByUserID Controller has been start`);
+  const toolBox = { req, res, next };
+  baseController(
+    toolBox,
+    constants.types.MsgTypeUser,
+    constants.actions.MsgActionUserSetPass
+  );
+  loggerFactory.info(`Function setPasswordByUserID Controller has been end`);
+};
+
 const userController = {
   getAllUser,
   createUser,
@@ -140,7 +157,8 @@ const userController = {
   editUserByID,
   deleteUserByID,
   changePasswordUserByID,
-  addRolesToUserByUserID
+  addRolesToUserByUserID,
+  setPasswordByUserID
 };
 
 export default userController;

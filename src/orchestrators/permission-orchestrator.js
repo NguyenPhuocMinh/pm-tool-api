@@ -397,6 +397,12 @@ const addRolesToPermissionByID = async (toolBox) => {
   }
 };
 
+/**
+ * @description Helper
+ * @param {*} id
+ * @param {*} updatedAt
+ * @param {*} updatedBy
+ */
 const removePermissionsInRoles = async (id, updatedAt, updatedBy) => {
   loggerFactory.info(`Function removePermissionsInRoles has been start`);
 

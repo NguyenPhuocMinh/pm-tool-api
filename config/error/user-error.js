@@ -2,77 +2,85 @@
 
 export default {
   UserFirstNameIsRequired: {
-    message: 'resources.organizations.notifications.errors.fistNameIsRequired',
+    message: 'resources.users.notifications.errors.fistNameIsRequired',
     returnCode: 0,
     statusCode: 400
   },
   UserLastNameIsRequired: {
-    message: 'resources.organizations.notifications.errors.lastNameIsRequired',
+    message: 'resources.users.notifications.errors.lastNameIsRequired',
     returnCode: 0,
     statusCode: 400
   },
   UserEmailIsRequired: {
-    message: 'resources.organizations.notifications.errors.emailIsRequired',
+    message: 'resources.users.notifications.errors.emailIsRequired',
     returnCode: 0,
     statusCode: 400
   },
   UserPasswordIsRequired: {
-    message: 'resources.organizations.notifications.errors.passwordIsRequired',
+    message: 'resources.users.notifications.errors.passwordIsRequired',
     returnCode: 0,
     statusCode: 400
   },
   UserPasswordConfirmIsRequired: {
     message:
-      'resources.organizations.notifications.errors.passwordConfirmIsRequired',
+      'resources.users.notifications.errors.passwordConfirmIsRequired',
     returnCode: 0,
     statusCode: 400
   },
   UserEmailIsNotFormat: {
-    message: 'resources.organizations.notifications.errors.emailIsNotFormat',
+    message: 'resources.users.notifications.errors.emailIsNotFormat',
     returnCode: 0,
     statusCode: 400
   },
   UserPasswordIsValidLength: {
     message:
-      'resources.organizations.notifications.errors.passwordIsValidLength',
+      'resources.users.notifications.errors.passwordIsValidLength',
     returnCode: 0,
     statusCode: 400
   },
   UserPasswordConfirmIsValidLength: {
     message:
-      'resources.organizations.notifications.errors.passwordConfirmIsValidLength',
+      'resources.users.notifications.errors.passwordConfirmIsValidLength',
+    returnCode: 0,
+    statusCode: 400
+  },
+  UserPasswordConfirmIsNotMatches: {
+    message:
+      'resources.users.notifications.errors.passwordConfirmIsNotMatches',
     returnCode: 0,
     statusCode: 400
   },
   UserCurrentPasswordIsRequired: {
     message:
-      'resources.organizations.notifications.errors.currentPasswordIsRequired',
+      'resources.users.notifications.errors.currentPasswordIsRequired',
     returnCode: 0,
     statusCode: 400
   },
   UserNewPasswordConfirmIsRequired: {
     message:
-      'resources.organizations.notifications.errors.currentPasswordConfirmIsRequired',
+      'resources.users.notifications.errors.newPasswordConfirmIsRequired',
     returnCode: 0,
     statusCode: 400
   },
   UserCurrentPasswordIsNotMatches: {
-    message: 'resources.organizations.notifications.errors.currentPasswordIsNotMatches',
+    message:
+      'resources.users.notifications.errors.currentPasswordIsNotMatches',
     returnCode: 0,
     statusCode: 400
   },
   UserNewPasswordConfirmIsNotMatches: {
-    message: 'resources.organizations.notifications.errors.newPasswordConfirmIsNotMatches',
+    message:
+      'resources.users.notifications.errors.newPasswordConfirmIsNotMatches',
     returnCode: 0,
     statusCode: 400
   },
   DuplicateEmailUser: {
-    message: 'resources.organizations.notifications.errors.duplicateEmailUser',
+    message: 'resources.users.notifications.errors.emailIsDuplicate',
     returnCode: 0,
     statusCode: 400
   },
   UserIDNotFound: {
-    message: 'resources.organizations.notifications.errors.idNotFound',
+    message: 'resources.users.notifications.errors.idNotFound',
     returnCode: 0,
     statusCode: 400
   }

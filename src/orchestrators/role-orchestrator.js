@@ -179,7 +179,7 @@ const editRoleByID = async (toolBox) => {
     loggerFactory.info(`Function editRoleByID Orchestrator has been start`);
 
     const { id } = req.params;
-    const { name } = req.body;
+    const { name, activated } = req.body;
 
     if (isEmpty(id)) {
       throw errorCommon.BuildNewError('RoleIDNotFound');
@@ -205,6 +205,10 @@ const editRoleByID = async (toolBox) => {
     });
 
     role = configureCommon.attributeFilter(role);
+
+    if (!activated) {
+      await removeRolesInUserAndPermission(id, role.updatedAt, role.updatedBy);
+    }
 
     loggerFactory.info(`Function editRoleByID Orchestrator has been end`);
 
@@ -245,10 +249,15 @@ const deleteRoleByID = async (toolBox) => {
       throw errorCommon.BuildNewError('RoleIDNotFound');
     }
 
+    req.body = configureCommon.attributeFilter(req.body);
+    const { updatedAt, updatedBy } = req.body;
+
     const result = await dbManager.deleteOne({
       type: 'RoleModel',
       id
     });
+
+    await removeRolesInUserAndPermission(id, updatedAt, updatedBy);
 
     loggerFactory.info(`Function deleteRoleByID Orchestrator has been end`);
 
@@ -383,6 +392,54 @@ const addPermissionsToRoleByID = async (toolBox) => {
     );
     return Promise.reject(err);
   }
+};
+
+/**
+ * @description Helper
+ * @param {*} id
+ * @param {*} updatedAt
+ * @param {*} updatedBy
+ */
+const removeRolesInUserAndPermission = async (id, updatedAt, updatedBy) => {
+  loggerFactory.info(`Function removeRolesInUserAndPermission has been start`);
+
+  await dbManager.updateMany({
+    type: 'UserModel',
+    filter: {
+      users: {
+        $elemMatch: {
+          $eq: id
+        }
+      }
+    },
+    doc: {
+      $pull: {
+        roles: id
+      },
+      updatedAt,
+      updatedBy
+    }
+  });
+
+  await dbManager.updateMany({
+    type: 'PermissionModel',
+    filter: {
+      users: {
+        $elemMatch: {
+          $eq: id
+        }
+      }
+    },
+    doc: {
+      $pull: {
+        roles: id
+      },
+      updatedAt,
+      updatedBy
+    }
+  });
+
+  loggerFactory.info(`Function removeRolesInUserAndPermission has been end`);
 };
 
 const roleOrchestrator = {

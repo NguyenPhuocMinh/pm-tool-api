@@ -30,5 +30,15 @@ export default {
     message: 'resources.users.notifications.success.changePassword',
     returnCode: 1,
     statusCode: 200
+  },
+  UserAddRolesSuccess: {
+    message: 'resources.users.notifications.success.addRoles',
+    returnCode: 1,
+    statusCode: 200
+  },
+  UserSetPasswordSuccess: {
+    message: 'resources.users.notifications.success.setPassword',
+    returnCode: 1,
+    statusCode: 200
   }
 };

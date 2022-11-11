@@ -102,6 +102,7 @@ const TIMEZONE_DEFAULT = 'Asia/Ho_Chi_Minh';
 const DEFAULT_SYSTEM = 'system';
 const DEFAULT_SKIP = 0;
 const DEFAULT_LIMIT = 1000;
+const DEFAULT_PASSWORD = 'S3Cr3t';
 
 const HTTP_STATUS = {
   SUCCESS: '200',
@@ -132,7 +133,8 @@ const types = {
  * @description HOME ACTIONS
  */
 const homeActions = {
-  MsgActionHomePage: 'HOME_PAGE'
+  MsgActionHomePage: 'HOME_PAGE',
+  MsgActionHealthCheck: 'HEALTH_CHECK'
 };
 
 /**
@@ -189,7 +191,8 @@ const userActions = {
   MsgActionUserEdit: 'USER_EDIT',
   MsgActionUserDelete: 'USER_DELETE',
   MsgActionUserChangePass: 'USER_CHANGE_PASS',
-  MsgActionUserAddRoles: 'USER_ADD_ROLES'
+  MsgActionUserAddRoles: 'USER_ADD_ROLES',
+  MsgActionUserSetPass: 'USER_SET_PASS'
 };
 
 const actions = {
@@ -209,6 +212,7 @@ const constants = {
   DEFAULT_SYSTEM,
   DEFAULT_SKIP,
   DEFAULT_LIMIT,
+  DEFAULT_PASSWORD,
   HTTP_STATUS,
   APP_NAME,
   STRUCT_NAME_SERVER,

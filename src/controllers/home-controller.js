@@ -27,8 +27,26 @@ const homePage = (req, res, next) => {
   loggerFactory.info(`Function homePage Controller has been end`);
 };
 
+/**
+ * @description Health Check Controller
+ * @param {*} req
+ * @param {*} res
+ * @param {*} next
+ */
+const healthCheck = (req, res, next) => {
+  loggerFactory.info(`Function healthCheck Controller has been start`);
+  const toolBox = { req, res, next };
+  baseController(
+    toolBox,
+    constants.types.MsgTypeHome,
+    constants.actions.MsgActionHealthCheck
+  );
+  loggerFactory.info(`Function healthCheck Controller has been end`);
+};
+
 const homeController = {
-  homePage
+  homePage,
+  healthCheck
 };
 
 export default homeController;

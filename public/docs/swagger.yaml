@@ -51,7 +51,7 @@ paths:
   /health:
     get:
       tags:
-        - health
+        - home
       security: []
       summary: Health check
       description: Health check
@@ -76,16 +76,16 @@ paths:
   /login:
     post:
       tags:
-        - admin
+        - auth
       security: []
-      summary: Login admin
-      description: Login pm tool
+      summary: Login account
+      description: Login account pm tool
       requestBody:
         required: true
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/adminLogin"
+              $ref: "#/components/schemas/authLogin"
       responses:
         200:
           description: OK
@@ -103,17 +103,17 @@ paths:
   /logout:
     post:
       tags:
-        - admin
+        - auth
       security:
         - X-Access-Token: []
-      summary: Logout admin
-      description: Logout admin pm tool
+      summary: Logout account
+      description: Logout account pm tool
       requestBody:
         required: true
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/adminLogin"
+              $ref: "#/components/schemas/authLogin"
       responses:
         200:
           description: OK
@@ -182,7 +182,7 @@ paths:
           $ref: "#/components/responses/NotFound"
         500:
           $ref: "#/components/responses/ServerError"
-  
+
   /projects:
     get:
       tags:
@@ -238,6 +238,663 @@ paths:
         500:
           $ref: "#/components/responses/ServerError"
 
+  /roles:
+    get:
+      tags:
+        - role
+      security: []
+      summary: Role List
+      description: Role List
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/commonResponse"
+        400:
+          $ref: "#/components/responses/BadRequest"
+        401:
+          $ref: "#/components/responses/UnAuthorization"
+        403:
+          $ref: "#/components/responses/Forbidden"
+        404:
+          $ref: "#/components/responses/NotFound"
+        500:
+          $ref: "#/components/responses/ServerError"
+
+    post:
+      tags:
+        - role
+      security: []
+      summary: Role Create
+      description: Role Create
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/createRole"
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/commonResponse"
+        400:
+          $ref: "#/components/responses/BadRequest"
+        401:
+          $ref: "#/components/responses/UnAuthorization"
+        403:
+          $ref: "#/components/responses/Forbidden"
+        404:
+          $ref: "#/components/responses/NotFound"
+        500:
+          $ref: "#/components/responses/ServerError"
+
+  /roles/{id}:
+    get:
+      tags:
+        - role
+      security:
+        - X-Access-Token: []
+      summary: Get role by id
+      description: Return item role
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+          description: Id of role
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/commonResponse"
+        400:
+          $ref: "#/components/responses/BadRequest"
+        401:
+          $ref: "#/components/responses/UnAuthorization"
+        403:
+          $ref: "#/components/responses/Forbidden"
+        404:
+          $ref: "#/components/responses/NotFound"
+        500:
+          $ref: "#/components/responses/ServerError"
+
+    patch:
+      tags:
+        - role
+      security:
+        - X-Access-Token: []
+      summary: Update role by id
+      description: Return result update role
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/updateRole"
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+          description: Id of role
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/commonResponse"
+        400:
+          $ref: "#/components/responses/BadRequest"
+        401:
+          $ref: "#/components/responses/UnAuthorization"
+        403:
+          $ref: "#/components/responses/Forbidden"
+        404:
+          $ref: "#/components/responses/NotFound"
+        500:
+          $ref: "#/components/responses/ServerError"
+
+    delete:
+      tags:
+        - role
+      security:
+        - X-Access-Token: []
+      summary: Delete role by id
+      description: Return result delete role
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+          description: Id of role
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/commonResponse"
+        400:
+          $ref: "#/components/responses/BadRequest"
+        401:
+          $ref: "#/components/responses/UnAuthorization"
+        403:
+          $ref: "#/components/responses/Forbidden"
+        404:
+          $ref: "#/components/responses/NotFound"
+        500:
+          $ref: "#/components/responses/ServerError"
+
+  /roles/{id}/permissions:
+    get:
+      tags:
+        - role
+      security:
+        - X-Access-Token: []
+      summary: Get permissions by role id
+      description: Return item role
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+          description: Id of role
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/commonResponse"
+        400:
+          $ref: "#/components/responses/BadRequest"
+        401:
+          $ref: "#/components/responses/UnAuthorization"
+        403:
+          $ref: "#/components/responses/Forbidden"
+        404:
+          $ref: "#/components/responses/NotFound"
+        500:
+          $ref: "#/components/responses/ServerError"
+
+  /permissions:
+    get:
+      tags:
+        - permission
+      security: []
+      summary: Permission List
+      description: Permission List
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/commonResponse"
+        400:
+          $ref: "#/components/responses/BadRequest"
+        401:
+          $ref: "#/components/responses/UnAuthorization"
+        403:
+          $ref: "#/components/responses/Forbidden"
+        404:
+          $ref: "#/components/responses/NotFound"
+        500:
+          $ref: "#/components/responses/ServerError"
+
+    post:
+      tags:
+        - permission
+      security: []
+      summary: Permission Create
+      description: Permission Create
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/createPermission"
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/commonResponse"
+        400:
+          $ref: "#/components/responses/BadRequest"
+        401:
+          $ref: "#/components/responses/UnAuthorization"
+        403:
+          $ref: "#/components/responses/Forbidden"
+        404:
+          $ref: "#/components/responses/NotFound"
+        500:
+          $ref: "#/components/responses/ServerError"
+
+  /permissions/{id}:
+    get:
+      tags:
+        - permission
+      security:
+        - X-Access-Token: []
+      summary: Get permission by id
+      description: Return item permission
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+          description: Id of permission
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/commonResponse"
+        400:
+          $ref: "#/components/responses/BadRequest"
+        401:
+          $ref: "#/components/responses/UnAuthorization"
+        403:
+          $ref: "#/components/responses/Forbidden"
+        404:
+          $ref: "#/components/responses/NotFound"
+        500:
+          $ref: "#/components/responses/ServerError"
+
+    patch:
+      tags:
+        - permission
+      security:
+        - X-Access-Token: []
+      summary: Update permission by id
+      description: Return result update permission
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/updatePermission"
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+          description: Id of permission
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/commonResponse"
+        400:
+          $ref: "#/components/responses/BadRequest"
+        401:
+          $ref: "#/components/responses/UnAuthorization"
+        403:
+          $ref: "#/components/responses/Forbidden"
+        404:
+          $ref: "#/components/responses/NotFound"
+        500:
+          $ref: "#/components/responses/ServerError"
+
+    delete:
+      tags:
+        - permission
+      security:
+        - X-Access-Token: []
+      summary: Delete permission by id
+      description: Return result delete permission
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+          description: Id of permission
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/commonResponse"
+        400:
+          $ref: "#/components/responses/BadRequest"
+        401:
+          $ref: "#/components/responses/UnAuthorization"
+        403:
+          $ref: "#/components/responses/Forbidden"
+        404:
+          $ref: "#/components/responses/NotFound"
+        500:
+          $ref: "#/components/responses/ServerError"
+
+  /permissions/{id}/add-roles:
+    patch:
+      tags:
+        - permission
+      security:
+        - X-Access-Token: []
+      summary: Add permission by role id
+      description: Return result add role in permission
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/addRoleToPermission"
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+          description: Id of permission
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/commonResponse"
+        400:
+          $ref: "#/components/responses/BadRequest"
+        401:
+          $ref: "#/components/responses/UnAuthorization"
+        403:
+          $ref: "#/components/responses/Forbidden"
+        404:
+          $ref: "#/components/responses/NotFound"
+        500:
+          $ref: "#/components/responses/ServerError"
+
+  /users:
+    get:
+      tags:
+        - user
+      security: []
+      summary: User List
+      description: User List
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/commonResponse"
+        400:
+          $ref: "#/components/responses/BadRequest"
+        401:
+          $ref: "#/components/responses/UnAuthorization"
+        403:
+          $ref: "#/components/responses/Forbidden"
+        404:
+          $ref: "#/components/responses/NotFound"
+        500:
+          $ref: "#/components/responses/ServerError"
+
+    post:
+      tags:
+        - user
+      security: []
+      summary: User Create
+      description: User Create
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/createUser"
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/commonResponse"
+        400:
+          $ref: "#/components/responses/BadRequest"
+        401:
+          $ref: "#/components/responses/UnAuthorization"
+        403:
+          $ref: "#/components/responses/Forbidden"
+        404:
+          $ref: "#/components/responses/NotFound"
+        500:
+          $ref: "#/components/responses/ServerError"
+
+  /users/{id}:
+    get:
+      tags:
+        - user
+      security:
+        - X-Access-Token: []
+      summary: Get user by id
+      description: Return item user
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+          description: Id of user
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/commonResponse"
+        400:
+          $ref: "#/components/responses/BadRequest"
+        401:
+          $ref: "#/components/responses/UnAuthorization"
+        403:
+          $ref: "#/components/responses/Forbidden"
+        404:
+          $ref: "#/components/responses/NotFound"
+        500:
+          $ref: "#/components/responses/ServerError"
+
+    patch:
+      tags:
+        - user
+      security:
+        - X-Access-Token: []
+      summary: Update user by id
+      description: Return result update user
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/updateUser"
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+          description: Id of user
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/commonResponse"
+        400:
+          $ref: "#/components/responses/BadRequest"
+        401:
+          $ref: "#/components/responses/UnAuthorization"
+        403:
+          $ref: "#/components/responses/Forbidden"
+        404:
+          $ref: "#/components/responses/NotFound"
+        500:
+          $ref: "#/components/responses/ServerError"
+
+    delete:
+      tags:
+        - user
+      security:
+        - X-Access-Token: []
+      summary: Delete user by id
+      description: Return result delete user
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+          description: Id of user
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/commonResponse"
+        400:
+          $ref: "#/components/responses/BadRequest"
+        401:
+          $ref: "#/components/responses/UnAuthorization"
+        403:
+          $ref: "#/components/responses/Forbidden"
+        404:
+          $ref: "#/components/responses/NotFound"
+        500:
+          $ref: "#/components/responses/ServerError"
+
+  /users/{id}/change-password:
+    patch:
+      tags:
+        - user
+      security:
+        - X-Access-Token: []
+      summary: Change password user by id
+      description: Return result update user
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/changePassUser"
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+          description: Id of user
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/commonResponse"
+        400:
+          $ref: "#/components/responses/BadRequest"
+        401:
+          $ref: "#/components/responses/UnAuthorization"
+        403:
+          $ref: "#/components/responses/Forbidden"
+        404:
+          $ref: "#/components/responses/NotFound"
+        500:
+          $ref: "#/components/responses/ServerError"
+
+  /users/{id}/set-password:
+    patch:
+      tags:
+        - user
+      security:
+        - X-Access-Token: []
+      summary: Set temporary password user by id
+      description: Return result update user
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/setPassUser"
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+          description: Id of user
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/commonResponse"
+        400:
+          $ref: "#/components/responses/BadRequest"
+        401:
+          $ref: "#/components/responses/UnAuthorization"
+        403:
+          $ref: "#/components/responses/Forbidden"
+        404:
+          $ref: "#/components/responses/NotFound"
+        500:
+          $ref: "#/components/responses/ServerError"
+
+  /users/{id}/add-roles:
+    patch:
+      tags:
+        - user
+      security:
+        - X-Access-Token: []
+      summary: Add role to user by id
+      description: Return result update user
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/addRoleToUser"
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+          description: Id of user
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/commonResponse"
+        400:
+          $ref: "#/components/responses/BadRequest"
+        401:
+          $ref: "#/components/responses/UnAuthorization"
+        403:
+          $ref: "#/components/responses/Forbidden"
+        404:
+          $ref: "#/components/responses/NotFound"
+        500:
+          $ref: "#/components/responses/ServerError"
+
+          
 ## components
 components:
   # security
@@ -305,6 +962,27 @@ components:
           type: integer
           example: 200/400/500/...
 
+    commonProperties:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+
+    ## Auth schema
+    authLogin:
+      type: object
+      required:
+        - email
+        - password
+      properties:
+        email:
+          type: string
+        password:
+          type: string
+
+    ## Organization schema
     organizationCreate:
       type: object
       required:
@@ -316,7 +994,8 @@ components:
         activated:
           type: boolean
           default: true
-    
+
+    ## Project schema
     projectCreate:
       type: object
       required:
@@ -332,3 +1011,110 @@ components:
         activated:
           type: boolean
           default: true
+
+    ## Role schema
+    createRole:
+      type: object
+      required:
+        - name
+      properties:
+        name:
+          type: string
+          default: role name
+        description:
+          type: string
+
+    updateRole:
+      type: object
+      required:
+        - name
+      properties:
+        name:
+          type: string
+          default: role name
+        description:
+          type: string
+
+    ## Permission schema
+    createPermission:
+      type: object
+      required:
+        - name
+      properties:
+        name:
+          type: string
+          default: role name
+        description:
+          type: string
+
+    updatePermission:
+      type: object
+      required:
+        - name
+      properties:
+        name:
+          type: string
+          default: role name
+        description:
+          type: string
+
+    addRoleToPermission:
+      type: object
+      properties:
+        availableRoles:
+          type: array
+          $ref: "#/components/schemas/commonProperties"
+        assignedRoles:
+          type: array
+          $ref: "#/components/schemas/commonProperties"
+
+    ## User schema
+    createUser:
+      type: object
+      required:
+        - firstName
+        - lastName
+        - email
+      properties:
+        firstName:
+          type: string
+        lastName:
+          type: string
+        email:
+          type: string
+
+    updateUser:
+      type: object
+      required:
+        - firstName
+        - lastName
+        - email
+      properties:
+        firstName:
+          type: string
+        lastName:
+          type: string
+        email:
+          type: string
+
+    setPassUser:
+      type: object
+      required:
+        - password
+        - passwordConfirm
+      properties:
+        password:
+          type: string
+        passwordConfirm:
+          type: string
+
+    addRoleToUser:
+      type: object
+      properties:
+        availableRoles:
+          type: array
+          $ref: "#/components/schemas/commonProperties"
+        assignedRoles:
+          type: array
+          $ref: "#/components/schemas/commonProperties"
+        

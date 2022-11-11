@@ -146,6 +146,7 @@ const convertDataResponse = async (data = {}) => {
     response = data.toJSON();
 
     response.id = response._id;
+
     delete response._id;
 
     return Promise.resolve(response);

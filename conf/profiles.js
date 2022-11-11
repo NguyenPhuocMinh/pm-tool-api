@@ -3,7 +3,7 @@
 require('dotenv').config();
 
 const profiles = {
-  VERSION: 'v0.1.5',
+  VERSION: 'v0.1.6',
   APP_PORT: process.env.APP_PORT || 8080,
   APP_HOST: process.env.APP_HOST || '0.0.0.0',
   APP_DOCS_PATH: process.env.APP_DOCS_PATH || '/docs',

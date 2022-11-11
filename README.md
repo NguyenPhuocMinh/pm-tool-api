@@ -51,18 +51,17 @@ $ npm install
 ├── Dockerfile
 ├── README.md
 ├── charts
-│   ├── cert-manager
-│   ├── ingress
-│   └── pm-tool-api
 ├── conf
 ├── config
 ├── constants
 ├── core
 │   ├── common
 │   ├── database
-│   └── models
+│   ├── models
+│   └── schemas
 ├── deploy.sh
 ├── docker-compose.yml
+├── helpers
 ├── middlewares
 ├── package.json
 ├── public

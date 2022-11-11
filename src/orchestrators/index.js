@@ -192,6 +192,12 @@ const orchestratorUser = [
     type: constants.types.MsgTypeUser,
     action: constants.actions.MsgActionUserAddRoles,
     orchestrator: userOrchestrator.addRolesToUserByUserID
+  },
+  {
+    type: constants.types.MsgTypeUser,
+    action: constants.actions.MsgActionUserSetPass,
+    orchestrator: userOrchestrator.setPasswordByUserID,
+    schema: 'userSetPassSchema'
   }
 ];
 

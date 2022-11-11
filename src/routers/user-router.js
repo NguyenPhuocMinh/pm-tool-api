@@ -37,7 +37,7 @@ const userRouter = [
     controller: userController.deleteUserByID
   },
   {
-    pathName: '/users/:id',
+    pathName: '/users/:id/change-password',
     method: 'PATCH',
     methodName: 'changePasswordUserByID',
     controller: userController.changePasswordUserByID
@@ -47,6 +47,12 @@ const userRouter = [
     method: 'PATCH',
     methodName: 'addRolesToUserByUserID',
     controller: userController.addRolesToUserByUserID
+  },
+  {
+    pathName: '/users/:id/set-password',
+    method: 'PATCH',
+    methodName: 'setPasswordByUserID',
+    controller: userController.setPasswordByUserID
   }
 ];
 

@@ -29,8 +29,26 @@ const homePage = async (toolBox) => {
   }
 };
 
+const healthCheck = async (toolBox) => {
+  try {
+    loggerFactory.info(`Function healthCheck has been start`);
+    return {
+      result: {
+        data: 'Service has been start success'
+      },
+      msg: 'GetHealthCheckSuccess'
+    };
+  } catch (err) {
+    loggerFactory.info(`Function healthCheck has error`, {
+      args: returnUtils.returnErrorMessage(err)
+    });
+    return Promise.reject(err);
+  }
+};
+
 const homeOrchestrator = {
-  homePage
+  homePage,
+  healthCheck
 };
 
 export default homeOrchestrator;

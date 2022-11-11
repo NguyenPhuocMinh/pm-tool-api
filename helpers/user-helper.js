@@ -5,13 +5,7 @@ import { isEmpty, isEqual } from 'lodash';
 import errorCommon from '../core/common/error-common';
 import validateUtils from '../utils/validate-util';
 
-const validateUserCreate = ({
-  firstName,
-  lastName,
-  email,
-  password,
-  passwordConfirm
-}) => {
+const validateUserCreate = ({ firstName, lastName, email }) => {
   switch (true) {
     case isEmpty(firstName):
       throw errorCommon.BuildNewError('UserFirstNameIsRequired');
@@ -19,10 +13,6 @@ const validateUserCreate = ({
       throw errorCommon.BuildNewError('UserLastNameIsRequired');
     case isEmpty(email):
       throw errorCommon.BuildNewError('UserEmailIsRequired');
-    case isEmpty(password):
-      throw errorCommon.BuildNewError('UserPasswordIsRequired');
-    case isEmpty(passwordConfirm):
-      throw errorCommon.BuildNewError('UserPasswordConfirmIsRequired');
     default:
       break;
   }
@@ -31,15 +21,6 @@ const validateUserCreate = ({
   if (!isValidEmail) {
     throw errorCommon.BuildNewError('UserEmailIsNotFormat');
   }
-
-  // validate length
-  validatePasswordLength(password, passwordConfirm);
-
-  // validate compare
-  validateComparePassword(
-    { password, passwordConfirm },
-    'UserPasswordConfirmIsNotMatches'
-  );
 };
 
 const validateUserUpdate = ({ firstName, lastName, email }) => {
@@ -81,10 +62,30 @@ const validateUserChangePass = ({
   );
 };
 
+const validateUserSetPass = ({ password, passwordConfirm }) => {
+  switch (true) {
+    case isEmpty(password):
+      throw errorCommon.BuildNewError('UserPasswordIsRequired');
+    case isEmpty(passwordConfirm):
+      throw errorCommon.BuildNewError('UserPasswordConfirmIsRequired');
+    default:
+      break;
+  }
+
+  // validate length
+  validatePasswordLength(password, passwordConfirm);
+
+  // validate compare
+  validateComparePassword(
+    { password: password, passwordConfirm: passwordConfirm },
+    'UserPasswordConfirmNotMatches'
+  );
+};
+
 const validatePasswordLength = (password, passwordConfirm) => {
   const isValidPasswordLength = validateUtils.validateStringLength(
     password,
-    6,
+    8,
     'min'
   );
 
@@ -94,7 +95,7 @@ const validatePasswordLength = (password, passwordConfirm) => {
 
   const isValidPasswordConfirmLength = validateUtils.validateStringLength(
     passwordConfirm,
-    6,
+    8,
     'min'
   );
 
@@ -109,4 +110,9 @@ const validateComparePassword = ({ password, passwordConfirm }, message) => {
   }
 };
 
-export { validateUserCreate, validateUserUpdate, validateUserChangePass };
+export {
+  validateUserCreate,
+  validateUserUpdate,
+  validateUserChangePass,
+  validateUserSetPass
+};

@@ -68,6 +68,7 @@ const baseController = async (toolBox, msgType, msgAction) => {
     loggerFactory.error(`Function BaseController has error`, {
       args: returnUtils.returnErrorMessage(err)
     });
+    console.error(err);
     return responseCommon.BuildErrorResponse(toolBox, err);
   }
 };

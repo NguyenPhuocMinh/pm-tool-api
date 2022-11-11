@@ -12,7 +12,8 @@ export default {
     passwordConfirm: { type: String },
     isAdmin: { type: Boolean, default: false },
     roles: [{ type: Schema.Types.ObjectId, ref: 'RoleModel' }],
-    photoURL: { type: String },
+    avatarURL: { type: String },
+    backgroundURL: { type: String },
     // filter
     slug: { type: String },
     deleted: { type: Boolean, default: false },

@@ -10,7 +10,8 @@ import logUtils from '../../utils/log-util';
 import returnUtils from '../../utils/return-util';
 
 import errorCommon from './error-common';
-import schemaCommon from './schema-common';
+
+import schemas from '../schemas';
 
 const ajv = new Ajv({ allErrors: true, strict: false });
 addFormats(ajv, { mode: 'fast', keywords: true });
@@ -27,8 +28,8 @@ const BuildNewValidateSchema = async (schema, data) => {
       args: schema
     });
     const errors = {};
-    if (Object.prototype.hasOwnProperty.call(schemaCommon, schema)) {
-      const validate = ajv.compile(schemaCommon[schema]);
+    if (Object.prototype.hasOwnProperty.call(schemas, schema)) {
+      const validate = ajv.compile(schemas[schema]);
       const valid = validate(data);
       if (!valid) {
         loggerFactory.debug(`validate errors`, {

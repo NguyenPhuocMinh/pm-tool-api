@@ -1,23 +1,34 @@
 'use strict';
 
-import { isEmpty } from 'lodash';
+import { isEmpty, differenceBy, toString } from 'lodash';
 
 import constants from '../../constants';
 import logUtils from '../../utils/log-util';
+
+import dbManager from '../../core/database';
 
 const loggerFactory = logUtils.createLogger(
   constants.APP_NAME,
   constants.STRUCT_DTO.USER_DTO
 );
 
-const userDTO = (data) => {
+const userDTO = async (data) => {
   loggerFactory.data('Func userDTO has been start');
   const response = {};
 
   if (!isEmpty(data)) {
     data = data.toJSON();
 
-    const { _id, firstName, lastName, email, isAdmin, createdAt, updatedAt } = data;
+    const {
+      _id,
+      firstName,
+      lastName,
+      email,
+      isAdmin,
+      roles,
+      createdAt,
+      updatedAt
+    } = data;
 
     response.id = _id;
     response.firstName = firstName;
@@ -26,6 +37,35 @@ const userDTO = (data) => {
     response.isAdmin = isAdmin;
     response.createdAt = createdAt;
     response.updatedAt = updatedAt;
+
+    const listRole = await dbManager.findAll({
+      type: 'RoleModel',
+      filter: {
+        deleted: false,
+        activated: true
+      },
+      projection: {
+        _id: 1,
+        name: 1
+      }
+    });
+
+    const roleMap = roles.map((r) => {
+      return {
+        id: toString(r._id),
+        name: r.name
+      };
+    });
+
+    const listRoleMap = listRole.map((e) => {
+      return {
+        id: toString(e._id),
+        name: e.name
+      };
+    });
+
+    response.availableRoles = differenceBy(listRoleMap, roleMap, 'id');
+    response.assignedRoles = roleMap;
 
     loggerFactory.data('Func userDTO has data');
 

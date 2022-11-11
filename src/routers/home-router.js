@@ -11,6 +11,12 @@ const homeRouter = [
     method: 'GET',
     methodName: 'homePage',
     controller: homeController.homePage
+  },
+  {
+    pathName: '/health',
+    method: 'GET',
+    methodName: 'healthCheck',
+    controller: homeController.healthCheck
   }
 ];
 
