@@ -1,4 +1,21 @@
 {
-  "plugins": ["source-map-support"],
+  "plugins": [
+    "source-map-support",
+    [
+      "module-resolver",
+      {
+        "root": ["./"],
+        "alias": {
+          "@conf": "./src/conf",
+          "@configs": "./src/configs",
+          "@constants": "./src/constants",
+          "@core": "./src/core",
+          "@helpers": "./src/helpers",
+          "@mappings": "./src/mappings",
+          "@middleware": "./src/middleware"
+        }
+      }
+    ]
+  ],
   "presets": ["@babel/preset-env"]
 }
