@@ -9,6 +9,7 @@ RUN npm install
 
 ENV APP_PORT=8080
 ENV APP_HOST=0.0.0.0
+ENV NODE_ENV=dev
 
 COPY . .
 
@@ -22,6 +23,7 @@ COPY package*.json ./
 
 ENV APP_PORT=8080
 ENV APP_HOST=0.0.0.0
+ENV NODE_ENV=production
 
 RUN npm install --only=production
 

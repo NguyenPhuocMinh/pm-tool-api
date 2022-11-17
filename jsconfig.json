@@ -1,0 +1,15 @@
+{
+  "compilerOptions": {
+    "baseUrl": "./",
+    "paths": {
+      "@conf/*": ["src/conf/*"],
+      "@configs/*": ["src/configs/*"],
+      "@constants": ["src/constants/index"],
+      "@core/*": ["src/core/*"],
+      "@helpers/*": ["src/helpers/*"],
+      "@mappings/*": ["src/mappings/*"],
+      "@middleware/*": ["src/middleware/*"]
+    }
+  },
+  "exclude": ["node_modules"]
+}

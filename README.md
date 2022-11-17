@@ -44,6 +44,10 @@ $ npm install
 - APP_DOCS_PATH=/docs
 - APP_MONGO_URI=mongodb://127.0.0.1:27017/pm-tool
 - APP_DOMAIN_PATH=http://localhost:3500
+- APP_SECRET_KEY=do-biet-day-secret
+- APP_SECRET_REFRESH_KEY=do-biet-day-refresh
+- APP_AUDIENCE=http://localhost:3500
+- APP_ISSUER=pm-tool-iss
 ## Structures
 
 ```
@@ -51,31 +55,41 @@ $ npm install
 ├── Dockerfile
 ├── README.md
 ├── charts
-├── conf
-├── config
-├── constants
-├── core
-│   ├── common
-│   ├── database
-│   ├── models
-│   └── schemas
+│   ├── cert-manager
+│   ├── ingress
+│   └── pm-tool-api
 ├── deploy.sh
 ├── docker-compose.yml
-├── helpers
-├── middlewares
+├── jsconfig.json
 ├── package.json
 ├── public
 │   └── docs
 │       └── swagger.yaml
+├── scripts
+│   └── create-admin.sh
 ├── server.js
 ├── src
-│   ├── controllers
-│   ├── dtos
-│   ├── orchestrators
-│   ├── routers
-│   └── services
+│   ├── conf
+│   ├── configs
+│   ├── constants
+│   ├── core
+│   │   ├── authorization
+│   │   ├── common
+│   │   ├── database
+│   │   │   └── models
+│   │   ├── logger
+│   │   ├── shared
+│   │   │   ├── dtos
+│   │   │   └── schemas
+│   │   └── utils
+│   ├── helpers
+│   ├── mappings
+│   │   ├── controllers
+│   │   ├── orchestrators
+│   │   ├── routers
+│   │   └── services
+│   └── middleware
 ├── tests
-├── utils
 └── webpack.config.js
 ```
 
@@ -128,9 +142,9 @@ $ docker run -d -p 8080:8080 pm-tool-api
 
 - **When merge master so remember**:
   - **Step 1** => go to file config.yml in folder .circleci change APP_DOCKER_TAG and APP_HELM_TAG new version
-  - **Step 2** => go to file values.yaml in folder /helm-charts/pm-tool-api change new version docker tag
-  - **Step 3** => go to file Chart.yaml in folder /helm-charts/pm-tool-api change new version chart
-  - **Step 4** => go to file profiles.js in folder conf change new version
+  - **Step 2** => go to file values.yaml in folder /charts/pm-tool-api change new version docker tag
+  - **Step 3** => go to file Chart.yaml in folder /charts/pm-tool-api change new version chart
+  - **Step 4** => go to file profiles.js in folder /src/conf change new version
 
 ## Circle CI/CD
 

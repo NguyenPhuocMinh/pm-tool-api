@@ -32,5 +32,24 @@ module.exports = {
         exclude: /node_modules/
       }
     ]
+  },
+  resolve: {
+    extensions: ['.js', '.json'],
+    alias: {
+      '@src': path.resolve(__dirname, './src'),
+      '@conf': path.resolve(__dirname, './src/conf'),
+      '@configs': path.resolve(__dirname, './src/configs'),
+      '@constants': path.resolve(__dirname, './src/constants'),
+      '@core': path.resolve(__dirname, './src/core'),
+      '@helpers': path.resolve(__dirname, './src/helpers'),
+      '@mappings': path.resolve(__dirname, './src/mappings'),
+      '@middleware': path.resolve(__dirname, './src/middleware')
+    },
+    modules: [
+      'node_modules',
+      'bower_components',
+      'shared',
+      '/shared/vendor/modules'
+    ]
   }
 };

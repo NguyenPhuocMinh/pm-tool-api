@@ -2,7 +2,7 @@
 
 import { describe, it } from 'mocha';
 import { expect } from 'chai';
-import sum from '../src/services/sum';
+import sum from '../src/mappings/services/sum';
 
 describe('It will test the sum service', () => {
   it('should test the sum of 2 numbers', (done) => {
