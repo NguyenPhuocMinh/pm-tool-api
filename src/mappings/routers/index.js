@@ -5,9 +5,9 @@ import { get, toLower } from 'lodash';
 
 import constants from '@constants';
 import logger from '@core/logger';
-import { formatUtils } from '@core/utils';
+import { formatErrorMessage } from '@utils';
 
-import authMiddleware from '@middleware/auth-middleware';
+import { authMiddleware } from '@middleware';
 
 import authRouter from './auth-router';
 import homeRouter from './home-router';
@@ -55,7 +55,7 @@ const routers = routes.map((route) => {
     return router;
   } catch (err) {
     loggerFactory.error(`Layer route has error`, {
-      args: formatUtils.formatErrorMessage(err)
+      args: formatErrorMessage(err)
     });
     throw err;
   }

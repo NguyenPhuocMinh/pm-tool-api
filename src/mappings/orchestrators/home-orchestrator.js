@@ -3,9 +3,11 @@
 import Promise from 'bluebird';
 
 import constants from '@constants';
-import profiles from '@conf/profiles';
+import { profiles } from '@conf';
+import { formatErrorMessage } from '@utils';
+
+// core
 import logger from '@core/logger';
-import { formatUtils } from '@core/utils';
 
 const loggerFactory = logger.createLogger(
   constants.APP_NAME,
@@ -27,7 +29,7 @@ const homePage = async (toolBox) => {
     };
   } catch (err) {
     loggerFactory.info(`Function homePage has error`, {
-      args: formatUtils.formatErrorMessage(err)
+      args: formatErrorMessage(err)
     });
     return Promise.reject(err);
   }

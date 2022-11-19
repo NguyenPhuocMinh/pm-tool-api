@@ -1,17 +1,8 @@
 'use strict';
 
-import configureCommon from './configure-common';
-import lookupCommon from './lookup-common';
-import templateCommon from './template-common';
-import errorCommon from './error-common';
-import responseCommon from './response-common';
-import validateCommon from './validate-common';
-
-export {
-  configureCommon,
-  lookupCommon,
-  templateCommon,
-  errorCommon,
-  responseCommon,
-  validateCommon
-};
+export * from './configure-common';
+export * from './lookup-common';
+export * from './template-common';
+export * from './error-common';
+export * from './response-common';
+export * from './validate-common';

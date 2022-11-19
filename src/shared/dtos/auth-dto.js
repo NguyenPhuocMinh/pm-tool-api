@@ -1,6 +1,6 @@
 'use strict';
 
-import { isEmpty, map, compact, flatten } from 'lodash';
+import { isEmpty, map } from 'lodash';
 
 import constants from '@constants';
 import logger from '@core/logger';
@@ -10,9 +10,10 @@ const loggerFactory = logger.createLogger(
   constants.STRUCT_DTO.AUTH_DTO
 );
 
-const authDTO = (data) => {
+const authDTO = (data = {}, attributes = {}) => {
   loggerFactory.data('Func authDTO has been start');
   const response = {};
+  const { permissions } = attributes;
 
   if (!isEmpty(data)) {
     data = data.toJSON();
@@ -35,8 +36,8 @@ const authDTO = (data) => {
     response.email = email;
     response.locale = locale || 'en';
     response.isAdmin = isAdmin;
-    response.roles = convertRolesAndPermissions(roles).roleMap;
-    response.permissions = convertRolesAndPermissions(roles).permissionMap;
+    response.roles = convertMap(roles);
+    response.permissions = convertMap(permissions);
     response.avatarURL = avatarURL;
     response.backgroundURL = backgroundURL;
 
@@ -49,23 +50,10 @@ const authDTO = (data) => {
   return response;
 };
 
-const convertRolesAndPermissions = (roles) => {
-  const roleMap = map(roles, (role) => role.name);
+const convertMap = (data = []) => {
+  const dataMap = map(data, (e) => e.name);
 
-  const permissionMap = compact(
-    flatten(
-      map(roles, (role) => {
-        const permissions = [];
-        permissions.push(role.permissions);
-        return permissions;
-      })
-    ).map((p) => p.name)
-  );
-
-  return {
-    roleMap,
-    permissionMap
-  };
+  return dataMap;
 };
 
 export default authDTO;

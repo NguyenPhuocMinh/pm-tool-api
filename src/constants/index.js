@@ -194,6 +194,7 @@ const roleActions = {
   MsgActionRoleGetID: 'ROLE_GET_ID',
   MsgActionRoleEdit: 'ROLE_EDIT',
   MsgActionRoleDelete: 'ROLE_DELETE',
+  MsgActionRoleGetUsers: 'ROLE_GET_USERS',
   MsgActionRoleGetPermissions: 'ROLE_GET_PERMISSIONS',
   MsgActionRoleAddPermissions: 'ROLE_ADD_PERMISSIONS'
 };

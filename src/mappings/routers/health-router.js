@@ -7,7 +7,6 @@ import { healthController } from '../controllers';
  */
 const healthRouter = [
   {
-    enable: true,
     pathName: '/healths',
     method: 'GET',
     methodName: 'healthCheck',

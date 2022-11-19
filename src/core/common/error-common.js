@@ -2,14 +2,14 @@
 
 import constants from '@constants';
 import logger from '@core/logger';
-import errorCodes from '@configs/error-codes';
+import { errorCodes } from '@configs';
 
 const loggerFactory = logger.createLogger(
   constants.APP_NAME,
   constants.STRUCT_COMMON.ERROR_COMMON
 );
 
-const BuildNewError = (msg = '') => {
+export const buildNewError = (msg = '') => {
   try {
     loggerFactory.error(`Function BuildNewError has been start`);
     const error = {};
@@ -35,9 +35,3 @@ const BuildNewError = (msg = '') => {
     throw err;
   }
 };
-
-const errorCommon = {
-  BuildNewError
-};
-
-export default errorCommon;

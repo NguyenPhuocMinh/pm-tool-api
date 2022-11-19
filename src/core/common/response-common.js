@@ -3,25 +3,24 @@
 import { assign, get } from 'lodash';
 
 import constants from '@constants';
+import { formatErrorMessage } from '@utils';
+
+// core
 import logger from '@core/logger';
-import { templateCommon } from '@core/common';
-import { formatUtils } from '@core/utils';
+import { buildNewSuccessTemplate, buildNewErrorTemplate } from '@core/common';
 
 const loggerFactory = logger.createLogger(
   constants.APP_NAME,
   constants.STRUCT_COMMON.RESPONSE_COMMON
 );
 
-const BuildSuccessResponse = (toolBox, args) => {
+export const buildSuccessResponse = (toolBox, args) => {
   try {
     loggerFactory.info(`BuildSuccessResponse has been start`);
     const { res } = toolBox;
     const header = get(args, 'headers');
 
-    const templateSuccessResponse = templateCommon.BuildNewSuccessTemplate(
-      toolBox,
-      args
-    );
+    const templateSuccessResponse = buildNewSuccessTemplate(toolBox, args);
 
     const headers = assign({}, header ?? {}, {
       'X-Return-Code': templateSuccessResponse.returnCode
@@ -35,21 +34,18 @@ const BuildSuccessResponse = (toolBox, args) => {
       .send(templateSuccessResponse);
   } catch (err) {
     loggerFactory.error(`BuildSuccessResponse has error`, {
-      args: formatUtils.formatErrorMessage(err)
+      args: formatErrorMessage(err)
     });
     throw err;
   }
 };
 
-const BuildErrorResponse = (toolBox, args) => {
+export const buildErrorResponse = (toolBox, args) => {
   try {
     loggerFactory.error(`BuildErrorResponse has been start`);
     const { res } = toolBox;
 
-    const templateErrorResponse = templateCommon.BuildNewErrorTemplate(
-      toolBox,
-      args
-    );
+    const templateErrorResponse = buildNewErrorTemplate(toolBox, args);
 
     const headers = {
       'X-Return-Code': templateErrorResponse.returnCode
@@ -63,15 +59,8 @@ const BuildErrorResponse = (toolBox, args) => {
       .send(templateErrorResponse);
   } catch (err) {
     loggerFactory.error(`BuildErrorResponse has been error`, {
-      args: formatUtils.formatErrorMessage(err)
+      args: formatErrorMessage(err)
     });
     throw err;
   }
 };
-
-const responseCommon = {
-  BuildSuccessResponse,
-  BuildErrorResponse
-};
-
-export default responseCommon;

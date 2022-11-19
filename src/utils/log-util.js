@@ -1,7 +1,7 @@
 'use strict';
 
 import chalk from 'chalk';
-import options from '@conf/options';
+import { options } from '@conf';
 
 const symbolInfo = options.loggerOptions.symbols.info;
 const symbolWarn = options.loggerOptions.symbols.warn;
@@ -22,7 +22,7 @@ const colorSilly = options.loggerOptions.colors.silly;
 const colorData = options.loggerOptions.colors.data;
 const colorDefault = options.loggerOptions.colors.default;
 
-const convertLogMessage = (level, label, message, timestamp) => {
+export const convertLogMessage = (level, label, message, timestamp) => {
   switch (level) {
     case symbolInfo:
       return {
@@ -90,7 +90,7 @@ const convertLogMessage = (level, label, message, timestamp) => {
   }
 };
 
-const convertLogArgs = (level, args) => {
+export const convertLogArgs = (level, args) => {
   let argsLog = '';
 
   if (typeof args === 'undefined') {
@@ -140,10 +140,3 @@ const convertLogArgs = (level, args) => {
       };
   }
 };
-
-const convertUtils = {
-  convertLogMessage,
-  convertLogArgs
-};
-
-export default convertUtils;

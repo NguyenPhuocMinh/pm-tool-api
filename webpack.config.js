@@ -43,7 +43,10 @@ module.exports = {
       '@core': path.resolve(__dirname, './src/core'),
       '@helpers': path.resolve(__dirname, './src/helpers'),
       '@mappings': path.resolve(__dirname, './src/mappings'),
-      '@middleware': path.resolve(__dirname, './src/middleware')
+      '@middleware': path.resolve(__dirname, './src/middleware'),
+      '@services': path.resolve(__dirname, './src/services'),
+      '@shared': path.resolve(__dirname, './src/shared'),
+      '@utils': path.resolve(__dirname, './src/utils')
     },
     modules: [
       'node_modules',

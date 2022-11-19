@@ -3,16 +3,18 @@
 import { isEmpty } from 'lodash';
 
 import constants from '@constants';
+import { successCodes } from '@configs';
+import { formatErrorMessage } from '@utils';
+
+// core
 import logger from '@core/logger';
-import successCodes from '@configs/success-codes';
-import { formatUtils } from '@core/utils';
 
 const loggerFactory = logger.createLogger(
   constants.APP_NAME,
   constants.STRUCT_COMMON.TEMPLATE_COMMON
 );
 
-const BuildNewSuccessTemplate = (toolBox, args = {}) => {
+export const buildNewSuccessTemplate = (toolBox, args = {}) => {
   const { req } = toolBox;
   const { msg, result } = args;
 
@@ -52,13 +54,13 @@ const BuildNewSuccessTemplate = (toolBox, args = {}) => {
     return template;
   } catch (err) {
     loggerFactory.error('BuildNewTemplate has error', {
-      args: formatUtils.formatErrorMessage(err)
+      args: formatErrorMessage(err)
     });
     throw err;
   }
 };
 
-const BuildNewErrorTemplate = (toolBox, args = {}) => {
+export const buildNewErrorTemplate = (toolBox, args = {}) => {
   const { req } = toolBox;
 
   try {
@@ -81,15 +83,8 @@ const BuildNewErrorTemplate = (toolBox, args = {}) => {
     return template;
   } catch (err) {
     loggerFactory.error('BuildNewErrorTemplate has error', {
-      args: formatUtils.formatErrorMessage(err)
+      args: formatErrorMessage(err)
     });
     throw err;
   }
 };
-
-const templateCommon = {
-  BuildNewSuccessTemplate,
-  BuildNewErrorTemplate
-};
-
-export default templateCommon;

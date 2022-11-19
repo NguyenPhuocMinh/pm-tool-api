@@ -96,6 +96,23 @@ const deleteRoleByID = (req, res, next) => {
 };
 
 /**
+ * @description Get User In Role By Role ID Controller
+ * @param {*} req
+ * @param {*} res
+ * @param {*} next
+ */
+const getUsersByRoleID = (req, res, next) => {
+  loggerFactory.info(`Function getUsersByRoleID Controller has been start`);
+  const toolBox = { req, res, next };
+  baseController(
+    toolBox,
+    constants.types.MsgTypeRole,
+    constants.actions.MsgActionRoleGetUsers
+  );
+  loggerFactory.info(`Function getUsersByRoleID Controller has been end`);
+};
+
+/**
  * @description Get Permission In Role By Role ID Controller
  * @param {*} req
  * @param {*} res
@@ -141,6 +158,7 @@ const roleController = {
   getRolByID,
   editRoleByID,
   deleteRoleByID,
+  getUsersByRoleID,
   getPermissionsByRoleID,
   addPermissionsToRoleByRoleID
 };

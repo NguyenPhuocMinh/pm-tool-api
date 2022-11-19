@@ -5,21 +5,30 @@ import bcrypt from 'bcrypt';
 import { assign, isEmpty } from 'lodash';
 
 import constants from '@constants';
-import options from '@conf/options';
+import { options } from '@conf';
+import { formatSlug, formatFullName, formatErrorMessage } from '@utils';
 
+// core
 import logger from '@core/logger';
 import dbManager from '@core/database';
+import {
+  buildNewError,
+  createFilterPagination,
+  createFindQuery,
+  createSortOrderQuery,
+  convertDataResponseMap,
+  checkDuplicate,
+  attributeFilter
+} from '@core/common';
 
-import { formatUtils } from '@core/utils';
-import { errorCommon, configureCommon } from '@core/common';
-import { userDTO } from '@core/shared/dtos';
+import { userDTO } from '@shared/dtos';
 
 import {
   validateUserCreate,
   validateUserUpdate,
   validateUserChangePass,
   validateUserSetPass
-} from '@helpers/user-helper';
+} from '@helpers';
 
 const loggerFactory = logger.createLogger(
   constants.APP_NAME,
@@ -35,9 +44,9 @@ const getAllUser = async (toolBox) => {
   try {
     loggerFactory.info(`Function getAllUser has been start`);
 
-    const { skip, limit } = configureCommon.createFilterPagination(req.query);
-    const query = configureCommon.createFindQuery(req.query, ['email']);
-    const sort = configureCommon.createSortOrderQuery(req.query);
+    const { skip, limit } = createFilterPagination(req.query);
+    const query = createFindQuery(req.query, ['email'], [{ isAdmin: false }]);
+    const sort = createSortOrderQuery(req.query);
 
     const users = await dbManager.findAll({
       type: 'UserModel',
@@ -62,7 +71,7 @@ const getAllUser = async (toolBox) => {
       filter: query
     });
 
-    const response = await configureCommon.convertDataResponseMap(users);
+    const response = await convertDataResponseMap(users);
 
     loggerFactory.info(`Function getAllUser has been end`);
 
@@ -75,7 +84,7 @@ const getAllUser = async (toolBox) => {
     };
   } catch (err) {
     loggerFactory.info(`Function getAllUser has error`, {
-      args: formatUtils.formatErrorMessage(err)
+      args: formatErrorMessage(err)
     });
     return Promise.reject(err);
   }
@@ -95,23 +104,23 @@ const createUser = async (toolBox) => {
     // validate inputs
     validateUserCreate(req.body);
 
-    const fullName = formatUtils.formatFullName(firstName, lastName);
-    const slug = formatUtils.formatSlug(fullName);
+    const fullName = formatFullName(firstName, lastName);
+    const slug = formatSlug(fullName);
 
     // check duplicate slug
-    const isDuplicate = await configureCommon.checkDuplicate('UserModel', {
+    const isDuplicate = await checkDuplicate('UserModel', {
       $or: [{ email }, { slug }]
     });
 
     if (isDuplicate) {
-      throw errorCommon.BuildNewError('DuplicateEmailUser');
+      throw buildNewError('DuplicateEmailUser');
     }
 
     let user = assign(req.body, {
       slug: slug
     });
 
-    user = configureCommon.attributeFilter(user, 'create');
+    user = attributeFilter(user, 'create');
 
     // default password
     const hashDefaultPassword = bcrypt.hashSync(
@@ -138,7 +147,7 @@ const createUser = async (toolBox) => {
     };
   } catch (err) {
     loggerFactory.info(`Function createUser has error`, {
-      args: formatUtils.formatErrorMessage(err)
+      args: formatErrorMessage(err)
     });
     return Promise.reject(err);
   }
@@ -156,7 +165,7 @@ const getUserByID = async (toolBox) => {
     const { id } = req.params;
 
     if (isEmpty(id)) {
-      throw errorCommon.BuildNewError('UserIDNotFound');
+      throw buildNewError('UserIDNotFound');
     }
 
     const user = await dbManager.getOne({
@@ -187,7 +196,7 @@ const getUserByID = async (toolBox) => {
     };
   } catch (err) {
     loggerFactory.info(`Function getUserByID Orchestrator has error`, {
-      args: formatUtils.formatErrorMessage(err)
+      args: formatErrorMessage(err)
     });
     return Promise.reject(err);
   }
@@ -205,7 +214,7 @@ const editUserByID = async (toolBox) => {
     const { id } = req.params;
 
     if (isEmpty(id)) {
-      throw errorCommon.BuildNewError('UserIDNotFound');
+      throw buildNewError('UserIDNotFound');
     }
 
     // validate inputs
@@ -213,24 +222,24 @@ const editUserByID = async (toolBox) => {
 
     const { firstName, lastName, email } = req.body;
 
-    const fullName = formatUtils.formatFullName(firstName, lastName);
-    const slug = formatUtils.formatSlug(fullName);
+    const fullName = formatFullName(firstName, lastName);
+    const slug = formatSlug(fullName);
 
     // check duplicate slug
-    const isDuplicate = await configureCommon.checkDuplicate('UserModel', {
+    const isDuplicate = await checkDuplicate('UserModel', {
       $or: [{ email }, { slug }],
       _id: { $ne: id }
     });
 
     if (isDuplicate) {
-      throw errorCommon.BuildNewError('DuplicateNameRole');
+      throw buildNewError('DuplicateNameRole');
     }
 
     let user = assign(req.body, {
       slug: slug
     });
 
-    user = configureCommon.attributeFilter(user);
+    user = attributeFilter(user);
 
     loggerFactory.info(`Function editUserByID Orchestrator has been end`);
 
@@ -250,7 +259,7 @@ const editUserByID = async (toolBox) => {
     };
   } catch (err) {
     loggerFactory.info(`Function editUserByID Orchestrator has error`, {
-      args: formatUtils.formatErrorMessage(err)
+      args: formatErrorMessage(err)
     });
     return Promise.reject(err);
   }
@@ -268,10 +277,10 @@ const deleteUserByID = async (toolBox) => {
     const { id } = req.params;
 
     if (isEmpty(id)) {
-      throw errorCommon.BuildNewError('UserIDNotFound');
+      throw buildNewError('UserIDNotFound');
     }
 
-    req.body = configureCommon.attributeFilter(req.body);
+    req.body = attributeFilter(req.body);
     const { updatedAt, updatedBy } = req.body;
 
     const result = await dbManager.deleteOne({
@@ -291,7 +300,7 @@ const deleteUserByID = async (toolBox) => {
     };
   } catch (err) {
     loggerFactory.info(`Function deleteUserByID Orchestrator has error`, {
-      args: formatUtils.formatErrorMessage(err)
+      args: formatErrorMessage(err)
     });
     return Promise.reject(err);
   }
@@ -311,13 +320,13 @@ const changePasswordUserByID = async (toolBox) => {
     const { id } = req.params;
 
     if (isEmpty(id)) {
-      throw errorCommon.BuildNewError('UserIDNotFound');
+      throw buildNewError('UserIDNotFound');
     }
 
     // validate inputs
     validateUserChangePass(req.body);
 
-    req.body = configureCommon.attributeFilter(req.body);
+    req.body = attributeFilter(req.body);
 
     const { currentPassword, newPassword, updatedAt, updatedBy } = req.body;
 
@@ -333,7 +342,7 @@ const changePasswordUserByID = async (toolBox) => {
     // compare password in db
     const isValidCompare = await bcrypt.compare(currentPassword, user.password);
     if (!isValidCompare) {
-      throw errorCommon.BuildNewError('UserCurrentPasswordIsNotMatches');
+      throw buildNewError('UserCurrentPasswordIsNotMatches');
     }
 
     // create new password
@@ -365,7 +374,7 @@ const changePasswordUserByID = async (toolBox) => {
     loggerFactory.info(
       `Function changePasswordUserByID Orchestrator has error`,
       {
-        args: formatUtils.formatErrorMessage(err)
+        args: formatErrorMessage(err)
       }
     );
     return Promise.reject(err);
@@ -386,10 +395,10 @@ const addRolesToUserByUserID = async (toolBox) => {
     const { id } = req.params;
 
     if (isEmpty(id)) {
-      throw errorCommon.BuildNewError('UserIDNotFound');
+      throw buildNewError('UserIDNotFound');
     }
 
-    req.body = configureCommon.attributeFilter(req.body);
+    req.body = attributeFilter(req.body);
     const { availableRoles, assignedRoles, updatedAt, updatedBy } = req.body;
 
     const idsAssignedRoles = assignedRoles.map((e) => e.id);
@@ -469,7 +478,7 @@ const addRolesToUserByUserID = async (toolBox) => {
     loggerFactory.error(
       `Function addRolesToUserByUserID Orchestrator has error`,
       {
-        args: formatUtils.formatErrorMessage(err)
+        args: formatErrorMessage(err)
       }
     );
     return Promise.reject(err);
@@ -490,13 +499,13 @@ const setPasswordByUserID = async (toolBox) => {
     const { id } = req.params;
 
     if (isEmpty(id)) {
-      throw errorCommon.BuildNewError('UserIDNotFound');
+      throw buildNewError('UserIDNotFound');
     }
 
     // validate inputs
     validateUserSetPass(req.body);
 
-    req.body = configureCommon.attributeFilter(req.body);
+    req.body = attributeFilter(req.body);
     const { password, updatedAt, updatedBy } = req.body;
 
     // hash pass
@@ -535,7 +544,7 @@ const setPasswordByUserID = async (toolBox) => {
     };
   } catch (err) {
     loggerFactory.error(`Function setPasswordByUserID Orchestrator has error`, {
-      args: formatUtils.formatErrorMessage(err)
+      args: formatErrorMessage(err)
     });
     return Promise.reject(err);
   }

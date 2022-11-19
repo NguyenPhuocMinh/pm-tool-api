@@ -4,6 +4,8 @@ import { models } from 'mongoose';
 import { includes } from 'lodash';
 
 import constants from '@constants';
+
+// core
 import logger from '@core/logger';
 
 const loggerFactory = logger.createLogger(
@@ -11,7 +13,7 @@ const loggerFactory = logger.createLogger(
   constants.STRUCT_COMMON.LOOKUP_COMMON
 );
 
-const BuildFindModel = (schemas, type) => {
+export const buildFindModel = (schemas, type) => {
   loggerFactory.info(`BuildFindModel has been start`);
 
   let model = null;
@@ -31,9 +33,3 @@ const BuildFindModel = (schemas, type) => {
   loggerFactory.error(`BuildSuccessResponse has been end with not found model`);
   throw new Error('InvalidNameModel');
 };
-
-const lookupCommon = {
-  BuildFindModel
-};
-
-export default lookupCommon;

@@ -132,6 +132,11 @@ const orchestratorRole = [
   },
   {
     type: constants.types.MsgTypeRole,
+    action: constants.actions.MsgActionRoleGetUsers,
+    orchestrator: roleOrchestrator.getUsersByRoleID
+  },
+  {
+    type: constants.types.MsgTypeRole,
     action: constants.actions.MsgActionRoleGetPermissions,
     orchestrator: roleOrchestrator.getPermissionsByRoleID
   },
