@@ -1,21 +1,25 @@
 'use strict';
 
+import fs from 'fs';
+import path from 'path';
 import Promise from 'bluebird';
 import moment from 'moment';
 import 'moment-timezone';
-import { isEmpty } from 'lodash';
+import { isEmpty, get } from 'lodash';
 
 import constants from '@constants';
+import { formatErrorMessage, formatSlug, convertSecretKey } from '@utils';
+
+// core
 import logger from '@core/logger';
 import dbManager from '@core/database';
-import { formatUtils } from '@core/utils';
 
 const loggerFactory = logger.createLogger(
   constants.APP_NAME,
   constants.STRUCT_COMMON.CONFIGURE_COMMON
 );
 
-const checkDuplicate = async (type, filter = {}) => {
+export const checkDuplicate = async (type, filter = {}) => {
   loggerFactory.info(`Function checkDuplicate has been start`);
 
   const isDuplicate = await dbManager.count({
@@ -28,7 +32,7 @@ const checkDuplicate = async (type, filter = {}) => {
   return isDuplicate >= 1;
 };
 
-const attributeFilter = (data = {}, action) => {
+export const attributeFilter = (data = {}, action) => {
   try {
     loggerFactory.info(`Function checkDuplicate has been start`);
 
@@ -52,13 +56,13 @@ const attributeFilter = (data = {}, action) => {
     return data;
   } catch (err) {
     loggerFactory.error(`Function attributeFilter has error`, {
-      args: formatUtils.formatErrorMessage(err)
+      args: formatErrorMessage(err)
     });
     throw err;
   }
 };
 
-const createFilterPagination = (query = {}) => {
+export const createFilterPagination = (query = {}) => {
   loggerFactory.info(`Function createFilterPagination has been start`);
 
   const _start = query._start || constants.DEFAULT_SKIP;
@@ -77,7 +81,7 @@ const createFilterPagination = (query = {}) => {
   };
 };
 
-const createFindQuery = (query = {}, attributes = []) => {
+export const createFindQuery = (query = {}, attributes = [], fields = []) => {
   loggerFactory.info(`Function createFindQuery has been start`);
 
   const { search } = query;
@@ -91,7 +95,7 @@ const createFindQuery = (query = {}, attributes = []) => {
   };
 
   if (!isEmpty(search)) {
-    const _search = formatUtils.formatSlug(search);
+    const _search = formatSlug(search);
 
     const querySearch = { $or: [] };
     const searchDefault = ['slug'];
@@ -109,12 +113,19 @@ const createFindQuery = (query = {}, attributes = []) => {
     _query['$and'].push(querySearch);
   }
 
+  if (!isEmpty(fields)) {
+    fields.forEach((field) => {
+      // eslint-disable-next-line dot-notation
+      _query['$and'].push(field);
+    });
+  }
+
   loggerFactory.info(`Function createFindQuery has been end`);
 
   return _query;
 };
 
-const createSortOrderQuery = (query = {}) => {
+export const createSortOrderQuery = (query = {}) => {
   loggerFactory.info(`Function createSortOrderQuery has been start`);
 
   const { _sort, _order } = query;
@@ -127,7 +138,7 @@ const createSortOrderQuery = (query = {}) => {
   return { [sort]: order };
 };
 
-const convertDataResponseMap = async (responses = []) => {
+export const convertDataResponseMap = async (responses = []) => {
   return Promise.map(
     responses,
     (data) => {
@@ -137,7 +148,7 @@ const convertDataResponseMap = async (responses = []) => {
   );
 };
 
-const convertDataResponse = async (data = {}) => {
+export const convertDataResponse = async (data = {}) => {
   let response = {};
 
   if (!isEmpty(data)) {
@@ -153,14 +164,29 @@ const convertDataResponse = async (data = {}) => {
   return Promise.resolve();
 };
 
-const configureCommon = {
-  checkDuplicate,
-  attributeFilter,
-  createFindQuery,
-  createSortOrderQuery,
-  createFilterPagination,
-  convertDataResponseMap,
-  convertDataResponse
+export const getDataJSON = () => {
+  loggerFactory.info(`Function getDataJSON has been start`);
+  const configurePath = path.join(process.cwd(), './src/conf/secret.json');
+
+  const json = fs.readFileSync(configurePath);
+  const configure = JSON.parse(json.toString());
+
+  loggerFactory.info(`Function getDataJSON has been end`);
+
+  return configure;
 };
 
-export default configureCommon;
+export const getSecretJSON = () => {
+  const secret = getDataJSON();
+
+  const privateKey = get(secret, 'privateKey');
+  const publicKey = get(secret, 'publicKey');
+
+  const privateSecret = convertSecretKey(privateKey, 'private');
+  const publicSecret = convertSecretKey(publicKey, 'public');
+
+  return {
+    privateSecret,
+    publicSecret
+  };
+};

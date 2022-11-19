@@ -4,13 +4,22 @@ import Promise from 'bluebird';
 import { assign, isEmpty } from 'lodash';
 
 import constants from '@constants';
+import { formatSlug, formatErrorMessage } from '@utils';
 
+// core
 import logger from '@core/logger';
 import dbManager from '@core/database';
+import {
+  buildNewError,
+  createFilterPagination,
+  createFindQuery,
+  createSortOrderQuery,
+  convertDataResponseMap,
+  checkDuplicate,
+  attributeFilter
+} from '@core/common';
 
-import { formatUtils } from '@core/utils';
-import { errorCommon, configureCommon } from '@core/common';
-import { permissionDTO } from '@core/shared/dtos';
+import { permissionDTO } from 'src/shared/dtos';
 
 const loggerFactory = logger.createLogger(
   constants.APP_NAME,
@@ -26,9 +35,9 @@ const getAllPermission = async (toolBox) => {
   try {
     loggerFactory.info(`Function getAllPermission has been start`);
 
-    const { skip, limit } = configureCommon.createFilterPagination(req.query);
-    const query = configureCommon.createFindQuery(req.query);
-    const sort = configureCommon.createSortOrderQuery(req.query);
+    const { skip, limit } = createFilterPagination(req.query);
+    const query = createFindQuery(req.query);
+    const sort = createSortOrderQuery(req.query);
 
     const permissions = await dbManager.findAll({
       type: 'PermissionModel',
@@ -50,7 +59,7 @@ const getAllPermission = async (toolBox) => {
       filter: query
     });
 
-    const response = await configureCommon.convertDataResponseMap(permissions);
+    const response = await convertDataResponseMap(permissions);
 
     loggerFactory.info(`Function getAllPermission has been end`);
 
@@ -63,7 +72,7 @@ const getAllPermission = async (toolBox) => {
     };
   } catch (err) {
     loggerFactory.info(`Function getAllPermission has error`, {
-      args: formatUtils.formatErrorMessage(err)
+      args: formatErrorMessage(err)
     });
     return Promise.reject(err);
   }
@@ -82,26 +91,23 @@ const createPermission = async (toolBox) => {
     const { name } = req.body;
 
     if (isEmpty(name)) {
-      throw errorCommon.BuildNewError('PermissionNameIsRequired');
+      throw buildNewError('PermissionNameIsRequired');
     }
 
-    const slug = formatUtils.formatSlug(name);
+    const slug = formatSlug(name);
 
     // check duplicate slug
-    const isDuplicate = await configureCommon.checkDuplicate(
-      'PermissionModel',
-      { slug }
-    );
+    const isDuplicate = await checkDuplicate('PermissionModel', { slug });
 
     if (isDuplicate) {
-      throw errorCommon.BuildNewError('DuplicateNamePermission');
+      throw buildNewError('DuplicateNamePermission');
     }
 
     let permission = assign(req.body, {
       slug: slug
     });
 
-    permission = configureCommon.attributeFilter(permission, 'create');
+    permission = attributeFilter(permission, 'create');
 
     const data = await dbManager.createOne({
       type: 'PermissionModel',
@@ -120,7 +126,7 @@ const createPermission = async (toolBox) => {
     };
   } catch (err) {
     loggerFactory.info(`Function createPermission has error`, {
-      args: formatUtils.formatErrorMessage(err)
+      args: formatErrorMessage(err)
     });
     return Promise.reject(err);
   }
@@ -138,7 +144,7 @@ const getPermissionByID = async (toolBox) => {
     const { id } = req.params;
 
     if (isEmpty(id)) {
-      throw errorCommon.BuildNewError('PermissionIDNotFound');
+      throw buildNewError('PermissionIDNotFound');
     }
 
     const permission = await dbManager.getOne({
@@ -169,7 +175,7 @@ const getPermissionByID = async (toolBox) => {
     };
   } catch (err) {
     loggerFactory.info(`Function getPermissionByID has error`, {
-      args: formatUtils.formatErrorMessage(err)
+      args: formatErrorMessage(err)
     });
     return Promise.reject(err);
   }
@@ -187,29 +193,29 @@ const editPermissionByID = async (toolBox) => {
     const { name, activated } = req.body;
 
     if (isEmpty(id)) {
-      throw errorCommon.BuildNewError('PermissionIDNotFound');
+      throw buildNewError('PermissionIDNotFound');
     }
 
     if (isEmpty(name)) {
-      throw errorCommon.BuildNewError('PermissionNameIsRequired');
+      throw buildNewError('PermissionNameIsRequired');
     }
 
-    const slug = formatUtils.formatSlug(name);
+    const slug = formatSlug(name);
     // check duplicate slug
-    const isDuplicate = await configureCommon.checkDuplicate(
-      'PermissionModel',
-      { slug, _id: { $ne: id } }
-    );
+    const isDuplicate = await checkDuplicate('PermissionModel', {
+      slug,
+      _id: { $ne: id }
+    });
 
     if (isDuplicate) {
-      throw errorCommon.BuildNewError('DuplicateNamePermission');
+      throw buildNewError('DuplicateNamePermission');
     }
 
     let permission = assign(req.body, {
       slug: slug
     });
 
-    permission = configureCommon.attributeFilter(permission);
+    permission = attributeFilter(permission);
 
     let data = await dbManager.updateOne({
       type: 'PermissionModel',
@@ -255,7 +261,7 @@ const editPermissionByID = async (toolBox) => {
     };
   } catch (err) {
     loggerFactory.info(`Function editPermissionByID has error`, {
-      args: formatUtils.formatErrorMessage(err)
+      args: formatErrorMessage(err)
     });
     return Promise.reject(err);
   }
@@ -271,11 +277,11 @@ const deletePermissionByID = async (toolBox) => {
     loggerFactory.info(`Function deletePermissionByID has been start`);
 
     const { id } = req.params;
-    req.body = configureCommon.attributeFilter(req.body);
+    req.body = attributeFilter(req.body);
     const { updatedAt, updatedBy } = req.body;
 
     if (isEmpty(id)) {
-      throw errorCommon.BuildNewError('PermissionIDNotFound');
+      throw buildNewError('PermissionIDNotFound');
     }
 
     const result = await dbManager.deleteOne({
@@ -295,7 +301,7 @@ const deletePermissionByID = async (toolBox) => {
     };
   } catch (err) {
     loggerFactory.info(`Function deletePermissionByID has error`, {
-      args: formatUtils.formatErrorMessage(err)
+      args: formatErrorMessage(err)
     });
     return Promise.reject(err);
   }
@@ -312,7 +318,7 @@ const addRolesToPermissionByID = async (toolBox) => {
 
     const { id } = req.params;
 
-    req.body = configureCommon.attributeFilter(req.body);
+    req.body = attributeFilter(req.body);
     const { availableRoles, assignedRoles, updatedAt, updatedBy } = req.body;
 
     const idsAssignedRoles = assignedRoles.map((e) => e.id);
@@ -388,7 +394,7 @@ const addRolesToPermissionByID = async (toolBox) => {
     };
   } catch (err) {
     loggerFactory.error(`Function addRolesToPermissionByID has error`, {
-      args: formatUtils.formatErrorMessage(err)
+      args: formatErrorMessage(err)
     });
     return Promise.reject(err);
   }

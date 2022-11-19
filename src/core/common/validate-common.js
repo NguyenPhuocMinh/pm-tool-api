@@ -5,10 +5,13 @@ import addFormats from 'ajv-formats';
 import addErrors from 'ajv-errors';
 
 import constants from '@constants';
+import { formatErrorMessage } from '@utils';
+
+// core
 import logger from '@core/logger';
-import schemas from '@core/shared/schemas';
-import { formatUtils } from '@core/utils/format-util';
-import { errorCommon } from '@core/common';
+import { buildNewError } from '@core/common';
+
+import schemas from '@shared/schemas';
 
 const ajv = new Ajv({ allErrors: true, strict: false });
 addFormats(ajv, { mode: 'fast', keywords: true });
@@ -19,7 +22,7 @@ const loggerFactory = logger.createLogger(
   constants.STRUCT_COMMON.VALIDATE_COMMON
 );
 
-const BuildNewValidateSchema = async (schema, data) => {
+export const buildNewValidateSchema = async (schema, data) => {
   try {
     loggerFactory.info(`BuildNewValidateSchema has been start with schema`, {
       args: schema
@@ -38,20 +41,14 @@ const BuildNewValidateSchema = async (schema, data) => {
         errors.statusCode = 400;
       }
     } else {
-      throw errorCommon.BuildNewError('SchemaNotFound');
+      throw buildNewError('SchemaNotFound');
     }
     loggerFactory.info(`BuildNewValidateSchema has been end`);
     return errors;
   } catch (err) {
     loggerFactory.error(`BuildNewValidateSchema has error`, {
-      args: formatUtils.formatErrorMessage(err)
+      args: formatErrorMessage(err)
     });
     throw err;
   }
 };
-
-const validateCommon = {
-  BuildNewValidateSchema
-};
-
-export default validateCommon;

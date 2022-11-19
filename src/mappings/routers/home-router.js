@@ -7,7 +7,6 @@ import { homeController } from '../controllers';
  */
 const homeRouter = [
   {
-    enable: true,
     pathName: '/',
     method: 'GET',
     methodName: 'homePage',

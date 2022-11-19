@@ -1,12 +1,12 @@
 'use strict';
 
-const validateEmail = (input) => {
+export const validateEmail = (input) => {
   const regex =
     /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
   return regex.test(input);
 };
 
-const validateStringLength = (input, length, operator) => {
+export const validateStringLength = (input, length, operator) => {
   let isValid = true;
 
   switch (operator) {
@@ -24,10 +24,3 @@ const validateStringLength = (input, length, operator) => {
 
   return isValid;
 };
-
-const validateUtils = {
-  validateEmail,
-  validateStringLength
-};
-
-export default validateUtils;

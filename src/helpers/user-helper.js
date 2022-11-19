@@ -1,36 +1,37 @@
 'use strict';
 
 import { isEmpty, isEqual } from 'lodash';
+import { validateEmail, validateStringLength } from '@utils';
 
-import { errorCommon } from '@core/common';
-import { validateUtils } from '@core/utils';
+// core
+import { buildNewError } from '@core/common';
 
 const validateUserCreate = ({ firstName, lastName, email }) => {
   switch (true) {
     case isEmpty(firstName):
-      throw errorCommon.BuildNewError('UserFirstNameIsRequired');
+      throw buildNewError('UserFirstNameIsRequired');
     case isEmpty(lastName):
-      throw errorCommon.BuildNewError('UserLastNameIsRequired');
+      throw buildNewError('UserLastNameIsRequired');
     case isEmpty(email):
-      throw errorCommon.BuildNewError('UserEmailIsRequired');
+      throw buildNewError('UserEmailIsRequired');
     default:
       break;
   }
 
-  const isValidEmail = validateUtils.validateEmail(email);
+  const isValidEmail = validateEmail(email);
   if (!isValidEmail) {
-    throw errorCommon.BuildNewError('UserEmailIsNotFormat');
+    throw buildNewError('UserEmailIsNotFormat');
   }
 };
 
 const validateUserUpdate = ({ firstName, lastName, email }) => {
   switch (true) {
     case isEmpty(firstName):
-      throw errorCommon.BuildNewError('UserFirstNameIsRequired');
+      throw buildNewError('UserFirstNameIsRequired');
     case isEmpty(lastName):
-      throw errorCommon.BuildNewError('UserLastNameIsRequired');
+      throw buildNewError('UserLastNameIsRequired');
     case isEmpty(email):
-      throw errorCommon.BuildNewError('UserEmailIsRequired');
+      throw buildNewError('UserEmailIsRequired');
     default:
       break;
   }
@@ -43,11 +44,11 @@ const validateUserChangePass = ({
 }) => {
   switch (true) {
     case isEmpty(currentPassword):
-      throw errorCommon.BuildNewError('UserCurrentPasswordIsRequired');
+      throw buildNewError('UserCurrentPasswordIsRequired');
     case isEmpty(newPassword):
-      throw errorCommon.BuildNewError('UserNewPasswordIsRequired');
+      throw buildNewError('UserNewPasswordIsRequired');
     case isEmpty(newPasswordConfirm):
-      throw errorCommon.BuildNewError('UserNewPasswordConfirmIsRequired');
+      throw buildNewError('UserNewPasswordConfirmIsRequired');
     default:
       break;
   }
@@ -65,9 +66,9 @@ const validateUserChangePass = ({
 const validateUserSetPass = ({ password, passwordConfirm }) => {
   switch (true) {
     case isEmpty(password):
-      throw errorCommon.BuildNewError('UserPasswordIsRequired');
+      throw buildNewError('UserPasswordIsRequired');
     case isEmpty(passwordConfirm):
-      throw errorCommon.BuildNewError('UserPasswordConfirmIsRequired');
+      throw buildNewError('UserPasswordConfirmIsRequired');
     default:
       break;
   }
@@ -83,30 +84,26 @@ const validateUserSetPass = ({ password, passwordConfirm }) => {
 };
 
 const validatePasswordLength = (password, passwordConfirm) => {
-  const isValidPasswordLength = validateUtils.validateStringLength(
-    password,
-    8,
-    'min'
-  );
+  const isValidPasswordLength = validateStringLength(password, 8, 'min');
 
   if (!isValidPasswordLength) {
-    throw errorCommon.BuildNewError('UserPasswordIsValidLength');
+    throw buildNewError('UserPasswordIsValidLength');
   }
 
-  const isValidPasswordConfirmLength = validateUtils.validateStringLength(
+  const isValidPasswordConfirmLength = validateStringLength(
     passwordConfirm,
     8,
     'min'
   );
 
   if (!isValidPasswordConfirmLength) {
-    throw errorCommon.BuildNewError('UserPasswordConfirmIsValidLength');
+    throw buildNewError('UserPasswordConfirmIsValidLength');
   }
 };
 
 const validateComparePassword = ({ password, passwordConfirm }, message) => {
   if (!isEqual(password, passwordConfirm)) {
-    throw errorCommon.BuildNewError(message);
+    throw buildNewError(message);
   }
 };
 

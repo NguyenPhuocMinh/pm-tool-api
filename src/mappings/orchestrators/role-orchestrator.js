@@ -4,13 +4,22 @@ import Promise from 'bluebird';
 import { assign, isEmpty } from 'lodash';
 
 import constants from '@constants';
+import { formatSlug, formatErrorMessage } from '@utils';
 
+// core
 import logger from '@core/logger';
 import dbManager from '@core/database';
+import {
+  buildNewError,
+  createFilterPagination,
+  createFindQuery,
+  createSortOrderQuery,
+  convertDataResponseMap,
+  checkDuplicate,
+  attributeFilter
+} from '@core/common';
 
-import { formatUtils } from '@core/utils';
-import { errorCommon, configureCommon } from '@core/common';
-import { roleDTO } from '@core/shared/dtos';
+import { roleDTO } from '@shared/dtos';
 
 const loggerFactory = logger.createLogger(
   constants.APP_NAME,
@@ -26,9 +35,9 @@ const getAllRole = async (toolBox) => {
   try {
     loggerFactory.info(`Function getAllRole has been start`);
 
-    const { skip, limit } = configureCommon.createFilterPagination(req.query);
-    const query = configureCommon.createFindQuery(req.query);
-    const sort = configureCommon.createSortOrderQuery(req.query);
+    const { skip, limit } = createFilterPagination(req.query);
+    const query = createFindQuery(req.query);
+    const sort = createSortOrderQuery(req.query);
 
     const roles = await dbManager.findAll({
       type: 'RoleModel',
@@ -50,7 +59,7 @@ const getAllRole = async (toolBox) => {
       filter: query
     });
 
-    const response = await configureCommon.convertDataResponseMap(roles);
+    const response = await convertDataResponseMap(roles);
 
     loggerFactory.info(`Function getAllRole has been end`);
 
@@ -63,7 +72,7 @@ const getAllRole = async (toolBox) => {
     };
   } catch (err) {
     loggerFactory.info(`Function getAllRole has error`, {
-      args: formatUtils.formatErrorMessage(err)
+      args: formatErrorMessage(err)
     });
     return Promise.reject(err);
   }
@@ -82,25 +91,25 @@ const createRole = async (toolBox) => {
     const { name } = req.body;
 
     if (isEmpty(name)) {
-      throw errorCommon.BuildNewError('RoleNameIsRequired');
+      throw buildNewError('RoleNameIsRequired');
     }
 
-    const slug = formatUtils.formatSlug(name);
+    const slug = formatSlug(name);
 
     // check duplicate slug
-    const isDuplicate = await configureCommon.checkDuplicate('RoleModel', {
+    const isDuplicate = await checkDuplicate('RoleModel', {
       slug
     });
 
     if (isDuplicate) {
-      throw errorCommon.BuildNewError('DuplicateNameRole');
+      throw buildNewError('DuplicateNameRole');
     }
 
     let role = assign(req.body, {
       slug: slug
     });
 
-    role = configureCommon.attributeFilter(role, 'create');
+    role = attributeFilter(role, 'create');
 
     const data = await dbManager.createOne({
       type: 'RoleModel',
@@ -119,7 +128,7 @@ const createRole = async (toolBox) => {
     };
   } catch (err) {
     loggerFactory.info(`Function createRole has error`, {
-      args: formatUtils.formatErrorMessage(err)
+      args: formatErrorMessage(err)
     });
     return Promise.reject(err);
   }
@@ -137,7 +146,7 @@ const getRoleByID = async (toolBox) => {
     const { id } = req.params;
 
     if (isEmpty(id)) {
-      throw errorCommon.BuildNewError('RoleIDNotFound');
+      throw buildNewError('RoleIDNotFound');
     }
 
     const role = await dbManager.getOne({
@@ -160,7 +169,7 @@ const getRoleByID = async (toolBox) => {
     };
   } catch (err) {
     loggerFactory.info(`Function getRoleByID Orchestrator has error`, {
-      args: formatUtils.formatErrorMessage(err)
+      args: formatErrorMessage(err)
     });
     return Promise.reject(err);
   }
@@ -179,29 +188,29 @@ const editRoleByID = async (toolBox) => {
     const { name, activated } = req.body;
 
     if (isEmpty(id)) {
-      throw errorCommon.BuildNewError('RoleIDNotFound');
+      throw buildNewError('RoleIDNotFound');
     }
 
     if (isEmpty(name)) {
-      throw errorCommon.BuildNewError('RoleNameIsRequired');
+      throw buildNewError('RoleNameIsRequired');
     }
 
-    const slug = formatUtils.formatSlug(name);
+    const slug = formatSlug(name);
     // check duplicate slug
-    const isDuplicate = await configureCommon.checkDuplicate('RoleModel', {
+    const isDuplicate = await checkDuplicate('RoleModel', {
       slug,
       _id: { $ne: id }
     });
 
     if (isDuplicate) {
-      throw errorCommon.BuildNewError('DuplicateNameRole');
+      throw buildNewError('DuplicateNameRole');
     }
 
     let role = assign(req.body, {
       slug: slug
     });
 
-    role = configureCommon.attributeFilter(role);
+    role = attributeFilter(role);
 
     if (!activated) {
       await removeRolesInUserAndPermission(id, role.updatedAt, role.updatedBy);
@@ -225,7 +234,7 @@ const editRoleByID = async (toolBox) => {
     };
   } catch (err) {
     loggerFactory.info(`Function editRoleByID Orchestrator has error`, {
-      args: formatUtils.formatErrorMessage(err)
+      args: formatErrorMessage(err)
     });
     return Promise.reject(err);
   }
@@ -243,10 +252,10 @@ const deleteRoleByID = async (toolBox) => {
     const { id } = req.params;
 
     if (isEmpty(id)) {
-      throw errorCommon.BuildNewError('RoleIDNotFound');
+      throw buildNewError('RoleIDNotFound');
     }
 
-    req.body = configureCommon.attributeFilter(req.body);
+    req.body = attributeFilter(req.body);
     const { updatedAt, updatedBy } = req.body;
 
     const result = await dbManager.deleteOne({
@@ -266,7 +275,72 @@ const deleteRoleByID = async (toolBox) => {
     };
   } catch (err) {
     loggerFactory.info(`Function deleteRoleByID Orchestrator has error`, {
-      args: formatUtils.formatErrorMessage(err)
+      args: formatErrorMessage(err)
+    });
+    return Promise.reject(err);
+  }
+};
+
+/**
+ * @description Get Users By RoleID Orchestrator
+ * @param {*} toolBox { req, res, next }
+ */
+const getUsersByRoleID = async (toolBox) => {
+  const { req } = toolBox;
+  try {
+    loggerFactory.info(`Function getUsersByRoleID Orchestrator has been start`);
+    const { id } = req.params;
+
+    if (isEmpty(id)) {
+      throw buildNewError('RoleIDNotFound');
+    }
+
+    const { skip, limit } = createFilterPagination(req.query);
+    const sort = createSortOrderQuery(req.query);
+
+    const query = {
+      roles: {
+        $elemMatch: {
+          $eq: id
+        }
+      }
+    };
+
+    const users = await dbManager.findAll({
+      type: 'UserModel',
+      filter: query,
+      projection: {
+        id: 1,
+        firstName: 1,
+        lastName: 1,
+        email: 1
+      },
+      options: {
+        skip,
+        limit,
+        sort
+      }
+    });
+
+    const total = await dbManager.count({
+      type: 'UserModel',
+      filter: query
+    });
+
+    const result = await convertDataResponseMap(users);
+
+    loggerFactory.info(`Function getUsersByRoleID Orchestrator has been end`);
+
+    return {
+      result: {
+        data: result,
+        total
+      },
+      msg: 'RoleGetUsersSuccess'
+    };
+  } catch (err) {
+    loggerFactory.info(`Function getUsersByRoleID Orchestrator has error`, {
+      args: formatErrorMessage(err)
     });
     return Promise.reject(err);
   }
@@ -285,11 +359,11 @@ const getPermissionsByRoleID = async (toolBox) => {
     const { id } = req.params;
 
     if (isEmpty(id)) {
-      throw errorCommon.BuildNewError('RoleIDNotFound');
+      throw buildNewError('RoleIDNotFound');
     }
 
-    const { skip, limit } = configureCommon.createFilterPagination(req.query);
-    const sort = configureCommon.createSortOrderQuery(req.query);
+    const { skip, limit } = createFilterPagination(req.query);
+    const sort = createSortOrderQuery(req.query);
 
     const query = {
       roles: {
@@ -323,7 +397,7 @@ const getPermissionsByRoleID = async (toolBox) => {
       filter: query
     });
 
-    const result = await configureCommon.convertDataResponseMap(permissions);
+    const result = await convertDataResponseMap(permissions);
 
     loggerFactory.info(
       `Function getPermissionsByRoleID Orchestrator has been end`
@@ -340,7 +414,7 @@ const getPermissionsByRoleID = async (toolBox) => {
     loggerFactory.info(
       `Function getPermissionsByRoleID Orchestrator has error`,
       {
-        args: formatUtils.formatErrorMessage(err)
+        args: formatErrorMessage(err)
       }
     );
     return Promise.reject(err);
@@ -384,7 +458,7 @@ const addPermissionsToRoleByID = async (toolBox) => {
     loggerFactory.info(
       `Function addPermissionsToRoleByID Orchestrator has error`,
       {
-        args: formatUtils.formatErrorMessage(err)
+        args: formatErrorMessage(err)
       }
     );
     return Promise.reject(err);
@@ -445,6 +519,7 @@ const roleOrchestrator = {
   getRoleByID,
   editRoleByID,
   deleteRoleByID,
+  getUsersByRoleID,
   getPermissionsByRoleID,
   addPermissionsToRoleByID
 };

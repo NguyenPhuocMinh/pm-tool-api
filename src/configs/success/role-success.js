@@ -26,6 +26,11 @@ export default {
     returnCode: 1,
     statusCode: 200
   },
+  RoleGetUsersSuccess: {
+    message: 'resources.roles.notifications.success.getUsers',
+    returnCode: 1,
+    statusCode: 200
+  },
   RoleGetPermissionsSuccess: {
     message: 'resources.roles.notifications.success.getPermissions',
     returnCode: 1,

@@ -3,17 +3,17 @@
 import mongoose from 'mongoose';
 import lodash from 'lodash';
 import retry from 'retry';
+import bcrypt from 'bcrypt';
 
 import models from './models';
 
 import constants from '@constants';
-import options from '@conf/options';
-import profiles from '@conf/profiles';
+import { options, profiles } from '@conf';
+import { formatErrorMessage } from '@utils';
 
 // core
 import logger from '@core/logger';
-import { lookupCommon } from '@core/common';
-import { formatUtils } from '@core/utils';
+import { buildFindModel, getDataJSON, attributeFilter } from '@core/common';
 
 const { isEmpty, map } = lodash;
 
@@ -41,12 +41,51 @@ const Init = async () => {
   try {
     await mongoose.connect(APP_MONGO_URI, options.mongooseOptions);
 
+    const secret = getDataJSON();
+
+    const {
+      admin: { email, password }
+    } = secret;
+
+    // check admin exists
+    const existsAdmin = await count({
+      type: 'UserModel',
+      filter: {
+        email: email
+      }
+    });
+
+    if (existsAdmin) {
+      loggerFactory.info(`User admin has been exists in database`);
+    } else {
+      const hashPass = bcrypt.hashSync(password, options.bcryptOptions.salt);
+
+      let data = {
+        email,
+        password: hashPass,
+        firstName: 'admin',
+        lastName: 'super'
+      };
+
+      data = attributeFilter(data, 'create');
+
+      await createOne({
+        type: 'UserModel',
+        doc: {
+          ...data,
+          isAdmin: true
+        }
+      });
+
+      loggerFactory.info(`User admin has been create in database`);
+    }
+
     loggerFactory.info(`The database is running on`, {
       args: `[${APP_MONGO_URI}]`
     });
   } catch (err) {
     loggerFactory.error('Connect database has error', {
-      args: formatUtils.formatErrorMessage(err)
+      args: formatErrorMessage(err)
     });
 
     const operation = retry.operation(options.retryOptions);
@@ -88,7 +127,7 @@ const findAll = async ({ type, filter = {}, projection = {}, options }) => {
   try {
     loggerFactory.data('Function findAll has been start');
 
-    const model = lookupCommon.BuildFindModel(schemaModels, type);
+    const model = buildFindModel(schemaModels, type);
 
     const data = await model.find(filter, projection, options).exec();
 
@@ -96,7 +135,7 @@ const findAll = async ({ type, filter = {}, projection = {}, options }) => {
     return data;
   } catch (err) {
     loggerFactory.error('Function findAll has been error', {
-      args: formatUtils.formatErrorMessage(err)
+      args: formatErrorMessage(err)
     });
     throw err;
   }
@@ -124,7 +163,7 @@ const findOne = async ({ type, filter = {}, projection = {}, options }) => {
   try {
     loggerFactory.data('Function findOne has been start');
 
-    const model = lookupCommon.BuildFindModel(schemaModels, type);
+    const model = buildFindModel(schemaModels, type);
 
     const data = await model.findOne(filter, projection, options).exec();
 
@@ -132,7 +171,7 @@ const findOne = async ({ type, filter = {}, projection = {}, options }) => {
     return data;
   } catch (err) {
     loggerFactory.error('Function findOne has been error', {
-      args: formatUtils.formatErrorMessage(err)
+      args: formatErrorMessage(err)
     });
     throw err;
   }
@@ -161,7 +200,7 @@ const getOne = async ({ type, id, projection, options }) => {
   try {
     loggerFactory.data('Function get has been start');
 
-    const model = lookupCommon.BuildFindModel(schemaModels, type);
+    const model = buildFindModel(schemaModels, type);
 
     const data = await model.findById(id, projection, options).exec();
 
@@ -169,7 +208,7 @@ const getOne = async ({ type, id, projection, options }) => {
     return data;
   } catch (err) {
     loggerFactory.error('Function get has been error', {
-      args: formatUtils.formatErrorMessage(err)
+      args: formatErrorMessage(err)
     });
     throw err;
   }
@@ -188,7 +227,7 @@ const createOne = async ({ type, doc }) => {
   try {
     loggerFactory.data('Function createOne has been start');
 
-    const model = lookupCommon.BuildFindModel(schemaModels, type);
+    const model = buildFindModel(schemaModels, type);
 
     const data = await model.create(doc);
 
@@ -196,7 +235,7 @@ const createOne = async ({ type, doc }) => {
     return data;
   } catch (err) {
     loggerFactory.error('Function createOne has been error', {
-      args: formatUtils.formatErrorMessage(err)
+      args: formatErrorMessage(err)
     });
     throw err;
   }
@@ -217,7 +256,7 @@ const updateOne = async ({ type, id, doc, options }) => {
   try {
     loggerFactory.data('Function updateOne has been start');
 
-    const model = lookupCommon.BuildFindModel(schemaModels, type);
+    const model = buildFindModel(schemaModels, type);
 
     const data = await model
       .findByIdAndUpdate(id, doc, {
@@ -230,7 +269,7 @@ const updateOne = async ({ type, id, doc, options }) => {
     return data;
   } catch (err) {
     loggerFactory.error('Function updateOne has been error', {
-      args: formatUtils.formatErrorMessage(err)
+      args: formatErrorMessage(err)
     });
     throw err;
   }
@@ -250,7 +289,7 @@ const deleteOne = async ({ type, id, options }) => {
   try {
     loggerFactory.data('Function deleteID has been start');
 
-    const model = lookupCommon.BuildFindModel(schemaModels, type);
+    const model = buildFindModel(schemaModels, type);
 
     const data = await model.findByIdAndRemove(id, options).exec();
 
@@ -258,7 +297,7 @@ const deleteOne = async ({ type, id, options }) => {
     return data;
   } catch (err) {
     loggerFactory.error('Function deleteID has been error', {
-      args: formatUtils.formatErrorMessage(err)
+      args: formatErrorMessage(err)
     });
     throw err;
   }
@@ -279,7 +318,7 @@ const count = async ({ type, filter = {} }) => {
   try {
     loggerFactory.data('Function count has been start');
 
-    const model = lookupCommon.BuildFindModel(schemaModels, type);
+    const model = buildFindModel(schemaModels, type);
 
     const count = await model.countDocuments(filter).exec();
 
@@ -287,7 +326,7 @@ const count = async ({ type, filter = {} }) => {
     return count;
   } catch (err) {
     loggerFactory.error('Function count has been error', {
-      args: formatUtils.formatErrorMessage(err)
+      args: formatErrorMessage(err)
     });
     throw err;
   }
@@ -310,7 +349,7 @@ const updateMany = async ({ type, filter, doc, options }) => {
   try {
     loggerFactory.data('Function updateMany has been start');
 
-    const model = lookupCommon.BuildFindModel(schemaModels, type);
+    const model = buildFindModel(schemaModels, type);
 
     const data = await model.updateMany(filter, doc, options).exec();
 
@@ -318,7 +357,7 @@ const updateMany = async ({ type, filter, doc, options }) => {
     return data;
   } catch (err) {
     loggerFactory.error('Function updateMany has been error', {
-      args: formatUtils.formatErrorMessage(err)
+      args: formatErrorMessage(err)
     });
     throw err;
   }
@@ -333,7 +372,7 @@ const bulkWrite = async ({ type, pipelines = [], options }) => {
   try {
     loggerFactory.data('Function bulkWrite has been start');
 
-    const model = lookupCommon.BuildFindModel(schemaModels, type);
+    const model = buildFindModel(schemaModels, type);
 
     const data = model.bulkWrite(pipelines, options);
 
@@ -341,7 +380,7 @@ const bulkWrite = async ({ type, pipelines = [], options }) => {
     return data;
   } catch (err) {
     loggerFactory.error('Function bulkWrite has been error', {
-      args: formatUtils.formatErrorMessage(err)
+      args: formatErrorMessage(err)
     });
     throw err;
   }

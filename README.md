@@ -5,7 +5,6 @@
 - [Clone](#clone)
 - [Install](#install)
 - [Ex .env](#ex-env)
-- [Structures](#structures)
 - [Run](#run)
 - [Docs](#docs)
 - [Docker](#docker)
@@ -48,50 +47,6 @@ $ npm install
 - APP_SECRET_REFRESH_KEY=do-biet-day-refresh
 - APP_AUDIENCE=http://localhost:3500
 - APP_ISSUER=pm-tool-iss
-## Structures
-
-```
-.
-├── Dockerfile
-├── README.md
-├── charts
-│   ├── cert-manager
-│   ├── ingress
-│   └── pm-tool-api
-├── deploy.sh
-├── docker-compose.yml
-├── jsconfig.json
-├── package.json
-├── public
-│   └── docs
-│       └── swagger.yaml
-├── scripts
-│   └── create-admin.sh
-├── server.js
-├── src
-│   ├── conf
-│   ├── configs
-│   ├── constants
-│   ├── core
-│   │   ├── authorization
-│   │   ├── common
-│   │   ├── database
-│   │   │   └── models
-│   │   ├── logger
-│   │   ├── shared
-│   │   │   ├── dtos
-│   │   │   └── schemas
-│   │   └── utils
-│   ├── helpers
-│   ├── mappings
-│   │   ├── controllers
-│   │   ├── orchestrators
-│   │   ├── routers
-│   │   └── services
-│   └── middleware
-├── tests
-└── webpack.config.js
-```
 
 ## Run
 
@@ -124,6 +79,7 @@ $ npm run lint:check
 ```sh
 $ http://localhost:8080/docs
 ```
+
 ## Docker
 
 - **Run build docker images**

@@ -3,12 +3,12 @@
 import jwt from 'jsonwebtoken';
 import { isEmpty, get, includes, find, toUpper } from 'lodash';
 
-import profiles from '@conf/profiles';
 import constants from '@constants';
+import { formatErrorMessage } from '@utils';
 
+// core
 import logger from '@core/logger';
-import { formatUtils } from '@core/utils';
-import { errorCommon, responseCommon } from '@core/common';
+import { buildNewError, buildErrorResponse, getSecretJSON } from '@core/common';
 import { publicAuthorization, privateAuthorization } from '@core/authorization';
 
 const loggerFactory = logger.createLogger(
@@ -66,31 +66,47 @@ const authMiddleware = (req, res, next) => {
           message: 'Not found token in header or cookie'
         }
       });
-      const tokenNotFoundError = errorCommon.BuildNewError('AuthTokenNotFound');
-      return responseCommon.BuildErrorResponse(toolBox, tokenNotFoundError);
+      const tokenNotFoundError = buildNewError('AuthTokenNotFound');
+      return buildErrorResponse(toolBox, tokenNotFoundError);
     } else {
-      jwt.verify(token, profiles.APP_SECRET_KEY, (err, decoded) => {
+      const { publicSecret } = getSecretJSON();
+      jwt.verify(token, publicSecret, (err, decoded) => {
         if (err) {
           loggerFactory.error(
             `Function authMiddleware verify token has been error`,
             {
-              args: formatUtils.formatErrorMessage(err)
+              args: formatErrorMessage(err)
             }
           );
 
           let tokenError;
           switch (true) {
             case err instanceof jwt.TokenExpiredError:
-              tokenError = errorCommon.BuildNewError('AuthTokenExpiredError');
+              tokenError = buildNewError('AuthTokenExpiredError');
               break;
             case err instanceof jwt.JsonWebTokenError:
-              tokenError = errorCommon.BuildNewError('AuthTokenInvalidError');
+              tokenError = buildNewError('AuthTokenInvalidError');
               break;
             default:
               break;
           }
-          return responseCommon.BuildErrorResponse(toolBox, tokenError);
+          return buildErrorResponse(toolBox, tokenError);
         } else {
+          /**
+           * No need verify permissions if user is admin
+           */
+          const userIsAdmin = get(decoded, 'isAdmin');
+          if (userIsAdmin) {
+            loggerFactory.verbose(
+              `Function authMiddleware has been end with message`,
+              {
+                args: {
+                  message: 'User is admin'
+                }
+              }
+            );
+            return next();
+          }
           /**
            * No need verify permissions if find public paths
            */
@@ -121,17 +137,16 @@ const authMiddleware = (req, res, next) => {
             return next();
           }
 
+          /**
+           * Verify permission in user login
+           */
           const userPermissions = get(decoded, 'permissions');
-          const userIsAdmin = get(decoded, 'isAdmin');
-          if (
-            includes(userPermissions, findPrivateAuth.permission) ||
-            userIsAdmin
-          ) {
+          if (includes(userPermissions, findPrivateAuth.permission)) {
             loggerFactory.verbose(
               `Function authMiddleware has been end with message`,
               {
                 args: {
-                  message: 'User has permission or user is admin'
+                  message: 'User has permission'
                 }
               }
             );
@@ -145,12 +160,8 @@ const authMiddleware = (req, res, next) => {
                 }
               }
             );
-            const tokenForbiddenError =
-              errorCommon.BuildNewError('AuthTokenForbidden');
-            return responseCommon.BuildErrorResponse(
-              toolBox,
-              tokenForbiddenError
-            );
+            const tokenForbiddenError = buildNewError('AuthTokenForbidden');
+            return buildErrorResponse(toolBox, tokenForbiddenError);
           }
         }
       });
@@ -158,7 +169,7 @@ const authMiddleware = (req, res, next) => {
   } catch (err) {
     console.error(err);
     loggerFactory.error(`Function authMiddleware has been error`, {
-      args: formatUtils.formatErrorMessage(err)
+      args: formatErrorMessage(err)
     });
     throw err;
   }

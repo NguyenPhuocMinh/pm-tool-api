@@ -4,27 +4,40 @@ import Promise from 'bluebird';
 import { assign } from 'lodash';
 
 import constants from '@constants';
+import { formatSlug, formatErrorMessage } from '@utils';
 
+// core
 import logger from '@core/logger';
 import dbManager from '@core/database';
+import {
+  buildNewError,
+  createFilterPagination,
+  createFindQuery,
+  createSortOrderQuery,
+  convertDataResponseMap,
+  checkDuplicate,
+  attributeFilter
+} from '@core/common';
 
-import { formatUtils } from '@core/utils';
-import { errorCommon, configureCommon } from '@core/common';
-import { projectDTO } from '@core/shared/dtos';
+import { projectDTO } from '@shared/dtos';
 
 const loggerFactory = logger.createLogger(
   constants.APP_NAME,
   constants.STRUCT_ORCHESTRATORS.PROJECT_ORCHESTRATOR
 );
 
+/**
+ * @description Get All Project Orchestrator
+ * @param {*} toolBox { req, res, next }
+ */
 const getAllProject = async (toolBox) => {
   const { req } = toolBox;
   try {
     loggerFactory.info(`Function getAllProject has been start`);
 
-    const { skip, limit } = configureCommon.createFilterPagination(req.query);
-    const query = configureCommon.createFindQuery(req.query);
-    const sort = configureCommon.createSortOrderQuery(req.query);
+    const { skip, limit } = createFilterPagination(req.query);
+    const query = createFindQuery(req.query);
+    const sort = createSortOrderQuery(req.query);
 
     const projects = await dbManager.findAll({
       type: 'ProjectModel',
@@ -48,7 +61,7 @@ const getAllProject = async (toolBox) => {
       filter: query
     });
 
-    const response = await configureCommon.convertDataResponseMap(projects);
+    const response = await convertDataResponseMap(projects);
 
     loggerFactory.info(`Function getAllProject has been end`);
 
@@ -61,12 +74,16 @@ const getAllProject = async (toolBox) => {
     };
   } catch (err) {
     loggerFactory.info(`Function getAllProject has error`, {
-      args: formatUtils.formatErrorMessage(err)
+      args: formatErrorMessage(err)
     });
     return Promise.reject(err);
   }
 };
 
+/**
+ * @description Create Project Orchestrator
+ * @param {*} toolBox { req, res, next }
+ */
 const createProject = async (toolBox) => {
   const { req } = toolBox;
 
@@ -75,22 +92,22 @@ const createProject = async (toolBox) => {
 
     const { name } = req.body;
 
-    const slug = formatUtils.formatSlug(name);
+    const slug = formatSlug(name);
 
     // check duplicate slug
-    const isDuplicate = await configureCommon.checkDuplicate('ProjectModel', {
+    const isDuplicate = await checkDuplicate('ProjectModel', {
       slug
     });
 
     if (isDuplicate) {
-      throw errorCommon.BuildNewError('DuplicateNameProject');
+      throw buildNewError('DuplicateNameProject');
     }
 
     let doc = assign(req.body, {
       slug: slug
     });
 
-    doc = configureCommon.attributeFilter(doc, 'create');
+    doc = attributeFilter(doc, 'create');
 
     const data = await dbManager.createOne({
       type: 'ProjectModel',
@@ -109,7 +126,7 @@ const createProject = async (toolBox) => {
     };
   } catch (err) {
     loggerFactory.info(`Function CreateProject has error`, {
-      args: formatUtils.formatErrorMessage(err)
+      args: formatErrorMessage(err)
     });
     return Promise.reject(err);
   }

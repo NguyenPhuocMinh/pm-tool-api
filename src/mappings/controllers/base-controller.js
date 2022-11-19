@@ -5,11 +5,16 @@ import { isFunction, isEmpty } from 'lodash';
 import baseOrchestrators from '../orchestrators/base-orchestrator';
 
 import constants from '@constants';
+import { formatErrorMessage } from '@utils';
 
+// core
 import logger from '@core/logger';
-import { formatUtils } from '@core/utils';
-
-import { errorCommon, responseCommon, validateCommon } from '@core/common';
+import {
+  buildNewError,
+  buildNewValidateSchema,
+  buildErrorResponse,
+  buildSuccessResponse
+} from '@core/common';
 
 const loggerFactory = logger.createLogger(
   constants.APP_NAME,
@@ -41,19 +46,16 @@ const baseController = async (toolBox, msgType, msgAction) => {
           msgAction
         }
       });
-      throw errorCommon.BuildNewError('OrchestratorHandlerNotFound');
+      throw buildNewError('OrchestratorHandlerNotFound');
     }
 
     if (!isEmpty(schema)) {
-      const errorSchema = await validateCommon.BuildNewValidateSchema(
-        schema,
-        req.body
-      );
+      const errorSchema = await buildNewValidateSchema(schema, req.body);
       if (!isEmpty(errorSchema)) {
         loggerFactory.error(`Function BaseController has errorSchema`, {
-          args: formatUtils.formatErrorMessage(errorSchema)
+          args: formatErrorMessage(errorSchema)
         });
-        return responseCommon.BuildErrorResponse(toolBox, errorSchema);
+        return buildErrorResponse(toolBox, errorSchema);
       }
     }
 
@@ -61,13 +63,13 @@ const baseController = async (toolBox, msgType, msgAction) => {
 
     const response = await orchestratorHandler(toolBox);
 
-    return responseCommon.BuildSuccessResponse(toolBox, response);
+    return buildSuccessResponse(toolBox, response);
   } catch (err) {
     loggerFactory.error(`Function BaseController has error`, {
-      args: formatUtils.formatErrorMessage(err)
+      args: formatErrorMessage(err)
     });
     console.error(err);
-    return responseCommon.BuildErrorResponse(toolBox, err);
+    return buildErrorResponse(toolBox, err);
   }
 };
 

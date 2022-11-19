@@ -2,14 +2,15 @@
 
 import { isEmpty } from 'lodash';
 
-import { errorCommon } from '@core/common';
+// core
+import { buildNewError } from '@core/common';
 
 export const validateSigIn = ({ email, password }) => {
   if (isEmpty(email)) {
-    throw errorCommon.BuildNewError('AuthEmailIsRequired');
+    throw buildNewError('AuthEmailIsRequired');
   }
 
   if (isEmpty(password)) {
-    throw errorCommon.BuildNewError('AuthPasswordIsRequired');
+    throw buildNewError('AuthPasswordIsRequired');
   }
 };

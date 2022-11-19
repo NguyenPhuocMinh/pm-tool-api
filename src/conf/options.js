@@ -52,7 +52,8 @@ const loggerOptions = {
 
 const mongooseOptions = {
   useNewUrlParser: true,
-  useUnifiedTopology: true
+  useUnifiedTopology: true,
+  maxPoolSize: 5 // Maintain up to 5 socket connections
 };
 
 const retryOptions = {
@@ -68,6 +69,7 @@ const bcryptOptions = {
 };
 
 const jwtOptions = {
+  algorithm: 'RS256',
   audience: profiles.APP_AUDIENCE,
   issuer: profiles.APP_ISSUER,
   keyid: uuidV1(),

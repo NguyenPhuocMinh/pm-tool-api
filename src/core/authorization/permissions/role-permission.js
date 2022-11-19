@@ -1,9 +1,13 @@
 'use strict';
 
 const rolePermission = {
-  getAllRole: 'ROLE_GET_ALL',
-  getRoleByID: 'ROLE_GET_ID',
-  createRole: 'ROLE_CREATE'
+  LIST: 'ROLE_LIST',
+  GET_ID: 'ROLE_GET_ID',
+  CREATE: 'ROLE_CREATE',
+  EDIT: 'ROLE_EDIT',
+  DELETE: 'ROLE_DELETE',
+  GET_PERMISSIONS: 'ROLE_GET_PERMISSIONS',
+  ADD_PERMISSIONS: 'ROLE_ADD_PERMISSIONS'
 };
 
 export default rolePermission;

@@ -11,21 +11,20 @@ import YAML from 'yamljs';
 import path from 'path';
 
 // conf
-import options from '@conf/options';
-import profiles from '@conf/profiles';
+import { options, profiles } from '@conf';
 
 import constants from '@constants';
+import { formatErrorMessage } from '@utils';
 
 // core
 import logger from '@core/logger';
 import dbManager from '@core/database';
-import { formatUtils } from '@core/utils';
 
 // mappings
 import routers from '@mappings/routers';
 
 // middleware
-import loggerMiddleware from '@middleware/logger-middleware';
+import { loggerMiddleware } from '@middleware';
 
 const loggerFactory = logger.createLogger(
   constants.APP_NAME,
@@ -90,6 +89,6 @@ const server = async () => {
 
 server().catch((err) => {
   loggerFactory.error(`The server has been error`, {
-    args: formatUtils.formatErrorMessage(err)
+    args: formatErrorMessage(err)
   });
 });

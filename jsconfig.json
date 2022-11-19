@@ -2,13 +2,16 @@
   "compilerOptions": {
     "baseUrl": "./",
     "paths": {
-      "@conf/*": ["src/conf/*"],
-      "@configs/*": ["src/configs/*"],
+      "@conf": ["src/conf/index"],
+      "@configs": ["src/configs/index"],
       "@constants": ["src/constants/index"],
       "@core/*": ["src/core/*"],
-      "@helpers/*": ["src/helpers/*"],
+      "@helpers": ["src/helpers/index"],
       "@mappings/*": ["src/mappings/*"],
-      "@middleware/*": ["src/middleware/*"]
+      "@middleware": ["src/middleware/index"],
+      "@services/*": ["src/services/*"],
+      "@shared/*": ["src/shared/*"],
+      "@utils": ["src/utils/index"]
     }
   },
   "exclude": ["node_modules"]

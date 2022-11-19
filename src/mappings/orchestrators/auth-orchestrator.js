@@ -5,18 +5,16 @@ import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import { isEmpty } from 'lodash';
 
-import profiles from '@conf/profiles';
-import options from '@conf/options';
-
 import constants from '@constants';
+import { profiles, options } from '@conf';
+import { formatErrorMessage } from '@utils';
+import { validateSigIn } from '@helpers';
+import { authDTO } from '@shared/dtos';
 
+// core
 import logger from '@core/logger';
 import dbManager from '@core/database';
-
-import { formatUtils } from '@core/utils';
-import { errorCommon } from '@core/common';
-import { authDTO } from '@core/shared/dtos';
-import { validateSigIn } from '@helpers/auth-helper';
+import { buildNewError, getSecretJSON } from '@core/common';
 
 const loggerFactory = logger.createLogger(
   constants.APP_NAME,
@@ -25,6 +23,7 @@ const loggerFactory = logger.createLogger(
 
 const APP_AUDIENCE = profiles.APP_AUDIENCE;
 const APP_ISSUER = profiles.APP_ISSUER;
+const ATTRIBUTE_TOKEN_KEY = constants.ATTRIBUTE_TOKEN_KEY;
 
 /**
  * @description Sign In Orchestrator
@@ -56,25 +55,31 @@ const signIn = async (toolBox) => {
         populate: [
           {
             path: 'roles',
-            select: 'id name permissions',
-            populate: [
-              {
-                path: 'permissions',
-                select: 'id name'
-              }
-            ]
+            select: 'id name'
           }
         ]
       }
     });
 
+    const perList = await dbManager.findAll({
+      type: 'PermissionModel',
+      filter: {
+        roles: {
+          $in: user.roles.map((r) => r.id)
+        }
+      },
+      projection: {
+        name: 1
+      }
+    });
+
     if (isEmpty(user)) {
-      throw errorCommon.BuildNewError('AuthUserIsNotFound');
+      throw buildNewError('AuthUserIsNotFound');
     }
 
     // compare password
     if (!bcrypt.compareSync(password, user.password)) {
-      throw errorCommon.BuildNewError('AuthPasswordIsInCorrect');
+      throw buildNewError('AuthPasswordIsInCorrect');
     }
 
     const {
@@ -88,7 +93,7 @@ const signIn = async (toolBox) => {
       locale,
       avatarURL,
       backgroundURL
-    } = authDTO(user);
+    } = authDTO(user, { permissions: perList });
 
     const payload = {
       id,
@@ -104,17 +109,17 @@ const signIn = async (toolBox) => {
       backgroundURL
     };
 
+    const { privateSecret } = getSecretJSON();
+
     // generator token
-    const token = jwt.sign(payload, profiles.APP_SECRET_KEY, {
-      algorithm: 'HS256',
-      expiresIn: '5m',
+    const token = jwt.sign(payload, privateSecret, {
+      expiresIn: '15m',
       ...options.jwtOptions
     });
 
     // generator refresh token
-    const refreshToken = jwt.sign(payload, profiles.APP_SECRET_REFRESH_KEY, {
-      algorithm: 'HS256',
-      expiresIn: '10m',
+    const refreshToken = jwt.sign(payload, privateSecret, {
+      expiresIn: '1d',
       ...options.jwtOptions
     });
 
@@ -122,7 +127,7 @@ const signIn = async (toolBox) => {
     user.refreshToken = refreshToken;
     await user.save();
 
-    res.cookie(constants.ATTRIBUTE_TOKEN_KEY, token, options.cookieOptions);
+    res.cookie(ATTRIBUTE_TOKEN_KEY, token, options.cookieOptions);
 
     loggerFactory.info(`Function signIn has been end`);
 
@@ -137,7 +142,7 @@ const signIn = async (toolBox) => {
     };
   } catch (err) {
     loggerFactory.info(`Function signIn has error`, {
-      args: formatUtils.formatErrorMessage(err)
+      args: formatErrorMessage(err)
     });
     return Promise.reject(err);
   }
@@ -155,7 +160,7 @@ const signOut = async (toolBox) => {
     const { email } = req.body;
 
     if (isEmpty(email)) {
-      throw errorCommon.BuildNewError('AuthEmailIsRequired');
+      throw buildNewError('AuthEmailIsRequired');
     }
 
     const user = await dbManager.findOne({
@@ -171,7 +176,7 @@ const signOut = async (toolBox) => {
     user.refreshToken = null;
     await user.save();
 
-    res.clearCookie(constants.ATTRIBUTE_TOKEN_KEY);
+    res.clearCookie(ATTRIBUTE_TOKEN_KEY);
 
     loggerFactory.info(`Function signOut has been end`);
 
@@ -183,7 +188,7 @@ const signOut = async (toolBox) => {
     };
   } catch (err) {
     loggerFactory.info(`Function signOut has error`, {
-      args: formatUtils.formatErrorMessage(err)
+      args: formatErrorMessage(err)
     });
     return Promise.reject(err);
   }
@@ -201,7 +206,7 @@ const refreshToken = async (toolBox) => {
     const { email } = req.body;
 
     if (isEmpty(email)) {
-      throw errorCommon.BuildNewError('AuthEmailIsRequired');
+      throw buildNewError('AuthEmailIsRequired');
     }
 
     const user = await dbManager.findOne({
@@ -215,13 +220,15 @@ const refreshToken = async (toolBox) => {
     });
 
     if (isEmpty(user)) {
-      throw errorCommon.BuildNewError('AuthUserIsNotFound');
+      throw buildNewError('AuthUserIsNotFound');
     }
+
+    const { privateSecret, publicSecret } = getSecretJSON();
 
     // verify refreshToken
     const payload = jwt.verify(
       user.refreshToken,
-      profiles.APP_SECRET_REFRESH_KEY,
+      publicSecret,
       {
         audience: APP_AUDIENCE,
         issuer: APP_ISSUER
@@ -231,10 +238,13 @@ const refreshToken = async (toolBox) => {
           loggerFactory.error(
             `Function refreshToken verify token has been error`,
             {
-              args: formatUtils.formatErrorMessage(err)
+              args: formatErrorMessage(err)
             }
           );
-          throw errorCommon.BuildNewError('AuthRefreshTokenExpiredError');
+
+          res.clearCookie(ATTRIBUTE_TOKEN_KEY);
+
+          throw buildNewError('AuthRefreshTokenExpiredError');
         } else {
           delete decoded.aud;
           delete decoded.iss;
@@ -247,13 +257,12 @@ const refreshToken = async (toolBox) => {
       }
     );
 
-    const newToken = jwt.sign(payload, profiles.APP_SECRET_KEY, {
-      algorithm: 'HS256',
-      expiresIn: '5m',
+    const newToken = jwt.sign(payload, privateSecret, {
+      expiresIn: '15m',
       ...options.jwtOptions
     });
 
-    res.cookie(constants.ATTRIBUTE_TOKEN_KEY, newToken, options.cookieOptions);
+    res.cookie(ATTRIBUTE_TOKEN_KEY, newToken, options.cookieOptions);
 
     loggerFactory.info(`Function refreshToken has been end`);
 
@@ -268,7 +277,7 @@ const refreshToken = async (toolBox) => {
     };
   } catch (err) {
     loggerFactory.info(`Function refreshToken has error`, {
-      args: formatUtils.formatErrorMessage(err)
+      args: formatErrorMessage(err)
     });
     return Promise.reject(err);
   }

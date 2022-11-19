@@ -2,9 +2,9 @@
 
 import winston from 'winston';
 
-import options from '@conf/options';
 import constants from '@constants';
-import { formatUtils } from '@core/utils';
+import { options } from '@conf';
+import { formatLabelLog, formatInfoLog } from '@utils';
 
 const createLogger = (appName = '-', structName = '-') => {
   const logger = winston.createLogger({
@@ -18,9 +18,9 @@ const createLogger = (appName = '-', structName = '-') => {
       winston.format.simple(),
       winston.format.timestamp({ format: constants.DATE_TIMESTAMP_FORMAT }),
       winston.format.label({
-        label: formatUtils.formatLabelLog(appName, structName)
+        label: formatLabelLog(appName, structName)
       }),
-      winston.format.printf((info) => formatUtils.formatInfoLog(info))
+      winston.format.printf((info) => formatInfoLog(info))
     ),
     transports: [new winston.transports.Console({ level: 'data' })]
   });

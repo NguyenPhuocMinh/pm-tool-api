@@ -32,5 +32,13 @@ export default [
     enable: true,
     method: 'GET',
     pathName: '/'
+  },
+  /**
+   * HEALTH
+   */
+  {
+    enable: true,
+    method: 'GET',
+    pathName: '/health'
   }
 ];
