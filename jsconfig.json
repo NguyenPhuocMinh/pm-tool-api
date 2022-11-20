@@ -11,7 +11,8 @@
       "@middleware": ["src/middleware/index"],
       "@services/*": ["src/services/*"],
       "@shared/*": ["src/shared/*"],
-      "@utils": ["src/utils/index"]
+      "@utils": ["src/utils/index"],
+      "@stores": ["src/stores/index"]
     }
   },
   "exclude": ["node_modules"]

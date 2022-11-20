@@ -4,6 +4,7 @@ import express from 'express';
 import cors from 'cors';
 import helmet from 'helmet';
 import morgan from 'morgan';
+import sessionParser from 'express-session';
 import cookieParser from 'cookie-parser';
 import bodyParser from 'body-parser';
 import swaggerUI from 'swagger-ui-express';
@@ -40,8 +41,9 @@ const APP_SECRET_KEY = profiles.APP_SECRET_KEY;
 
 const server = async () => {
   app.use(cors(options.corsOptions));
+  app.use(sessionParser(options.sessionOptions));
+  app.use(cookieParser());
   app.use(helmet());
-  app.use(cookieParser(APP_SECRET_KEY));
   app.use(bodyParser.json({ limit: '100mb' }));
   app.use(bodyParser.urlencoded({ limit: '100mb', extended: true }));
   app.use(morgan(loggerMiddleware));

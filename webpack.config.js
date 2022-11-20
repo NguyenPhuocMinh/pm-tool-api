@@ -46,7 +46,8 @@ module.exports = {
       '@middleware': path.resolve(__dirname, './src/middleware'),
       '@services': path.resolve(__dirname, './src/services'),
       '@shared': path.resolve(__dirname, './src/shared'),
-      '@utils': path.resolve(__dirname, './src/utils')
+      '@utils': path.resolve(__dirname, './src/utils'),
+      '@stores': path.resolve(__dirname, './src/stores')
     },
     modules: [
       'node_modules',

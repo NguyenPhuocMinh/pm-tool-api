@@ -15,7 +15,8 @@
           "@middleware": "./src/middleware",
           "@services": "./src/services",
           "@shared": "./src/shared",
-          "@utils": "./src/utils"
+          "@utils": "./src/utils",
+          "@stores": "./src/stores"
         }
       }
     ]

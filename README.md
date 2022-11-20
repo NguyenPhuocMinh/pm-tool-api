@@ -44,7 +44,6 @@ $ npm install
 - APP_MONGO_URI=mongodb://127.0.0.1:27017/pm-tool
 - APP_DOMAIN_PATH=http://localhost:3500
 - APP_SECRET_KEY=do-biet-day-secret
-- APP_SECRET_REFRESH_KEY=do-biet-day-refresh
 - APP_AUDIENCE=http://localhost:3500
 - APP_ISSUER=pm-tool-iss
 

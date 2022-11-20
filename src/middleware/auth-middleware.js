@@ -13,7 +13,7 @@ import { publicAuthorization, privateAuthorization } from '@core/authorization';
 
 const loggerFactory = logger.createLogger(
   constants.APP_NAME,
-  constants.STRUCT_MIDDLEWARES.TOKEN_MIDDLEWARE
+  constants.STRUCT_MIDDLEWARES.AUTH_MIDDLEWARE
 );
 
 const ATTRIBUTE_TOKEN_KEY = constants.ATTRIBUTE_TOKEN_KEY;
@@ -56,7 +56,9 @@ const authMiddleware = (req, res, next) => {
      * Verify token
      */
     const token =
-      req.header(ATTRIBUTE_TOKEN_KEY) || req.cookies[ATTRIBUTE_TOKEN_KEY];
+      req.header(ATTRIBUTE_TOKEN_KEY) ||
+      req.cookies[ATTRIBUTE_TOKEN_KEY] ||
+      req.session[ATTRIBUTE_TOKEN_KEY];
     loggerFactory.verbose(`Function authMiddleware verify data token`, {
       args: [token]
     });

@@ -15,6 +15,7 @@ import { authDTO } from '@shared/dtos';
 import logger from '@core/logger';
 import dbManager from '@core/database';
 import { buildNewError, getSecretJSON } from '@core/common';
+import { sessionStore, sessionUnStore } from '@stores';
 
 const loggerFactory = logger.createLogger(
   constants.APP_NAME,
@@ -30,7 +31,7 @@ const ATTRIBUTE_TOKEN_KEY = constants.ATTRIBUTE_TOKEN_KEY;
  * @param {*} toolBox { req, res, next }
  */
 const signIn = async (toolBox) => {
-  const { req, res } = toolBox;
+  const { req } = toolBox;
   try {
     loggerFactory.info(`Function signIn has been start`);
 
@@ -127,7 +128,7 @@ const signIn = async (toolBox) => {
     user.refreshToken = refreshToken;
     await user.save();
 
-    res.cookie(ATTRIBUTE_TOKEN_KEY, token, options.cookieOptions);
+    sessionStore(req, token);
 
     loggerFactory.info(`Function signIn has been end`);
 
@@ -153,7 +154,7 @@ const signIn = async (toolBox) => {
  * @param {*} toolBox { req, res, next }
  */
 const signOut = async (toolBox) => {
-  const { req, res } = toolBox;
+  const { req } = toolBox;
   try {
     loggerFactory.info(`Function signOut has been start`);
 
@@ -176,7 +177,7 @@ const signOut = async (toolBox) => {
     user.refreshToken = null;
     await user.save();
 
-    res.clearCookie(ATTRIBUTE_TOKEN_KEY);
+    sessionUnStore(req);
 
     loggerFactory.info(`Function signOut has been end`);
 
@@ -262,7 +263,7 @@ const refreshToken = async (toolBox) => {
       ...options.jwtOptions
     });
 
-    res.cookie(ATTRIBUTE_TOKEN_KEY, newToken, options.cookieOptions);
+    sessionStore(req, newToken);
 
     loggerFactory.info(`Function refreshToken has been end`);
 

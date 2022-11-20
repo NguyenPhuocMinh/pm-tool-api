@@ -11,11 +11,11 @@ const STRUCT_NAME_ORCHESTRATOR = 'orchestrator';
  * @description MIDDLEWARES
  */
 const LOG_MIDDLEWARE = 'log-middleware';
-const TOKEN_MIDDLEWARE = 'token-middleware';
+const AUTH_MIDDLEWARE = 'auth-middleware';
 
 const STRUCT_MIDDLEWARES = {
   LOG_MIDDLEWARE,
-  TOKEN_MIDDLEWARE
+  AUTH_MIDDLEWARE
 };
 
 /**

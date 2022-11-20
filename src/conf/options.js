@@ -1,7 +1,7 @@
 'use strict';
 
 import { v4 as uuidV4, v1 as uuidV1 } from 'uuid';
-
+import session from 'express-session';
 import profiles from './profiles';
 
 const corsOptions = {
@@ -14,6 +14,16 @@ const cookieOptions = {
   httpOnly: true,
   sameSite: 'strict',
   secure: profiles.APP_ENV === 'production'
+};
+
+const memoryStore = new session.MemoryStore();
+
+const sessionOptions = {
+  secret: profiles.APP_SECRET_KEY,
+  maxAge: 1000 * 60 * 15,
+  resave: false,
+  saveUninitialized: true,
+  store: memoryStore
 };
 
 const loggerOptions = {
@@ -79,6 +89,7 @@ const jwtOptions = {
 const options = {
   corsOptions,
   cookieOptions,
+  sessionOptions,
   loggerOptions,
   mongooseOptions,
   retryOptions,
