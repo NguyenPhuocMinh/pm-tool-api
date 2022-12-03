@@ -8,14 +8,31 @@ const STRUCT_NAME_DATABASE = 'database';
 const STRUCT_NAME_ORCHESTRATOR = 'orchestrator';
 
 /**
- * @description MIDDLEWARES
+ * @description MIDDLEWARE
  */
 const LOG_MIDDLEWARE = 'log-middleware';
 const AUTH_MIDDLEWARE = 'auth-middleware';
+const ROUTER_MIDDLEWARE = 'router-middleware';
+const ERROR_MIDDLEWARE = 'error-middleware';
 
-const STRUCT_MIDDLEWARES = {
+const STRUCT_MIDDLEWARE = {
   LOG_MIDDLEWARE,
-  AUTH_MIDDLEWARE
+  AUTH_MIDDLEWARE,
+  ROUTER_MIDDLEWARE,
+  ERROR_MIDDLEWARE
+};
+
+/**
+ * @description BUILD
+ */
+const TEMPLATE_BUILD = 'template-build';
+const RESPONSE_BUILD = 'response-build';
+const LOOKUP_BUILD = 'lookup-build';
+
+const STRUCT_BUILDS = {
+  TEMPLATE_BUILD,
+  RESPONSE_BUILD,
+  LOOKUP_BUILD
 };
 
 /**
@@ -30,6 +47,7 @@ const PROJECT_CONTROLLER = 'project-controller';
 const ROLE_CONTROLLER = 'role-controller';
 const PERMISSION_CONTROLLER = 'permission-controller';
 const USER_CONTROLLER = 'user-controller';
+const USER_SESSION_CONTROLLER = 'user-session-controller';
 
 const STRUCT_CONTROLLERS = {
   BASE_CONTROLLER,
@@ -40,7 +58,8 @@ const STRUCT_CONTROLLERS = {
   PROJECT_CONTROLLER,
   ROLE_CONTROLLER,
   PERMISSION_CONTROLLER,
-  USER_CONTROLLER
+  USER_CONTROLLER,
+  USER_SESSION_CONTROLLER
 };
 
 /**
@@ -55,6 +74,7 @@ const PROJECT_ORCHESTRATOR = 'project-orchestrator';
 const ROLE_ORCHESTRATOR = 'role-orchestrator';
 const PERMISSION_ORCHESTRATOR = 'permission-orchestrator';
 const USER_ORCHESTRATOR = 'user-orchestrator';
+const USER_SESSION_ORCHESTRATOR = 'user-session-orchestrator';
 
 const STRUCT_ORCHESTRATORS = {
   BASE_ORCHESTRATOR,
@@ -65,55 +85,118 @@ const STRUCT_ORCHESTRATORS = {
   PROJECT_ORCHESTRATOR,
   ROLE_ORCHESTRATOR,
   PERMISSION_ORCHESTRATOR,
-  USER_ORCHESTRATOR
+  USER_ORCHESTRATOR,
+  USER_SESSION_ORCHESTRATOR
 };
 
 /**
- * @description DTOS
+ * @description SERVICES
  */
 
-const AUTH_DTO = 'auth-dto';
-const ORGANIZATION_DTO = 'organization-dto';
-const PROJECT_DTO = 'project-dto';
-const ROLE_DTO = 'role-dto';
-const PERMISSION_DTO = 'permission-dto';
-const USER_DTO = 'user-dto';
+const REDIS_SERVICE = 'redis-service';
 
-const STRUCT_DTO = {
-  AUTH_DTO,
-  ORGANIZATION_DTO,
-  PROJECT_DTO,
-  ROLE_DTO,
-  PERMISSION_DTO,
-  USER_DTO
+const STRUCT_SERVICES = {
+  REDIS_SERVICE
 };
 
 /**
- * @description COMMON
+ * @description VALIDATORS
+ */
+const AUTH_VALIDATOR = 'auth-validator';
+
+const STRUCT_VALIDATORS = {
+  AUTH_VALIDATOR
+};
+
+/**
+ * @description TRANSFERS
+ */
+const AUTH_TRANSFER = 'auth-transfer';
+const ORGANIZATION_TRANSFER = 'organization-transfer';
+const PROJECT_TRANSFER = 'project-transfer';
+const ROLE_TRANSFER = 'role-transfer';
+const PERMISSION_TRANSFER = 'permission-transfer';
+const USER_TRANSFER = 'user-transfer';
+const USER_SESSION_TRANSFER = 'user-transfer';
+
+const STRUCT_TRANSFERS = {
+  AUTH_TRANSFER,
+  ORGANIZATION_TRANSFER,
+  PROJECT_TRANSFER,
+  ROLE_TRANSFER,
+  PERMISSION_TRANSFER,
+  USER_TRANSFER,
+  USER_SESSION_TRANSFER
+};
+
+/**
+ * @description COMMONS
  */
 const ERROR_COMMON = 'error-common';
-const RESPONSE_COMMON = 'response-common';
-const TEMPLATE_COMMON = 'template-common';
-const LOOKUP_COMMON = 'lookup-common';
-const CONFIGURE_COMMON = 'configure-common';
-const VALIDATE_COMMON = 'validate-common';
+const MAPPER_COMMON = 'mapper-common';
 
 const STRUCT_COMMON = {
   ERROR_COMMON,
-  RESPONSE_COMMON,
-  TEMPLATE_COMMON,
-  LOOKUP_COMMON,
-  CONFIGURE_COMMON,
-  VALIDATE_COMMON
+  MAPPER_COMMON
+};
+
+/**
+ * @description ADAPTERS
+ */
+const REDIS_ADAPTER = 'redis-adapter';
+const SOCKET_ADAPTER = 'socket-adapter';
+
+const STRUCT_ADAPTERS = {
+  REDIS_ADAPTER,
+  SOCKET_ADAPTER
+};
+
+/**
+ * @description LAYERS
+ */
+const REPOSITORY_LAYER = 'repository-layer';
+
+const STRUCT_LAYERS = {
+  REPOSITORY_LAYER
+};
+
+/**
+ * @description WORKERS
+ */
+const SOCKET_WORKER = 'socket-worker';
+
+const STRUCT_WORKER = {
+  SOCKET_WORKER
+};
+
+/**
+ * @description SHARES
+ */
+const VALIDATOR_SCHEMA = 'validator-schema';
+
+const STRUCT_SHARES = {
+  VALIDATOR_SCHEMA
+};
+
+/**
+ * @description SOCKET EVENTS
+ */
+const SOCKET_EVENTS = {
+  SOCKET_ROOM: 'pm-tool-room',
+  SOCKET_USER_LOGIN: 'socket_user_login',
+  SOCKET_USER_LOGOUT: 'socket_user_logout',
+  SOCKET_USER_ONLINE: 'socket_user_online'
 };
 
 const DATE_TIMESTAMP_FORMAT = 'YYYY-MM-DD HH:mm:ss';
 const TIMEZONE_DEFAULT = 'Asia/Ho_Chi_Minh';
-const DEFAULT_SYSTEM = 'system';
+const DEFAULT_SYSTEM = 'SYSTEM';
 const DEFAULT_SKIP = 0;
 const DEFAULT_LIMIT = 1000;
-const DEFAULT_PASSWORD = 'S3Cr3t';
+const DEFAULT_PASSWORD = 'KeepS3cr3t!';
 const ATTRIBUTE_TOKEN_KEY = 'Authorization';
+const DEFAULT_EXPIRES_TOKEN = 900; // => 15 minutes
+const DEFAULT_EXPIRES_REFRESH_TOKEN = '1d';
 
 const HTTP_STATUS = {
   SUCCESS: '200',
@@ -139,7 +222,8 @@ const types = {
   MsgTypeProject: 'PROJECT',
   MsgTypeRole: 'ROLE',
   MsgTypePermission: 'PERMISSION',
-  MsgTypeUser: 'USER'
+  MsgTypeUser: 'USER',
+  MsgTypeUserSession: 'USER_SESSION'
 };
 
 /**
@@ -148,7 +232,9 @@ const types = {
 const authActions = {
   MsgActionSignIn: 'AUTH_SIGN_IN',
   MsgActionSignOut: 'AUTH_SIGN_OUT',
-  MsgActionRefreshToken: 'AUTH_REFRESH_TOKEN'
+  MsgActionWhoAmI: 'AUTH_WHOAMI',
+  MsgActionRefreshToken: 'AUTH_REFRESH_TOKEN',
+  MsgActionRevokeToken: 'AUTH_REVOKE_TOKEN'
 };
 
 /**
@@ -172,8 +258,8 @@ const HealthActions = {
 const organizationActions = {
   MsgActionOrganizationGetAll: 'ORGANIZATION_GET_ALL',
   MsgActionOrganizationCreate: 'ORGANIZATION_CREATE',
-  MsgActionOrganizationGetID: 'ORGANIZATION_GET_ID',
-  MsgActionOrganizationEdit: 'ORGANIZATION_EDIT',
+  MsgActionOrganizationGet: 'ORGANIZATION_GET',
+  MsgActionOrganizationUpdate: 'ORGANIZATION_UPDATE',
   MsgActionOrganizationDelete: 'ORGANIZATION_DELETE'
 };
 
@@ -191,8 +277,8 @@ const projectActions = {
 const roleActions = {
   MsgActionRoleGetAll: 'ROLE_GET_ALL',
   MsgActionRoleCreate: 'ROLE_CREATE',
-  MsgActionRoleGetID: 'ROLE_GET_ID',
-  MsgActionRoleEdit: 'ROLE_EDIT',
+  MsgActionRoleGet: 'ROLE_GET',
+  MsgActionRoleUpdate: 'ROLE_UPDATE',
   MsgActionRoleDelete: 'ROLE_DELETE',
   MsgActionRoleGetUsers: 'ROLE_GET_USERS',
   MsgActionRoleGetPermissions: 'ROLE_GET_PERMISSIONS',
@@ -205,8 +291,8 @@ const roleActions = {
 const permissionActions = {
   MsgActionPermissionGetAll: 'PERMISSION_GET_ALL',
   MsgActionPermissionCreate: 'PERMISSION_CREATE',
-  MsgActionPermissionGetID: 'PERMISSION_GET_ID',
-  MsgActionPermissionEdit: 'PERMISSION_EDIT',
+  MsgActionPermissionGet: 'PERMISSION_GET',
+  MsgActionPermissionUpdate: 'PERMISSION_UPDATE',
   MsgActionPermissionDelete: 'PERMISSION_DELETE',
   MsgActionPermissionAddRoles: 'PERMISSION_ADD_ROLES'
 };
@@ -217,12 +303,24 @@ const permissionActions = {
 const userActions = {
   MsgActionUserGetAll: 'USER_GET_ALL',
   MsgActionUserCreate: 'USER_CREATE',
-  MsgActionUserGetID: 'USER_GET_ID',
-  MsgActionUserEdit: 'USER_EDIT',
+  MsgActionUserGet: 'USER_GET',
+  MsgActionUserUpdate: 'USER_UPDATE',
   MsgActionUserDelete: 'USER_DELETE',
   MsgActionUserChangePass: 'USER_CHANGE_PASS',
   MsgActionUserAddRoles: 'USER_ADD_ROLES',
-  MsgActionUserSetPass: 'USER_SET_PASS'
+  MsgActionUserSetPass: 'USER_SET_PASS',
+  MsgActionUserResetPass: 'USER_RESET_PASS'
+};
+
+/**
+ * @description USER SESSION ACTIONS
+ */
+const userSessionActions = {
+  MsgActionUserSessionTimeline: 'USER_SESSION_TIME_LINE',
+  MsgActionUserSessionGetAll: 'USER_SESSION_GET_ALL',
+  MsgActionUserSessionCreate: 'USER_SESSION_CREATE',
+  MsgActionUserSessionUpdate: 'USER_SESSION_UPDATE',
+  MsgActionUserSessionDelete: 'USER_SESSION_DELETE'
 };
 
 const actions = {
@@ -233,7 +331,8 @@ const actions = {
   ...projectActions,
   ...roleActions,
   ...permissionActions,
-  ...userActions
+  ...userActions,
+  ...userSessionActions
 };
 
 const constants = {
@@ -246,17 +345,27 @@ const constants = {
   DEFAULT_LIMIT,
   DEFAULT_PASSWORD,
   ATTRIBUTE_TOKEN_KEY,
+  DEFAULT_EXPIRES_TOKEN,
+  DEFAULT_EXPIRES_REFRESH_TOKEN,
   HTTP_STATUS,
   APP_NAME,
   STRUCT_NAME_SERVER,
   STRUCT_NAME_ROUTER,
   STRUCT_NAME_DATABASE,
   STRUCT_NAME_ORCHESTRATOR,
-  STRUCT_DTO,
-  STRUCT_COMMON,
-  STRUCT_MIDDLEWARES,
+  STRUCT_MIDDLEWARE,
+  STRUCT_BUILDS,
   STRUCT_CONTROLLERS,
-  STRUCT_ORCHESTRATORS
+  STRUCT_ORCHESTRATORS,
+  STRUCT_SERVICES,
+  STRUCT_VALIDATORS,
+  STRUCT_COMMON,
+  STRUCT_ADAPTERS,
+  STRUCT_TRANSFERS,
+  STRUCT_LAYERS,
+  STRUCT_WORKER,
+  STRUCT_SHARES,
+  SOCKET_EVENTS
 };
 
 export default constants;

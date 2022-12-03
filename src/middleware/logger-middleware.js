@@ -3,11 +3,13 @@
 import * as uuid from 'uuid';
 
 import constants from '@constants';
-import logger from '@core/logger';
 
-const loggerFactory = logger.createLogger(
+// core
+import loggerManager from '@core/logger';
+
+const loggerFactory = loggerManager(
   constants.APP_NAME,
-  constants.STRUCT_MIDDLEWARES.LOG_MIDDLEWARE
+  constants.STRUCT_MIDDLEWARE.LOG_MIDDLEWARE
 );
 
 const loggerMiddleware = (tokens, req, res) => {

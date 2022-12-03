@@ -11,6 +11,16 @@ export default {
     returnCode: 0,
     statusCode: 400
   },
+  AuthTokenIsRequired: {
+    message: 'auth.notifications.errors.tokenIsRequired',
+    returnCode: 0,
+    statusCode: 400
+  },
+  AuthInvalidDataLogin: {
+    message: 'auth.notifications.errors.invalidDataLogin',
+    returnCode: 0,
+    statusCode: 400
+  },
   AuthUserIsNotFound: {
     message: 'auth.notifications.errors.userNotFound',
     returnCode: 0,
@@ -45,5 +55,15 @@ export default {
     message: 'auth.notifications.errors.tokenForbidden',
     returnCode: 0,
     statusCode: 403
+  },
+  AuthTokenWhiteListError: {
+    message: 'auth.notifications.errors.tokenInWhiteListError',
+    returnCode: 0,
+    statusCode: 401
+  },
+  AuthTokenBlackListError: {
+    message: 'auth.notifications.errors.tokenInBlackListError',
+    returnCode: 0,
+    statusCode: 401
   }
 };

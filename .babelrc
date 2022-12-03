@@ -9,14 +9,26 @@
           "@conf": "./src/conf",
           "@configs": "./src/configs",
           "@constants": "./src/constants",
+          "@commons": "./src/commons",
           "@core": "./src/core",
+          "@database": "./src/database",
           "@helpers": "./src/helpers",
           "@mappings": "./src/mappings",
           "@middleware": "./src/middleware",
           "@services": "./src/services",
-          "@shared": "./src/shared",
+          "@shares": "./src/shares",
           "@utils": "./src/utils",
-          "@stores": "./src/stores"
+          "@stores": "./src/stores",
+          "@layers": "./src/layers",
+          "@adapters": "./src/adapters",
+          "@models": "./src/models",
+          "@policies": "./src/policies",
+          "@routers": "./src/routers",
+          "@validators": "./src/validators",
+          "@workers": "./src/workers",
+          "@transfers": "./src/transfers",
+          "@schemas": "./src/schemas",
+          "@builds": "./src/builds"
         }
       }
     ]

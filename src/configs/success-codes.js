@@ -7,6 +7,7 @@ import projectSuccess from './success/project-success';
 import roleSuccess from './success/role-success';
 import permissionSuccess from './success/permission-success';
 import userSuccess from './success/user-success';
+import userSessionSuccess from './success/user-session-success';
 
 const successCodes = {
   ...authSuccess,
@@ -15,7 +16,8 @@ const successCodes = {
   ...projectSuccess,
   ...roleSuccess,
   ...permissionSuccess,
-  ...userSuccess
+  ...userSuccess,
+  ...userSessionSuccess
 };
 
 export default successCodes;

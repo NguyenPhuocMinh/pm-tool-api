@@ -1,5 +1,6 @@
 'use strict';
 
+import http from 'http';
 import express from 'express';
 import cors from 'cors';
 import helmet from 'helmet';
@@ -13,33 +14,38 @@ import path from 'path';
 
 // conf
 import { options, profiles } from '@conf';
-
 import constants from '@constants';
-import { formatErrorMessage } from '@utils';
+import utils from '@utils';
 
 // core
-import logger from '@core/logger';
+import loggerManager from '@core/logger';
 import dbManager from '@core/database';
-
-// mappings
-import routers from '@mappings/routers';
+// routers
+import routers from '@routers';
+// adapters
+import redisAdapter from '@adapters/redis';
+import socketAdapter from '@adapters/socket';
 
 // middleware
-import { loggerMiddleware } from '@middleware';
+import {
+  loggerMiddleware,
+  routerMiddleware,
+  errorMiddleware
+} from '@middleware';
 
-const loggerFactory = logger.createLogger(
+const loggerFactory = loggerManager(
   constants.APP_NAME,
   constants.STRUCT_NAME_SERVER
 );
 
-const app = express();
-
 const APP_PORT = profiles.APP_PORT;
 const APP_HOST = profiles.APP_HOST;
 const APP_DOCS_PATH = profiles.APP_DOCS_PATH;
-const APP_SECRET_KEY = profiles.APP_SECRET_KEY;
 
-const server = async () => {
+const app = express();
+const server = http.createServer(app);
+
+const main = async () => {
   app.use(cors(options.corsOptions));
   app.use(sessionParser(options.sessionOptions));
   app.use(cookieParser());
@@ -52,7 +58,7 @@ const server = async () => {
    * Docs
    */
   const swaggerYaml = YAML.load(
-    path.resolve(__dirname, '../public/docs', 'swagger.yaml')
+    path.resolve(__dirname, '../src/docs', 'swagger.yaml')
   );
   app.use(APP_DOCS_PATH, swaggerUI.serve, swaggerUI.setup(swaggerYaml));
 
@@ -66,31 +72,39 @@ const server = async () => {
   app.use(routers);
 
   /**
-   * Not found
+   * Router Not Found
    */
-  app.use('*', (req, res, next) => {
-    loggerFactory.warn(`Router not found with path`, {
-      args: `${req.baseUrl}`
-    });
-    return res.status(404).send({
-      error: 'Not Found Router'
-    });
-  });
+  app.use('*', routerMiddleware);
+
+  /**
+   * Error handler
+   */
+  app.use(errorMiddleware);
 
   /**
    * Database
    */
   await dbManager.Init();
 
-  app.listen(APP_PORT, APP_HOST, () => {
+  /**
+   * Redis
+   */
+  await redisAdapter.Init();
+
+  /**
+   * Socket.IO
+   */
+  await socketAdapter.Init(server);
+
+  server.listen(APP_PORT, APP_HOST, () => {
     loggerFactory.http(`The server is running on`, {
       args: `[http://${APP_HOST}:${APP_PORT}]`
     });
   });
 };
 
-server().catch((err) => {
+main().catch((err) => {
   loggerFactory.error(`The server has been error`, {
-    args: formatErrorMessage(err)
+    args: utils.formatErrorMsg(err)
   });
 });

@@ -5,26 +5,39 @@ import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import { isEmpty } from 'lodash';
 
-import constants from '@constants';
+// conf
 import { profiles, options } from '@conf';
-import { formatErrorMessage } from '@utils';
-import { validateSigIn } from '@helpers';
-import { authDTO } from '@shared/dtos';
+
+import constants from '@constants';
+import commons from '@commons';
+import helpers from '@helpers';
+import utils from '@utils';
 
 // core
-import logger from '@core/logger';
-import dbManager from '@core/database';
-import { buildNewError, getSecretJSON } from '@core/common';
+import loggerManager from '@core/logger';
+// layers
+import repository from '@layers/repository';
+// adapters
+import redisManager from '@adapters/redis';
+// stores
 import { sessionStore, sessionUnStore } from '@stores';
+// transfers
+import transfers from '@transfers';
+// validator
+import validators from '@validators';
+// orchestrators
+import userSessionOrchestrator from './user-session-orchestrator';
 
-const loggerFactory = logger.createLogger(
+const loggerFactory = loggerManager(
   constants.APP_NAME,
   constants.STRUCT_ORCHESTRATORS.AUTH_ORCHESTRATOR
 );
 
+const DEFAULT_EXPIRES_TOKEN = constants.DEFAULT_EXPIRES_TOKEN;
+const DEFAULT_EXPIRES_REFRESH_TOKEN = constants.DEFAULT_EXPIRES_REFRESH_TOKEN;
+
 const APP_AUDIENCE = profiles.APP_AUDIENCE;
 const APP_ISSUER = profiles.APP_ISSUER;
-const ATTRIBUTE_TOKEN_KEY = constants.ATTRIBUTE_TOKEN_KEY;
 
 /**
  * @description Sign In Orchestrator
@@ -35,15 +48,298 @@ const signIn = async (toolBox) => {
   try {
     loggerFactory.info(`Function signIn has been start`);
 
-    // validate inputs
-    validateSigIn(req.body);
+    // validator
+    const error = validators.validatorLogin(req.body);
+
+    if (error) {
+      throw commons.newError('AuthInvalidDataLogin');
+    }
 
     const { email, password } = req.body;
 
-    const user = await dbManager.findOne({
+    const user = await getUser(email);
+
+    // compare password
+    if (!bcrypt.compareSync(password, user.password)) {
+      throw commons.newError('AuthPasswordIsInCorrect');
+    }
+
+    const data = await transfers.authTransfer(user);
+
+    const { privateSecret } = helpers.getSecretJsonHelper();
+
+    // generator token
+    const payloadToken = {
+      typ: 'Bearer',
+      email: data.email,
+      isAdmin: data.isAdmin
+    };
+    const token = jwt.sign(payloadToken, privateSecret, {
+      expiresIn: DEFAULT_EXPIRES_TOKEN,
+      ...options.jwtOptions
+    });
+
+    // generator refresh token
+    const payloadRefreshToken = {
+      typ: 'Refresh',
+      email: data.email,
+      isAdmin: data.isAdmin
+    };
+    const refreshToken = jwt.sign(payloadRefreshToken, privateSecret, {
+      expiresIn: DEFAULT_EXPIRES_REFRESH_TOKEN,
+      ...options.jwtOptions
+    });
+
+    // save refresh token into db
+    user.refreshToken = refreshToken;
+    await user.save();
+
+    // save token in session
+    sessionStore(req, token);
+
+    // save whitelist token in redis
+    const wlKey = `whitelist_${data.id}`;
+    await redisManager.setExValue(wlKey, token, DEFAULT_EXPIRES_TOKEN);
+
+    loggerFactory.info(`Function signIn has been end`);
+
+    return {
+      result: {
+        token
+      },
+      msg: 'SignInSuccess'
+    };
+  } catch (err) {
+    loggerFactory.error(`Function signIn has error`, {
+      args: utils.formatErrorMsg(err)
+    });
+    return Promise.reject(err);
+  }
+};
+
+/**
+ * @description Sign Out Orchestrator
+ * @param {*} toolBox { req, res, next }
+ */
+const signOut = async (toolBox) => {
+  const { req } = toolBox;
+  const { tokenExp } = req;
+  try {
+    loggerFactory.info(`Function signOut has been start`);
+
+    const { email, token, sessionID } = req.body;
+
+    const user = await getUser(email);
+
+    await unStoreData(req, user);
+
+    // update lastAccess into db
+    await userSessionOrchestrator.updateUserSession(toolBox, {
+      id: sessionID,
+      reason: 'USER_LOGOUT'
+    });
+
+    // store token into blacklist in redis
+    const blKey = `blacklist_${user._id}`;
+    await redisManager.setExValue(blKey, token, tokenExp);
+
+    loggerFactory.info(`Function signOut has been end`);
+
+    return {
+      result: {
+        data: null
+      },
+      msg: 'SignOutSuccess'
+    };
+  } catch (err) {
+    loggerFactory.error(`Function signOut has error`, {
+      args: utils.formatErrorMsg(err)
+    });
+    return Promise.reject(err);
+  }
+};
+
+/**
+ * @description Who Am I Orchestrator
+ * @param {*} toolBox { req, res, next }
+ */
+const whoami = async (toolBox) => {
+  const { req } = toolBox;
+  try {
+    loggerFactory.info(`Function whoami has been start`);
+
+    const { email } = req.body;
+
+    const user = await getUser(email);
+
+    const result = await transfers.authTransfer(user);
+
+    loggerFactory.info(`Function whoami has been end`);
+
+    return {
+      result: {
+        data: result
+      },
+      msg: 'WhoAmISuccess'
+    };
+  } catch (err) {
+    loggerFactory.error(`Function whoami has error`, {
+      args: utils.formatErrorMsg(err)
+    });
+    return Promise.reject(err);
+  }
+};
+
+/**
+ * @description Refresh Token Orchestrator
+ * @param {*} toolBox { req, res, next }
+ */
+const refreshToken = async (toolBox) => {
+  const { req } = toolBox;
+  try {
+    loggerFactory.info(`Function refreshToken has been start`);
+
+    const { email, sessionID } = req.body;
+
+    if (isEmpty(email)) {
+      throw commons.newError('AuthEmailIsRequired');
+    }
+
+    const user = await getUser(email);
+
+    const wlKey = `whitelist_${user._id}`;
+
+    const { privateSecret, publicSecret } = helpers.getSecretJsonHelper();
+
+    // verify refreshToken
+    const payload = await jwt.verify(
+      user.refreshToken,
+      publicSecret,
+      {
+        audience: APP_AUDIENCE,
+        issuer: APP_ISSUER
+      },
+      async (err, decoded) => {
+        if (err) {
+          loggerFactory.error(
+            `Function refreshToken verify token has been error`,
+            {
+              args: utils.formatErrorMsg(err)
+            }
+          );
+
+          await unStoreData(req, user);
+
+          // update lastAccess into db
+          await userSessionOrchestrator.updateUserSession(toolBox, {
+            id: sessionID,
+            reason: 'USER_TOKEN_EXPIRED'
+          });
+
+          // delete token into whitelist in redis
+          await redisManager.deleteValue(wlKey);
+
+          throw commons.newError('AuthRefreshTokenExpiredError');
+        } else {
+          delete decoded.aud;
+          delete decoded.iss;
+          delete decoded.jti;
+          delete decoded.exp;
+          delete decoded.iat;
+
+          return decoded;
+        }
+      }
+    );
+
+    const newToken = jwt.sign(payload, privateSecret, {
+      expiresIn: DEFAULT_EXPIRES_TOKEN,
+      ...options.jwtOptions
+    });
+
+    // save in session
+    sessionStore(req, newToken);
+
+    // save whitelist token in redis
+    await redisManager.setExValue(wlKey, newToken, DEFAULT_EXPIRES_TOKEN);
+
+    loggerFactory.info(`Function refreshToken has been end`);
+
+    return {
+      result: {
+        token: newToken
+      },
+      msg: 'RefreshTokenSuccess'
+    };
+  } catch (err) {
+    loggerFactory.error(`Function refreshToken has error`, {
+      args: utils.formatErrorMsg(err)
+    });
+    return Promise.reject(err);
+  }
+};
+
+/**
+ * @description Revoke Token Orchestrator
+ * @param {*} toolBox { req, res, next }
+ */
+const revokeToken = async (toolBox) => {
+  const { req } = toolBox;
+  const { tokenExp } = req;
+  try {
+    loggerFactory.info(`Function revokeToken has been start`);
+
+    const { id, sessionID } = req.body;
+
+    const user = await repository.getOne({
+      type: 'UserModel',
+      id
+    });
+
+    // update lastAccess into db
+    await userSessionOrchestrator.updateUserSession(toolBox, {
+      id: sessionID,
+      reason: 'USER_TOKEN_REVOKED'
+    });
+
+    const wlKey = `whitelist_${user._id}`;
+    const blKey = `blacklist_${user._id}`;
+
+    // find token from whitelist in redis
+    const whitelistToken = await redisManager.getValue(wlKey);
+
+    // store token into blacklist in redis
+    await redisManager.setExValue(blKey, whitelistToken, tokenExp);
+
+    // delete token whitelist in redis
+    await redisManager.deleteValue(wlKey);
+
+    loggerFactory.info(`Function revokeToken has been end`);
+
+    return {
+      result: {
+        data: null
+      },
+      msg: 'RevokeTokenSuccess'
+    };
+  } catch (err) {
+    loggerFactory.error(`Function revokeToken has error`, {
+      args: utils.formatErrorMsg(err)
+    });
+    return Promise.reject(err);
+  }
+};
+
+/**
+ * @description Get user helper
+ * @param {String} email
+ */
+const getUser = async (email) => {
+  try {
+    const user = await repository.findOne({
       type: 'UserModel',
       filter: {
-        email: email
+        email
       },
       projection: {
         __v: 0,
@@ -62,232 +358,41 @@ const signIn = async (toolBox) => {
       }
     });
 
-    const perList = await dbManager.findAll({
-      type: 'PermissionModel',
-      filter: {
-        roles: {
-          $in: user.roles.map((r) => r.id)
-        }
-      },
-      projection: {
-        name: 1
-      }
-    });
-
     if (isEmpty(user)) {
-      throw buildNewError('AuthUserIsNotFound');
+      throw commons.newError('AuthUserIsNotFound');
     }
 
-    // compare password
-    if (!bcrypt.compareSync(password, user.password)) {
-      throw buildNewError('AuthPasswordIsInCorrect');
-    }
-
-    const {
-      id,
-      firstName,
-      lastName,
-      fullName,
-      isAdmin,
-      roles,
-      permissions,
-      locale,
-      avatarURL,
-      backgroundURL
-    } = authDTO(user, { permissions: perList });
-
-    const payload = {
-      id,
-      firstName,
-      lastName,
-      fullName,
-      email,
-      locale,
-      isAdmin,
-      roles,
-      permissions,
-      avatarURL,
-      backgroundURL
-    };
-
-    const { privateSecret } = getSecretJSON();
-
-    // generator token
-    const token = jwt.sign(payload, privateSecret, {
-      expiresIn: '15m',
-      ...options.jwtOptions
-    });
-
-    // generator refresh token
-    const refreshToken = jwt.sign(payload, privateSecret, {
-      expiresIn: '1d',
-      ...options.jwtOptions
-    });
-
-    // save refresh token into db
-    user.refreshToken = refreshToken;
-    await user.save();
-
-    sessionStore(req, token);
-
-    loggerFactory.info(`Function signIn has been end`);
-
-    return {
-      result: {
-        data: {
-          token,
-          payload
-        }
-      },
-      msg: 'SignInSuccess'
-    };
+    return user;
   } catch (err) {
-    loggerFactory.info(`Function signIn has error`, {
-      args: formatErrorMessage(err)
+    loggerFactory.error(`Function getUser has error`, {
+      args: utils.formatErrorMsg(err)
     });
-    return Promise.reject(err);
+    throw err;
   }
 };
 
-/**
- * @description Sign Out Orchestrator
- * @param {*} toolBox { req, res, next }
- */
-const signOut = async (toolBox) => {
-  const { req } = toolBox;
+const unStoreData = async (req, user) => {
   try {
-    loggerFactory.info(`Function signOut has been start`);
-
-    const { email } = req.body;
-
-    if (isEmpty(email)) {
-      throw buildNewError('AuthEmailIsRequired');
-    }
-
-    const user = await dbManager.findOne({
-      type: 'UserModel',
-      filter: {
-        email
-      },
-      projection: {
-        refreshToken: 1
-      }
-    });
-
+    // save refresh token null into db
     user.refreshToken = null;
     await user.save();
 
+    // un store token in session
     sessionUnStore(req);
-
-    loggerFactory.info(`Function signOut has been end`);
-
-    return {
-      result: {
-        data: {}
-      },
-      msg: 'SignOutSuccess'
-    };
   } catch (err) {
-    loggerFactory.info(`Function signOut has error`, {
-      args: formatErrorMessage(err)
+    loggerFactory.error(`Function unStoreData has error`, {
+      args: utils.formatErrorMsg(err)
     });
-    return Promise.reject(err);
-  }
-};
-
-/**
- * @description Refresh Token Orchestrator
- * @param {*} toolBox { req, res, next }
- */
-const refreshToken = async (toolBox) => {
-  const { req, res } = toolBox;
-  try {
-    loggerFactory.info(`Function refreshToken has been start`);
-
-    const { email } = req.body;
-
-    if (isEmpty(email)) {
-      throw buildNewError('AuthEmailIsRequired');
-    }
-
-    const user = await dbManager.findOne({
-      type: 'UserModel',
-      filter: {
-        email
-      },
-      projection: {
-        refreshToken: 1
-      }
-    });
-
-    if (isEmpty(user)) {
-      throw buildNewError('AuthUserIsNotFound');
-    }
-
-    const { privateSecret, publicSecret } = getSecretJSON();
-
-    // verify refreshToken
-    const payload = jwt.verify(
-      user.refreshToken,
-      publicSecret,
-      {
-        audience: APP_AUDIENCE,
-        issuer: APP_ISSUER
-      },
-      (err, decoded) => {
-        if (err) {
-          loggerFactory.error(
-            `Function refreshToken verify token has been error`,
-            {
-              args: formatErrorMessage(err)
-            }
-          );
-
-          res.clearCookie(ATTRIBUTE_TOKEN_KEY);
-
-          throw buildNewError('AuthRefreshTokenExpiredError');
-        } else {
-          delete decoded.aud;
-          delete decoded.iss;
-          delete decoded.jti;
-          delete decoded.exp;
-          delete decoded.iat;
-
-          return decoded;
-        }
-      }
-    );
-
-    const newToken = jwt.sign(payload, privateSecret, {
-      expiresIn: '15m',
-      ...options.jwtOptions
-    });
-
-    sessionStore(req, newToken);
-
-    loggerFactory.info(`Function refreshToken has been end`);
-
-    return {
-      result: {
-        data: {
-          token: newToken,
-          payload
-        }
-      },
-      msg: 'RefreshTokenSuccess'
-    };
-  } catch (err) {
-    loggerFactory.info(`Function refreshToken has error`, {
-      args: formatErrorMessage(err)
-    });
-    return Promise.reject(err);
+    throw err;
   }
 };
 
 const authOrchestrator = {
   signIn,
   signOut,
-  refreshToken
+  whoami,
+  refreshToken,
+  revokeToken
 };
 
 export default authOrchestrator;

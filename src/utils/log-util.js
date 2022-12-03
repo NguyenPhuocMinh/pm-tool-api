@@ -22,7 +22,7 @@ const colorSilly = options.loggerOptions.colors.silly;
 const colorData = options.loggerOptions.colors.data;
 const colorDefault = options.loggerOptions.colors.default;
 
-export const convertLogMessage = (level, label, message, timestamp) => {
+export const convertLogMsg = (level, label, message, timestamp) => {
   switch (level) {
     case symbolInfo:
       return {

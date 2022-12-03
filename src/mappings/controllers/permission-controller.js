@@ -3,9 +3,11 @@
 import baseController from './base-controller';
 
 import constants from '@constants';
-import logger from '@core/logger';
 
-const loggerFactory = logger.createLogger(
+// core
+import loggerManager from '@core/logger';
+
+const loggerFactory = loggerManager(
   constants.APP_NAME,
   constants.STRUCT_CONTROLLERS.PERMISSION_CONTROLLER
 );
@@ -50,15 +52,15 @@ const createPermission = (req, res, next) => {
  * @param {*} res
  * @param {*} next
  */
-const getPermissionByID = (req, res, next) => {
-  loggerFactory.info(`Function getPermissionByID Controller has been start`);
+const getPermission = (req, res, next) => {
+  loggerFactory.info(`Function getPermission Controller has been start`);
   const toolBox = { req, res, next };
   baseController(
     toolBox,
     constants.types.MsgTypePermission,
-    constants.actions.MsgActionPermissionGetID
+    constants.actions.MsgActionPermissionGet
   );
-  loggerFactory.info(`Function getPermissionByID Controller has been end`);
+  loggerFactory.info(`Function getPermission Controller has been end`);
 };
 
 /**
@@ -67,15 +69,15 @@ const getPermissionByID = (req, res, next) => {
  * @param {*} res
  * @param {*} next
  */
-const editPermissionByID = (req, res, next) => {
-  loggerFactory.info(`Function editPermissionByID Controller has been start`);
+const updatePermission = (req, res, next) => {
+  loggerFactory.info(`Function updatePermission Controller has been start`);
   const toolBox = { req, res, next };
   baseController(
     toolBox,
     constants.types.MsgTypePermission,
-    constants.actions.MsgActionPermissionEdit
+    constants.actions.MsgActionPermissionUpdate
   );
-  loggerFactory.info(`Function editPermissionByID Controller has been end`);
+  loggerFactory.info(`Function updatePermission Controller has been end`);
 };
 
 /**
@@ -84,7 +86,7 @@ const editPermissionByID = (req, res, next) => {
  * @param {*} res
  * @param {*} next
  */
-const deletePermissionByID = (req, res, next) => {
+const deletePermission = (req, res, next) => {
   loggerFactory.info(`Function deletePermissionByID Controller has been start`);
   const toolBox = { req, res, next };
   baseController(
@@ -119,9 +121,9 @@ const addRolesToPermissionByID = (req, res, next) => {
 const permissionController = {
   getAllPermission,
   createPermission,
-  getPermissionByID,
-  editPermissionByID,
-  deletePermissionByID,
+  getPermission,
+  updatePermission,
+  deletePermission,
   addRolesToPermissionByID
 };
 

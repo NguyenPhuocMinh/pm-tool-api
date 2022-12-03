@@ -3,9 +3,11 @@
 import baseController from './base-controller';
 
 import constants from '@constants';
-import logger from '@core/logger';
 
-const loggerFactory = logger.createLogger(
+// core
+import loggerManager from '@core/logger';
+
+const loggerFactory = loggerManager(
   constants.APP_NAME,
   constants.STRUCT_CONTROLLERS.AUTH_CONTROLLER
 );
@@ -28,7 +30,7 @@ const signIn = (req, res, next) => {
 };
 
 /**
- * @description Health Check Controller
+ * @description Sign Out Controller
  * @param {*} req
  * @param {*} res
  * @param {*} next
@@ -45,7 +47,24 @@ const signOut = (req, res, next) => {
 };
 
 /**
- * @description Health Check Controller
+ * @description Who Am I Controller
+ * @param {*} req
+ * @param {*} res
+ * @param {*} next
+ */
+const whoami = (req, res, next) => {
+  loggerFactory.info(`Function whoami Controller has been start`);
+  const toolBox = { req, res, next };
+  baseController(
+    toolBox,
+    constants.types.MsgTypeAuth,
+    constants.actions.MsgActionWhoAmI
+  );
+  loggerFactory.info(`Function whoami Controller has been end`);
+};
+
+/**
+ * @description Refresh Token Controller
  * @param {*} req
  * @param {*} res
  * @param {*} next
@@ -61,10 +80,29 @@ const refreshToken = (req, res, next) => {
   loggerFactory.info(`Function refreshToken Controller has been end`);
 };
 
+/**
+ * @description Revoke Token Controller
+ * @param {*} req
+ * @param {*} res
+ * @param {*} next
+ */
+const revokeToken = (req, res, next) => {
+  loggerFactory.info(`Function refreshToken Controller has been start`);
+  const toolBox = { req, res, next };
+  baseController(
+    toolBox,
+    constants.types.MsgTypeAuth,
+    constants.actions.MsgActionRevokeToken
+  );
+  loggerFactory.info(`Function refreshToken Controller has been end`);
+};
+
 const authController = {
   signIn,
   signOut,
-  refreshToken
+  whoami,
+  refreshToken,
+  revokeToken
 };
 
 export default authController;

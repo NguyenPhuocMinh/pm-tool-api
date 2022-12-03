@@ -5,18 +5,16 @@ import { isFunction, isEmpty } from 'lodash';
 import baseOrchestrators from '../orchestrators/base-orchestrator';
 
 import constants from '@constants';
-import { formatErrorMessage } from '@utils';
+import commons from '@commons';
+import builds from '@builds';
+import utils from '@utils';
 
 // core
-import logger from '@core/logger';
-import {
-  buildNewError,
-  buildNewValidateSchema,
-  buildErrorResponse,
-  buildSuccessResponse
-} from '@core/common';
+import loggerManager from '@core/logger';
+// shares
+import shares from '@shares';
 
-const loggerFactory = logger.createLogger(
+const loggerFactory = loggerManager(
   constants.APP_NAME,
   constants.STRUCT_CONTROLLERS.BASE_CONTROLLER
 );
@@ -28,7 +26,7 @@ const loggerFactory = logger.createLogger(
  * @param {*} msgAction
  */
 const baseController = async (toolBox, msgType, msgAction) => {
-  const { req } = toolBox;
+  const { req, next } = toolBox;
 
   try {
     loggerFactory.info(`Function BaseController has been start`, {
@@ -40,22 +38,22 @@ const baseController = async (toolBox, msgType, msgAction) => {
     const { orchestratorHandler, schema } =
       baseOrchestrators.LookupOrchestrator(msgType, msgAction);
     if (!isFunction(orchestratorHandler)) {
-      loggerFactory.error(`Not found callback OrchestratorHandler with`, {
+      loggerFactory.error(`Not found callback orchestratorHandler with`, {
         args: {
           msgType,
           msgAction
         }
       });
-      throw buildNewError('OrchestratorHandlerNotFound');
+      throw commons.newError('OrchestratorHandlerNotFound');
     }
 
     if (!isEmpty(schema)) {
-      const errorSchema = await buildNewValidateSchema(schema, req.body);
+      const errorSchema = await shares.validatorSchema(schema, req.body);
       if (!isEmpty(errorSchema)) {
         loggerFactory.error(`Function BaseController has errorSchema`, {
-          args: formatErrorMessage(errorSchema)
+          args: utils.formatErrorMsg(errorSchema)
         });
-        return buildErrorResponse(toolBox, errorSchema);
+        return builds.errorResponse(toolBox, errorSchema);
       }
     }
 
@@ -63,13 +61,12 @@ const baseController = async (toolBox, msgType, msgAction) => {
 
     const response = await orchestratorHandler(toolBox);
 
-    return buildSuccessResponse(toolBox, response);
+    return builds.successResponse(toolBox, response);
   } catch (err) {
     loggerFactory.error(`Function BaseController has error`, {
-      args: formatErrorMessage(err)
+      args: utils.formatErrorMsg(err)
     });
-    console.error(err);
-    return buildErrorResponse(toolBox, err);
+    return next(err);
   }
 };
 

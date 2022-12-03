@@ -4,11 +4,13 @@ import constants from '@constants';
 
 import authOrchestrator from './auth-orchestrator';
 import homeOrchestrator from './home-orchestrator';
+import healthOrchestrator from './health-orchestrator';
 import organizationOrchestrator from './organization-orchestrator';
 import projectOrchestrator from './project-orchestrator';
 import roleOrchestrator from './role-orchestrator';
 import permissionOrchestrator from './permission-orchestrator';
 import userOrchestrator from './user-orchestrator';
+import userSessionOrchestrator from './user-session-orchestrator';
 
 /**
  * AUTH
@@ -27,9 +29,19 @@ const orchestratorAuth = [
   },
   {
     type: constants.types.MsgTypeAuth,
+    action: constants.actions.MsgActionWhoAmI,
+    orchestrator: authOrchestrator.whoami
+  },
+  {
+    type: constants.types.MsgTypeAuth,
     action: constants.actions.MsgActionRefreshToken,
     orchestrator: authOrchestrator.refreshToken,
     schema: 'refreshTokenSchema'
+  },
+  {
+    type: constants.types.MsgTypeAuth,
+    action: constants.actions.MsgActionRevokeToken,
+    orchestrator: authOrchestrator.revokeToken
   }
 ];
 
@@ -41,11 +53,17 @@ const orchestratorHome = [
     type: constants.types.MsgTypeHome,
     action: constants.actions.MsgActionHomePage,
     orchestrator: homeOrchestrator.homePage
-  },
+  }
+];
+
+/**
+ * HEALTH CHECK
+ */
+const orchestratorHealth = [
   {
-    type: constants.types.MsgTypeHome,
+    type: constants.types.MsgTypeHealth,
     action: constants.actions.MsgActionHealthCheck,
-    orchestrator: homeOrchestrator.healthCheck
+    orchestrator: healthOrchestrator.healthCheck
   }
 ];
 
@@ -66,19 +84,19 @@ const orchestratorOrganization = [
   },
   {
     type: constants.types.MsgTypeOrganization,
-    action: constants.actions.MsgActionOrganizationGetID,
-    orchestrator: organizationOrchestrator.getOrganizationByID
+    action: constants.actions.MsgActionOrganizationGet,
+    orchestrator: organizationOrchestrator.getOrganization
   },
   {
     type: constants.types.MsgTypeOrganization,
-    action: constants.actions.MsgActionOrganizationEdit,
-    orchestrator: organizationOrchestrator.editOrganizationByID,
+    action: constants.actions.MsgActionOrganizationUpdate,
+    orchestrator: organizationOrchestrator.updateOrganization,
     schema: 'organizationSchema'
   },
   {
     type: constants.types.MsgTypeOrganization,
     action: constants.actions.MsgActionOrganizationDelete,
-    orchestrator: organizationOrchestrator.deleteOrganizationByID
+    orchestrator: organizationOrchestrator.deleteOrganization
   }
 ];
 
@@ -88,7 +106,7 @@ const orchestratorOrganization = [
 const orchestratorProject = [
   {
     type: constants.types.MsgTypeProject,
-    action: constants.actions.MsgActionProjectGetList,
+    action: constants.actions.MsgActionProjectGetAll,
     orchestrator: projectOrchestrator.getAllProject
   },
   {
@@ -116,19 +134,19 @@ const orchestratorRole = [
   },
   {
     type: constants.types.MsgTypeRole,
-    action: constants.actions.MsgActionRoleGetID,
-    orchestrator: roleOrchestrator.getRoleByID
+    action: constants.actions.MsgActionRoleGet,
+    orchestrator: roleOrchestrator.getRole
   },
   {
     type: constants.types.MsgTypeRole,
-    action: constants.actions.MsgActionRoleEdit,
-    orchestrator: roleOrchestrator.editRoleByID,
+    action: constants.actions.MsgActionRoleUpdate,
+    orchestrator: roleOrchestrator.updateRole,
     schema: 'roleSchema'
   },
   {
     type: constants.types.MsgTypeRole,
     action: constants.actions.MsgActionRoleDelete,
-    orchestrator: roleOrchestrator.deleteRoleByID
+    orchestrator: roleOrchestrator.deleteRole
   },
   {
     type: constants.types.MsgTypeRole,
@@ -164,24 +182,24 @@ const orchestratorPermission = [
   },
   {
     type: constants.types.MsgTypePermission,
-    action: constants.actions.MsgActionPermissionGetID,
-    orchestrator: permissionOrchestrator.getPermissionByID
+    action: constants.actions.MsgActionPermissionGet,
+    orchestrator: permissionOrchestrator.getPermission
   },
   {
     type: constants.types.MsgTypePermission,
-    action: constants.actions.MsgActionPermissionEdit,
-    orchestrator: permissionOrchestrator.editPermissionByID,
+    action: constants.actions.MsgActionPermissionUpdate,
+    orchestrator: permissionOrchestrator.updatePermission,
     schema: 'permissionSchema'
   },
   {
     type: constants.types.MsgTypePermission,
     action: constants.actions.MsgActionPermissionDelete,
-    orchestrator: permissionOrchestrator.deletePermissionByID
+    orchestrator: permissionOrchestrator.deletePermission
   },
   {
     type: constants.types.MsgTypePermission,
     action: constants.actions.MsgActionPermissionAddRoles,
-    orchestrator: permissionOrchestrator.addRolesToPermissionByID
+    orchestrator: permissionOrchestrator.addRolesToPermission
   }
 ];
 
@@ -202,19 +220,19 @@ const orchestratorUser = [
   },
   {
     type: constants.types.MsgTypeUser,
-    action: constants.actions.MsgActionUserGetID,
-    orchestrator: userOrchestrator.getUserByID
+    action: constants.actions.MsgActionUserGet,
+    orchestrator: userOrchestrator.getUser
   },
   {
     type: constants.types.MsgTypeUser,
-    action: constants.actions.MsgActionUserEdit,
-    orchestrator: userOrchestrator.editUserByID,
+    action: constants.actions.MsgActionUserUpdate,
+    orchestrator: userOrchestrator.updateUser,
     schema: 'userEditSchema'
   },
   {
     type: constants.types.MsgTypeUser,
     action: constants.actions.MsgActionUserDelete,
-    orchestrator: userOrchestrator.deleteUserByID
+    orchestrator: userOrchestrator.deleteUser
   },
   {
     type: constants.types.MsgTypeUser,
@@ -232,6 +250,38 @@ const orchestratorUser = [
     action: constants.actions.MsgActionUserSetPass,
     orchestrator: userOrchestrator.setPasswordByUserID,
     schema: 'userSetPassSchema'
+  },
+  {
+    type: constants.types.MsgTypeUser,
+    action: constants.actions.MsgActionUserResetPass,
+    orchestrator: userOrchestrator.resetPasswordUser,
+    schema: 'userResetPassSchema'
+  }
+];
+
+/**
+ * USER SESSION
+ */
+const orchestratorUserSession = [
+  {
+    type: constants.types.MsgTypeUserSession,
+    action: constants.actions.MsgActionUserSessionTimeline,
+    orchestrator: userSessionOrchestrator.getUserTimelineSession
+  },
+  {
+    type: constants.types.MsgTypeUserSession,
+    action: constants.actions.MsgActionUserSessionCreate,
+    orchestrator: userSessionOrchestrator.createUserSession
+  },
+  {
+    type: constants.types.MsgTypeUserSession,
+    action: constants.actions.MsgActionUserSessionUpdate,
+    orchestrator: userSessionOrchestrator.updateUserSession
+  },
+  {
+    type: constants.types.MsgTypeUserSession,
+    action: constants.actions.MsgActionUserSessionDelete,
+    orchestrator: userSessionOrchestrator.deleteUserSession
   }
 ];
 
@@ -241,11 +291,13 @@ const orchestratorUser = [
 const orchestrators = [
   ...orchestratorAuth,
   ...orchestratorHome,
+  ...orchestratorHealth,
   ...orchestratorOrganization,
   ...orchestratorProject,
   ...orchestratorRole,
   ...orchestratorPermission,
-  ...orchestratorUser
+  ...orchestratorUser,
+  ...orchestratorUserSession
 ];
 
 export default orchestrators;

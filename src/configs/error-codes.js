@@ -7,6 +7,7 @@ import projectError from './error/project-error';
 import roleError from './error/role-error';
 import permissionError from './error/permission-error';
 import userError from './error/user-error';
+import userSessionError from './error/user-session-error';
 
 const errorCodes = {
   ...authError,
@@ -15,7 +16,8 @@ const errorCodes = {
   ...projectError,
   ...roleError,
   ...permissionError,
-  ...userError
+  ...userError,
+  ...userSessionError
 };
 
 export default errorCodes;

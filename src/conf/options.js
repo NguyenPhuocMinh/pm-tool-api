@@ -1,6 +1,7 @@
 'use strict';
 
-import { v4 as uuidV4, v1 as uuidV1 } from 'uuid';
+import { v4 as uuidV4 } from 'uuid';
+import { nanoid } from 'nanoid';
 import session from 'express-session';
 import profiles from './profiles';
 
@@ -79,11 +80,21 @@ const bcryptOptions = {
 };
 
 const jwtOptions = {
+  header: {
+    typ: 'JWT'
+  },
   algorithm: 'RS256',
   audience: profiles.APP_AUDIENCE,
   issuer: profiles.APP_ISSUER,
-  keyid: uuidV1(),
+  keyid: nanoid(30),
   jwtid: uuidV4()
+};
+
+const socketOptions = {
+  cors: {
+    origin: profiles.APP_DOMAIN_PATH,
+    methods: ['GET', 'POST']
+  }
 };
 
 const options = {
@@ -94,7 +105,8 @@ const options = {
   mongooseOptions,
   retryOptions,
   bcryptOptions,
-  jwtOptions
+  jwtOptions,
+  socketOptions
 };
 
 export default options;

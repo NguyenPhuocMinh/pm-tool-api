@@ -4,24 +4,18 @@ import Promise from 'bluebird';
 import { assign, isEmpty } from 'lodash';
 
 import constants from '@constants';
-import { formatSlug, formatErrorMessage } from '@utils';
+import commons from '@commons';
+import helpers from '@helpers';
+import utils from '@utils';
 
 // core
-import logger from '@core/logger';
-import dbManager from '@core/database';
-import {
-  buildNewError,
-  createFilterPagination,
-  createFindQuery,
-  createSortOrderQuery,
-  convertDataResponseMap,
-  checkDuplicate,
-  attributeFilter
-} from '@core/common';
+import loggerManager from '@core/logger';
+// layers
+import repository from '@layers/repository';
+// transfers
+import transfers from '@transfers';
 
-import { organizationDTO } from '@shared/dtos';
-
-const loggerFactory = logger.createLogger(
+const loggerFactory = loggerManager(
   constants.APP_NAME,
   constants.STRUCT_ORCHESTRATORS.ORGANIZATION_ORCHESTRATOR
 );
@@ -35,11 +29,11 @@ const getAllOrganization = async (toolBox) => {
   try {
     loggerFactory.info(`Function getAllOrganization has been start`);
 
-    const { skip, limit } = createFilterPagination(req.query);
-    const query = createFindQuery(req.query);
-    const sort = createSortOrderQuery(req.query);
+    const { skip, limit } = helpers.paginationHelper(req.query);
+    const query = helpers.queryHelper(req.query);
+    const sort = helpers.sortHelper(req.query);
 
-    const organizations = await dbManager.findAll({
+    const organizations = await repository.findAll({
       type: 'OrganizationModel',
       filter: query,
       projection: {
@@ -54,12 +48,12 @@ const getAllOrganization = async (toolBox) => {
       }
     });
 
-    const total = await dbManager.count({
+    const total = await repository.count({
       type: 'OrganizationModel',
       filter: query
     });
 
-    const result = await convertDataResponseMap(organizations);
+    const result = await commons.dataResponsesMapper(organizations);
 
     loggerFactory.info(`Function getAllOrganization has been end`);
 
@@ -71,8 +65,8 @@ const getAllOrganization = async (toolBox) => {
       msg: 'OrganizationGetAllSuccess'
     };
   } catch (err) {
-    loggerFactory.info(`Function getAllOrganization has error`, {
-      args: formatErrorMessage(err)
+    loggerFactory.error(`Function getAllOrganization has error`, {
+      args: utils.formatErrorMsg(err)
     });
     return Promise.reject(err);
   }
@@ -91,30 +85,32 @@ const createOrganization = async (toolBox) => {
     const { name } = req.body;
 
     if (isEmpty(name)) {
-      throw buildNewError('OrganizationNameIsRequired');
+      throw commons.newError('OrganizationNameIsRequired');
     }
 
-    const slug = formatSlug(name);
+    const slug = helpers.slugHelper(name);
 
     // check duplicate slug
-    const isDuplicate = await checkDuplicate('OrganizationModel', { slug });
+    const isDuplicate = await helpers.duplicateHelper('OrganizationModel', {
+      slug
+    });
 
     if (isDuplicate) {
-      throw buildNewError('DuplicateNameOrganization');
+      throw commons.newError('DuplicateNameOrganization');
     }
 
     let organization = assign(req.body, {
       slug: slug
     });
 
-    organization = attributeFilter(organization, 'create');
+    organization = helpers.attributeHelper(req, organization, 'create');
 
-    const data = await dbManager.Create({
+    const data = await repository.createOne({
       type: 'OrganizationModel',
       doc: organization
     });
 
-    const result = organizationDTO(data);
+    const result = transfers.organizationTransfer(data);
 
     loggerFactory.info(`Function createOrganization has been end`);
 
@@ -125,8 +121,8 @@ const createOrganization = async (toolBox) => {
       msg: 'OrganizationCreateSuccess'
     };
   } catch (err) {
-    loggerFactory.info(`Function createOrganization has error`, {
-      args: formatErrorMessage(err)
+    loggerFactory.error(`Function createOrganization has error`, {
+      args: utils.formatErrorMsg(err)
     });
     return Promise.reject(err);
   }
@@ -136,18 +132,18 @@ const createOrganization = async (toolBox) => {
  * @description Create Organization Orchestrator
  * @param {*} toolBox { req, res, next }
  */
-const getOrganizationByID = async (toolBox) => {
+const getOrganization = async (toolBox) => {
   const { req } = toolBox;
   try {
-    loggerFactory.info(`Function getOrganizationByID has been start`);
+    loggerFactory.info(`Function getOrganization has been start`);
 
-    const id = req.params.id;
+    const { id } = req.params;
 
     if (isEmpty(id)) {
-      throw buildNewError('IDNotFound');
+      throw commons.newError('IDNotFound');
     }
 
-    const organization = await dbManager.Get({
+    const organization = await repository.getOne({
       type: 'OrganizationModel',
       id,
       projection: {
@@ -155,9 +151,9 @@ const getOrganizationByID = async (toolBox) => {
       }
     });
 
-    const result = organizationDTO(organization);
+    const result = transfers.organizationTransfer(organization);
 
-    loggerFactory.info(`Function getOrganizationByID has been end`);
+    loggerFactory.info(`Function getOrganization has been end`);
 
     return {
       result: {
@@ -166,59 +162,59 @@ const getOrganizationByID = async (toolBox) => {
       msg: 'OrganizationGetIDSuccess'
     };
   } catch (err) {
-    loggerFactory.info(`Function getOrganizationByID has error`, {
-      args: formatErrorMessage(err)
+    loggerFactory.error(`Function getOrganization has error`, {
+      args: utils.formatErrorMsg(err)
     });
     return Promise.reject(err);
   }
 };
 
 /**
- * @description Edit Organization Orchestrator
+ * @description Update Organization Orchestrator
  * @param {*} toolBox { req, res, next }
  */
-const editOrganizationByID = async (toolBox) => {
+const updateOrganization = async (toolBox) => {
   const { req } = toolBox;
   try {
-    loggerFactory.info(`Function editOrganizationByID has been start`);
+    loggerFactory.info(`Function updateOrganization has been start`);
 
     const { id } = req.params;
     const { name } = req.body;
 
     if (isEmpty(id)) {
-      throw buildNewError('OrganizationIDNotFound');
+      throw commons.newError('OrganizationIDNotFound');
     }
 
     if (isEmpty(name)) {
-      throw buildNewError('OrganizationNameIsRequired');
+      throw commons.newError('OrganizationNameIsRequired');
     }
 
-    const slug = formatSlug(name);
+    const slug = helpers.slugHelper(name);
     // check duplicate slug
-    const isDuplicate = await checkDuplicate('OrganizationModel', {
+    const isDuplicate = await helpers.duplicateHelper('OrganizationModel', {
       slug,
       _id: { $ne: id }
     });
 
     if (isDuplicate) {
-      throw buildNewError('DuplicateNameOrganization');
+      throw commons.newError('DuplicateNameOrganization');
     }
 
     let organization = assign(req.body, {
       slug: slug
     });
 
-    organization = attributeFilter(organization);
+    organization = helpers.attributeHelper(req, organization);
 
-    const data = await dbManager.Update({
+    const data = await repository.updateOne({
       type: 'OrganizationModel',
       id,
       organization
     });
 
-    const result = organizationDTO(data);
+    const result = transfers.organizationTransfer(data);
 
-    loggerFactory.info(`Function editOrganizationByID has been end`);
+    loggerFactory.info(`Function updateOrganization has been end`);
 
     return {
       result: {
@@ -227,8 +223,8 @@ const editOrganizationByID = async (toolBox) => {
       msg: 'OrganizationEditSuccess'
     };
   } catch (err) {
-    loggerFactory.info(`Function editOrganizationByID has error`, {
-      args: formatErrorMessage(err)
+    loggerFactory.error(`Function updateOrganization has error`, {
+      args: utils.formatErrorMsg(err)
     });
     return Promise.reject(err);
   }
@@ -238,22 +234,22 @@ const editOrganizationByID = async (toolBox) => {
  * @description Delete Organization Orchestrator
  * @param {*} toolBox { req, res, next }
  */
-const deleteOrganizationByID = async (toolBox) => {
+const deleteOrganization = async (toolBox) => {
   const { req } = toolBox;
   try {
-    loggerFactory.info(`Function deleteOrganizationByID has been start`);
+    loggerFactory.info(`Function deleteOrganization has been start`);
     const { id } = req.params;
 
     if (isEmpty(id)) {
-      throw buildNewError('OrganizationIDNotFound');
+      throw commons.newError('OrganizationIDNotFound');
     }
 
-    const result = await dbManager.Delete({
+    const result = await repository.deleteOne({
       type: 'OrganizationModel',
       id
     });
 
-    loggerFactory.info(`Function deleteOrganizationByID has been end`);
+    loggerFactory.info(`Function deleteOrganization has been end`);
 
     return {
       result: {
@@ -262,8 +258,8 @@ const deleteOrganizationByID = async (toolBox) => {
       msg: 'OrganizationDeleteSuccess'
     };
   } catch (err) {
-    loggerFactory.info(`Function deleteOrganizationByID has error`, {
-      args: formatErrorMessage(err)
+    loggerFactory.info(`Function deleteOrganization has error`, {
+      args: utils.formatErrorMsg(err)
     });
     return Promise.reject(err);
   }
@@ -272,9 +268,9 @@ const deleteOrganizationByID = async (toolBox) => {
 const organizationOrchestrator = {
   getAllOrganization,
   createOrganization,
-  getOrganizationByID,
-  editOrganizationByID,
-  deleteOrganizationByID
+  getOrganization,
+  updateOrganization,
+  deleteOrganization
 };
 
 export default organizationOrchestrator;

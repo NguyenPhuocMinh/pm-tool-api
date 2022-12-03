@@ -2,14 +2,16 @@
 
 import Promise from 'bluebird';
 
-import constants from '@constants';
+// conf
 import { profiles } from '@conf';
-import { formatErrorMessage } from '@utils';
+
+import constants from '@constants';
+import utils from '@utils';
 
 // core
-import logger from '@core/logger';
+import loggerManager from '@core/logger';
 
-const loggerFactory = logger.createLogger(
+const loggerFactory = loggerManager(
   constants.APP_NAME,
   constants.STRUCT_ORCHESTRATORS.HOME_ORCHESTRATOR
 );
@@ -29,7 +31,7 @@ const homePage = async (toolBox) => {
     };
   } catch (err) {
     loggerFactory.info(`Function homePage has error`, {
-      args: formatErrorMessage(err)
+      args: utils.formatErrorMsg(err)
     });
     return Promise.reject(err);
   }

@@ -3,12 +3,12 @@
 import Promise from 'bluebird';
 
 import constants from '@constants';
-import { formatErrorMessage } from '@utils';
+import utils from '@utils';
 
 // core
-import logger from '@core/logger';
+import loggerManager from '@core/logger';
 
-const loggerFactory = logger.createLogger(
+const loggerFactory = loggerManager(
   constants.APP_NAME,
   constants.STRUCT_ORCHESTRATORS.HEALTH_ORCHESTRATOR
 );
@@ -28,7 +28,7 @@ const healthCheck = async (toolBox) => {
     };
   } catch (err) {
     loggerFactory.info(`Function healthCheck has error`, {
-      args: formatErrorMessage(err)
+      args: utils.formatErrorMsg(err)
     });
     return Promise.reject(err);
   }

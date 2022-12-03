@@ -8,6 +8,7 @@ import projectController from './project-controller';
 import roleController from './role-controller';
 import permissionController from './permission-controller';
 import userController from './user-controller';
+import userSessionController from './user-session-controller';
 
 export {
   authController,
@@ -17,5 +18,6 @@ export {
   projectController,
   roleController,
   permissionController,
-  userController
+  userController,
+  userSessionController
 };

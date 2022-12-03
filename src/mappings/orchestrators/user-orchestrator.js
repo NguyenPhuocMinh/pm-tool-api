@@ -4,33 +4,24 @@ import Promise from 'bluebird';
 import bcrypt from 'bcrypt';
 import { assign, isEmpty } from 'lodash';
 
-import constants from '@constants';
+// conf
 import { options } from '@conf';
-import { formatSlug, formatFullName, formatErrorMessage } from '@utils';
+
+import constants from '@constants';
+import commons from '@commons';
+import helpers from '@helpers';
+import utils from '@utils';
 
 // core
-import logger from '@core/logger';
-import dbManager from '@core/database';
-import {
-  buildNewError,
-  createFilterPagination,
-  createFindQuery,
-  createSortOrderQuery,
-  convertDataResponseMap,
-  checkDuplicate,
-  attributeFilter
-} from '@core/common';
+import loggerManager from '@core/logger';
+// layers
+import repository from '@layers/repository';
+// transfers
+import transfers from '@transfers';
+// validators
+import validators from '@validators';
 
-import { userDTO } from '@shared/dtos';
-
-import {
-  validateUserCreate,
-  validateUserUpdate,
-  validateUserChangePass,
-  validateUserSetPass
-} from '@helpers';
-
-const loggerFactory = logger.createLogger(
+const loggerFactory = loggerManager(
   constants.APP_NAME,
   constants.STRUCT_ORCHESTRATORS.USER_ORCHESTRATOR
 );
@@ -44,11 +35,15 @@ const getAllUser = async (toolBox) => {
   try {
     loggerFactory.info(`Function getAllUser has been start`);
 
-    const { skip, limit } = createFilterPagination(req.query);
-    const query = createFindQuery(req.query, ['email'], [{ isAdmin: false }]);
-    const sort = createSortOrderQuery(req.query);
+    const { skip, limit } = helpers.paginationHelper(req.query);
+    const query = helpers.queryHelper(
+      req.query,
+      ['email'],
+      [{ isAdmin: false }]
+    );
+    const sort = helpers.sortHelper(req.query);
 
-    const users = await dbManager.findAll({
+    const users = await repository.findAll({
       type: 'UserModel',
       filter: query,
       projection: {
@@ -66,12 +61,12 @@ const getAllUser = async (toolBox) => {
       }
     });
 
-    const total = await dbManager.count({
+    const total = await repository.count({
       type: 'UserModel',
       filter: query
     });
 
-    const response = await convertDataResponseMap(users);
+    const response = await commons.dataResponsesMapper(users);
 
     loggerFactory.info(`Function getAllUser has been end`);
 
@@ -84,7 +79,7 @@ const getAllUser = async (toolBox) => {
     };
   } catch (err) {
     loggerFactory.info(`Function getAllUser has error`, {
-      args: formatErrorMessage(err)
+      args: utils.formatErrorMsg(err)
     });
     return Promise.reject(err);
   }
@@ -102,25 +97,24 @@ const createUser = async (toolBox) => {
 
     const { firstName, lastName, email } = req.body;
     // validate inputs
-    validateUserCreate(req.body);
 
-    const fullName = formatFullName(firstName, lastName);
-    const slug = formatSlug(fullName);
+    const fullName = utils.formatFullName(firstName, lastName);
+    const slug = helpers.slugHelper(fullName);
 
     // check duplicate slug
-    const isDuplicate = await checkDuplicate('UserModel', {
+    const isDuplicate = await helpers.duplicateHelper('UserModel', {
       $or: [{ email }, { slug }]
     });
 
     if (isDuplicate) {
-      throw buildNewError('DuplicateEmailUser');
+      throw commons.newError('DuplicateEmailUser');
     }
 
     let user = assign(req.body, {
       slug: slug
     });
 
-    user = attributeFilter(user, 'create');
+    user = helpers.attributeHelper(req, user, 'create');
 
     // default password
     const hashDefaultPassword = bcrypt.hashSync(
@@ -130,12 +124,12 @@ const createUser = async (toolBox) => {
     user.password = hashDefaultPassword;
     user.passwordConfirm = hashDefaultPassword;
 
-    const data = await dbManager.createOne({
+    const data = await repository.createOne({
       type: 'UserModel',
       doc: user
     });
 
-    const result = await userDTO(data);
+    const result = await transfers.userTransfer(data);
 
     loggerFactory.info(`Function createUser has been end`);
 
@@ -147,7 +141,7 @@ const createUser = async (toolBox) => {
     };
   } catch (err) {
     loggerFactory.info(`Function createUser has error`, {
-      args: formatErrorMessage(err)
+      args: utils.formatErrorMsg(err)
     });
     return Promise.reject(err);
   }
@@ -157,18 +151,18 @@ const createUser = async (toolBox) => {
  * @description Get User By ID Orchestrator
  * @param {*} toolBox { req, res, next }
  */
-const getUserByID = async (toolBox) => {
+const getUser = async (toolBox) => {
   const { req } = toolBox;
   try {
-    loggerFactory.info(`Function getUserByID Orchestrator has been start`);
+    loggerFactory.info(`Function getUser Orchestrator has been start`);
 
     const { id } = req.params;
 
     if (isEmpty(id)) {
-      throw buildNewError('UserIDNotFound');
+      throw commons.newError('UserIDNotFound');
     }
 
-    const user = await dbManager.getOne({
+    const user = await repository.getOne({
       type: 'UserModel',
       id,
       projection: {
@@ -184,9 +178,9 @@ const getUserByID = async (toolBox) => {
       }
     });
 
-    const result = await userDTO(user);
+    const result = await transfers.userTransfer(user);
 
-    loggerFactory.info(`Function getUserByID Orchestrator has been end`);
+    loggerFactory.info(`Function getUser Orchestrator has been end`);
 
     return {
       result: {
@@ -195,8 +189,8 @@ const getUserByID = async (toolBox) => {
       msg: 'UserGetIDSuccess'
     };
   } catch (err) {
-    loggerFactory.info(`Function getUserByID Orchestrator has error`, {
-      args: formatErrorMessage(err)
+    loggerFactory.error(`Function getUser Orchestrator has error`, {
+      args: utils.formatErrorMsg(err)
     });
     return Promise.reject(err);
   }
@@ -206,50 +200,49 @@ const getUserByID = async (toolBox) => {
  * @description Update User By ID Orchestrator
  * @param {*} toolBox { req, res, next }
  */
-const editUserByID = async (toolBox) => {
+const updateUser = async (toolBox) => {
   const { req } = toolBox;
   try {
-    loggerFactory.info(`Function editUserByID Orchestrator has been start`);
+    loggerFactory.info(`Function updateUser Orchestrator has been start`);
 
     const { id } = req.params;
 
     if (isEmpty(id)) {
-      throw buildNewError('UserIDNotFound');
+      throw commons.newError('UserIDNotFound');
     }
 
     // validate inputs
-    validateUserUpdate(req.body);
 
     const { firstName, lastName, email } = req.body;
 
-    const fullName = formatFullName(firstName, lastName);
-    const slug = formatSlug(fullName);
+    const fullName = utils.formatFullName(firstName, lastName);
+    const slug = helpers.slugHelper(fullName);
 
     // check duplicate slug
-    const isDuplicate = await checkDuplicate('UserModel', {
+    const isDuplicate = await helpers.duplicateHelper('UserModel', {
       $or: [{ email }, { slug }],
       _id: { $ne: id }
     });
 
     if (isDuplicate) {
-      throw buildNewError('DuplicateNameRole');
+      throw commons.newError('DuplicateNameRole');
     }
 
     let user = assign(req.body, {
       slug: slug
     });
 
-    user = attributeFilter(user);
+    user = helpers.attributeHelper(req, user);
 
-    loggerFactory.info(`Function editUserByID Orchestrator has been end`);
+    loggerFactory.info(`Function updateUser Orchestrator has been end`);
 
-    const data = await dbManager.updateOne({
+    const data = await repository.updateOne({
       type: 'UserModel',
       id,
       doc: user
     });
 
-    const result = await userDTO(data);
+    const result = await transfers.userTransfer(data);
 
     return {
       result: {
@@ -258,8 +251,8 @@ const editUserByID = async (toolBox) => {
       msg: 'UserEditSuccess'
     };
   } catch (err) {
-    loggerFactory.info(`Function editUserByID Orchestrator has error`, {
-      args: formatErrorMessage(err)
+    loggerFactory.error(`Function updateUser Orchestrator has error`, {
+      args: utils.formatErrorMsg(err)
     });
     return Promise.reject(err);
   }
@@ -269,28 +262,28 @@ const editUserByID = async (toolBox) => {
  * @description Delete User By ID Orchestrator
  * @param {*} toolBox { req, res, next }
  */
-const deleteUserByID = async (toolBox) => {
+const deleteUser = async (toolBox) => {
   const { req } = toolBox;
   try {
-    loggerFactory.info(`Function deleteUserByID Orchestrator has been start`);
+    loggerFactory.info(`Function deleteUser Orchestrator has been start`);
 
     const { id } = req.params;
 
     if (isEmpty(id)) {
-      throw buildNewError('UserIDNotFound');
+      throw commons.newError('UserIDNotFound');
     }
 
-    req.body = attributeFilter(req.body);
+    req.body = helpers.attributeHelper(req, req.body);
     const { updatedAt, updatedBy } = req.body;
 
-    const result = await dbManager.deleteOne({
+    const result = await repository.deleteOne({
       type: 'UserModel',
       id
     });
 
     await removeUserInRoles(id, updatedAt, updatedBy);
 
-    loggerFactory.info(`Function deleteUserByID Orchestrator has been end`);
+    loggerFactory.info(`Function deleteUser Orchestrator has been end`);
 
     return {
       result: {
@@ -299,8 +292,8 @@ const deleteUserByID = async (toolBox) => {
       msg: 'UserDeleteSuccess'
     };
   } catch (err) {
-    loggerFactory.info(`Function deleteUserByID Orchestrator has error`, {
-      args: formatErrorMessage(err)
+    loggerFactory.error(`Function deleteUser Orchestrator has error`, {
+      args: utils.formatErrorMsg(err)
     });
     return Promise.reject(err);
   }
@@ -320,17 +313,16 @@ const changePasswordUserByID = async (toolBox) => {
     const { id } = req.params;
 
     if (isEmpty(id)) {
-      throw buildNewError('UserIDNotFound');
+      throw commons.newError('UserIDNotFound');
     }
 
     // validate inputs
-    validateUserChangePass(req.body);
 
-    req.body = attributeFilter(req.body);
+    req.body = helpers.attributeHelper(req, req.body);
 
     const { currentPassword, newPassword, updatedAt, updatedBy } = req.body;
 
-    const user = await dbManager.getOne({
+    const user = await repository.getOne({
       type: 'UserModel',
       id,
       projection: {
@@ -342,7 +334,7 @@ const changePasswordUserByID = async (toolBox) => {
     // compare password in db
     const isValidCompare = await bcrypt.compare(currentPassword, user.password);
     if (!isValidCompare) {
-      throw buildNewError('UserCurrentPasswordIsNotMatches');
+      throw commons.newError('UserCurrentPasswordIsNotMatches');
     }
 
     // create new password
@@ -358,7 +350,7 @@ const changePasswordUserByID = async (toolBox) => {
 
     await user.save();
 
-    const result = await userDTO(user);
+    const result = await transfers.userTransfer(user);
 
     loggerFactory.info(
       `Function changePasswordUserByID Orchestrator has been end`
@@ -371,10 +363,10 @@ const changePasswordUserByID = async (toolBox) => {
       msg: 'UserChangePasswordSuccess'
     };
   } catch (err) {
-    loggerFactory.info(
+    loggerFactory.error(
       `Function changePasswordUserByID Orchestrator has error`,
       {
-        args: formatErrorMessage(err)
+        args: utils.formatErrorMsg(err)
       }
     );
     return Promise.reject(err);
@@ -395,17 +387,17 @@ const addRolesToUserByUserID = async (toolBox) => {
     const { id } = req.params;
 
     if (isEmpty(id)) {
-      throw buildNewError('UserIDNotFound');
+      throw commons.newError('UserIDNotFound');
     }
 
-    req.body = attributeFilter(req.body);
+    req.body = helpers.attributeHelper(req, req.body);
     const { availableRoles, assignedRoles, updatedAt, updatedBy } = req.body;
 
     const idsAssignedRoles = assignedRoles.map((e) => e.id);
     const idsUnAssignedRoles = availableRoles.map((e) => e.id);
 
     // add role to user
-    const user = await dbManager.updateOne({
+    const user = await repository.updateOne({
       type: 'UserModel',
       id,
       doc: {
@@ -424,7 +416,7 @@ const addRolesToUserByUserID = async (toolBox) => {
     });
 
     // add users to role
-    await dbManager.bulkWrite({
+    await repository.bulkWrite({
       type: 'RoleModel',
       pipelines: [
         {
@@ -462,7 +454,7 @@ const addRolesToUserByUserID = async (toolBox) => {
       ]
     });
 
-    const result = await userDTO(user);
+    const result = await transfers.userTransfer(user);
 
     loggerFactory.info(
       `Function addRolesToUserByUserID Orchestrator has been end`
@@ -478,7 +470,7 @@ const addRolesToUserByUserID = async (toolBox) => {
     loggerFactory.error(
       `Function addRolesToUserByUserID Orchestrator has error`,
       {
-        args: formatErrorMessage(err)
+        args: utils.formatErrorMsg(err)
       }
     );
     return Promise.reject(err);
@@ -499,24 +491,30 @@ const setPasswordByUserID = async (toolBox) => {
     const { id } = req.params;
 
     if (isEmpty(id)) {
-      throw buildNewError('UserIDNotFound');
+      throw commons.newError('UserIDNotFound');
     }
 
-    // validate inputs
-    validateUserSetPass(req.body);
+    /// validate inputs
+    const error = validators.validatorUserSetPass(req.body);
 
-    req.body = attributeFilter(req.body);
-    const { password, updatedAt, updatedBy } = req.body;
+    if (error) {
+      throw commons.newError('UserInvalidDataResetPassword');
+    }
+
+    req.body = helpers.attributeHelper(req, req.body);
+    const { password, isPasswordTemporary, updatedAt, updatedBy } = req.body;
 
     // hash pass
     const hashPass = await bcrypt.hash(password, options.bcryptOptions.salt);
 
-    const user = await dbManager.updateOne({
+    const user = await repository.updateOne({
       type: 'UserModel',
       id,
       doc: {
         password: hashPass,
         passwordConfirm: hashPass,
+        isPasswordSet: true,
+        isPasswordTemporary: isPasswordTemporary,
         updatedAt,
         updatedBy
       },
@@ -530,7 +528,7 @@ const setPasswordByUserID = async (toolBox) => {
       }
     });
 
-    const result = await userDTO(user);
+    const result = await transfers.userTransfer(user);
 
     loggerFactory.info(
       `Function setPasswordByUserID Orchestrator has been end`
@@ -544,7 +542,64 @@ const setPasswordByUserID = async (toolBox) => {
     };
   } catch (err) {
     loggerFactory.error(`Function setPasswordByUserID Orchestrator has error`, {
-      args: formatErrorMessage(err)
+      args: utils.formatErrorMsg(err)
+    });
+    return Promise.reject(err);
+  }
+};
+
+/**
+ * @description Reset Password User By ID Orchestrator
+ * @param {*} toolBox { req, res, next }
+ */
+const resetPasswordUser = async (toolBox) => {
+  const { req } = toolBox;
+  try {
+    loggerFactory.info(
+      `Function resetPasswordUser Orchestrator has been start`
+    );
+
+    const { id } = req.params;
+
+    if (isEmpty(id)) {
+      throw commons.newError('UserIDNotFound');
+    }
+
+    // validate inputs
+    const error = validators.validatorUserResetPass(req.body);
+
+    if (error) {
+      throw commons.newError('UserInvalidDataResetPassword');
+    }
+
+    req.body = helpers.attributeHelper(req, req.body);
+    const { password, updatedAt, updatedBy } = req.body;
+
+    // hash pass
+    const hashPass = await bcrypt.hash(password, options.bcryptOptions.salt);
+
+    await repository.updateOne({
+      type: 'UserModel',
+      id,
+      doc: {
+        password: hashPass,
+        passwordConfirm: hashPass,
+        updatedAt,
+        updatedBy
+      }
+    });
+
+    loggerFactory.info(`Function resetPasswordUser Orchestrator has been end`);
+
+    return {
+      result: {
+        data: null
+      },
+      msg: 'UserResetPasswordSuccess'
+    };
+  } catch (err) {
+    loggerFactory.error(`Function resetPasswordUser Orchestrator has error`, {
+      args: utils.formatErrorMsg(err)
     });
     return Promise.reject(err);
   }
@@ -559,7 +614,7 @@ const setPasswordByUserID = async (toolBox) => {
 const removeUserInRoles = async (id, updatedAt, updatedBy) => {
   loggerFactory.info(`Function removeUserInRoles has been start`);
 
-  await dbManager.updateMany({
+  await repository.updateMany({
     type: 'RoleModel',
     filter: {
       users: {
@@ -583,12 +638,13 @@ const removeUserInRoles = async (id, updatedAt, updatedBy) => {
 const userOrchestrator = {
   getAllUser,
   createUser,
-  getUserByID,
-  editUserByID,
-  deleteUserByID,
+  getUser,
+  updateUser,
+  deleteUser,
   changePasswordUserByID,
   addRolesToUserByUserID,
-  setPasswordByUserID
+  setPasswordByUserID,
+  resetPasswordUser
 };
 
 export default userOrchestrator;

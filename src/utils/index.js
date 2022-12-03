@@ -1,6 +1,20 @@
 'use strict';
 
-export * from './convert-util';
-export * from './log-util';
-export * from './format-util';
-export * from './validate-util';
+import { convertSecretKey } from './convert-util';
+import { convertLogArgs, convertLogMsg } from './log-util';
+import {
+  formatLabelLog,
+  formatInfoLog,
+  formatErrorMsg,
+  formatFullName
+} from './format-util';
+
+export default {
+  convertSecretKey,
+  convertLogArgs,
+  convertLogMsg,
+  formatLabelLog,
+  formatInfoLog,
+  formatErrorMsg,
+  formatFullName
+};

@@ -4,24 +4,18 @@ import Promise from 'bluebird';
 import { assign, isEmpty } from 'lodash';
 
 import constants from '@constants';
-import { formatSlug, formatErrorMessage } from '@utils';
+import commons from '@commons';
+import helpers from '@helpers';
+import utils from '@utils';
 
 // core
-import logger from '@core/logger';
-import dbManager from '@core/database';
-import {
-  buildNewError,
-  createFilterPagination,
-  createFindQuery,
-  createSortOrderQuery,
-  convertDataResponseMap,
-  checkDuplicate,
-  attributeFilter
-} from '@core/common';
+import loggerManager from '@core/logger';
+// layers
+import repository from '@layers/repository';
+// transfers
+import transfers from '@transfers';
 
-import { permissionDTO } from 'src/shared/dtos';
-
-const loggerFactory = logger.createLogger(
+const loggerFactory = loggerManager(
   constants.APP_NAME,
   constants.STRUCT_ORCHESTRATORS.PERMISSION_ORCHESTRATOR
 );
@@ -35,16 +29,16 @@ const getAllPermission = async (toolBox) => {
   try {
     loggerFactory.info(`Function getAllPermission has been start`);
 
-    const { skip, limit } = createFilterPagination(req.query);
-    const query = createFindQuery(req.query);
-    const sort = createSortOrderQuery(req.query);
+    const { skip, limit } = helpers.paginationHelper(req.query);
+    const query = helpers.queryHelper(req.query);
+    const sort = helpers.sortHelper(req.query);
 
-    const permissions = await dbManager.findAll({
+    const permissions = await repository.findAll({
       type: 'PermissionModel',
       filter: query,
       projection: {
         __v: 0,
-        CreatedBy: 0,
+        createdBy: 0,
         updatedBy: 0
       },
       options: {
@@ -54,12 +48,12 @@ const getAllPermission = async (toolBox) => {
       }
     });
 
-    const total = await dbManager.count({
+    const total = await repository.count({
       type: 'PermissionModel',
       filter: query
     });
 
-    const response = await convertDataResponseMap(permissions);
+    const response = await commons.dataResponsesMapper(permissions);
 
     loggerFactory.info(`Function getAllPermission has been end`);
 
@@ -71,8 +65,8 @@ const getAllPermission = async (toolBox) => {
       msg: 'PermissionGetAllSuccess'
     };
   } catch (err) {
-    loggerFactory.info(`Function getAllPermission has error`, {
-      args: formatErrorMessage(err)
+    loggerFactory.error(`Function getAllPermission has error`, {
+      args: utils.formatErrorMsg(err)
     });
     return Promise.reject(err);
   }
@@ -91,30 +85,32 @@ const createPermission = async (toolBox) => {
     const { name } = req.body;
 
     if (isEmpty(name)) {
-      throw buildNewError('PermissionNameIsRequired');
+      throw commons.newError('PermissionNameIsRequired');
     }
 
-    const slug = formatSlug(name);
+    const slug = helpers.slugHelper(name);
 
     // check duplicate slug
-    const isDuplicate = await checkDuplicate('PermissionModel', { slug });
+    const isDuplicate = await helpers.duplicateHelper('PermissionModel', {
+      slug
+    });
 
     if (isDuplicate) {
-      throw buildNewError('DuplicateNamePermission');
+      throw commons.newError('DuplicateNamePermission');
     }
 
     let permission = assign(req.body, {
       slug: slug
     });
 
-    permission = attributeFilter(permission, 'create');
+    permission = helpers.attributeHelper(req, permission, 'create');
 
-    const data = await dbManager.createOne({
+    const data = await repository.createOne({
       type: 'PermissionModel',
       doc: permission
     });
 
-    const result = await permissionDTO(data);
+    const result = await transfers.permissionTransfer(data);
 
     loggerFactory.info(`Function createPermission has been end`);
 
@@ -125,8 +121,8 @@ const createPermission = async (toolBox) => {
       msg: 'PermissionCreateSuccess'
     };
   } catch (err) {
-    loggerFactory.info(`Function createPermission has error`, {
-      args: formatErrorMessage(err)
+    loggerFactory.error(`Function createPermission has error`, {
+      args: utils.formatErrorMsg(err)
     });
     return Promise.reject(err);
   }
@@ -136,18 +132,18 @@ const createPermission = async (toolBox) => {
  * @description Get Permission By ID Orchestrator
  * @param {*} toolBox { req, res, next }
  */
-const getPermissionByID = async (toolBox) => {
+const getPermission = async (toolBox) => {
   const { req } = toolBox;
   try {
-    loggerFactory.info(`Function getPermissionByID has been start`);
+    loggerFactory.info(`Function getPermission has been start`);
 
     const { id } = req.params;
 
     if (isEmpty(id)) {
-      throw buildNewError('PermissionIDNotFound');
+      throw commons.newError('PermissionIDNotFound');
     }
 
-    const permission = await dbManager.getOne({
+    const permission = await repository.getOne({
       type: 'PermissionModel',
       id,
       projection: {
@@ -163,9 +159,9 @@ const getPermissionByID = async (toolBox) => {
       }
     });
 
-    const result = await permissionDTO(permission);
+    const result = await transfers.permissionTransfer(permission);
 
-    loggerFactory.info(`Function getPermissionByID has been end`);
+    loggerFactory.info(`Function getPermission has been end`);
 
     return {
       result: {
@@ -174,50 +170,50 @@ const getPermissionByID = async (toolBox) => {
       msg: 'PermissionGetIDSuccess'
     };
   } catch (err) {
-    loggerFactory.info(`Function getPermissionByID has error`, {
-      args: formatErrorMessage(err)
+    loggerFactory.error(`Function getPermission has error`, {
+      args: utils.formatErrorMsg(err)
     });
     return Promise.reject(err);
   }
 };
 
 /**
- * @description Edit Permission By ID Orchestrator
+ * @description Update Permission By ID Orchestrator
  * @param {*} toolBox { req, res, next }
  */
-const editPermissionByID = async (toolBox) => {
+const updatePermission = async (toolBox) => {
   const { req } = toolBox;
   try {
-    loggerFactory.info(`Function editPermissionByID has been start`);
+    loggerFactory.info(`Function updatePermission has been start`);
     const { id } = req.params;
     const { name, activated } = req.body;
 
     if (isEmpty(id)) {
-      throw buildNewError('PermissionIDNotFound');
+      throw commons.newError('PermissionIDNotFound');
     }
 
     if (isEmpty(name)) {
-      throw buildNewError('PermissionNameIsRequired');
+      throw commons.newError('PermissionNameIsRequired');
     }
 
-    const slug = formatSlug(name);
+    const slug = utils.formatSlug(name);
     // check duplicate slug
-    const isDuplicate = await checkDuplicate('PermissionModel', {
+    const isDuplicate = await helpers.duplicateHelper('PermissionModel', {
       slug,
       _id: { $ne: id }
     });
 
     if (isDuplicate) {
-      throw buildNewError('DuplicateNamePermission');
+      throw commons.newError('DuplicateNamePermission');
     }
 
     let permission = assign(req.body, {
       slug: slug
     });
 
-    permission = attributeFilter(permission);
+    permission = helpers.attributeHelper(req, permission);
 
-    let data = await dbManager.updateOne({
+    let data = await repository.updateOne({
       type: 'PermissionModel',
       id,
       doc: permission,
@@ -233,7 +229,7 @@ const editPermissionByID = async (toolBox) => {
 
     if (!activated) {
       if (!isEmpty(data.roles)) {
-        data = await dbManager.updateOne({
+        data = await repository.updateOne({
           type: 'PermissionModel',
           id,
           doc: {
@@ -249,9 +245,9 @@ const editPermissionByID = async (toolBox) => {
       }
     }
 
-    const result = await permissionDTO(data);
+    const result = await transfers.permissionTransfer(data);
 
-    loggerFactory.info(`Function editPermissionByID has been end`);
+    loggerFactory.info(`Function updatePermission has been end`);
 
     return {
       result: {
@@ -260,8 +256,8 @@ const editPermissionByID = async (toolBox) => {
       msg: 'PermissionEditSuccess'
     };
   } catch (err) {
-    loggerFactory.info(`Function editPermissionByID has error`, {
-      args: formatErrorMessage(err)
+    loggerFactory.error(`Function updatePermission has error`, {
+      args: utils.formatErrorMsg(err)
     });
     return Promise.reject(err);
   }
@@ -271,27 +267,27 @@ const editPermissionByID = async (toolBox) => {
  * @description Delete Permission By ID Orchestrator
  * @param {*} toolBox { req, res, next }
  */
-const deletePermissionByID = async (toolBox) => {
+const deletePermission = async (toolBox) => {
   const { req } = toolBox;
   try {
-    loggerFactory.info(`Function deletePermissionByID has been start`);
+    loggerFactory.info(`Function deletePermission has been start`);
 
     const { id } = req.params;
-    req.body = attributeFilter(req.body);
+    req.body = helpers.attributeHelper(req, req.body);
     const { updatedAt, updatedBy } = req.body;
 
     if (isEmpty(id)) {
-      throw buildNewError('PermissionIDNotFound');
+      throw commons.newError('PermissionIDNotFound');
     }
 
-    const result = await dbManager.deleteOne({
+    const result = await repository.deleteOne({
       type: 'PermissionModel',
       id
     });
 
     await removePermissionsInRoles(id, updatedAt, updatedBy);
 
-    loggerFactory.info(`Function deletePermissionByID has been end`);
+    loggerFactory.info(`Function deletePermission has been end`);
 
     return {
       result: {
@@ -300,8 +296,8 @@ const deletePermissionByID = async (toolBox) => {
       msg: 'PermissionDeleteSuccess'
     };
   } catch (err) {
-    loggerFactory.info(`Function deletePermissionByID has error`, {
-      args: formatErrorMessage(err)
+    loggerFactory.error(`Function deletePermission has error`, {
+      args: utils.formatErrorMsg(err)
     });
     return Promise.reject(err);
   }
@@ -311,21 +307,21 @@ const deletePermissionByID = async (toolBox) => {
  * @description Add Roles To Permission By ID Orchestrator
  * @param {*} toolBox { req, res, next }
  */
-const addRolesToPermissionByID = async (toolBox) => {
+const addRolesToPermission = async (toolBox) => {
   const { req } = toolBox;
   try {
-    loggerFactory.info(`Function addRolesToPermissionByID has been start`);
+    loggerFactory.info(`Function addRolesToPermission has been start`);
 
     const { id } = req.params;
 
-    req.body = attributeFilter(req.body);
+    req.body = helpers.attributeHelper(req, req.body);
     const { availableRoles, assignedRoles, updatedAt, updatedBy } = req.body;
 
     const idsAssignedRoles = assignedRoles.map((e) => e.id);
     const idsUnAssignedRoles = availableRoles.map((e) => e.id);
 
     // add role to permission
-    const permission = await dbManager.updateOne({
+    const permission = await repository.updateOne({
       type: 'PermissionModel',
       id,
       doc: {
@@ -344,7 +340,7 @@ const addRolesToPermissionByID = async (toolBox) => {
     });
 
     // add permission to role
-    await dbManager.bulkWrite({
+    await repository.bulkWrite({
       type: 'RoleModel',
       pipelines: [
         {
@@ -382,9 +378,9 @@ const addRolesToPermissionByID = async (toolBox) => {
       ]
     });
 
-    const result = await permissionDTO(permission);
+    const result = await transfers.permissionTransfer(permission);
 
-    loggerFactory.info(`Function addRolesToPermissionByID has been end`);
+    loggerFactory.info(`Function addRolesToPermission has been end`);
 
     return {
       result: {
@@ -393,8 +389,8 @@ const addRolesToPermissionByID = async (toolBox) => {
       msg: 'PermissionAddRolesSuccess'
     };
   } catch (err) {
-    loggerFactory.error(`Function addRolesToPermissionByID has error`, {
-      args: formatErrorMessage(err)
+    loggerFactory.error(`Function addRolesToPermission has error`, {
+      args: utils.formatErrorMsg(err)
     });
     return Promise.reject(err);
   }
@@ -409,7 +405,7 @@ const addRolesToPermissionByID = async (toolBox) => {
 const removePermissionsInRoles = async (id, updatedAt, updatedBy) => {
   loggerFactory.info(`Function removePermissionsInRoles has been start`);
 
-  await dbManager.updateMany({
+  await repository.updateMany({
     type: 'RoleModel',
     filter: {
       permissions: {
@@ -433,10 +429,10 @@ const removePermissionsInRoles = async (id, updatedAt, updatedBy) => {
 const permissionOrchestrator = {
   getAllPermission,
   createPermission,
-  getPermissionByID,
-  editPermissionByID,
-  deletePermissionByID,
-  addRolesToPermissionByID
+  getPermission,
+  updatePermission,
+  deletePermission,
+  addRolesToPermission
 };
 
 export default permissionOrchestrator;

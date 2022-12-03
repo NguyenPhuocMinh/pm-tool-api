@@ -3,9 +3,11 @@
 import baseController from './base-controller';
 
 import constants from '@constants';
-import logger from '@core/logger';
 
-const loggerFactory = logger.createLogger(
+// core
+import loggerManager from '@core/logger';
+
+const loggerFactory = loggerManager(
   constants.APP_NAME,
   constants.STRUCT_CONTROLLERS.ROLE_CONTROLLER
 );
@@ -50,15 +52,15 @@ const createRole = (req, res, next) => {
  * @param {*} res
  * @param {*} next
  */
-const getRolByID = (req, res, next) => {
-  loggerFactory.info(`Function getRolByID Controller has been start`);
+const getRole = (req, res, next) => {
+  loggerFactory.info(`Function getRole Controller has been start`);
   const toolBox = { req, res, next };
   baseController(
     toolBox,
     constants.types.MsgTypeRole,
-    constants.actions.MsgActionRoleGetID
+    constants.actions.MsgActionRoleGet
   );
-  loggerFactory.info(`Function getRolByID Controller has been end`);
+  loggerFactory.info(`Function getRole Controller has been end`);
 };
 
 /**
@@ -67,15 +69,15 @@ const getRolByID = (req, res, next) => {
  * @param {*} res
  * @param {*} next
  */
-const editRoleByID = (req, res, next) => {
-  loggerFactory.info(`Function editRoleByID Controller has been start`);
+const updateRole = (req, res, next) => {
+  loggerFactory.info(`Function updateRole Controller has been start`);
   const toolBox = { req, res, next };
   baseController(
     toolBox,
     constants.types.MsgTypeRole,
-    constants.actions.MsgActionRoleEdit
+    constants.actions.MsgActionRoleUpdate
   );
-  loggerFactory.info(`Function editRoleByID Controller has been end`);
+  loggerFactory.info(`Function updateRole Controller has been end`);
 };
 
 /**
@@ -84,15 +86,15 @@ const editRoleByID = (req, res, next) => {
  * @param {*} res
  * @param {*} next
  */
-const deleteRoleByID = (req, res, next) => {
-  loggerFactory.info(`Function deleteRoleByID Controller has been start`);
+const deleteRole = (req, res, next) => {
+  loggerFactory.info(`Function deleteRole Controller has been start`);
   const toolBox = { req, res, next };
   baseController(
     toolBox,
     constants.types.MsgTypeRole,
     constants.actions.MsgActionRoleDelete
   );
-  loggerFactory.info(`Function deleteRoleByID Controller has been end`);
+  loggerFactory.info(`Function deleteRole Controller has been end`);
 };
 
 /**
@@ -155,9 +157,9 @@ const addPermissionsToRoleByRoleID = (req, res, next) => {
 const roleController = {
   getAllRole,
   createRole,
-  getRolByID,
-  editRoleByID,
-  deleteRoleByID,
+  getRole,
+  updateRole,
+  deleteRole,
   getUsersByRoleID,
   getPermissionsByRoleID,
   addPermissionsToRoleByRoleID

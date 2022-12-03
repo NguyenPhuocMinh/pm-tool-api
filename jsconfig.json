@@ -5,14 +5,25 @@
       "@conf": ["src/conf/index"],
       "@configs": ["src/configs/index"],
       "@constants": ["src/constants/index"],
+      "@commons": ["src/commons/index"],
       "@core/*": ["src/core/*"],
       "@helpers": ["src/helpers/index"],
       "@mappings/*": ["src/mappings/*"],
       "@middleware": ["src/middleware/index"],
       "@services/*": ["src/services/*"],
-      "@shared/*": ["src/shared/*"],
+      "@shares": ["src/shares/index"],
       "@utils": ["src/utils/index"],
-      "@stores": ["src/stores/index"]
+      "@stores": ["src/stores/index"],
+      "@layers/*": ["src/layers/*"],
+      "@adapters/*": ["src/adapters/*"],
+      "@models": ["src/models/index"],
+      "@policies/*": ["src/policies/*"],
+      "@routers": ["src/routers/index"],
+      "@validators": ["src/validators/index"],
+      "@workers": ["src/workers/index"],
+      "@transfers": ["src/transfers/index"],
+      "@schemas": ["src/schemas/index"],
+      "@builds": ["src/builds/index"]
     }
   },
   "exclude": ["node_modules"]

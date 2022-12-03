@@ -3,9 +3,11 @@
 import baseController from './base-controller';
 
 import constants from '@constants';
-import logger from '@core/logger';
 
-const loggerFactory = logger.createLogger(
+// core
+import loggerManager from '@core/logger';
+
+const loggerFactory = loggerManager(
   constants.APP_NAME,
   constants.STRUCT_CONTROLLERS.HOME_CONTROLLER
 );
@@ -27,26 +29,8 @@ const homePage = (req, res, next) => {
   loggerFactory.info(`Function homePage Controller has been end`);
 };
 
-/**
- * @description Health Check Controller
- * @param {*} req
- * @param {*} res
- * @param {*} next
- */
-const healthCheck = (req, res, next) => {
-  loggerFactory.info(`Function healthCheck Controller has been start`);
-  const toolBox = { req, res, next };
-  baseController(
-    toolBox,
-    constants.types.MsgTypeHome,
-    constants.actions.MsgActionHealthCheck
-  );
-  loggerFactory.info(`Function healthCheck Controller has been end`);
-};
-
 const homeController = {
-  homePage,
-  healthCheck
+  homePage
 };
 
 export default homeController;

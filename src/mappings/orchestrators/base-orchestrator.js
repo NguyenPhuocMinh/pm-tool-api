@@ -6,12 +6,12 @@ import { get } from 'lodash';
 import orchestrators from './index';
 
 import constants from '@constants';
-import { formatErrorMessage } from '@utils';
+import utils from '@utils';
 
 // core
-import logger from '@core/logger';
+import loggerManager from '@core/logger';
 
-const loggerFactory = logger.createLogger(
+const loggerFactory = loggerManager(
   constants.APP_NAME,
   constants.STRUCT_ORCHESTRATORS.BASE_ORCHESTRATOR
 );
@@ -45,7 +45,7 @@ const LookupOrchestrator = (msgType, msgAction) => {
     return { orchestratorHandler: fnCallBack, schema };
   } catch (err) {
     loggerFactory.error(`Function LookupOrchestrator has error`, {
-      args: formatErrorMessage(err)
+      args: utils.formatErrorMsg(err)
     });
     return Promise.reject(err);
   }

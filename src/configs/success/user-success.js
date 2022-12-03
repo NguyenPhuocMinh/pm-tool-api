@@ -40,5 +40,10 @@ export default {
     message: 'resources.users.notifications.success.setPassword',
     returnCode: 1,
     statusCode: 200
+  },
+  UserResetPasswordSuccess: {
+    message: 'resources.users.notifications.success.resetPassword',
+    returnCode: 1,
+    statusCode: 200
   }
 };

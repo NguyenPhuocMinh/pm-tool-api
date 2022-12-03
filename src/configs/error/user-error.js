@@ -22,8 +22,7 @@ export default {
     statusCode: 400
   },
   UserPasswordConfirmIsRequired: {
-    message:
-      'resources.users.notifications.errors.passwordConfirmIsRequired',
+    message: 'resources.users.notifications.errors.passwordConfirmIsRequired',
     returnCode: 0,
     statusCode: 400
   },
@@ -33,8 +32,7 @@ export default {
     statusCode: 400
   },
   UserPasswordIsValidLength: {
-    message:
-      'resources.users.notifications.errors.passwordIsValidLength',
+    message: 'resources.users.notifications.errors.passwordIsValidLength',
     returnCode: 0,
     statusCode: 400
   },
@@ -45,14 +43,12 @@ export default {
     statusCode: 400
   },
   UserPasswordConfirmIsNotMatches: {
-    message:
-      'resources.users.notifications.errors.passwordConfirmIsNotMatches',
+    message: 'resources.users.notifications.errors.passwordConfirmIsNotMatches',
     returnCode: 0,
     statusCode: 400
   },
   UserCurrentPasswordIsRequired: {
-    message:
-      'resources.users.notifications.errors.currentPasswordIsRequired',
+    message: 'resources.users.notifications.errors.currentPasswordIsRequired',
     returnCode: 0,
     statusCode: 400
   },
@@ -63,8 +59,7 @@ export default {
     statusCode: 400
   },
   UserCurrentPasswordIsNotMatches: {
-    message:
-      'resources.users.notifications.errors.currentPasswordIsNotMatches',
+    message: 'resources.users.notifications.errors.currentPasswordIsNotMatches',
     returnCode: 0,
     statusCode: 400
   },
@@ -81,6 +76,11 @@ export default {
   },
   UserIDNotFound: {
     message: 'resources.users.notifications.errors.idNotFound',
+    returnCode: 0,
+    statusCode: 400
+  },
+  UserInvalidDataResetPassword: {
+    message: 'resources.users.notifications.errors.invalidDataResetPassword',
     returnCode: 0,
     statusCode: 400
   }

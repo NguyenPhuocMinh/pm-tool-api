@@ -4,24 +4,17 @@ import Promise from 'bluebird';
 import { assign } from 'lodash';
 
 import constants from '@constants';
-import { formatSlug, formatErrorMessage } from '@utils';
+import commons from '@commons';
+import helpers from '@helpers';
+import utils from '@utils';
+import transfers from '@transfers';
 
 // core
-import logger from '@core/logger';
-import dbManager from '@core/database';
-import {
-  buildNewError,
-  createFilterPagination,
-  createFindQuery,
-  createSortOrderQuery,
-  convertDataResponseMap,
-  checkDuplicate,
-  attributeFilter
-} from '@core/common';
+import loggerManager from '@core/logger';
+// layers
+import repository from '@layers/repository';
 
-import { projectDTO } from '@shared/dtos';
-
-const loggerFactory = logger.createLogger(
+const loggerFactory = loggerManager(
   constants.APP_NAME,
   constants.STRUCT_ORCHESTRATORS.PROJECT_ORCHESTRATOR
 );
@@ -35,11 +28,11 @@ const getAllProject = async (toolBox) => {
   try {
     loggerFactory.info(`Function getAllProject has been start`);
 
-    const { skip, limit } = createFilterPagination(req.query);
-    const query = createFindQuery(req.query);
-    const sort = createSortOrderQuery(req.query);
+    const { skip, limit } = helpers.paginationHelper(req.query);
+    const query = helpers.queryHelper(req.query);
+    const sort = helpers.sortHelper(req.query);
 
-    const projects = await dbManager.findAll({
+    const projects = await repository.findAll({
       type: 'ProjectModel',
       filter: query,
       projection: {
@@ -56,12 +49,12 @@ const getAllProject = async (toolBox) => {
       }
     });
 
-    const total = await dbManager.count({
+    const total = await repository.count({
       type: 'ProjectModel',
       filter: query
     });
 
-    const response = await convertDataResponseMap(projects);
+    const response = await commons.dataResponsesMapper(projects);
 
     loggerFactory.info(`Function getAllProject has been end`);
 
@@ -74,7 +67,7 @@ const getAllProject = async (toolBox) => {
     };
   } catch (err) {
     loggerFactory.info(`Function getAllProject has error`, {
-      args: formatErrorMessage(err)
+      args: utils.formatErrorMsg(err)
     });
     return Promise.reject(err);
   }
@@ -92,29 +85,29 @@ const createProject = async (toolBox) => {
 
     const { name } = req.body;
 
-    const slug = formatSlug(name);
+    const slug = helpers.slugHelper(name);
 
     // check duplicate slug
-    const isDuplicate = await checkDuplicate('ProjectModel', {
+    const isDuplicate = await helpers.duplicateHelper('ProjectModel', {
       slug
     });
 
     if (isDuplicate) {
-      throw buildNewError('DuplicateNameProject');
+      throw commons.newError('DuplicateNameProject');
     }
 
     let doc = assign(req.body, {
       slug: slug
     });
 
-    doc = attributeFilter(doc, 'create');
+    doc = helpers.attributeHelper(null, doc, 'create');
 
-    const data = await dbManager.createOne({
+    const data = await repository.createOne({
       type: 'ProjectModel',
       doc
     });
 
-    const result = projectDTO(data);
+    const result = transfers.projectTransfer(data);
 
     loggerFactory.info(`Function CreateProject has been end`);
 
@@ -126,7 +119,7 @@ const createProject = async (toolBox) => {
     };
   } catch (err) {
     loggerFactory.info(`Function CreateProject has error`, {
-      args: formatErrorMessage(err)
+      args: utils.formatErrorMsg(err)
     });
     return Promise.reject(err);
   }
