@@ -48,7 +48,6 @@ const getUserTimelineSession = async (toolBox) => {
         sort
       }
     });
-    console.log("🚀 ~ file: user-session-orchestrator.js:51 ~ getUserTimelineSession ~ timelines", timelines)
 
     const total = await repository.count({
       type: 'UserSessionModel',
@@ -56,7 +55,6 @@ const getUserTimelineSession = async (toolBox) => {
     });
 
     const response = await commons.dataResponsesMapper(timelines);
-    console.log("🚀 ~ file: user-session-orchestrator.js:59 ~ getUserTimelineSession ~ response", response)
 
     loggerFactory.info(`Function getUserTimelineSession has been end`);
 
