@@ -108,5 +108,3 @@ main().catch((err) => {
     args: utils.formatErrorMsg(err)
   });
 });
-
-module.export = server;
