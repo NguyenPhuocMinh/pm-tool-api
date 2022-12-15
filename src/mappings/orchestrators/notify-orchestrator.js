@@ -28,10 +28,8 @@ const NOTIFY_REMIND_CHANGE_PASSWORD_TEMPORARY =
  * @param {*} toolBox { req, res, next }
  */
 const getAllNotify = async (toolBox) => {
-  const { req } = toolBox;
   try {
     loggerFactory.info(`Function getAllNotify has been start`);
-
     loggerFactory.info(`Function getAllNotify has been start`);
 
     return {
