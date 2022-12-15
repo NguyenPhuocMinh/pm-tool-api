@@ -13,6 +13,8 @@ import transfers from '@transfers';
 import loggerManager from '@core/logger';
 // layers
 import repository from '@layers/repository';
+// validators
+import validators from '@validators';
 
 const loggerFactory = loggerManager(
   constants.APP_NAME,
@@ -26,7 +28,7 @@ const loggerFactory = loggerManager(
 const getAllProject = async (toolBox) => {
   const { req } = toolBox;
   try {
-    loggerFactory.info(`Function getAllProject has been start`);
+    loggerFactory.info(`Function getAllProject Orchestrator has been start`);
 
     const { skip, limit } = helpers.paginationHelper(req.query);
     const query = helpers.queryHelper(req.query);
@@ -56,17 +58,17 @@ const getAllProject = async (toolBox) => {
 
     const response = await commons.dataResponsesMapper(projects);
 
-    loggerFactory.info(`Function getAllProject has been end`);
+    loggerFactory.info(`Function getAllProject Orchestrator has been end`);
 
     return {
       result: {
         data: response,
         total
       },
-      msg: 'ProjectGetAllSuccess'
+      msg: 'ProjectS001'
     };
   } catch (err) {
-    loggerFactory.info(`Function getAllProject has error`, {
+    loggerFactory.info(`Function getAllProject Orchestrator has error`, {
       args: utils.formatErrorMsg(err)
     });
     return Promise.reject(err);
@@ -81,10 +83,16 @@ const createProject = async (toolBox) => {
   const { req } = toolBox;
 
   try {
-    loggerFactory.info(`Function CreateProject has been start`);
+    loggerFactory.info(`Function createProject Orchestrator has been start`);
+
+    // validate inputs
+    const error = validators.validatorProject(req.body);
+
+    if (error) {
+      throw commons.newError('ProjectE001');
+    }
 
     const { name } = req.body;
-
     const slug = helpers.slugHelper(name);
 
     // check duplicate slug
@@ -93,7 +101,7 @@ const createProject = async (toolBox) => {
     });
 
     if (isDuplicate) {
-      throw commons.newError('DuplicateNameProject');
+      throw commons.newError('ProjectE002');
     }
 
     let doc = assign(req.body, {
@@ -109,16 +117,16 @@ const createProject = async (toolBox) => {
 
     const result = transfers.projectTransfer(data);
 
-    loggerFactory.info(`Function CreateProject has been end`);
+    loggerFactory.info(`Function createProject Orchestrator has been end`);
 
     return {
       result: {
         data: result
       },
-      msg: 'ProjectCreateSuccess'
+      msg: 'ProjectS002'
     };
   } catch (err) {
-    loggerFactory.info(`Function CreateProject has error`, {
+    loggerFactory.info(`Function createProject Orchestrator has error`, {
       args: utils.formatErrorMsg(err)
     });
     return Promise.reject(err);

@@ -7,6 +7,9 @@ import roleTransfer from './role-transfer';
 import permissionTransfer from './permission-transfer';
 import userTransfer from './user-transfer';
 import userSessionTransfer from './user-session-transfer';
+import notifyTransfer from './notify-transfer';
+import notifyUserTransfer from './notify-user-transfer';
+import notifyTemplateTransfer from './notify-template-transfer';
 
 export default {
   authTransfer,
@@ -15,5 +18,8 @@ export default {
   roleTransfer,
   permissionTransfer,
   userTransfer,
-  userSessionTransfer
+  userSessionTransfer,
+  notifyTransfer,
+  notifyUserTransfer,
+  notifyTemplateTransfer
 };

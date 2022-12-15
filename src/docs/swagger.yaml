@@ -48,7 +48,7 @@ paths:
         500:
           $ref: "#/components/responses/ServerError"
 
-  /health:
+  /healths:
     get:
       tags:
         - home
@@ -73,7 +73,7 @@ paths:
         500:
           $ref: "#/components/responses/ServerError"
 
-  /login:
+  /auth/logins:
     post:
       tags:
         - auth
@@ -100,7 +100,7 @@ paths:
         500:
           $ref: "#/components/responses/ServerError"
 
-  /logout:
+  /auth/logouts:
     post:
       tags:
         - auth
@@ -113,7 +113,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/authLogin"
+              $ref: "#/components/schemas/authLogout"
       responses:
         200:
           description: OK
@@ -128,7 +128,35 @@ paths:
         500:
           $ref: "#/components/responses/ServerError"
 
-  /refresh-token:
+  /auth/whoami:
+    post:
+      tags:
+        - auth
+      security:
+        - X-Access-Token: []
+      summary: Get Whoami
+      description: Get whoami pm tool
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/authWhoami"
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/commonResponse"
+        400:
+          $ref: "#/components/responses/BadRequest"
+        404:
+          $ref: "#/components/responses/NotFound"
+        500:
+          $ref: "#/components/responses/ServerError"
+
+  /auth/refresh-tokens:
     post:
       tags:
         - auth
@@ -141,7 +169,35 @@ paths:
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/refreshToken"
+              $ref: "#/components/schemas/authRefreshToken"
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/commonResponse"
+        400:
+          $ref: "#/components/responses/BadRequest"
+        404:
+          $ref: "#/components/responses/NotFound"
+        500:
+          $ref: "#/components/responses/ServerError"
+
+  /auth/revoke-tokens:
+    post:
+      tags:
+        - auth
+      security:
+        - X-Access-Token: []
+      summary: Revoke token
+      description: Revoke token
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/authRevokeToken"
       responses:
         200:
           description: OK
@@ -398,6 +454,39 @@ paths:
         - X-Access-Token: []
       summary: Delete role by id
       description: Return result delete role
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+          description: Id of role
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/commonResponse"
+        400:
+          $ref: "#/components/responses/BadRequest"
+        401:
+          $ref: "#/components/responses/UnAuthorization"
+        403:
+          $ref: "#/components/responses/Forbidden"
+        404:
+          $ref: "#/components/responses/NotFound"
+        500:
+          $ref: "#/components/responses/ServerError"
+
+  /roles/{id}/users:
+    get:
+      tags:
+        - role
+      security:
+        - X-Access-Token: []
+      summary: Get users by role id
+      description: Return item role
       parameters:
         - name: id
           in: path
@@ -922,6 +1011,257 @@ paths:
         500:
           $ref: "#/components/responses/ServerError"
 
+  /users/sessions:
+    post:
+      tags:
+        - user-session
+      security: []
+      summary: User Session Create
+      description: User Session Create
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/createUserSession"
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/commonResponse"
+        400:
+          $ref: "#/components/responses/BadRequest"
+        401:
+          $ref: "#/components/responses/UnAuthorization"
+        403:
+          $ref: "#/components/responses/Forbidden"
+        404:
+          $ref: "#/components/responses/NotFound"
+        500:
+          $ref: "#/components/responses/ServerError"
+
+  /users/sessions/{id}:
+    patch:
+      tags:
+        - user-session
+      security:
+        - X-Access-Token: []
+      summary: Update user session
+      description: Return result update user session
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/updateUserSession"
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/commonResponse"
+        400:
+          $ref: "#/components/responses/BadRequest"
+        401:
+          $ref: "#/components/responses/UnAuthorization"
+        403:
+          $ref: "#/components/responses/Forbidden"
+        404:
+          $ref: "#/components/responses/NotFound"
+        500:
+          $ref: "#/components/responses/ServerError"
+
+    delete:
+      tags:
+        - user-session
+      security:
+        - X-Access-Token: []
+      summary: Delete user session by id
+      description: Return result delete user
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+          description: Id of user
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/commonResponse"
+        400:
+          $ref: "#/components/responses/BadRequest"
+        401:
+          $ref: "#/components/responses/UnAuthorization"
+        403:
+          $ref: "#/components/responses/Forbidden"
+        404:
+          $ref: "#/components/responses/NotFound"
+        500:
+          $ref: "#/components/responses/ServerError"
+
+  /notify/users:
+    get:
+      tags:
+        - notify-user
+      security: []
+      summary: Notify User List
+      description: Notify User List
+      parameters:
+        - name: id
+          in: query
+          required: true
+          schema:
+            type: string
+          description: Id of user
+        - name: _start
+          in: query
+          schema:
+            type: number
+        - name: _end
+          in: query
+          schema:
+            type: number
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/commonResponse"
+        400:
+          $ref: "#/components/responses/BadRequest"
+        401:
+          $ref: "#/components/responses/UnAuthorization"
+        403:
+          $ref: "#/components/responses/Forbidden"
+        404:
+          $ref: "#/components/responses/NotFound"
+        500:
+          $ref: "#/components/responses/ServerError"
+
+  /notify/users/{id}:
+    get:
+      tags:
+        - notify-user
+      security: []
+      summary: Get Notify User By Id
+      description: Get Notify User By Id
+      parameters:
+        - name: id
+          in: params
+          required: true
+          schema:
+            type: string
+          description: Id of user
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/commonResponse"
+        400:
+          $ref: "#/components/responses/BadRequest"
+        401:
+          $ref: "#/components/responses/UnAuthorization"
+        403:
+          $ref: "#/components/responses/Forbidden"
+        404:
+          $ref: "#/components/responses/NotFound"
+        500:
+          $ref: "#/components/responses/ServerError"
+
+  /notify/users-data:
+    get:
+      tags:
+        - notify-user
+      security: []
+      summary: Get All Data Notify User
+      description: Get All Data Notify User
+      parameters:
+        - name: id
+          in: query
+          required: true
+          schema:
+            type: string
+          description: Id of user
+        - name: isNew
+          in: query
+          required: true
+          schema:
+            type: boolean
+        - name: _start
+          in: query
+          schema:
+            type: number
+        - name: _end
+          in: query
+          schema:
+            type: number
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/commonResponse"
+        400:
+          $ref: "#/components/responses/BadRequest"
+        401:
+          $ref: "#/components/responses/UnAuthorization"
+        403:
+          $ref: "#/components/responses/Forbidden"
+        404:
+          $ref: "#/components/responses/NotFound"
+        500:
+          $ref: "#/components/responses/ServerError"
+
+  /notify/users-unread:
+    get:
+      tags:
+        - notify-user
+      security: []
+      summary: Get All Data Unread Notify User
+      description: Get All Data Unread Notify User
+      parameters:
+        - name: id
+          in: query
+          required: true
+          schema:
+            type: string
+          description: Id of user
+        - name: _start
+          in: query
+          schema:
+            type: number
+        - name: _end
+          in: query
+          schema:
+            type: number
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/commonResponse"
+        400:
+          $ref: "#/components/responses/BadRequest"
+        401:
+          $ref: "#/components/responses/UnAuthorization"
+        403:
+          $ref: "#/components/responses/Forbidden"
+        404:
+          $ref: "#/components/responses/NotFound"
+        500:
+          $ref: "#/components/responses/ServerError"
+
 ## components
 components:
   # security
@@ -982,6 +1322,9 @@ components:
         message:
           type: string
           example: Return message
+        description:
+          type: string
+          example: Return message
         returnCode:
           type: integer
           example: 0/1/...
@@ -1009,13 +1352,48 @@ components:
         password:
           type: string
 
-    ## Refresh token schema
-    refreshToken:
+    authLogout:
+      type: object
+      required:
+        - email
+        - token
+        - sessionID
+      properties:
+        email:
+          type: string
+        token:
+          type: string
+        sessionID:
+          type: string
+
+    authWhoami:
       type: object
       required:
         - email
       properties:
         email:
+          type: string
+
+    authRefreshToken:
+      type: object
+      required:
+        - email
+        - sessionID
+      properties:
+        email:
+          type: string
+        sessionID:
+          type: string
+
+    authRevokeToken:
+      type: object
+      required:
+        - id
+        - sessionID
+      properties:
+        id:
+          type: string
+        sessionID:
           type: string
 
     ## Organization schema
@@ -1153,3 +1531,12 @@ components:
         assignedRoles:
           type: array
           $ref: "#/components/schemas/commonProperties"
+
+    ## UserSession schema
+    createUserSession:
+      type: object
+      required:
+        - userID
+      properties:
+        userID:
+          type: string

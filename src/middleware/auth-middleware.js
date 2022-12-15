@@ -76,7 +76,7 @@ const authMiddleware = async (req, res, next) => {
           message: 'Not found token in header or cookie'
         }
       });
-      const tokenNotFoundError = commons.newError('AuthTokenNotFound');
+      const tokenNotFoundError = commons.newError('AuthE005');
       return builds.errorResponse(toolBox, tokenNotFoundError);
     }
 
@@ -96,10 +96,10 @@ const authMiddleware = async (req, res, next) => {
         let tokenError;
         switch (true) {
           case err instanceof jwt.TokenExpiredError:
-            tokenError = commons.newError('AuthTokenExpiredError');
+            tokenError = commons.newError('AuthE006');
             break;
           case err instanceof jwt.JsonWebTokenError:
-            tokenError = commons.newError('AuthTokenInvalidError');
+            tokenError = commons.newError('AuthE007');
             break;
           default:
             break;
@@ -121,9 +121,7 @@ const authMiddleware = async (req, res, next) => {
               }
             }
           );
-          const tokenBlackListError = commons.newError(
-            'AuthTokenBlackListError'
-          );
+          const tokenBlackListError = commons.newError('AuthE009');
           return builds.errorResponse(toolBox, tokenBlackListError);
         }
         /**
@@ -176,32 +174,38 @@ const authMiddleware = async (req, res, next) => {
           );
           return next();
         }
-
         /**
          * Verify permission in user login
          */
         const userPermissions = get(decoded, 'permissions');
-        if (includes(userPermissions, findPrivateAuth.permission)) {
-          loggerFactory.verbose(
-            `Function authMiddleware has been end with message`,
-            {
-              args: {
-                message: 'User has permission'
+        try {
+          if (includes(userPermissions, findPrivateAuth.permission)) {
+            loggerFactory.verbose(
+              `Function authMiddleware has been end with message`,
+              {
+                args: {
+                  message: 'User has permission'
+                }
               }
-            }
-          );
-          return next();
-        } else {
-          loggerFactory.error(
-            `Function authMiddleware has been end with message`,
-            {
-              args: {
-                message: 'Permission not found'
+            );
+            return next();
+          } else {
+            loggerFactory.error(
+              `Function authMiddleware has been end with message`,
+              {
+                args: {
+                  message: 'Permission not found'
+                }
               }
-            }
-          );
-          const tokenForbiddenError = commons.newError('AuthTokenForbidden');
-          return builds.errorResponse(toolBox, tokenForbiddenError);
+            );
+            const tokenForbiddenError = commons.newError('AuthE008');
+            return builds.errorResponse(toolBox, tokenForbiddenError);
+          }
+        } catch (err) {
+          loggerFactory.error(`Function authMiddleware has been error`, {
+            args: utils.formatErrorMsg(err)
+          });
+          return next(err);
         }
       }
     });
@@ -209,7 +213,7 @@ const authMiddleware = async (req, res, next) => {
     loggerFactory.error(`Function authMiddleware has been error`, {
       args: utils.formatErrorMsg(err)
     });
-    return next(err);
+    throw err;
   }
 };
 

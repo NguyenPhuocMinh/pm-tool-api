@@ -27,10 +27,10 @@ const homePage = async (toolBox) => {
       result: {
         data: `Welcome to homepage with version ${profiles.VERSION}`
       },
-      msg: 'GetHomePageSuccess'
+      msg: 'S001'
     };
   } catch (err) {
-    loggerFactory.info(`Function homePage has error`, {
+    loggerFactory.error(`Function homePage has error`, {
       args: utils.formatErrorMsg(err)
     });
     return Promise.reject(err);

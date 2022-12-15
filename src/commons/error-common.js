@@ -1,6 +1,6 @@
 'use strict';
 
-import { errorCodes } from '@configs';
+import { errorCodes } from '@resources';
 
 import constants from '@constants';
 import utils from '@utils';
@@ -25,12 +25,14 @@ export const newError = (msg = '') => {
       loggerFactory.error(`HasOwnProperty name in errorCodes`);
       error.name = msg;
       error.message = errorCodes[msg].message;
+      error.description = errorCodes[msg].description;
       error.returnCode = errorCodes[msg].returnCode;
       error.statusCode = errorCodes[msg].statusCode;
     } else {
       loggerFactory.error(`Not hasOwnProperty message in errorCodes`);
       error.name = msg;
       error.message = `Error name [${msg}] not supported`;
+      error.description = errorCodes[msg].description;
       error.returnCode = 9999;
       error.statusCode = 400;
     }

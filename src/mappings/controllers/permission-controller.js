@@ -103,7 +103,7 @@ const deletePermission = (req, res, next) => {
  * @param {*} res
  * @param {*} next
  */
-const addRolesToPermissionByID = (req, res, next) => {
+const addRolesToPermission = (req, res, next) => {
   loggerFactory.info(
     `Function addRolesToPermissionByID Controller has been start`
   );
@@ -124,7 +124,7 @@ const permissionController = {
   getPermission,
   updatePermission,
   deletePermission,
-  addRolesToPermissionByID
+  addRolesToPermission
 };
 
 export default permissionController;

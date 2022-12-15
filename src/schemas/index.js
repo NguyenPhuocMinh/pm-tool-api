@@ -12,6 +12,7 @@ import {
   userSetPassSchema,
   userResetPassSchema
 } from './user-schema';
+import { notifyTemplateSchema } from './notify-template-schema';
 
 const schemas = {
   signInSchema,
@@ -25,7 +26,8 @@ const schemas = {
   userEditSchema,
   userChangePassSchema,
   userSetPassSchema,
-  userResetPassSchema
+  userResetPassSchema,
+  notifyTemplateSchema
 };
 
 export default schemas;

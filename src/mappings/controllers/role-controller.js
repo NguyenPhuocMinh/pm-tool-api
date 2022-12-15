@@ -103,15 +103,15 @@ const deleteRole = (req, res, next) => {
  * @param {*} res
  * @param {*} next
  */
-const getUsersByRoleID = (req, res, next) => {
-  loggerFactory.info(`Function getUsersByRoleID Controller has been start`);
+const getUsersInRole = (req, res, next) => {
+  loggerFactory.info(`Function getUsersInRole Controller has been start`);
   const toolBox = { req, res, next };
   baseController(
     toolBox,
     constants.types.MsgTypeRole,
     constants.actions.MsgActionRoleGetUsers
   );
-  loggerFactory.info(`Function getUsersByRoleID Controller has been end`);
+  loggerFactory.info(`Function getUsersInRole Controller has been end`);
 };
 
 /**
@@ -120,38 +120,15 @@ const getUsersByRoleID = (req, res, next) => {
  * @param {*} res
  * @param {*} next
  */
-const getPermissionsByRoleID = (req, res, next) => {
-  loggerFactory.info(
-    `Function getPermissionsByRoleID Controller has been start`
-  );
+const getPermissionsInRole = (req, res, next) => {
+  loggerFactory.info(`Function getPermissionsInRole Controller has been start`);
   const toolBox = { req, res, next };
   baseController(
     toolBox,
     constants.types.MsgTypeRole,
     constants.actions.MsgActionRoleGetPermissions
   );
-  loggerFactory.info(`Function getPermissionsByRoleID Controller has been end`);
-};
-
-/**
- * @description Add Permission To Role By Role ID Controller
- * @param {*} req
- * @param {*} res
- * @param {*} next
- */
-const addPermissionsToRoleByRoleID = (req, res, next) => {
-  loggerFactory.info(
-    `Function addPermissionsToRoleByRoleID Controller has been start`
-  );
-  const toolBox = { req, res, next };
-  baseController(
-    toolBox,
-    constants.types.MsgTypeRole,
-    constants.actions.MsgActionRoleAddPermissions
-  );
-  loggerFactory.info(
-    `Function addPermissionsToRoleByRoleID Controller has been end`
-  );
+  loggerFactory.info(`Function getPermissionsInRole Controller has been end`);
 };
 
 const roleController = {
@@ -160,9 +137,8 @@ const roleController = {
   getRole,
   updateRole,
   deleteRole,
-  getUsersByRoleID,
-  getPermissionsByRoleID,
-  addPermissionsToRoleByRoleID
+  getUsersInRole,
+  getPermissionsInRole
 };
 
 export default roleController;

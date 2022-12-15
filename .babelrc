@@ -28,7 +28,8 @@
           "@workers": "./src/workers",
           "@transfers": "./src/transfers",
           "@schemas": "./src/schemas",
-          "@builds": "./src/builds"
+          "@builds": "./src/builds",
+          "@resources": "./src/resources"
         }
       }
     ]

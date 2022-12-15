@@ -1,7 +1,7 @@
 'use strict';
 
 const organizationPermission = {
-  LIST: 'ORGANIZATION_LIST',
+  GET_ALL: 'ORGANIZATION_GET_ALL',
   GET_ID: 'ORGANIZATION_GET_ID',
   CREATE: 'ORGANIZATION_CREATE',
   EDIT: 'ORGANIZATION_EDIT',

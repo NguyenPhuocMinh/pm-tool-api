@@ -75,7 +75,7 @@ const getAllUser = async (toolBox) => {
         data: response,
         total
       },
-      msg: 'UserGetAllSuccess'
+      msg: 'UserS001'
     };
   } catch (err) {
     loggerFactory.info(`Function getAllUser has error`, {
@@ -94,9 +94,14 @@ const createUser = async (toolBox) => {
 
   try {
     loggerFactory.info(`Function createUser has been start`);
+    // validate inputs
+    const error = validators.validatorUser(req.body);
+
+    if (error) {
+      throw commons.newError('UserE001');
+    }
 
     const { firstName, lastName, email } = req.body;
-    // validate inputs
 
     const fullName = utils.formatFullName(firstName, lastName);
     const slug = helpers.slugHelper(fullName);
@@ -107,7 +112,7 @@ const createUser = async (toolBox) => {
     });
 
     if (isDuplicate) {
-      throw commons.newError('DuplicateEmailUser');
+      throw commons.newError('UserE002');
     }
 
     let user = assign(req.body, {
@@ -137,7 +142,7 @@ const createUser = async (toolBox) => {
       result: {
         data: result
       },
-      msg: 'UserCreateSuccess'
+      msg: 'UserS002'
     };
   } catch (err) {
     loggerFactory.info(`Function createUser has error`, {
@@ -159,7 +164,7 @@ const getUser = async (toolBox) => {
     const { id } = req.params;
 
     if (isEmpty(id)) {
-      throw commons.newError('UserIDNotFound');
+      throw commons.newError('UserE003');
     }
 
     const user = await repository.getOne({
@@ -186,7 +191,7 @@ const getUser = async (toolBox) => {
       result: {
         data: result
       },
-      msg: 'UserGetIDSuccess'
+      msg: 'UserS003'
     };
   } catch (err) {
     loggerFactory.error(`Function getUser Orchestrator has error`, {
@@ -203,15 +208,20 @@ const getUser = async (toolBox) => {
 const updateUser = async (toolBox) => {
   const { req } = toolBox;
   try {
-    loggerFactory.info(`Function updateUser Orchestrator has been start`);
+    loggerFactory.info(`Function updateUser has been start`);
 
     const { id } = req.params;
 
     if (isEmpty(id)) {
-      throw commons.newError('UserIDNotFound');
+      throw commons.newError('UserE003');
     }
 
     // validate inputs
+    const error = validators.validatorUser(req.body);
+
+    if (error) {
+      throw commons.newError('UserE001');
+    }
 
     const { firstName, lastName, email } = req.body;
 
@@ -225,7 +235,7 @@ const updateUser = async (toolBox) => {
     });
 
     if (isDuplicate) {
-      throw commons.newError('DuplicateNameRole');
+      throw commons.newError('UserE002');
     }
 
     let user = assign(req.body, {
@@ -248,7 +258,7 @@ const updateUser = async (toolBox) => {
       result: {
         data: result
       },
-      msg: 'UserEditSuccess'
+      msg: 'UserS004'
     };
   } catch (err) {
     loggerFactory.error(`Function updateUser Orchestrator has error`, {
@@ -265,12 +275,12 @@ const updateUser = async (toolBox) => {
 const deleteUser = async (toolBox) => {
   const { req } = toolBox;
   try {
-    loggerFactory.info(`Function deleteUser Orchestrator has been start`);
+    loggerFactory.info(`Function deleteUser has been start`);
 
     const { id } = req.params;
 
     if (isEmpty(id)) {
-      throw commons.newError('UserIDNotFound');
+      throw commons.newError('UserE003');
     }
 
     req.body = helpers.attributeHelper(req, req.body);
@@ -283,13 +293,13 @@ const deleteUser = async (toolBox) => {
 
     await removeUserInRoles(id, updatedAt, updatedBy);
 
-    loggerFactory.info(`Function deleteUser Orchestrator has been end`);
+    loggerFactory.info(`Function deleteUser has been end`);
 
     return {
       result: {
         data: result
       },
-      msg: 'UserDeleteSuccess'
+      msg: 'UserS005'
     };
   } catch (err) {
     loggerFactory.error(`Function deleteUser Orchestrator has error`, {
@@ -303,20 +313,23 @@ const deleteUser = async (toolBox) => {
  * @description Change Password User By ID Orchestrator
  * @param {*} toolBox { req, res, next }
  */
-const changePasswordUserByID = async (toolBox) => {
+const changePassUser = async (toolBox) => {
   const { req } = toolBox;
   try {
-    loggerFactory.info(
-      `Function changePasswordUserByID Orchestrator has been start`
-    );
+    loggerFactory.info(`Function changePassUser Orchestrator has been start`);
 
     const { id } = req.params;
 
     if (isEmpty(id)) {
-      throw commons.newError('UserIDNotFound');
+      throw commons.newError('UserE003');
     }
 
     // validate inputs
+    const error = validators.validatorUserChangePass(req.body);
+
+    if (error) {
+      throw commons.newError('UserE004');
+    }
 
     req.body = helpers.attributeHelper(req, req.body);
 
@@ -334,7 +347,7 @@ const changePasswordUserByID = async (toolBox) => {
     // compare password in db
     const isValidCompare = await bcrypt.compare(currentPassword, user.password);
     if (!isValidCompare) {
-      throw commons.newError('UserCurrentPasswordIsNotMatches');
+      throw commons.newError('UserE005');
     }
 
     // create new password
@@ -352,23 +365,140 @@ const changePasswordUserByID = async (toolBox) => {
 
     const result = await transfers.userTransfer(user);
 
-    loggerFactory.info(
-      `Function changePasswordUserByID Orchestrator has been end`
-    );
+    loggerFactory.info(`Function changePassUser Orchestrator has been end`);
 
     return {
       result: {
         data: result
       },
-      msg: 'UserChangePasswordSuccess'
+      msg: 'UserS006'
     };
   } catch (err) {
-    loggerFactory.error(
-      `Function changePasswordUserByID Orchestrator has error`,
-      {
-        args: utils.formatErrorMsg(err)
+    loggerFactory.error(`Function changePassUser Orchestrator has error`, {
+      args: utils.formatErrorMsg(err)
+    });
+    return Promise.reject(err);
+  }
+};
+
+/**
+ * @description Set Password User By ID Orchestrator
+ * @param {*} toolBox { req, res, next }
+ */
+const setPassUser = async (toolBox) => {
+  const { req } = toolBox;
+  try {
+    loggerFactory.info(`Function setPassUser Orchestrator has been start`);
+
+    const { id } = req.params;
+
+    if (isEmpty(id)) {
+      throw commons.newError('UserE003');
+    }
+
+    /// validate inputs
+    const error = validators.validatorUserSetPass(req.body);
+
+    if (error) {
+      throw commons.newError('UserE006');
+    }
+
+    req.body = helpers.attributeHelper(req, req.body);
+    const { password, isPasswordTemporary, updatedAt, updatedBy } = req.body;
+
+    // hash pass
+    const hashPass = await bcrypt.hash(password, options.bcryptOptions.salt);
+
+    const user = await repository.updateOne({
+      type: 'UserModel',
+      id,
+      doc: {
+        password: hashPass,
+        passwordConfirm: hashPass,
+        isPasswordSet: true,
+        isPasswordTemporary: isPasswordTemporary,
+        updatedAt,
+        updatedBy
+      },
+      options: {
+        populate: [
+          {
+            path: 'roles',
+            select: 'id name'
+          }
+        ]
       }
-    );
+    });
+
+    const result = await transfers.userTransfer(user);
+
+    loggerFactory.info(`Function setPassUser Orchestrator has been end`);
+
+    return {
+      result: {
+        data: result
+      },
+      msg: 'UserS007'
+    };
+  } catch (err) {
+    loggerFactory.error(`Function setPassUser Orchestrator has error`, {
+      args: utils.formatErrorMsg(err)
+    });
+    return Promise.reject(err);
+  }
+};
+
+/**
+ * @description Reset Password User By ID Orchestrator
+ * @param {*} toolBox { req, res, next }
+ */
+const resetPassUser = async (toolBox) => {
+  const { req } = toolBox;
+  try {
+    loggerFactory.info(`Function resetPassUser Orchestrator has been start`);
+
+    const { id } = req.params;
+
+    if (isEmpty(id)) {
+      throw commons.newError('UserE003');
+    }
+
+    // validate inputs
+    const error = validators.validatorUserResetPass(req.body);
+
+    if (error) {
+      throw commons.newError('UserE007');
+    }
+
+    req.body = helpers.attributeHelper(req, req.body);
+    const { password, updatedAt, updatedBy } = req.body;
+
+    // hash pass
+    const hashPass = await bcrypt.hash(password, options.bcryptOptions.salt);
+
+    await repository.updateOne({
+      type: 'UserModel',
+      id,
+      doc: {
+        password: hashPass,
+        passwordConfirm: hashPass,
+        updatedAt,
+        updatedBy
+      }
+    });
+
+    loggerFactory.info(`Function resetPassUser Orchestrator has been end`);
+
+    return {
+      result: {
+        data: null
+      },
+      msg: 'UserS008'
+    };
+  } catch (err) {
+    loggerFactory.error(`Function resetPassUser Orchestrator has error`, {
+      args: utils.formatErrorMsg(err)
+    });
     return Promise.reject(err);
   }
 };
@@ -377,17 +507,15 @@ const changePasswordUserByID = async (toolBox) => {
  * @description Add Roles To User By ID Orchestrator
  * @param {*} toolBox { req, res, next }
  */
-const addRolesToUserByUserID = async (toolBox) => {
+const addRolesToUser = async (toolBox) => {
   const { req } = toolBox;
   try {
-    loggerFactory.info(
-      `Function addRolesToUserByUserID Orchestrator has been start`
-    );
+    loggerFactory.info(`Function addRolesToUser Orchestrator has been start`);
 
     const { id } = req.params;
 
     if (isEmpty(id)) {
-      throw commons.newError('UserIDNotFound');
+      throw commons.newError('UserE003');
     }
 
     req.body = helpers.attributeHelper(req, req.body);
@@ -456,149 +584,16 @@ const addRolesToUserByUserID = async (toolBox) => {
 
     const result = await transfers.userTransfer(user);
 
-    loggerFactory.info(
-      `Function addRolesToUserByUserID Orchestrator has been end`
-    );
+    loggerFactory.info(`Function addRolesToUser Orchestrator has been end`);
 
     return {
       result: {
         data: result
       },
-      msg: 'UserAddRolesSuccess'
+      msg: 'UserS009'
     };
   } catch (err) {
-    loggerFactory.error(
-      `Function addRolesToUserByUserID Orchestrator has error`,
-      {
-        args: utils.formatErrorMsg(err)
-      }
-    );
-    return Promise.reject(err);
-  }
-};
-
-/**
- * @description Set Password User By ID Orchestrator
- * @param {*} toolBox { req, res, next }
- */
-const setPasswordByUserID = async (toolBox) => {
-  const { req } = toolBox;
-  try {
-    loggerFactory.info(
-      `Function setPasswordByUserID Orchestrator has been start`
-    );
-
-    const { id } = req.params;
-
-    if (isEmpty(id)) {
-      throw commons.newError('UserIDNotFound');
-    }
-
-    /// validate inputs
-    const error = validators.validatorUserSetPass(req.body);
-
-    if (error) {
-      throw commons.newError('UserInvalidDataResetPassword');
-    }
-
-    req.body = helpers.attributeHelper(req, req.body);
-    const { password, isPasswordTemporary, updatedAt, updatedBy } = req.body;
-
-    // hash pass
-    const hashPass = await bcrypt.hash(password, options.bcryptOptions.salt);
-
-    const user = await repository.updateOne({
-      type: 'UserModel',
-      id,
-      doc: {
-        password: hashPass,
-        passwordConfirm: hashPass,
-        isPasswordSet: true,
-        isPasswordTemporary: isPasswordTemporary,
-        updatedAt,
-        updatedBy
-      },
-      options: {
-        populate: [
-          {
-            path: 'roles',
-            select: 'id name'
-          }
-        ]
-      }
-    });
-
-    const result = await transfers.userTransfer(user);
-
-    loggerFactory.info(
-      `Function setPasswordByUserID Orchestrator has been end`
-    );
-
-    return {
-      result: {
-        data: result
-      },
-      msg: 'UserSetPasswordSuccess'
-    };
-  } catch (err) {
-    loggerFactory.error(`Function setPasswordByUserID Orchestrator has error`, {
-      args: utils.formatErrorMsg(err)
-    });
-    return Promise.reject(err);
-  }
-};
-
-/**
- * @description Reset Password User By ID Orchestrator
- * @param {*} toolBox { req, res, next }
- */
-const resetPasswordUser = async (toolBox) => {
-  const { req } = toolBox;
-  try {
-    loggerFactory.info(
-      `Function resetPasswordUser Orchestrator has been start`
-    );
-
-    const { id } = req.params;
-
-    if (isEmpty(id)) {
-      throw commons.newError('UserIDNotFound');
-    }
-
-    // validate inputs
-    const error = validators.validatorUserResetPass(req.body);
-
-    if (error) {
-      throw commons.newError('UserInvalidDataResetPassword');
-    }
-
-    req.body = helpers.attributeHelper(req, req.body);
-    const { password, updatedAt, updatedBy } = req.body;
-
-    // hash pass
-    const hashPass = await bcrypt.hash(password, options.bcryptOptions.salt);
-
-    await repository.updateOne({
-      type: 'UserModel',
-      id,
-      doc: {
-        password: hashPass,
-        passwordConfirm: hashPass,
-        updatedAt,
-        updatedBy
-      }
-    });
-
-    loggerFactory.info(`Function resetPasswordUser Orchestrator has been end`);
-
-    return {
-      result: {
-        data: null
-      },
-      msg: 'UserResetPasswordSuccess'
-    };
-  } catch (err) {
-    loggerFactory.error(`Function resetPasswordUser Orchestrator has error`, {
+    loggerFactory.error(`Function addRolesToUser has error`, {
       args: utils.formatErrorMsg(err)
     });
     return Promise.reject(err);
@@ -641,10 +636,10 @@ const userOrchestrator = {
   getUser,
   updateUser,
   deleteUser,
-  changePasswordUserByID,
-  addRolesToUserByUserID,
-  setPasswordByUserID,
-  resetPasswordUser
+  changePassUser,
+  setPassUser,
+  resetPassUser,
+  addRolesToUser
 };
 
 export default userOrchestrator;

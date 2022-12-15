@@ -3,7 +3,7 @@
     "baseUrl": "./",
     "paths": {
       "@conf": ["src/conf/index"],
-      "@configs": ["src/configs/index"],
+      "@configs": ["src/resources/index"],
       "@constants": ["src/constants/index"],
       "@commons": ["src/commons/index"],
       "@core/*": ["src/core/*"],
@@ -23,7 +23,8 @@
       "@workers": ["src/workers/index"],
       "@transfers": ["src/transfers/index"],
       "@schemas": ["src/schemas/index"],
-      "@builds": ["src/builds/index"]
+      "@builds": ["src/builds/index"],
+      "@resources": ["src/resources/index"]
     }
   },
   "exclude": ["node_modules"]

@@ -5,10 +5,13 @@ import { Schema } from 'mongoose';
 export default {
   name: 'NotifyModel',
   attributes: {
-    user: { type: Schema.Types.ObjectId, ref: 'UserModel' },
-    notificationTemplate: {
-      type: Schema.Types.ObjectId,
-      ref: 'NotifyTemplateModel'
+    user: { type: Schema.Types.ObjectId, ref: 'UserModel' }, // receiver
+    sender: { type: Schema.Types.ObjectId, ref: 'UserModel' },
+    template: { type: Schema.Types.ObjectId, ref: 'NotifyTemplateModel' },
+    details: {
+      isNew: { type: Boolean, default: false },
+      isRead: { type: Boolean, default: false },
+      readAt: { type: Date }
     },
     // filter
     slug: { type: String },

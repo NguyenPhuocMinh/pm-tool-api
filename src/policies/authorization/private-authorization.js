@@ -19,7 +19,7 @@ export default [
     enable: true,
     method: 'GET',
     pathName: '/organizations',
-    permission: permissions.admin.organizations.LIST
+    permission: permissions.admin.organizations.GET_ALL
   },
   {
     enable: true,
@@ -52,7 +52,7 @@ export default [
     enable: true,
     method: 'GET',
     pathName: '/projects',
-    permission: permissions.admin.projects.LIST
+    permission: permissions.admin.projects.GET_ALL
   },
   {
     enable: true,
@@ -73,7 +73,7 @@ export default [
     enable: true,
     method: 'GET',
     pathName: '/roles',
-    permission: permissions.admin.roles.LIST
+    permission: permissions.admin.roles.GET_ALL
   },
   {
     enable: true,
@@ -118,7 +118,7 @@ export default [
     enable: true,
     method: 'GET',
     pathName: '/permissions',
-    permission: permissions.admin.permissions.LIST
+    permission: permissions.admin.permissions.GET_ALL
   },
   {
     enable: true,
@@ -157,7 +157,7 @@ export default [
     enable: true,
     method: 'GET',
     pathName: '/users',
-    permission: permissions.admin.users.LIST
+    permission: permissions.admin.users.GET_ALL
   },
   {
     enable: true,
@@ -209,5 +209,38 @@ export default [
     pathName: '/users/sessions',
     method: 'DELETE',
     controller: permissions.admin.userSessions.DELETE
+  },
+  /**
+   * NOTIFY TEMPLATE
+   */
+  {
+    enable: true,
+    method: 'GET',
+    pathName: '/notify-templates',
+    permission: permissions.admin.notifyTemplates.GET_ALL
+  },
+  {
+    enable: true,
+    method: 'POST',
+    pathName: '/notify-templates',
+    permission: permissions.admin.notifyTemplates.CREATE
+  },
+  {
+    enable: true,
+    method: 'GET',
+    pathName: '/notify-templates/:id',
+    permission: permissions.admin.notifyTemplates.GET_ID
+  },
+  {
+    enable: true,
+    pathName: '/notify-templates/:id',
+    method: 'PATCH',
+    controller: permissions.admin.notifyTemplates.EDIT
+  },
+  {
+    enable: true,
+    pathName: '/notify-templates/:id',
+    method: 'DELETE',
+    controller: permissions.admin.notifyTemplates.DELETE
   }
 ];

@@ -39,26 +39,26 @@ const userRouter = [
   {
     pathName: '/users/:id/change-password',
     method: 'PATCH',
-    methodName: 'changePasswordUserByID',
-    controller: userController.changePasswordUserByID
+    methodName: 'changePassUser',
+    controller: userController.changePassUser
   },
   {
     pathName: '/users/:id/set-password',
     method: 'PATCH',
-    methodName: 'setPasswordByUserID',
-    controller: userController.setPasswordByUserID
-  },
-  {
-    pathName: '/users/:id/add-roles',
-    method: 'PATCH',
-    methodName: 'addRolesToUserByUserID',
-    controller: userController.addRolesToUserByUserID
+    methodName: 'setPassUser',
+    controller: userController.setPassUser
   },
   {
     pathName: '/users/:id/reset-password',
     method: 'PATCH',
-    methodName: 'resetPasswordUser',
-    controller: userController.resetPasswordUser
+    methodName: 'resetPassUser',
+    controller: userController.resetPassUser
+  },
+  {
+    pathName: '/users/:id/add-roles',
+    method: 'PATCH',
+    methodName: 'addRolesToUser',
+    controller: userController.addRolesToUser
   }
 ];
 

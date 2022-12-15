@@ -14,6 +14,8 @@ import loggerManager from '@core/logger';
 import repository from '@layers/repository';
 // transfers
 import transfers from '@transfers';
+// validators
+import validators from '@validators';
 
 const loggerFactory = loggerManager(
   constants.APP_NAME,
@@ -62,7 +64,7 @@ const getAllRole = async (toolBox) => {
         data: response,
         total
       },
-      msg: 'RoleGetAllSuccess'
+      msg: 'RoleS001'
     };
   } catch (err) {
     loggerFactory.info(`Function getAllRole has error`, {
@@ -82,11 +84,14 @@ const createRole = async (toolBox) => {
   try {
     loggerFactory.info(`Function createRole has been start`);
 
-    const { name } = req.body;
+    // validate inputs
+    const error = validators.validatorRole(req.body);
 
-    if (isEmpty(name)) {
-      throw commons.newError('RoleNameIsRequired');
+    if (error) {
+      throw commons.newError('RoleE001');
     }
+
+    const { name } = req.body;
 
     const slug = helpers.slugHelper(name);
 
@@ -96,14 +101,14 @@ const createRole = async (toolBox) => {
     });
 
     if (isDuplicate) {
-      throw commons.newError('DuplicateNameRole');
+      throw commons.newError('RoleE002');
     }
 
     let role = assign(req.body, {
       slug: slug
     });
 
-    role = helpers.attributeHelper(null, role, 'create');
+    role = helpers.attributeHelper(req, role, 'create');
 
     const data = await repository.createOne({
       type: 'RoleModel',
@@ -118,7 +123,7 @@ const createRole = async (toolBox) => {
       result: {
         data: result
       },
-      msg: 'RoleCreateSuccess'
+      msg: 'RoleS002'
     };
   } catch (err) {
     loggerFactory.info(`Function createRole has error`, {
@@ -140,7 +145,7 @@ const getRole = async (toolBox) => {
     const { id } = req.params;
 
     if (isEmpty(id)) {
-      throw commons.newError('RoleIDNotFound');
+      throw commons.newError('RoleE003');
     }
 
     const role = await repository.getOne({
@@ -159,7 +164,7 @@ const getRole = async (toolBox) => {
       result: {
         data: result
       },
-      msg: 'RoleGetIDSuccess'
+      msg: 'RoleS003'
     };
   } catch (err) {
     loggerFactory.info(`Function getRole Orchestrator has error`, {
@@ -179,15 +184,18 @@ const updateRole = async (toolBox) => {
     loggerFactory.info(`Function updateRole Orchestrator has been start`);
 
     const { id } = req.params;
-    const { name, activated } = req.body;
 
     if (isEmpty(id)) {
-      throw commons.newError('RoleIDNotFound');
+      throw commons.newError('RoleE003');
     }
 
-    if (isEmpty(name)) {
-      throw commons.newError('RoleNameIsRequired');
+    const error = validators.validatorRole(req.body);
+
+    if (error) {
+      throw commons.newError('RoleE001');
     }
+
+    const { name, activated } = req.body;
 
     const slug = helpers.slugHelper(name);
     // check duplicate slug
@@ -197,7 +205,7 @@ const updateRole = async (toolBox) => {
     });
 
     if (isDuplicate) {
-      throw commons.newError('DuplicateNameRole');
+      throw commons.newError('RoleE002');
     }
 
     let role = assign(req.body, {
@@ -224,10 +232,10 @@ const updateRole = async (toolBox) => {
       result: {
         data: result
       },
-      msg: 'RoleEditSuccess'
+      msg: 'RoleS004'
     };
   } catch (err) {
-    loggerFactory.info(`Function updateRole Orchestrator has error`, {
+    loggerFactory.info(`Function updateRole has error`, {
       args: utils.formatErrorMsg(err)
     });
     return Promise.reject(err);
@@ -241,12 +249,12 @@ const updateRole = async (toolBox) => {
 const deleteRole = async (toolBox) => {
   const { req } = toolBox;
   try {
-    loggerFactory.info(`Function deleteRole Orchestrator has been start`);
+    loggerFactory.info(`Function deleteRole has been start`);
 
     const { id } = req.params;
 
     if (isEmpty(id)) {
-      throw commons.newError('RoleIDNotFound');
+      throw commons.newError('RoleE003');
     }
 
     req.body = helpers.attributeHelper(req, req.body);
@@ -259,16 +267,16 @@ const deleteRole = async (toolBox) => {
 
     await removeRolesInUserAndPermission(id, updatedAt, updatedBy);
 
-    loggerFactory.info(`Function deleteRole Orchestrator has been end`);
+    loggerFactory.info(`Function deleteRole has been end`);
 
     return {
       result: {
         data: result
       },
-      msg: 'RoleDeleteSuccess'
+      msg: 'RoleS005'
     };
   } catch (err) {
-    loggerFactory.error(`Function deleteRole Orchestrator has error`, {
+    loggerFactory.error(`Function deleteRole has error`, {
       args: utils.formatErrorMsg(err)
     });
     return Promise.reject(err);
@@ -276,17 +284,17 @@ const deleteRole = async (toolBox) => {
 };
 
 /**
- * @description Get Users By RoleID Orchestrator
+ * @description Get Users In Role Orchestrator
  * @param {*} toolBox { req, res, next }
  */
-const getUsersByRoleID = async (toolBox) => {
+const getUsersInRole = async (toolBox) => {
   const { req } = toolBox;
   try {
-    loggerFactory.info(`Function getUsersByRoleID Orchestrator has been start`);
+    loggerFactory.info(`Function getUsersInRole Orchestrator has been start`);
     const { id } = req.params;
 
     if (isEmpty(id)) {
-      throw commons.newError('RoleIDNotFound');
+      throw commons.newError('RoleE003');
     }
 
     const { skip, limit } = helpers.paginationHelper(req.query);
@@ -323,7 +331,7 @@ const getUsersByRoleID = async (toolBox) => {
 
     const result = await commons.dataResponsesMapper(users);
 
-    loggerFactory.info(`Function getUsersByRoleID Orchestrator has been end`);
+    loggerFactory.info(`Function getUsersInRole Orchestrator has been end`);
 
     return {
       result: {
@@ -333,7 +341,7 @@ const getUsersByRoleID = async (toolBox) => {
       msg: 'RoleGetUsersSuccess'
     };
   } catch (err) {
-    loggerFactory.info(`Function getUsersByRoleID Orchestrator has error`, {
+    loggerFactory.info(`Function getUsersInRole Orchestrator has error`, {
       args: utils.formatErrorMsg(err)
     });
     return Promise.reject(err);
@@ -341,10 +349,10 @@ const getUsersByRoleID = async (toolBox) => {
 };
 
 /**
- * @description Get Permissions By RoleID Orchestrator
+ * @description Get Permissions In Role Orchestrator
  * @param {*} toolBox { req, res, next }
  */
-const getPermissionsByRoleID = async (toolBox) => {
+const getPermissionsInRole = async (toolBox) => {
   const { req } = toolBox;
   try {
     loggerFactory.info(
@@ -353,7 +361,7 @@ const getPermissionsByRoleID = async (toolBox) => {
     const { id } = req.params;
 
     if (isEmpty(id)) {
-      throw commons.newError('RoleIDNotFound');
+      throw commons.newError('RoleE003');
     }
 
     const { skip, limit } = helpers.paginationHelper(req.query);
@@ -381,10 +389,6 @@ const getPermissionsByRoleID = async (toolBox) => {
         sort
       }
     });
-    console.log(
-      '🚀 ~ file: role-orchestrator.js ~ line 310 ~ getPermissionsByRoleID ~ permissions',
-      permissions
-    );
 
     const total = await repository.count({
       type: 'PermissionModel',
@@ -402,55 +406,11 @@ const getPermissionsByRoleID = async (toolBox) => {
         data: result,
         total
       },
-      msg: 'RoleGetPermissionsSuccess'
+      msg: 'RoleS007'
     };
   } catch (err) {
     loggerFactory.info(
       `Function getPermissionsByRoleID Orchestrator has error`,
-      {
-        args: utils.formatErrorMsg(err)
-      }
-    );
-    return Promise.reject(err);
-  }
-};
-
-/**
- * @description Add Permissions To Roles By RoleID Orchestrator
- * @param {*} toolBox { req, res, next }
- */
-const addPermissionsToRoleByID = async (toolBox) => {
-  const { req } = toolBox;
-  try {
-    loggerFactory.info(
-      `Function addPermissionsToRoleByID Orchestrator has been start`
-    );
-    const { id: permissionID } = req.params;
-    const { assignedRoles } = req.body;
-
-    const result = await repository.updateMany({
-      type: 'RoleModel',
-      filter: {
-        id: {
-          $in: assignedRoles.map((e) => e.id)
-        }
-      },
-      doc: {
-        $push: {
-          permissions: permissionID
-        }
-      }
-    });
-
-    return {
-      result: {
-        data: result
-      },
-      msg: 'RoleAddPermissionsSuccess'
-    };
-  } catch (err) {
-    loggerFactory.info(
-      `Function addPermissionsToRoleByID Orchestrator has error`,
       {
         args: utils.formatErrorMsg(err)
       }
@@ -513,9 +473,8 @@ const roleOrchestrator = {
   getRole,
   updateRole,
   deleteRole,
-  getUsersByRoleID,
-  getPermissionsByRoleID,
-  addPermissionsToRoleByID
+  getUsersInRole,
+  getPermissionsInRole
 };
 
 export default roleOrchestrator;

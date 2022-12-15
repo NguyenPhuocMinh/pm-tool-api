@@ -14,6 +14,8 @@ import loggerManager from '@core/logger';
 import repository from '@layers/repository';
 // transfers
 import transfers from '@transfers';
+// validators
+import validators from '@validators';
 
 const loggerFactory = loggerManager(
   constants.APP_NAME,
@@ -62,7 +64,7 @@ const getAllOrganization = async (toolBox) => {
         data: result,
         total
       },
-      msg: 'OrganizationGetAllSuccess'
+      msg: 'OrganizationS001'
     };
   } catch (err) {
     loggerFactory.error(`Function getAllOrganization has error`, {
@@ -82,12 +84,14 @@ const createOrganization = async (toolBox) => {
   try {
     loggerFactory.info(`Function createOrganization has been start`);
 
-    const { name } = req.body;
+    // validate inputs
+    const error = validators.validatorOrganization(req.body);
 
-    if (isEmpty(name)) {
-      throw commons.newError('OrganizationNameIsRequired');
+    if (error) {
+      throw commons.newError('OrganizationE001');
     }
 
+    const { name } = req.body;
     const slug = helpers.slugHelper(name);
 
     // check duplicate slug
@@ -96,7 +100,7 @@ const createOrganization = async (toolBox) => {
     });
 
     if (isDuplicate) {
-      throw commons.newError('DuplicateNameOrganization');
+      throw commons.newError('OrganizationE002');
     }
 
     let organization = assign(req.body, {
@@ -118,7 +122,7 @@ const createOrganization = async (toolBox) => {
       result: {
         data: result
       },
-      msg: 'OrganizationCreateSuccess'
+      msg: 'OrganizationS002'
     };
   } catch (err) {
     loggerFactory.error(`Function createOrganization has error`, {
@@ -140,7 +144,7 @@ const getOrganization = async (toolBox) => {
     const { id } = req.params;
 
     if (isEmpty(id)) {
-      throw commons.newError('IDNotFound');
+      throw commons.newError('OrganizationE003');
     }
 
     const organization = await repository.getOne({
@@ -159,7 +163,7 @@ const getOrganization = async (toolBox) => {
       result: {
         data: result
       },
-      msg: 'OrganizationGetIDSuccess'
+      msg: 'OrganizationS003'
     };
   } catch (err) {
     loggerFactory.error(`Function getOrganization has error`, {
@@ -179,16 +183,19 @@ const updateOrganization = async (toolBox) => {
     loggerFactory.info(`Function updateOrganization has been start`);
 
     const { id } = req.params;
-    const { name } = req.body;
 
     if (isEmpty(id)) {
-      throw commons.newError('OrganizationIDNotFound');
+      throw commons.newError('OrganizationE003');
     }
 
-    if (isEmpty(name)) {
-      throw commons.newError('OrganizationNameIsRequired');
+    // validate inputs
+    const error = validators.validatorOrganization(req.body);
+
+    if (error) {
+      throw commons.newError('OrganizationE001');
     }
 
+    const { name } = req.body;
     const slug = helpers.slugHelper(name);
     // check duplicate slug
     const isDuplicate = await helpers.duplicateHelper('OrganizationModel', {
@@ -197,7 +204,7 @@ const updateOrganization = async (toolBox) => {
     });
 
     if (isDuplicate) {
-      throw commons.newError('DuplicateNameOrganization');
+      throw commons.newError('OrganizationE002');
     }
 
     let organization = assign(req.body, {
@@ -220,7 +227,7 @@ const updateOrganization = async (toolBox) => {
       result: {
         data: result
       },
-      msg: 'OrganizationEditSuccess'
+      msg: 'OrganizationS004'
     };
   } catch (err) {
     loggerFactory.error(`Function updateOrganization has error`, {
@@ -241,7 +248,7 @@ const deleteOrganization = async (toolBox) => {
     const { id } = req.params;
 
     if (isEmpty(id)) {
-      throw commons.newError('OrganizationIDNotFound');
+      throw commons.newError('OrganizationE003');
     }
 
     const result = await repository.deleteOne({
@@ -255,7 +262,7 @@ const deleteOrganization = async (toolBox) => {
       result: {
         data: result
       },
-      msg: 'OrganizationDeleteSuccess'
+      msg: 'OrganizationS005'
     };
   } catch (err) {
     loggerFactory.info(`Function deleteOrganization has error`, {

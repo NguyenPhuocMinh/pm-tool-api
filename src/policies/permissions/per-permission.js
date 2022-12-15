@@ -1,7 +1,7 @@
 'use strict';
 
 const perPermission = {
-  LIST: 'PERMISSION_LIST',
+  GET_ALL: 'PERMISSION_GET_ALL',
   GET_ID: 'PERMISSION_GET_ID',
   CREATE: 'PERMISSION_CREATE',
   EDIT: 'PERMISSION_EDIT',

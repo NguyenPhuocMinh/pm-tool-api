@@ -24,10 +24,10 @@ const healthCheck = async (toolBox) => {
       result: {
         data: 'Service has been start success'
       },
-      msg: 'GetHealthCheckSuccess'
+      msg: 'S002'
     };
   } catch (err) {
-    loggerFactory.info(`Function healthCheck has error`, {
+    loggerFactory.error(`Function healthCheck has error`, {
       args: utils.formatErrorMsg(err)
     });
     return Promise.reject(err);

@@ -39,8 +39,8 @@ const permissionRouter = [
   {
     pathName: '/permissions/:id/add-roles',
     method: 'PATCH',
-    methodName: 'addRolesToPermissionByID',
-    controller: permissionController.addRolesToPermissionByID
+    methodName: 'addRolesToPermission',
+    controller: permissionController.addRolesToPermission
   }
 ];
 

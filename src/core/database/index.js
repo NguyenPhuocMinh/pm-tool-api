@@ -8,7 +8,6 @@ import bcrypt from 'bcrypt';
 import { options, profiles } from '@conf';
 
 import constants from '@constants';
-import commons from '@commons';
 import helpers from '@helpers';
 import utils from '@utils';
 
@@ -54,11 +53,11 @@ const Init = async () => {
       let data = {
         email,
         password: hashPass,
-        firstName: 'admin',
-        lastName: 'super'
+        firstName: 'Admin',
+        lastName: 'Super'
       };
 
-      data = commons.attributeFilter(null, data, 'create');
+      data = helpers.attributeHelper(null, data, 'create');
 
       await repository.createOne({
         type: 'UserModel',
