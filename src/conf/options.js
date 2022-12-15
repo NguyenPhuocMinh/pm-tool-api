@@ -93,7 +93,8 @@ const jwtOptions = {
 const socketOptions = {
   cors: {
     origin: profiles.APP_DOMAIN_PATH,
-    methods: ['GET', 'POST']
+    methods: ['GET', 'POST'],
+    credentials: true
   }
 };
 

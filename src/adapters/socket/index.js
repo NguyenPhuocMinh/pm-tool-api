@@ -29,6 +29,7 @@ const Init = async (httpServer) => {
       loggerFactory.info('Socket io has been connection');
 
       socket.on(SOCKET_USER_LOGIN, async (data) => {
+        console.log('🚀 ~ file: index.js:32 ~ socket.on ~ data', data);
         await workers.handlerSocketWorkerUserLogin(data, { socket, io });
       });
 
@@ -37,6 +38,7 @@ const Init = async (httpServer) => {
       });
 
       socket.on('disconnect', () => {
+        loggerFactory.warn('User has disconnect');
         workers.handlerWorkerSocketUserDisconnect();
       });
     });

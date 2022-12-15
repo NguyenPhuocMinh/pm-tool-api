@@ -1,5 +1,7 @@
 'use strict';
 
+import { isEmpty } from 'lodash';
+
 import constants from '@constants';
 import utils from '@utils';
 
@@ -26,7 +28,7 @@ export const handlerSocketWorkerUserLogin = async (data, { socket, io }) => {
 
     socket.join(SOCKET_ROOM);
 
-    if (!onlineUsers.some((user) => user.id === data?.id)) {
+    if (!isEmpty(data) && !onlineUsers.some((user) => user.id === data?.id)) {
       onlineUsers.unshift({
         socketID: socket.id,
         id: data?.id,
