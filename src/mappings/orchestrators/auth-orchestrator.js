@@ -52,7 +52,7 @@ const signIn = async (toolBox) => {
     const error = validators.validatorLogin(req.body);
 
     if (error) {
-      throw commons.newError('AuthInvalidDataLogin');
+      throw commons.newError('AuthE002');
     }
 
     const { email, password } = req.body;
@@ -61,7 +61,7 @@ const signIn = async (toolBox) => {
 
     // compare password
     if (!bcrypt.compareSync(password, user.password)) {
-      throw commons.newError('AuthPasswordIsInCorrect');
+      throw commons.newError('AuthE004');
     }
 
     const data = await transfers.authTransfer(user);
@@ -71,6 +71,7 @@ const signIn = async (toolBox) => {
     // generator token
     const payloadToken = {
       typ: 'Bearer',
+      id: data.id,
       email: data.email,
       isAdmin: data.isAdmin
     };
@@ -82,6 +83,7 @@ const signIn = async (toolBox) => {
     // generator refresh token
     const payloadRefreshToken = {
       typ: 'Refresh',
+      id: data.id,
       email: data.email,
       isAdmin: data.isAdmin
     };
@@ -107,7 +109,7 @@ const signIn = async (toolBox) => {
       result: {
         token
       },
-      msg: 'SignInSuccess'
+      msg: 'AuthS001'
     };
   } catch (err) {
     loggerFactory.error(`Function signIn has error`, {
@@ -149,7 +151,7 @@ const signOut = async (toolBox) => {
       result: {
         data: null
       },
-      msg: 'SignOutSuccess'
+      msg: 'AuthS002'
     };
   } catch (err) {
     loggerFactory.error(`Function signOut has error`, {
@@ -180,7 +182,7 @@ const whoami = async (toolBox) => {
       result: {
         data: result
       },
-      msg: 'WhoAmISuccess'
+      msg: 'AuthS003'
     };
   } catch (err) {
     loggerFactory.error(`Function whoami has error`, {
@@ -202,7 +204,7 @@ const refreshToken = async (toolBox) => {
     const { email, sessionID } = req.body;
 
     if (isEmpty(email)) {
-      throw commons.newError('AuthEmailIsRequired');
+      throw commons.newError('AuthE001');
     }
 
     const user = await getUser(email);
@@ -239,7 +241,7 @@ const refreshToken = async (toolBox) => {
           // delete token into whitelist in redis
           await redisManager.deleteValue(wlKey);
 
-          throw commons.newError('AuthRefreshTokenExpiredError');
+          throw commons.newError('AuthE006');
         } else {
           delete decoded.aud;
           delete decoded.iss;
@@ -269,7 +271,7 @@ const refreshToken = async (toolBox) => {
       result: {
         token: newToken
       },
-      msg: 'RefreshTokenSuccess'
+      msg: 'AuthS004'
     };
   } catch (err) {
     loggerFactory.error(`Function refreshToken has error`, {
@@ -320,7 +322,7 @@ const revokeToken = async (toolBox) => {
       result: {
         data: null
       },
-      msg: 'RevokeTokenSuccess'
+      msg: 'AuthS005'
     };
   } catch (err) {
     loggerFactory.error(`Function revokeToken has error`, {
@@ -359,7 +361,7 @@ const getUser = async (email) => {
     });
 
     if (isEmpty(user)) {
-      throw commons.newError('AuthUserIsNotFound');
+      throw commons.newError('AuthE003');
     }
 
     return user;

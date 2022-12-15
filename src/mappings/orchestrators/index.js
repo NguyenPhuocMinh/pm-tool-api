@@ -3,6 +3,7 @@
 import constants from '@constants';
 
 import authOrchestrator from './auth-orchestrator';
+import configOrchestrator from './config-orchestrator';
 import homeOrchestrator from './home-orchestrator';
 import healthOrchestrator from './health-orchestrator';
 import organizationOrchestrator from './organization-orchestrator';
@@ -11,6 +12,9 @@ import roleOrchestrator from './role-orchestrator';
 import permissionOrchestrator from './permission-orchestrator';
 import userOrchestrator from './user-orchestrator';
 import userSessionOrchestrator from './user-session-orchestrator';
+import notifyOrchestrator from './notify-orchestrator';
+import notifyUserOrchestrator from './notify-user-orchestrator';
+import notifyTemplateOrchestrator from './notify-template-orchestrator';
 
 /**
  * AUTH
@@ -42,6 +46,17 @@ const orchestratorAuth = [
     type: constants.types.MsgTypeAuth,
     action: constants.actions.MsgActionRevokeToken,
     orchestrator: authOrchestrator.revokeToken
+  }
+];
+
+/**
+ * CONFIG
+ */
+const orchestratorConfig = [
+  {
+    type: constants.types.MsgTypeConfig,
+    action: constants.actions.MsgActionGetDataConfigJson,
+    orchestrator: configOrchestrator.getDataConfigJson
   }
 ];
 
@@ -151,17 +166,12 @@ const orchestratorRole = [
   {
     type: constants.types.MsgTypeRole,
     action: constants.actions.MsgActionRoleGetUsers,
-    orchestrator: roleOrchestrator.getUsersByRoleID
+    orchestrator: roleOrchestrator.getUsersInRole
   },
   {
     type: constants.types.MsgTypeRole,
     action: constants.actions.MsgActionRoleGetPermissions,
-    orchestrator: roleOrchestrator.getPermissionsByRoleID
-  },
-  {
-    type: constants.types.MsgTypeRole,
-    action: constants.actions.MsgActionRoleAddPermissions,
-    orchestrator: roleOrchestrator.addPermissionsToRoleByID
+    orchestrator: roleOrchestrator.getPermissionsInRole
   }
 ];
 
@@ -237,25 +247,25 @@ const orchestratorUser = [
   {
     type: constants.types.MsgTypeUser,
     action: constants.actions.MsgActionUserChangePass,
-    orchestrator: userOrchestrator.changePasswordUserByID,
+    orchestrator: userOrchestrator.changePassUser,
     schema: 'userChangePassSchema'
   },
   {
     type: constants.types.MsgTypeUser,
-    action: constants.actions.MsgActionUserAddRoles,
-    orchestrator: userOrchestrator.addRolesToUserByUserID
-  },
-  {
-    type: constants.types.MsgTypeUser,
     action: constants.actions.MsgActionUserSetPass,
-    orchestrator: userOrchestrator.setPasswordByUserID,
+    orchestrator: userOrchestrator.setPassUser,
     schema: 'userSetPassSchema'
   },
   {
     type: constants.types.MsgTypeUser,
     action: constants.actions.MsgActionUserResetPass,
-    orchestrator: userOrchestrator.resetPasswordUser,
+    orchestrator: userOrchestrator.resetPassUser,
     schema: 'userResetPassSchema'
+  },
+  {
+    type: constants.types.MsgTypeUser,
+    action: constants.actions.MsgActionUserAddRoles,
+    orchestrator: userOrchestrator.addRolesToUser
   }
 ];
 
@@ -286,10 +296,85 @@ const orchestratorUserSession = [
 ];
 
 /**
+ * NOTIFY
+ */
+const orchestratorNotify = [
+  {
+    type: constants.types.MsgTypeNotify,
+    action: constants.actions.MsgActionNotifyGetAll,
+    orchestrator: notifyOrchestrator.getAllNotify
+  },
+  {
+    type: constants.types.MsgTypeNotify,
+    action: constants.actions.MsgActionNotifyGet,
+    orchestrator: notifyOrchestrator.getNotifyById
+  },
+  {
+    type: constants.types.MsgTypeNotify,
+    action: constants.actions.MsgActionNotifyOfUserGetAll,
+    orchestrator: notifyOrchestrator.getAllNotifyOfUser
+  },
+  {
+    type: constants.types.MsgTypeNotify,
+    action: constants.actions.MsgActionNotifyChangePasswordTemporary,
+    orchestrator: notifyOrchestrator.notifyChangePasswordTemporary
+  },
+  {
+    type: constants.types.MsgTypeNotify,
+    action: constants.actions.MsgActionNotifyUpdateRead,
+    orchestrator: notifyOrchestrator.notifyUpdateRead
+  }
+];
+
+/**
+ * NOTIFY USER
+ */
+const orchestratorNotifyUser = [
+  {
+    type: constants.types.MsgTypeNotifyUser,
+    action: constants.actions.MsgActionNotifyUserGetAll,
+    orchestrator: notifyUserOrchestrator.getAllNotifyUser
+  },
+  {
+    type: constants.types.MsgTypeNotifyUser,
+    action: constants.actions.MsgActionNotifyUserGetId,
+    orchestrator: notifyUserOrchestrator.getDetailNotifyUser
+  },
+  {
+    type: constants.types.MsgTypeNotifyUser,
+    action: constants.actions.MsgActionNotifyUserGetAllData,
+    orchestrator: notifyUserOrchestrator.getAllDataNotifyUser
+  },
+  {
+    type: constants.types.MsgTypeNotifyUser,
+    action: constants.actions.MsgActionNotifyUserGetAllUnRead,
+    orchestrator: notifyUserOrchestrator.getAllUnReadNotifyUser
+  }
+];
+
+/**
+ * NOTIFY TEMPLATE
+ */
+const orchestratorNotifyTemplate = [
+  {
+    type: constants.types.MsgTypeNotifyTemplate,
+    action: constants.actions.MsgActionNotifyTemplateGetAll,
+    orchestrator: notifyTemplateOrchestrator.getAllNotifyTemplate
+  },
+  {
+    type: constants.types.MsgTypeNotifyTemplate,
+    action: constants.actions.MsgActionNotifyTemplateCreate,
+    orchestrator: notifyTemplateOrchestrator.createNotifyTemplate,
+    schema: 'notifyTemplateSchema'
+  }
+];
+
+/**
  * BASE
  */
 const orchestrators = [
   ...orchestratorAuth,
+  ...orchestratorConfig,
   ...orchestratorHome,
   ...orchestratorHealth,
   ...orchestratorOrganization,
@@ -297,7 +382,10 @@ const orchestrators = [
   ...orchestratorRole,
   ...orchestratorPermission,
   ...orchestratorUser,
-  ...orchestratorUserSession
+  ...orchestratorUserSession,
+  ...orchestratorNotify,
+  ...orchestratorNotifyUser,
+  ...orchestratorNotifyTemplate
 ];
 
 export default orchestrators;

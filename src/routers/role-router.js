@@ -39,20 +39,14 @@ const roleRouter = [
   {
     pathName: '/roles/:id/users',
     method: 'GET',
-    methodName: 'getUsersByRoleID',
-    controller: roleController.getUsersByRoleID
+    methodName: 'getUsersInRole',
+    controller: roleController.getUsersInRole
   },
   {
     pathName: '/roles/:id/permissions',
     method: 'GET',
-    methodName: 'getPermissionsByRoleID',
-    controller: roleController.getPermissionsByRoleID
-  },
-  {
-    pathName: '/roles/:id/add-permissions',
-    method: 'PATCH',
-    methodName: 'addPermissionsToRoleByRoleID',
-    controller: roleController.addPermissionsToRoleByRoleID
+    methodName: 'getPermissionsInRole',
+    controller: roleController.getPermissionsInRole
   }
 ];
 

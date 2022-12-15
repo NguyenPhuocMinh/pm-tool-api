@@ -25,7 +25,7 @@ const loggerFactory = loggerManager(
  *      sort: sort,
  *      skip: 0,
  *      limit: 1000,
- *      populates: [
+ *      populate: [
  *        {
  *          path: 'roles',
  *          select: 'name'
@@ -99,9 +99,9 @@ const findOne = async ({ type, filter = {}, projection = {}, options }) => {
  *    projection: { __v: 0 },
  *    options: {
  *        populates: [
- *          {
- *          path: 'roles',
- *          select: 'name'
+ *         {
+ *           path: 'roles',
+ *           select: 'name'
  *        }
  *      ]
  *    }

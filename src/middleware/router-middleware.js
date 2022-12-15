@@ -6,6 +6,8 @@ import builds from '@builds';
 
 // core
 import loggerManager from '@core/logger';
+// resource
+import { R0004, R0005 } from '@resources';
 
 const loggerFactory = loggerManager(
   constants.APP_NAME,
@@ -13,12 +15,12 @@ const loggerFactory = loggerManager(
 );
 
 const routerMiddleware = (req, res, next) => {
-  loggerFactory.warn(`Function routerMiddleware has been start`);
+  loggerFactory.warn(R0004);
 
   const toolBox = { req, res, next };
-  const routerNotFoundError = commons.newError('RouterNotFound');
+  const routerNotFoundError = commons.newError('E002');
 
-  loggerFactory.warn(`Function routerMiddleware has been end`);
+  loggerFactory.warn(R0005);
 
   return builds.errorResponse(toolBox, routerNotFoundError);
 };

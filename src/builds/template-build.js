@@ -1,7 +1,7 @@
 'use strict';
 
 import { isEmpty } from 'lodash';
-import { successCodes } from '@configs';
+import { successCodes } from '@resources';
 
 import constants from '@constants';
 import utils from '@utils';
@@ -34,6 +34,7 @@ export const newSuccessTemplate = (toolBox, args = {}) => {
       template.endpoint = path;
       template.name = msg;
       template.message = successCodes[msg].message;
+      template.description = successCodes[msg].description;
       template.returnCode = successCodes[msg].returnCode;
       template.statusCode = successCodes[msg].statusCode;
     } else {
@@ -45,6 +46,7 @@ export const newSuccessTemplate = (toolBox, args = {}) => {
       template.endpoint = path;
       template.name = msg;
       template.message = `Message name [${msg}] not supported`;
+      template.description = successCodes[msg].description;
       template.returnCode = 1000;
       template.statusCode = 400;
     }
@@ -75,6 +77,7 @@ export const newErrorTemplate = (toolBox, args = {}) => {
     template.endpoint = path;
     template.name = args.name;
     template.message = args.message || 'Internal Error Server';
+    template.description = args.description;
     template.returnCode = args.returnCode || 0;
     template.statusCode = args.statusCode || 500;
 

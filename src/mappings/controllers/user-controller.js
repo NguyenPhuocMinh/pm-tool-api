@@ -103,36 +103,15 @@ const deleteUser = (req, res, next) => {
  * @param {*} res
  * @param {*} next
  */
-const changePasswordUserByID = (req, res, next) => {
-  loggerFactory.info(
-    `Function changePasswordUserByID Controller has been start`
-  );
+const changePassUser = (req, res, next) => {
+  loggerFactory.info(`Function changePassUser Controller has been start`);
   const toolBox = { req, res, next };
   baseController(
     toolBox,
     constants.types.MsgTypeUser,
     constants.actions.MsgActionUserChangePass
   );
-  loggerFactory.info(`Function changePasswordUserByID Controller has been end`);
-};
-
-/**
- * @description Add Role To User By ID Controller
- * @param {*} req
- * @param {*} res
- * @param {*} next
- */
-const addRolesToUserByUserID = (req, res, next) => {
-  loggerFactory.info(
-    `Function addRolesToUserByUserID Controller has been start`
-  );
-  const toolBox = { req, res, next };
-  baseController(
-    toolBox,
-    constants.types.MsgTypeUser,
-    constants.actions.MsgActionUserAddRoles
-  );
-  loggerFactory.info(`Function addRolesToUserByUserID Controller has been end`);
+  loggerFactory.info(`Function changePassUser Controller has been end`);
 };
 
 /**
@@ -141,15 +120,15 @@ const addRolesToUserByUserID = (req, res, next) => {
  * @param {*} res
  * @param {*} next
  */
-const setPasswordByUserID = (req, res, next) => {
-  loggerFactory.info(`Function setPasswordByUserID Controller has been start`);
+const setPassUser = (req, res, next) => {
+  loggerFactory.info(`Function setPassUser Controller has been start`);
   const toolBox = { req, res, next };
   baseController(
     toolBox,
     constants.types.MsgTypeUser,
     constants.actions.MsgActionUserSetPass
   );
-  loggerFactory.info(`Function setPasswordByUserID Controller has been end`);
+  loggerFactory.info(`Function setPassUser Controller has been end`);
 };
 
 /**
@@ -158,15 +137,32 @@ const setPasswordByUserID = (req, res, next) => {
  * @param {*} res
  * @param {*} next
  */
-const resetPasswordUser = (req, res, next) => {
-  loggerFactory.info(`Function resetPasswordUser Controller has been start`);
+const resetPassUser = (req, res, next) => {
+  loggerFactory.info(`Function resetPassUser Controller has been start`);
   const toolBox = { req, res, next };
   baseController(
     toolBox,
     constants.types.MsgTypeUser,
     constants.actions.MsgActionUserResetPass
   );
-  loggerFactory.info(`Function resetPasswordUser Controller has been end`);
+  loggerFactory.info(`Function resetPassUser Controller has been end`);
+};
+
+/**
+ * @description Add Role To User By ID Controller
+ * @param {*} req
+ * @param {*} res
+ * @param {*} next
+ */
+const addRolesToUser = (req, res, next) => {
+  loggerFactory.info(`Function addRolesToUser Controller has been start`);
+  const toolBox = { req, res, next };
+  baseController(
+    toolBox,
+    constants.types.MsgTypeUser,
+    constants.actions.MsgActionUserAddRoles
+  );
+  loggerFactory.info(`Function addRolesToUser Controller has been end`);
 };
 
 const userController = {
@@ -175,10 +171,10 @@ const userController = {
   getUser,
   updateUser,
   deleteUser,
-  changePasswordUserByID,
-  addRolesToUserByUserID,
-  setPasswordByUserID,
-  resetPasswordUser
+  changePassUser,
+  setPassUser,
+  resetPassUser,
+  addRolesToUser
 };
 
 export default userController;

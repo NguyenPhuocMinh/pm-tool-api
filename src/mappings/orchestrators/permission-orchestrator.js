@@ -14,6 +14,8 @@ import loggerManager from '@core/logger';
 import repository from '@layers/repository';
 // transfers
 import transfers from '@transfers';
+// validators
+import validators from '@validators';
 
 const loggerFactory = loggerManager(
   constants.APP_NAME,
@@ -62,7 +64,7 @@ const getAllPermission = async (toolBox) => {
         data: response,
         total
       },
-      msg: 'PermissionGetAllSuccess'
+      msg: 'PerS001'
     };
   } catch (err) {
     loggerFactory.error(`Function getAllPermission has error`, {
@@ -82,12 +84,14 @@ const createPermission = async (toolBox) => {
   try {
     loggerFactory.info(`Function createPermission has been start`);
 
-    const { name } = req.body;
+    // validate inputs
+    const error = validators.validatorPermission(req.body);
 
-    if (isEmpty(name)) {
-      throw commons.newError('PermissionNameIsRequired');
+    if (error) {
+      throw commons.newError('PerE001');
     }
 
+    const { name } = req.body;
     const slug = helpers.slugHelper(name);
 
     // check duplicate slug
@@ -96,7 +100,7 @@ const createPermission = async (toolBox) => {
     });
 
     if (isDuplicate) {
-      throw commons.newError('DuplicateNamePermission');
+      throw commons.newError('PerE002');
     }
 
     let permission = assign(req.body, {
@@ -118,7 +122,7 @@ const createPermission = async (toolBox) => {
       result: {
         data: result
       },
-      msg: 'PermissionCreateSuccess'
+      msg: 'PerS002'
     };
   } catch (err) {
     loggerFactory.error(`Function createPermission has error`, {
@@ -140,7 +144,7 @@ const getPermission = async (toolBox) => {
     const { id } = req.params;
 
     if (isEmpty(id)) {
-      throw commons.newError('PermissionIDNotFound');
+      throw commons.newError('PerE003');
     }
 
     const permission = await repository.getOne({
@@ -167,7 +171,7 @@ const getPermission = async (toolBox) => {
       result: {
         data: result
       },
-      msg: 'PermissionGetIDSuccess'
+      msg: 'PerS003'
     };
   } catch (err) {
     loggerFactory.error(`Function getPermission has error`, {
@@ -186,16 +190,18 @@ const updatePermission = async (toolBox) => {
   try {
     loggerFactory.info(`Function updatePermission has been start`);
     const { id } = req.params;
-    const { name, activated } = req.body;
 
     if (isEmpty(id)) {
-      throw commons.newError('PermissionIDNotFound');
+      throw commons.newError('PerE003');
     }
 
-    if (isEmpty(name)) {
-      throw commons.newError('PermissionNameIsRequired');
+    const error = validators.validatorPermission(req.body);
+
+    if (error) {
+      throw commons.newError('PerE001');
     }
 
+    const { name, activated } = req.body;
     const slug = utils.formatSlug(name);
     // check duplicate slug
     const isDuplicate = await helpers.duplicateHelper('PermissionModel', {
@@ -204,7 +210,7 @@ const updatePermission = async (toolBox) => {
     });
 
     if (isDuplicate) {
-      throw commons.newError('DuplicateNamePermission');
+      throw commons.newError('PerE002');
     }
 
     let permission = assign(req.body, {
@@ -253,7 +259,7 @@ const updatePermission = async (toolBox) => {
       result: {
         data: result
       },
-      msg: 'PermissionEditSuccess'
+      msg: 'PerS004'
     };
   } catch (err) {
     loggerFactory.error(`Function updatePermission has error`, {
@@ -277,7 +283,7 @@ const deletePermission = async (toolBox) => {
     const { updatedAt, updatedBy } = req.body;
 
     if (isEmpty(id)) {
-      throw commons.newError('PermissionIDNotFound');
+      throw commons.newError('PerE003');
     }
 
     const result = await repository.deleteOne({
@@ -293,7 +299,7 @@ const deletePermission = async (toolBox) => {
       result: {
         data: result
       },
-      msg: 'PermissionDeleteSuccess'
+      msg: 'PerS005'
     };
   } catch (err) {
     loggerFactory.error(`Function deletePermission has error`, {
@@ -386,7 +392,7 @@ const addRolesToPermission = async (toolBox) => {
       result: {
         data: result
       },
-      msg: 'PermissionAddRolesSuccess'
+      msg: 'PerS006'
     };
   } catch (err) {
     loggerFactory.error(`Function addRolesToPermission has error`, {

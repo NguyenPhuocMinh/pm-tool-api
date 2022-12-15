@@ -37,6 +37,7 @@ const baseController = async (toolBox, msgType, msgAction) => {
     });
     const { orchestratorHandler, schema } =
       baseOrchestrators.LookupOrchestrator(msgType, msgAction);
+
     if (!isFunction(orchestratorHandler)) {
       loggerFactory.error(`Not found callback orchestratorHandler with`, {
         args: {
@@ -44,7 +45,7 @@ const baseController = async (toolBox, msgType, msgAction) => {
           msgAction
         }
       });
-      throw commons.newError('OrchestratorHandlerNotFound');
+      throw commons.newError('E003');
     }
 
     if (!isEmpty(schema)) {

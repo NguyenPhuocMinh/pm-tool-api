@@ -13,6 +13,7 @@ import loggerManager from '@core/logger';
 import { authMiddleware } from '@middleware';
 
 import authRouter from './auth-router';
+import configRouter from './config-router';
 import homeRouter from './home-router';
 import healthRouter from './health-router';
 import organizationRouter from './organization-router';
@@ -21,6 +22,9 @@ import roleRouter from './role-router';
 import permissionRouter from './permission-router';
 import userRouter from './user-router';
 import userSessionRouter from './user-session-router';
+import notifyRouter from './notify-router';
+import notifyUserRouter from './notify-user-router';
+import notifyTemplateRouter from './notify-template-router';
 
 const router = express.Router();
 
@@ -31,6 +35,7 @@ const loggerFactory = loggerManager(
 
 const routes = [
   ...authRouter,
+  ...configRouter,
   ...homeRouter,
   ...healthRouter,
   ...organizationRouter,
@@ -38,7 +43,10 @@ const routes = [
   ...roleRouter,
   ...permissionRouter,
   ...userRouter,
-  ...userSessionRouter
+  ...userSessionRouter,
+  ...notifyRouter,
+  ...notifyUserRouter,
+  ...notifyTemplateRouter
 ];
 
 /**

@@ -1,7 +1,7 @@
 'use strict';
 
 const rolePermission = {
-  LIST: 'ROLE_LIST',
+  GET_ALL: 'ROLE_GET_ALL',
   GET_ID: 'ROLE_GET_ID',
   CREATE: 'ROLE_CREATE',
   EDIT: 'ROLE_EDIT',
