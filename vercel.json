@@ -1,4 +1,6 @@
 {
+  "buildCommand": "npm run build-esm",
+  "outputDirectory": "dist",
   "builds": [
     {
       "src": "server.js",
