@@ -1,4 +1,4 @@
 { 
-  "routes": [{ "src": "/(.*)", "dest": "/server.js" }],
+  "routes": [{ "src": "/api/(.*)", "dest": "/server.js" }],
   "rewrites": [{ "source": "/api/(.*)", "destination": "/api/404.js" }]
 }
