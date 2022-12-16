@@ -8,8 +8,7 @@
     "start:debug": "npm run build-esm && NODE_ENV=dev DEBUG=* node build/server.js",
     "build-esm": "rimraf ./build && babel . --ignore node_modules --out-dir build",
     "lint:check": "eslint --color --ext .js,.ts,.tsx \"./src/**/*.{js,ts,tsx}\"",
-    "unit:test": "mocha build/src/tests/**/*.js",
-    "vercel-build": "npm run build-esm"
+    "unit:test": "mocha build/src/tests/**/*.js"
   },
   "keywords": [],
   "author": "Minh Nguyen",
