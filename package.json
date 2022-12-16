@@ -9,7 +9,7 @@
     "build-esm": "rimraf ./dist && babel . --ignore node_modules --out-dir dist",
     "lint:check": "eslint --color --ext .js,.ts,.tsx \"./src/**/*.{js,ts,tsx}\"",
     "unit:test": "mocha dist/src/tests/**/*.js",
-    "vercel-build": "npm build-esm"
+    "vercel-build": "npm run build-esm"
   },
   "keywords": [],
   "author": "Minh Nguyen",
