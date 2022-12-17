@@ -9,7 +9,10 @@
     {
       "src": "/(.*)",
       "dest": "dist/server.js"
+    },
+    {
+      "src": "/api/(.*)",
+      "dest": "/api/handler.js"
     }
-  ],
-  "rewrites": [{ "source": "/api/(.*)", "destination": "/api/handler.js" }]
+  ]
 }
