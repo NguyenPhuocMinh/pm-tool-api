@@ -32,6 +32,7 @@ const APP_VERCEL_TOKEN = profiles.APP_VERCEL_TOKEN;
  */
 const getAllSystemLog = async (toolBox) => {
   const { req } = toolBox;
+  console.log("🚀 ~ file: system-log-orchestrator.js:35 ~ getAllSystemLog ~ req", req)
   try {
     loggerFactory.info(`Function getAllSystemLog Orchestrator has been start`);
 

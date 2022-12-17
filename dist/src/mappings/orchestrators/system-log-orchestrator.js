@@ -37,9 +37,10 @@ var getAllSystemLog = /*#__PURE__*/function () {
         switch (_context.prev = _context.next) {
           case 0:
             req = toolBox.req;
-            _context.prev = 1;
+            console.log("🚀 ~ file: system-log-orchestrator.js:35 ~ getAllSystemLog ~ req", req);
+            _context.prev = 2;
             loggerFactory.info("Function getAllSystemLog Orchestrator has been start");
-            _context.next = 5;
+            _context.next = 6;
             return (0, _nodeFetch["default"])('https://api.vercel.com/v1/integrations/log-drains', {
               method: 'GET',
               headers: {
@@ -48,7 +49,7 @@ var getAllSystemLog = /*#__PURE__*/function () {
             }).then(function (res) {
               return res.json();
             });
-          case 5:
+          case 6:
             data = _context.sent;
             console.log('🚀 ~ file: system-log-orchestrator.js:47 ~ getAllSystemLog ~ data', data);
 
@@ -66,19 +67,19 @@ var getAllSystemLog = /*#__PURE__*/function () {
               },
               msg: 'systemLogS001'
             });
-          case 11:
-            _context.prev = 11;
-            _context.t0 = _context["catch"](1);
+          case 12:
+            _context.prev = 12;
+            _context.t0 = _context["catch"](2);
             loggerFactory.info("Function getAllSystemLog Orchestrator has error", {
               args: _utils["default"].formatErrorMsg(_context.t0)
             });
             return _context.abrupt("return", _bluebird["default"].reject(_context.t0));
-          case 15:
+          case 16:
           case "end":
             return _context.stop();
         }
       }
-    }, _callee, null, [[1, 11]]);
+    }, _callee, null, [[2, 12]]);
   }));
   return function getAllSystemLog(_x) {
     return _ref.apply(this, arguments);

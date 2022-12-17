@@ -5,7 +5,7 @@
       "use": "@vercel/node"
     },
     {
-      "src": "dist/api/handler.js",
+      "src": "dist/api",
       "use": "@vercel/node"
     }
   ],
@@ -16,7 +16,7 @@
     },
     {
       "src": "/api/(.*)",
-      "dest": "/api/handler.js"
+      "dest": "/api/404.js"
     }
   ]
 }
