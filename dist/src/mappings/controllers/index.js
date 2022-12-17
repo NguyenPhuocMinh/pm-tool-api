@@ -69,6 +69,12 @@ Object.defineProperty(exports, "roleController", {
     return _roleController["default"];
   }
 });
+Object.defineProperty(exports, "systemLogController", {
+  enumerable: true,
+  get: function get() {
+    return _systemLogController["default"];
+  }
+});
 Object.defineProperty(exports, "userController", {
   enumerable: true,
   get: function get() {
@@ -95,4 +101,5 @@ var _userSessionController = _interopRequireDefault(require("./user-session-cont
 var _notifyController = _interopRequireDefault(require("./notify-controller"));
 var _notifyUserController = _interopRequireDefault(require("./notify-user-controller"));
 var _notifyTemplateController = _interopRequireDefault(require("./notify-template-controller"));
+var _systemLogController = _interopRequireDefault(require("./system-log-controller"));
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }

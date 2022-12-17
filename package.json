@@ -4,6 +4,7 @@
   "description": "Building pm-tool-api",
   "main": "server.js",
   "scripts": {
+    "dev": "npm run build-esm && NODE_ENV=dev node dist/server.js",
     "start": "node dist/server.js",
     "start:debug": "npm run build-esm && NODE_ENV=dev DEBUG=* node dist/server.js",
     "build-esm": "rimraf ./dist && babel . --ignore node_modules --out-dir dist",
@@ -39,6 +40,7 @@
     "mongoose": "^6.7.0",
     "morgan": "^1.10.0",
     "nanoid": "^3.3.4",
+    "node-fetch": "^2.6.7",
     "redis": "^4.5.0",
     "retry": "^0.13.1",
     "slugify": "^1.6.5",

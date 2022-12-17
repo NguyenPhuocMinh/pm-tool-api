@@ -11,6 +11,7 @@ import userSessionSuccess from './success/user-session-success';
 import notifySuccess from './success/notify-success';
 import notifyUserSuccess from './success/notify-user-success';
 import notifyTemplateSuccess from './success/notify-template-success';
+import systemLogSuccess from './success/system-log-success';
 
 const successCodes = {
   ...authSuccess,
@@ -23,7 +24,8 @@ const successCodes = {
   ...userSessionSuccess,
   ...notifySuccess,
   ...notifyUserSuccess,
-  ...notifyTemplateSuccess
+  ...notifyTemplateSuccess,
+  ...systemLogSuccess
 };
 
 export default successCodes;

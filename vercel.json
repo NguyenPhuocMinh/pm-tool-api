@@ -9,6 +9,11 @@
     {
       "src": "/(.*)",
       "dest": "dist/server.js"
+    },
+    {
+      "src": "/api/(.*)",
+      "middlewarePath": "handler",
+      "continue": true
     }
   ]
 }

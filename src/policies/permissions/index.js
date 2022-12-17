@@ -9,6 +9,7 @@ import perPermission from './per-permission';
 import userPermission from './user-permission';
 import userSessionPermission from './user-session-permission';
 import notifyTemplatePermission from './notify-template-permission';
+import systemLogPermission from './system-log-permission';
 
 const permissions = {
   admin: {
@@ -19,7 +20,8 @@ const permissions = {
     permissions: perPermission,
     users: userPermission,
     userSessions: userSessionPermission,
-    notifyTemplates: notifyTemplatePermission
+    notifyTemplates: notifyTemplatePermission,
+    systemLogs: systemLogPermission
   }
 };
 

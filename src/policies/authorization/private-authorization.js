@@ -242,5 +242,14 @@ export default [
     pathName: '/notify-templates/:id',
     method: 'DELETE',
     controller: permissions.admin.notifyTemplates.DELETE
+  },
+  /**
+   * SYSTEM LOG
+   */
+  {
+    enable: true,
+    pathName: '/system-logs',
+    method: 'GET',
+    controller: permissions.admin.systemLogs.GET_ALL
   }
 ];

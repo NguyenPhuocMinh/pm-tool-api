@@ -219,5 +219,14 @@ var _default = [
   pathName: '/notify-templates/:id',
   method: 'DELETE',
   controller: _permissions["default"].admin.notifyTemplates.DELETE
+},
+/**
+ * SYSTEM LOG
+ */
+{
+  enable: true,
+  pathName: '/system-logs',
+  method: 'GET',
+  controller: _permissions["default"].admin.systemLogs.GET_ALL
 }];
 exports["default"] = _default;

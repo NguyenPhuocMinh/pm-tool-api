@@ -15,6 +15,7 @@ import userSessionOrchestrator from './user-session-orchestrator';
 import notifyOrchestrator from './notify-orchestrator';
 import notifyUserOrchestrator from './notify-user-orchestrator';
 import notifyTemplateOrchestrator from './notify-template-orchestrator';
+import systemLogOrchestrator from './system-log-orchestrator';
 
 /**
  * AUTH
@@ -370,6 +371,17 @@ const orchestratorNotifyTemplate = [
 ];
 
 /**
+ * SYSTEM LOG
+ */
+const orchestratorSystemLog = [
+  {
+    type: constants.types.MsgTypeSystemLog,
+    action: constants.actions.MsgActionSystemLogGetAll,
+    orchestrator: systemLogOrchestrator.getAllSystemLog
+  }
+];
+
+/**
  * BASE
  */
 const orchestrators = [
@@ -385,7 +397,8 @@ const orchestrators = [
   ...orchestratorUserSession,
   ...orchestratorNotify,
   ...orchestratorNotifyUser,
-  ...orchestratorNotifyTemplate
+  ...orchestratorNotifyTemplate,
+  ...orchestratorSystemLog
 ];
 
 export default orchestrators;

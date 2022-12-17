@@ -25,6 +25,7 @@ import userSessionRouter from './user-session-router';
 import notifyRouter from './notify-router';
 import notifyUserRouter from './notify-user-router';
 import notifyTemplateRouter from './notify-template-router';
+import systemLogRouter from './system-log-router';
 
 const router = express.Router();
 
@@ -46,7 +47,8 @@ const routes = [
   ...userSessionRouter,
   ...notifyRouter,
   ...notifyUserRouter,
-  ...notifyTemplateRouter
+  ...notifyTemplateRouter,
+  ...systemLogRouter
 ];
 
 /**

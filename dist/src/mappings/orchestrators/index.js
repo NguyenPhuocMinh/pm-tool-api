@@ -19,6 +19,7 @@ var _userSessionOrchestrator = _interopRequireDefault(require("./user-session-or
 var _notifyOrchestrator = _interopRequireDefault(require("./notify-orchestrator"));
 var _notifyUserOrchestrator = _interopRequireDefault(require("./notify-user-orchestrator"));
 var _notifyTemplateOrchestrator = _interopRequireDefault(require("./notify-template-orchestrator"));
+var _systemLogOrchestrator = _interopRequireDefault(require("./system-log-orchestrator"));
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 /**
  * AUTH
@@ -309,8 +310,17 @@ var orchestratorNotifyTemplate = [{
 }];
 
 /**
+ * SYSTEM LOG
+ */
+var orchestratorSystemLog = [{
+  type: _constants["default"].types.MsgTypeSystemLog,
+  action: _constants["default"].actions.MsgActionSystemLogGetAll,
+  orchestrator: _systemLogOrchestrator["default"].getAllSystemLog
+}];
+
+/**
  * BASE
  */
-var orchestrators = [].concat(orchestratorAuth, orchestratorConfig, orchestratorHome, orchestratorHealth, orchestratorOrganization, orchestratorProject, orchestratorRole, orchestratorPermission, orchestratorUser, orchestratorUserSession, orchestratorNotify, orchestratorNotifyUser, orchestratorNotifyTemplate);
+var orchestrators = [].concat(orchestratorAuth, orchestratorConfig, orchestratorHome, orchestratorHealth, orchestratorOrganization, orchestratorProject, orchestratorRole, orchestratorPermission, orchestratorUser, orchestratorUserSession, orchestratorNotify, orchestratorNotifyUser, orchestratorNotifyTemplate, orchestratorSystemLog);
 var _default = orchestrators;
 exports["default"] = _default;
