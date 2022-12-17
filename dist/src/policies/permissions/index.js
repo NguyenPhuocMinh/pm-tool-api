@@ -13,7 +13,6 @@ var _perPermission = _interopRequireDefault(require("./per-permission"));
 var _userPermission = _interopRequireDefault(require("./user-permission"));
 var _userSessionPermission = _interopRequireDefault(require("./user-session-permission"));
 var _notifyTemplatePermission = _interopRequireDefault(require("./notify-template-permission"));
-var _systemLogPermission = _interopRequireDefault(require("./system-log-permission"));
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 var permissions = {
   admin: {
@@ -24,8 +23,7 @@ var permissions = {
     permissions: _perPermission["default"],
     users: _userPermission["default"],
     userSessions: _userSessionPermission["default"],
-    notifyTemplates: _notifyTemplatePermission["default"],
-    systemLogs: _systemLogPermission["default"]
+    notifyTemplates: _notifyTemplatePermission["default"]
   }
 };
 var _default = permissions;

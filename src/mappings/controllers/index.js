@@ -13,7 +13,6 @@ import userSessionController from './user-session-controller';
 import notifyController from './notify-controller';
 import notifyUserController from './notify-user-controller';
 import notifyTemplateController from './notify-template-controller';
-import systemLogController from './system-log-controller';
 
 export {
   authController,
@@ -28,6 +27,5 @@ export {
   userSessionController,
   notifyController,
   notifyUserController,
-  notifyTemplateController,
-  systemLogController
+  notifyTemplateController
 };

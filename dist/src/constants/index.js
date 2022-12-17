@@ -57,7 +57,6 @@ var USER_SESSION_CONTROLLER = 'user-session-controller';
 var NOTIFY_CONTROLLER = 'notify-controller';
 var NOTIFY_USER_CONTROLLER = 'notify-user-controller';
 var NOTIFY_TEMPLATE_CONTROLLER = 'notify-template-controller';
-var SYSTEM_LOG_CONTROLLER = 'system-log-controller';
 var STRUCT_CONTROLLERS = {
   BASE_CONTROLLER: BASE_CONTROLLER,
   AUTH_CONTROLLER: AUTH_CONTROLLER,
@@ -72,8 +71,7 @@ var STRUCT_CONTROLLERS = {
   USER_SESSION_CONTROLLER: USER_SESSION_CONTROLLER,
   NOTIFY_CONTROLLER: NOTIFY_CONTROLLER,
   NOTIFY_USER_CONTROLLER: NOTIFY_USER_CONTROLLER,
-  NOTIFY_TEMPLATE_CONTROLLER: NOTIFY_TEMPLATE_CONTROLLER,
-  SYSTEM_LOG_CONTROLLER: SYSTEM_LOG_CONTROLLER
+  NOTIFY_TEMPLATE_CONTROLLER: NOTIFY_TEMPLATE_CONTROLLER
 };
 
 /**
@@ -93,7 +91,6 @@ var USER_SESSION_ORCHESTRATOR = 'user-session-orchestrator';
 var NOTIFY_ORCHESTRATOR = 'notify-orchestrator';
 var NOTIFY_USER_ORCHESTRATOR = 'notify-user-orchestrator';
 var NOTIFY_TEMPLATE_ORCHESTRATOR = 'notify-template-orchestrator';
-var SYSTEM_LOG_ORCHESTRATOR = 'system-log-orchestrator';
 var STRUCT_ORCHESTRATORS = {
   BASE_ORCHESTRATOR: BASE_ORCHESTRATOR,
   AUTH_ORCHESTRATOR: AUTH_ORCHESTRATOR,
@@ -108,8 +105,7 @@ var STRUCT_ORCHESTRATORS = {
   USER_SESSION_ORCHESTRATOR: USER_SESSION_ORCHESTRATOR,
   NOTIFY_ORCHESTRATOR: NOTIFY_ORCHESTRATOR,
   NOTIFY_USER_ORCHESTRATOR: NOTIFY_USER_ORCHESTRATOR,
-  NOTIFY_TEMPLATE_ORCHESTRATOR: NOTIFY_TEMPLATE_ORCHESTRATOR,
-  SYSTEM_LOG_ORCHESTRATOR: SYSTEM_LOG_ORCHESTRATOR
+  NOTIFY_TEMPLATE_ORCHESTRATOR: NOTIFY_TEMPLATE_ORCHESTRATOR
 };
 
 /**
@@ -256,8 +252,7 @@ var types = {
   MsgTypeUserSession: 'USER_SESSION',
   MsgTypeNotify: 'NOTIFY',
   MsgTypeNotifyUser: 'NOTIFY_USER',
-  MsgTypeNotifyTemplate: 'NOTIFY_TEMPLATE',
-  MsgTypeSystemLog: 'SYSTEM_LOG'
+  MsgTypeNotifyTemplate: 'NOTIFY_TEMPLATE'
 };
 
 /**
@@ -393,13 +388,6 @@ var notifyTemplateActions = {
 };
 
 /**
- * @description SYSTEM LOG ACTIONS
- */
-var systemLogActions = {
-  MsgActionSystemLogGetAll: 'SYSTEM_LOG_GET_ALL'
-};
-
-/**
  * @description NOTIFY TYPES
  */
 var notifyTypes = {
@@ -417,7 +405,7 @@ var notifyTypes = {
 var senders = {
   SENDER_SYSTEM: 'SYSTEM'
 };
-var actions = _objectSpread(_objectSpread(_objectSpread(_objectSpread(_objectSpread(_objectSpread(_objectSpread(_objectSpread(_objectSpread(_objectSpread(_objectSpread(_objectSpread(_objectSpread(_objectSpread({}, authActions), configActions), homeActions), HealthActions), organizationActions), projectActions), roleActions), permissionActions), userActions), userSessionActions), notifyActions), notifyUserActions), notifyTemplateActions), systemLogActions);
+var actions = _objectSpread(_objectSpread(_objectSpread(_objectSpread(_objectSpread(_objectSpread(_objectSpread(_objectSpread(_objectSpread(_objectSpread(_objectSpread(_objectSpread(_objectSpread({}, authActions), configActions), homeActions), HealthActions), organizationActions), projectActions), roleActions), permissionActions), userActions), userSessionActions), notifyActions), notifyUserActions), notifyTemplateActions);
 var constants = {
   types: types,
   actions: actions,

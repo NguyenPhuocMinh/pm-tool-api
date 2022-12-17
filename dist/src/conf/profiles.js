@@ -18,8 +18,7 @@ var profiles = {
   APP_SECRET_KEY: process.env.APP_SECRET_KEY,
   APP_SECRET_REFRESH_KEY: process.env.APP_SECRET_REFRESH_KEY,
   APP_AUDIENCE: process.env.APP_AUDIENCE,
-  APP_ISSUER: process.env.APP_ISSUER,
-  APP_VERCEL_TOKEN: process.env.APP_VERCEL_TOKEN
+  APP_ISSUER: process.env.APP_ISSUER
 };
 var _default = profiles;
 exports["default"] = _default;

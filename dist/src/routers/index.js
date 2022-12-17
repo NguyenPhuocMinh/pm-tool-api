@@ -24,7 +24,6 @@ var _userSessionRouter = _interopRequireDefault(require("./user-session-router")
 var _notifyRouter = _interopRequireDefault(require("./notify-router"));
 var _notifyUserRouter = _interopRequireDefault(require("./notify-user-router"));
 var _notifyTemplateRouter = _interopRequireDefault(require("./notify-template-router"));
-var _systemLogRouter = _interopRequireDefault(require("./system-log-router"));
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread(); }
 function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
@@ -34,7 +33,7 @@ function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) return _arrayLikeToAr
 function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
 var router = _express["default"].Router();
 var loggerFactory = (0, _logger["default"])(_constants["default"].APP_NAME, _constants["default"].STRUCT_NAME_ROUTER);
-var routes = [].concat(_toConsumableArray(_authRouter["default"]), _toConsumableArray(_configRouter["default"]), _toConsumableArray(_homeRouter["default"]), _toConsumableArray(_healthRouter["default"]), _toConsumableArray(_organizationRouter["default"]), _toConsumableArray(_projectRouter["default"]), _toConsumableArray(_roleRouter["default"]), _toConsumableArray(_permissionRouter["default"]), _toConsumableArray(_userRouter["default"]), _toConsumableArray(_userSessionRouter["default"]), _toConsumableArray(_notifyRouter["default"]), _toConsumableArray(_notifyUserRouter["default"]), _toConsumableArray(_notifyTemplateRouter["default"]), _toConsumableArray(_systemLogRouter["default"]));
+var routes = [].concat(_toConsumableArray(_authRouter["default"]), _toConsumableArray(_configRouter["default"]), _toConsumableArray(_homeRouter["default"]), _toConsumableArray(_healthRouter["default"]), _toConsumableArray(_organizationRouter["default"]), _toConsumableArray(_projectRouter["default"]), _toConsumableArray(_roleRouter["default"]), _toConsumableArray(_permissionRouter["default"]), _toConsumableArray(_userRouter["default"]), _toConsumableArray(_userSessionRouter["default"]), _toConsumableArray(_notifyRouter["default"]), _toConsumableArray(_notifyUserRouter["default"]), _toConsumableArray(_notifyTemplateRouter["default"]));
 
 /**
  * @description Init layer router

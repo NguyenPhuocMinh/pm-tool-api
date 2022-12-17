@@ -52,7 +52,6 @@ const USER_SESSION_CONTROLLER = 'user-session-controller';
 const NOTIFY_CONTROLLER = 'notify-controller';
 const NOTIFY_USER_CONTROLLER = 'notify-user-controller';
 const NOTIFY_TEMPLATE_CONTROLLER = 'notify-template-controller';
-const SYSTEM_LOG_CONTROLLER = 'system-log-controller';
 
 const STRUCT_CONTROLLERS = {
   BASE_CONTROLLER,
@@ -68,8 +67,7 @@ const STRUCT_CONTROLLERS = {
   USER_SESSION_CONTROLLER,
   NOTIFY_CONTROLLER,
   NOTIFY_USER_CONTROLLER,
-  NOTIFY_TEMPLATE_CONTROLLER,
-  SYSTEM_LOG_CONTROLLER
+  NOTIFY_TEMPLATE_CONTROLLER
 };
 
 /**
@@ -89,7 +87,6 @@ const USER_SESSION_ORCHESTRATOR = 'user-session-orchestrator';
 const NOTIFY_ORCHESTRATOR = 'notify-orchestrator';
 const NOTIFY_USER_ORCHESTRATOR = 'notify-user-orchestrator';
 const NOTIFY_TEMPLATE_ORCHESTRATOR = 'notify-template-orchestrator';
-const SYSTEM_LOG_ORCHESTRATOR = 'system-log-orchestrator';
 
 const STRUCT_ORCHESTRATORS = {
   BASE_ORCHESTRATOR,
@@ -105,8 +102,7 @@ const STRUCT_ORCHESTRATORS = {
   USER_SESSION_ORCHESTRATOR,
   NOTIFY_ORCHESTRATOR,
   NOTIFY_USER_ORCHESTRATOR,
-  NOTIFY_TEMPLATE_ORCHESTRATOR,
-  SYSTEM_LOG_ORCHESTRATOR
+  NOTIFY_TEMPLATE_ORCHESTRATOR
 };
 
 /**
@@ -263,8 +259,7 @@ const types = {
   MsgTypeUserSession: 'USER_SESSION',
   MsgTypeNotify: 'NOTIFY',
   MsgTypeNotifyUser: 'NOTIFY_USER',
-  MsgTypeNotifyTemplate: 'NOTIFY_TEMPLATE',
-  MsgTypeSystemLog: 'SYSTEM_LOG'
+  MsgTypeNotifyTemplate: 'NOTIFY_TEMPLATE'
 };
 
 /**
@@ -400,13 +395,6 @@ const notifyTemplateActions = {
 };
 
 /**
- * @description SYSTEM LOG ACTIONS
- */
-const systemLogActions = {
-  MsgActionSystemLogGetAll: 'SYSTEM_LOG_GET_ALL'
-};
-
-/**
  * @description NOTIFY TYPES
  */
 const notifyTypes = {
@@ -439,8 +427,7 @@ const actions = {
   ...userSessionActions,
   ...notifyActions,
   ...notifyUserActions,
-  ...notifyTemplateActions,
-  ...systemLogActions
+  ...notifyTemplateActions
 };
 
 const constants = {
