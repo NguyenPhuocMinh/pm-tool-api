@@ -5,7 +5,7 @@
       "use": "@vercel/node"
     },
     {
-      "src": "dist/api",
+      "src": "server.js",
       "use": "@vercel/node"
     }
   ],
