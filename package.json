@@ -4,7 +4,7 @@
   "description": "Building pm-tool-api",
   "main": "server.js",
   "scripts": {
-    "start": "npm run build-esm && NODE_ENV=dev node dist/server.js",
+    "start": "node dist/server.js",
     "start:debug": "npm run build-esm && NODE_ENV=dev DEBUG=* node dist/server.js",
     "build-esm": "rimraf ./dist && babel . --ignore node_modules --out-dir dist",
     "lint:check": "eslint --color --ext .js,.ts,.tsx \"./src/**/*.{js,ts,tsx}\"",
