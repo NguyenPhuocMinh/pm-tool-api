@@ -24,7 +24,10 @@ const Init = async (httpServer) => {
   try {
     const io = new Server(httpServer, {
       cors: {
-        origin: '*'
+        origin: [
+          'https://pm-tool-ui.netlify.app',
+          'https://pm-tool-ui.netlify.app/*'
+        ]
       }
     });
 
