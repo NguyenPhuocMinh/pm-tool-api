@@ -41,8 +41,12 @@ const Init = async (httpServer) => {
         await workers.handlerSocketWorkerUserLogout(data, { socket, io });
       });
 
-      socket.on('disconnect', () => {
-        loggerFactory.warn('User has disconnect');
+      socket.on('disconnect', (reason) => {
+        loggerFactory.warn('User has disconnect', {
+          args: {
+            reason
+          }
+        });
         workers.handlerWorkerSocketUserDisconnect();
       });
     });
