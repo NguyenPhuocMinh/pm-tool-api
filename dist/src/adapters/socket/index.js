@@ -31,10 +31,9 @@ var Init = /*#__PURE__*/function () {
               cors: {
                 origin: _conf.profiles.APP_DOMAIN_PATH,
                 methods: ['GET', 'POST'],
+                allowedHeaders: ['my-custom-header'],
                 credentials: true
-              },
-              transports: ['websocket', 'polling'],
-              allowEIO3: true
+              }
             });
             io.on('connection', function (socket) {
               loggerFactory.info('Socket io has been connection');

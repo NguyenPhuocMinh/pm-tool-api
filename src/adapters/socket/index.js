@@ -26,10 +26,9 @@ const Init = async (httpServer) => {
       cors: {
         origin: profiles.APP_DOMAIN_PATH,
         methods: ['GET', 'POST'],
+        allowedHeaders: ['my-custom-header'],
         credentials: true
-      },
-      transports: ['websocket', 'polling'],
-      allowEIO3: true
+      }
     });
 
     io.on('connection', (socket) => {

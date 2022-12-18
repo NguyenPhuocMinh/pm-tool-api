@@ -6,7 +6,7 @@ import session from 'express-session';
 import profiles from './profiles';
 
 const corsOptions = {
-  origin: ['*', profiles.APP_DOMAIN_PATH],
+  origin: [profiles.APP_DOMAIN_PATH],
   credentials: true
 };
 
