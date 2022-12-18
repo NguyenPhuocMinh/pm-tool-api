@@ -24,12 +24,8 @@ const SOCKET_USER_LOGOUT = constants.SOCKET_EVENTS.SOCKET_USER_LOGOUT;
 const Init = async (httpServer) => {
   try {
     const io = new Server(httpServer, {
-      allowRequest: (req, cb) => {
-        const isAllowed = req.headers.origin === profiles.APP_DOMAIN_PATH;
-        cb(null, isAllowed);
-      },
       cors: {
-        credentials: true
+        origin: [profiles.APP_DOMAIN_PATH, 'http://localhost:3500']
       }
     });
 
