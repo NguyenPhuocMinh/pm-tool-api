@@ -11,7 +11,7 @@ var _expressSession = _interopRequireDefault(require("express-session"));
 var _profiles = _interopRequireDefault(require("./profiles"));
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 var corsOptions = {
-  origin: ['*', _profiles["default"].APP_DOMAIN_PATH],
+  origin: [_profiles["default"].APP_DOMAIN_PATH],
   credentials: true
 };
 var cookieOptions = {
