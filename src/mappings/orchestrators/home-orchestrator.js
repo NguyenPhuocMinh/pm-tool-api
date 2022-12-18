@@ -27,7 +27,7 @@ const homePage = async (toolBox) => {
       result: {
         data: `Welcome to homepage with version ${profiles.VERSION}`
       },
-      msg: 'S001'
+      msg: 's001'
     };
   } catch (err) {
     loggerFactory.error(`Function homePage has error`, {

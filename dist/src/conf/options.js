@@ -90,8 +90,7 @@ var jwtOptions = {
 var socketOptions = {
   cors: {
     origin: _profiles["default"].APP_DOMAIN_PATH,
-    methods: ['GET', 'POST'],
-    credentials: true
+    methods: ['GET', 'POST']
   }
 };
 var options = {
