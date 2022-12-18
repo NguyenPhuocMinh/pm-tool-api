@@ -24,7 +24,8 @@ const Init = async (httpServer) => {
   try {
     const io = new Server(httpServer, {
       cors: {
-        origin: profiles.APP_DOMAIN_PATH
+        origin: profiles.APP_DOMAIN_PATH,
+        methods: ['GET', 'POST']
       }
     });
 

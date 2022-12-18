@@ -29,7 +29,8 @@ var Init = /*#__PURE__*/function () {
             _context3.prev = 0;
             io = new _socket.Server(httpServer, {
               cors: {
-                origin: _conf.profiles.APP_DOMAIN_PATH
+                origin: _conf.profiles.APP_DOMAIN_PATH,
+                methods: ['GET', 'POST']
               }
             });
             io.on('connection', function (socket) {
