@@ -2,9 +2,6 @@
 
 import { Server } from 'socket.io';
 
-// conf
-import { profiles } from '@conf';
-
 import constants from '@constants';
 import utils from '@utils';
 
@@ -25,7 +22,7 @@ const Init = async (httpServer) => {
   try {
     const io = new Server(httpServer, {
       cors: {
-        origin: [profiles.APP_DOMAIN_PATH, 'http://localhost:3500']
+        origin: '*'
       }
     });
 
