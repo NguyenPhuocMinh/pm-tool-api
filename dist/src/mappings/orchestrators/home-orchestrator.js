@@ -33,7 +33,7 @@ var homePage = /*#__PURE__*/function () {
               result: {
                 data: "Welcome to homepage with version ".concat(_conf.profiles.VERSION)
               },
-              msg: 'S001'
+              msg: 's001'
             });
           case 5:
             _context.prev = 5;
