@@ -27,7 +27,7 @@ var Init = /*#__PURE__*/function () {
           case 0:
             _context3.prev = 0;
             io = new _socket.Server(httpServer, {
-              transports: ['websocket']
+              transports: ['polling']
             });
             io.on('connection', function (socket) {
               loggerFactory.info('Socket io has been connection');
