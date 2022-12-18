@@ -3,7 +3,7 @@
 import { Server } from 'socket.io';
 
 // conf
-// import { profiles } from '@conf';
+import { profiles } from '@conf';
 import constants from '@constants';
 import utils from '@utils';
 
@@ -23,7 +23,13 @@ const SOCKET_USER_LOGOUT = constants.SOCKET_EVENTS.SOCKET_USER_LOGOUT;
 const Init = async (httpServer) => {
   try {
     const io = new Server(httpServer, {
-      transports: ['polling']
+      cors: {
+        origin: profiles.APP_DOMAIN_PATH,
+        methods: ['GET', 'POST'],
+        credentials: true
+      },
+      transports: ['websocket', 'polling'],
+      allowEIO3: true
     });
 
     io.on('connection', (socket) => {
