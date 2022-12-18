@@ -3,7 +3,7 @@
 import { Server } from 'socket.io';
 
 // conf
-import { options } from '@conf';
+import { profiles } from '@conf';
 
 import constants from '@constants';
 import utils from '@utils';
@@ -23,13 +23,20 @@ const SOCKET_USER_LOGOUT = constants.SOCKET_EVENTS.SOCKET_USER_LOGOUT;
 
 const Init = async (httpServer) => {
   try {
-    const io = new Server(httpServer, options.socketOptions);
+    const io = new Server(httpServer, {
+      allowRequest: (req, cb) => {
+        const isAllowed = req.headers.origin === profiles.APP_DOMAIN_PATH;
+        cb(null, isAllowed);
+      },
+      cors: {
+        credentials: true
+      }
+    });
 
     io.on('connection', (socket) => {
       loggerFactory.info('Socket io has been connection');
 
       socket.on(SOCKET_USER_LOGIN, async (data) => {
-        console.log('🚀 ~ file: index.js:32 ~ socket.on ~ data', data);
         await workers.handlerSocketWorkerUserLogin(data, { socket, io });
       });
 

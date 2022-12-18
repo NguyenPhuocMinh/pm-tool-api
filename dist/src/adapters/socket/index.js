@@ -27,7 +27,15 @@ var Init = /*#__PURE__*/function () {
         switch (_context3.prev = _context3.next) {
           case 0:
             _context3.prev = 0;
-            io = new _socket.Server(httpServer, _conf.options.socketOptions);
+            io = new _socket.Server(httpServer, {
+              allowRequest: function allowRequest(req, cb) {
+                var isAllowed = req.headers.origin === _conf.profiles.APP_DOMAIN_PATH;
+                cb(null, isAllowed);
+              },
+              cors: {
+                credentials: true
+              }
+            });
             io.on('connection', function (socket) {
               loggerFactory.info('Socket io has been connection');
               socket.on(SOCKET_USER_LOGIN, /*#__PURE__*/function () {
@@ -36,13 +44,12 @@ var Init = /*#__PURE__*/function () {
                     while (1) {
                       switch (_context.prev = _context.next) {
                         case 0:
-                          console.log('🚀 ~ file: index.js:32 ~ socket.on ~ data', data);
-                          _context.next = 3;
+                          _context.next = 2;
                           return _workers["default"].handlerSocketWorkerUserLogin(data, {
                             socket: socket,
                             io: io
                           });
-                        case 3:
+                        case 2:
                         case "end":
                           return _context.stop();
                       }
