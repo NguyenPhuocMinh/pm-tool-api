@@ -2,6 +2,8 @@
 
 import { Server } from 'socket.io';
 
+// conf
+import { options, profiles } from '@conf';
 import constants from '@constants';
 import utils from '@utils';
 
@@ -21,8 +23,10 @@ const SOCKET_USER_LOGOUT = constants.SOCKET_EVENTS.SOCKET_USER_LOGOUT;
 const Init = async (httpServer) => {
   try {
     const io = new Server(httpServer, {
-      cors: {
-        origin: '*'
+      ...options.socketOptions,
+      allowRequest: (req, cb) => {
+        const isAllowed = req.headers.origin === profiles.APP_DOMAIN_PATH;
+        cb(null, isAllowed);
       }
     });
 
