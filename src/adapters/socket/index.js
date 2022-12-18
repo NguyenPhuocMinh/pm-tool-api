@@ -3,7 +3,7 @@
 import { Server } from 'socket.io';
 
 // conf
-import { profiles } from '@conf';
+// import { profiles } from '@conf';
 import constants from '@constants';
 import utils from '@utils';
 
@@ -22,11 +22,7 @@ const SOCKET_USER_LOGOUT = constants.SOCKET_EVENTS.SOCKET_USER_LOGOUT;
 
 const Init = async (httpServer) => {
   try {
-    const io = new Server(httpServer, {
-      cors: {
-        origin: profiles.APP_DOMAIN_PATH
-      }
-    });
+    const io = new Server(httpServer);
 
     io.on('connection', (socket) => {
       loggerFactory.info('Socket io has been connection');
