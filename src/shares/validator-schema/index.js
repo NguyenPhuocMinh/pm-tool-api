@@ -40,7 +40,7 @@ const validatorSchema = async (schema, data) => {
         errors.statusCode = 400;
       }
     } else {
-      throw commons.newError('E004');
+      throw commons.newError('e004');
     }
     loggerFactory.info(`Function validatorSchema has been end`);
     return errors;

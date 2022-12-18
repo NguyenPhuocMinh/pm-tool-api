@@ -86,7 +86,7 @@ var getAllNotifyUser = /*#__PURE__*/function () {
                 data: result,
                 total: total
               },
-              msg: 'NotifyUserS001'
+              msg: 'notifyUserS001'
             });
           case 20:
             _context.prev = 20;
@@ -135,7 +135,7 @@ var getDetailNotifyUser = /*#__PURE__*/function () {
               result: {
                 data: result
               },
-              msg: 'NotifyUserS002'
+              msg: 'notifyUserS002'
             });
           case 14:
             _context2.prev = 14;
@@ -225,7 +225,7 @@ var getAllDataNotifyUser = /*#__PURE__*/function () {
                 data: result,
                 total: total
               },
-              msg: 'NotifyUserS003'
+              msg: 'notifyUserS003'
             });
           case 20:
             _context3.prev = 20;
@@ -312,7 +312,7 @@ var getAllUnReadNotifyUser = /*#__PURE__*/function () {
                 data: result,
                 total: total
               },
-              msg: 'NotifyUserS004'
+              msg: 'notifyUserS004'
             });
           case 20:
             _context4.prev = 20;
@@ -349,7 +349,7 @@ var getNotifyUserFunc = /*#__PURE__*/function () {
               _context5.next = 3;
               break;
             }
-            throw _commons["default"].newError('NotifyUserE001');
+            throw _commons["default"].newError('notifyUserE001');
           case 3:
             _context5.next = 5;
             return _repository["default"].getOne({

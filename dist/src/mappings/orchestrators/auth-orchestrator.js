@@ -56,7 +56,7 @@ var signIn = /*#__PURE__*/function () {
               _context.next = 6;
               break;
             }
-            throw _commons["default"].newError('AuthE002');
+            throw _commons["default"].newError('authE002');
           case 6:
             _req$body = req.body, email = _req$body.email, password = _req$body.password;
             _context.next = 9;
@@ -67,7 +67,7 @@ var signIn = /*#__PURE__*/function () {
               _context.next = 12;
               break;
             }
-            throw _commons["default"].newError('AuthE004');
+            throw _commons["default"].newError('authE004');
           case 12:
             _context.next = 14;
             return _transfers["default"].authTransfer(user);
@@ -109,7 +109,7 @@ var signIn = /*#__PURE__*/function () {
               result: {
                 token: token
               },
-              msg: 'AuthS001'
+              msg: 'authS001'
             });
           case 31:
             _context.prev = 31;
@@ -169,7 +169,7 @@ var signOut = /*#__PURE__*/function () {
               result: {
                 data: null
               },
-              msg: 'AuthS002'
+              msg: 'authS002'
             });
           case 19:
             _context2.prev = 19;
@@ -218,7 +218,7 @@ var whoami = /*#__PURE__*/function () {
               result: {
                 data: result
               },
-              msg: 'AuthS003'
+              msg: 'authS003'
             });
           case 14:
             _context3.prev = 14;
@@ -258,7 +258,7 @@ var refreshToken = /*#__PURE__*/function () {
               _context5.next = 6;
               break;
             }
-            throw _commons["default"].newError('AuthE001');
+            throw _commons["default"].newError('authE001');
           case 6:
             _context5.next = 8;
             return getUser(email);
@@ -295,7 +295,7 @@ var refreshToken = /*#__PURE__*/function () {
                         _context4.next = 8;
                         return _redis["default"].deleteValue(wlKey);
                       case 8:
-                        throw _commons["default"].newError('AuthE006');
+                        throw _commons["default"].newError('authE006');
                       case 11:
                         delete decoded.aud;
                         delete decoded.iss;
@@ -330,7 +330,7 @@ var refreshToken = /*#__PURE__*/function () {
               result: {
                 token: newToken
               },
-              msg: 'AuthS004'
+              msg: 'authS004'
             });
           case 22:
             _context5.prev = 22;
@@ -397,7 +397,7 @@ var revokeToken = /*#__PURE__*/function () {
               result: {
                 data: null
               },
-              msg: 'AuthS005'
+              msg: 'authS005'
             });
           case 23:
             _context6.prev = 23;
@@ -456,7 +456,7 @@ var getUser = /*#__PURE__*/function () {
               _context7.next = 6;
               break;
             }
-            throw _commons["default"].newError('AuthE003');
+            throw _commons["default"].newError('authE003');
           case 6:
             return _context7.abrupt("return", user);
           case 9:

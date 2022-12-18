@@ -6,7 +6,7 @@ Object.defineProperty(exports, "__esModule", {
 exports["default"] = void 0;
 require("source-map-support/register");
 var _default = {
-  NotifyTemplateE001: {
+  notifyTemplateE001: {
     message: 'resources.notifyTemplates.notifications.errors.s001',
     description: 'ID Not Found',
     returnCode: 0,

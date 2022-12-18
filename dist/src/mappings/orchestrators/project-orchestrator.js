@@ -75,7 +75,7 @@ var getAllProject = /*#__PURE__*/function () {
                 data: response,
                 total: total
               },
-              msg: 'ProjectS001'
+              msg: 'projectS001'
             });
           case 19:
             _context.prev = 19;
@@ -117,7 +117,7 @@ var createProject = /*#__PURE__*/function () {
               _context2.next = 6;
               break;
             }
-            throw _commons["default"].newError('ProjectE001');
+            throw _commons["default"].newError('projectE001');
           case 6:
             name = req.body.name;
             slug = _helpers["default"].slugHelper(name); // check duplicate slug
@@ -131,7 +131,7 @@ var createProject = /*#__PURE__*/function () {
               _context2.next = 13;
               break;
             }
-            throw _commons["default"].newError('ProjectE002');
+            throw _commons["default"].newError('projectE002');
           case 13:
             doc = (0, _lodash.assign)(req.body, {
               slug: slug
@@ -150,7 +150,7 @@ var createProject = /*#__PURE__*/function () {
               result: {
                 data: result
               },
-              msg: 'ProjectS002'
+              msg: 'projectS002'
             });
           case 23:
             _context2.prev = 23;

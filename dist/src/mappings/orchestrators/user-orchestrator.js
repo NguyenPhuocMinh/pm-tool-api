@@ -80,7 +80,7 @@ var getAllUser = /*#__PURE__*/function () {
                 data: response,
                 total: total
               },
-              msg: 'UserS001'
+              msg: 'userS001'
             });
           case 19:
             _context.prev = 19;
@@ -121,7 +121,7 @@ var createUser = /*#__PURE__*/function () {
               _context2.next = 6;
               break;
             }
-            throw _commons["default"].newError('UserE001');
+            throw _commons["default"].newError('userE001');
           case 6:
             _req$body = req.body, firstName = _req$body.firstName, lastName = _req$body.lastName, email = _req$body.email;
             fullName = _utils["default"].formatFullName(firstName, lastName);
@@ -140,7 +140,7 @@ var createUser = /*#__PURE__*/function () {
               _context2.next = 14;
               break;
             }
-            throw _commons["default"].newError('UserE002');
+            throw _commons["default"].newError('userE002');
           case 14:
             user = (0, _lodash.assign)(req.body, {
               slug: slug
@@ -167,7 +167,7 @@ var createUser = /*#__PURE__*/function () {
               result: {
                 data: result
               },
-              msg: 'UserS002'
+              msg: 'userS002'
             });
           case 29:
             _context2.prev = 29;
@@ -207,7 +207,7 @@ var getUser = /*#__PURE__*/function () {
               _context3.next = 6;
               break;
             }
-            throw _commons["default"].newError('UserE003');
+            throw _commons["default"].newError('userE003');
           case 6:
             _context3.next = 8;
             return _repository["default"].getOne({
@@ -234,7 +234,7 @@ var getUser = /*#__PURE__*/function () {
               result: {
                 data: result
               },
-              msg: 'UserS003'
+              msg: 'userS003'
             });
           case 16:
             _context3.prev = 16;
@@ -274,7 +274,7 @@ var updateUser = /*#__PURE__*/function () {
               _context4.next = 6;
               break;
             }
-            throw _commons["default"].newError('UserE003');
+            throw _commons["default"].newError('userE003');
           case 6:
             // validate inputs
             error = _validators["default"].validatorUser(req.body);
@@ -282,7 +282,7 @@ var updateUser = /*#__PURE__*/function () {
               _context4.next = 9;
               break;
             }
-            throw _commons["default"].newError('UserE001');
+            throw _commons["default"].newError('userE001');
           case 9:
             _req$body2 = req.body, firstName = _req$body2.firstName, lastName = _req$body2.lastName, email = _req$body2.email;
             fullName = _utils["default"].formatFullName(firstName, lastName);
@@ -304,7 +304,7 @@ var updateUser = /*#__PURE__*/function () {
               _context4.next = 17;
               break;
             }
-            throw _commons["default"].newError('UserE002');
+            throw _commons["default"].newError('userE002');
           case 17:
             user = (0, _lodash.assign)(req.body, {
               slug: slug
@@ -327,7 +327,7 @@ var updateUser = /*#__PURE__*/function () {
               result: {
                 data: result
               },
-              msg: 'UserS004'
+              msg: 'userS004'
             });
           case 29:
             _context4.prev = 29;
@@ -367,7 +367,7 @@ var deleteUser = /*#__PURE__*/function () {
               _context5.next = 6;
               break;
             }
-            throw _commons["default"].newError('UserE003');
+            throw _commons["default"].newError('userE003');
           case 6:
             req.body = _helpers["default"].attributeHelper(req, req.body);
             _req$body3 = req.body, updatedAt = _req$body3.updatedAt, updatedBy = _req$body3.updatedBy;
@@ -386,7 +386,7 @@ var deleteUser = /*#__PURE__*/function () {
               result: {
                 data: result
               },
-              msg: 'UserS005'
+              msg: 'userS005'
             });
           case 17:
             _context5.prev = 17;
@@ -426,7 +426,7 @@ var changePassUser = /*#__PURE__*/function () {
               _context6.next = 6;
               break;
             }
-            throw _commons["default"].newError('UserE003');
+            throw _commons["default"].newError('userE003');
           case 6:
             // validate inputs
             error = _validators["default"].validatorUserChangePass(req.body);
@@ -434,7 +434,7 @@ var changePassUser = /*#__PURE__*/function () {
               _context6.next = 9;
               break;
             }
-            throw _commons["default"].newError('UserE004');
+            throw _commons["default"].newError('userE004');
           case 9:
             req.body = _helpers["default"].attributeHelper(req, req.body);
             _req$body4 = req.body, currentPassword = _req$body4.currentPassword, newPassword = _req$body4.newPassword, updatedAt = _req$body4.updatedAt, updatedBy = _req$body4.updatedBy;
@@ -457,7 +457,7 @@ var changePassUser = /*#__PURE__*/function () {
               _context6.next = 19;
               break;
             }
-            throw _commons["default"].newError('UserE005');
+            throw _commons["default"].newError('userE005');
           case 19:
             _context6.next = 21;
             return _bcrypt["default"].hash(newPassword, _conf.options.bcryptOptions.salt);
@@ -479,7 +479,7 @@ var changePassUser = /*#__PURE__*/function () {
               result: {
                 data: result
               },
-              msg: 'UserS006'
+              msg: 'userS006'
             });
           case 35:
             _context6.prev = 35;
@@ -519,7 +519,7 @@ var setPassUser = /*#__PURE__*/function () {
               _context7.next = 6;
               break;
             }
-            throw _commons["default"].newError('UserE003');
+            throw _commons["default"].newError('userE003');
           case 6:
             /// validate inputs
             error = _validators["default"].validatorUserSetPass(req.body);
@@ -527,7 +527,7 @@ var setPassUser = /*#__PURE__*/function () {
               _context7.next = 9;
               break;
             }
-            throw _commons["default"].newError('UserE006');
+            throw _commons["default"].newError('userE006');
           case 9:
             req.body = _helpers["default"].attributeHelper(req, req.body);
             _req$body5 = req.body, password = _req$body5.password, isPasswordTemporary = _req$body5.isPasswordTemporary, updatedAt = _req$body5.updatedAt, updatedBy = _req$body5.updatedBy; // hash pass
@@ -565,7 +565,7 @@ var setPassUser = /*#__PURE__*/function () {
               result: {
                 data: result
               },
-              msg: 'UserS007'
+              msg: 'userS007'
             });
           case 24:
             _context7.prev = 24;
@@ -605,7 +605,7 @@ var resetPassUser = /*#__PURE__*/function () {
               _context8.next = 6;
               break;
             }
-            throw _commons["default"].newError('UserE003');
+            throw _commons["default"].newError('userE003');
           case 6:
             // validate inputs
             error = _validators["default"].validatorUserResetPass(req.body);
@@ -613,7 +613,7 @@ var resetPassUser = /*#__PURE__*/function () {
               _context8.next = 9;
               break;
             }
-            throw _commons["default"].newError('UserE007');
+            throw _commons["default"].newError('userE007');
           case 9:
             req.body = _helpers["default"].attributeHelper(req, req.body);
             _req$body6 = req.body, password = _req$body6.password, updatedAt = _req$body6.updatedAt, updatedBy = _req$body6.updatedBy; // hash pass
@@ -638,7 +638,7 @@ var resetPassUser = /*#__PURE__*/function () {
               result: {
                 data: null
               },
-              msg: 'UserS008'
+              msg: 'userS008'
             });
           case 20:
             _context8.prev = 20;
@@ -678,7 +678,7 @@ var addRolesToUser = /*#__PURE__*/function () {
               _context9.next = 6;
               break;
             }
-            throw _commons["default"].newError('UserE003');
+            throw _commons["default"].newError('userE003');
           case 6:
             req.body = _helpers["default"].attributeHelper(req, req.body);
             _req$body7 = req.body, availableRoles = _req$body7.availableRoles, assignedRoles = _req$body7.assignedRoles, updatedAt = _req$body7.updatedAt, updatedBy = _req$body7.updatedBy;
@@ -751,7 +751,7 @@ var addRolesToUser = /*#__PURE__*/function () {
               result: {
                 data: result
               },
-              msg: 'UserS009'
+              msg: 'userS009'
             });
           case 22:
             _context9.prev = 22;

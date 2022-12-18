@@ -41,7 +41,7 @@ var getDataConfigJson = /*#__PURE__*/function () {
               result: {
                 data: data
               },
-              msg: 'S003'
+              msg: 's003'
             });
           case 11:
             _context.prev = 11;

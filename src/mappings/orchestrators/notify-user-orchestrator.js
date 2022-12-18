@@ -78,7 +78,7 @@ const getAllNotifyUser = async (toolBox) => {
         data: result,
         total
       },
-      msg: 'NotifyUserS001'
+      msg: 'notifyUserS001'
     };
   } catch (err) {
     loggerFactory.error(`Function getAllNotifyUser has error`, {
@@ -109,7 +109,7 @@ const getDetailNotifyUser = async (toolBox) => {
       result: {
         data: result
       },
-      msg: 'NotifyUserS002'
+      msg: 'notifyUserS002'
     };
   } catch (err) {
     loggerFactory.error(`Function getDetailNotifyUser has error`, {
@@ -183,7 +183,7 @@ const getAllDataNotifyUser = async (toolBox) => {
         data: result,
         total
       },
-      msg: 'NotifyUserS003'
+      msg: 'notifyUserS003'
     };
   } catch (err) {
     loggerFactory.error(`Function getAllDataNotifyUser has error`, {
@@ -254,7 +254,7 @@ const getAllUnReadNotifyUser = async (toolBox) => {
         data: result,
         total
       },
-      msg: 'NotifyUserS004'
+      msg: 'notifyUserS004'
     };
   } catch (err) {
     loggerFactory.error(`Function getAllUnReadNotifyUser has error`, {
@@ -271,7 +271,7 @@ const getAllUnReadNotifyUser = async (toolBox) => {
 const getNotifyUserFunc = async (id) => {
   try {
     if (isEmpty(id)) {
-      throw commons.newError('NotifyUserE001');
+      throw commons.newError('notifyUserE001');
     }
 
     const notify = await repository.getOne({

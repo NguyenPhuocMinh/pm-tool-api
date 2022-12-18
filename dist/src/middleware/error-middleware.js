@@ -20,7 +20,7 @@ var errorMiddleware = function errorMiddleware(_err, req, res, next) {
     res: res,
     next: next
   };
-  var internalServerError = _commons["default"].newError('E001');
+  var internalServerError = _commons["default"].newError('e001');
   if (_err.stack) {
     loggerFactory.error('Function errorMiddleware has been end without error internal server');
     console.error('error stack', _err.stack);

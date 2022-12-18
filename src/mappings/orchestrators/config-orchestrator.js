@@ -36,7 +36,7 @@ const getDataConfigJson = async (toolBox) => {
       result: {
         data: data
       },
-      msg: 'S003'
+      msg: 's003'
     };
   } catch (err) {
     loggerFactory.error(`Function getDataConfigJson has error`, {

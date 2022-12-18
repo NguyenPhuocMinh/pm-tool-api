@@ -73,7 +73,7 @@ var getAllRole = /*#__PURE__*/function () {
                 data: response,
                 total: total
               },
-              msg: 'RoleS001'
+              msg: 'roleS001'
             });
           case 19:
             _context.prev = 19;
@@ -115,7 +115,7 @@ var createRole = /*#__PURE__*/function () {
               _context2.next = 6;
               break;
             }
-            throw _commons["default"].newError('RoleE001');
+            throw _commons["default"].newError('roleE001');
           case 6:
             name = req.body.name;
             slug = _helpers["default"].slugHelper(name); // check duplicate slug
@@ -129,7 +129,7 @@ var createRole = /*#__PURE__*/function () {
               _context2.next = 13;
               break;
             }
-            throw _commons["default"].newError('RoleE002');
+            throw _commons["default"].newError('roleE002');
           case 13:
             role = (0, _lodash.assign)(req.body, {
               slug: slug
@@ -148,7 +148,7 @@ var createRole = /*#__PURE__*/function () {
               result: {
                 data: result
               },
-              msg: 'RoleS002'
+              msg: 'roleS002'
             });
           case 23:
             _context2.prev = 23;
@@ -188,7 +188,7 @@ var getRole = /*#__PURE__*/function () {
               _context3.next = 6;
               break;
             }
-            throw _commons["default"].newError('RoleE003');
+            throw _commons["default"].newError('roleE003');
           case 6:
             _context3.next = 8;
             return _repository["default"].getOne({
@@ -206,7 +206,7 @@ var getRole = /*#__PURE__*/function () {
               result: {
                 data: result
               },
-              msg: 'RoleS003'
+              msg: 'roleS003'
             });
           case 14:
             _context3.prev = 14;
@@ -246,14 +246,14 @@ var updateRole = /*#__PURE__*/function () {
               _context4.next = 6;
               break;
             }
-            throw _commons["default"].newError('RoleE003');
+            throw _commons["default"].newError('roleE003');
           case 6:
             error = _validators["default"].validatorRole(req.body);
             if (!error) {
               _context4.next = 9;
               break;
             }
-            throw _commons["default"].newError('RoleE001');
+            throw _commons["default"].newError('roleE001');
           case 9:
             _req$body = req.body, name = _req$body.name, activated = _req$body.activated;
             slug = _helpers["default"].slugHelper(name); // check duplicate slug
@@ -270,7 +270,7 @@ var updateRole = /*#__PURE__*/function () {
               _context4.next = 16;
               break;
             }
-            throw _commons["default"].newError('RoleE002');
+            throw _commons["default"].newError('roleE002');
           case 16:
             role = (0, _lodash.assign)(req.body, {
               slug: slug
@@ -297,7 +297,7 @@ var updateRole = /*#__PURE__*/function () {
               result: {
                 data: result
               },
-              msg: 'RoleS004'
+              msg: 'roleS004'
             });
           case 29:
             _context4.prev = 29;
@@ -337,7 +337,7 @@ var deleteRole = /*#__PURE__*/function () {
               _context5.next = 6;
               break;
             }
-            throw _commons["default"].newError('RoleE003');
+            throw _commons["default"].newError('roleE003');
           case 6:
             req.body = _helpers["default"].attributeHelper(req, req.body);
             _req$body2 = req.body, updatedAt = _req$body2.updatedAt, updatedBy = _req$body2.updatedBy;
@@ -356,7 +356,7 @@ var deleteRole = /*#__PURE__*/function () {
               result: {
                 data: result
               },
-              msg: 'RoleS005'
+              msg: 'roleS005'
             });
           case 17:
             _context5.prev = 17;
@@ -396,7 +396,7 @@ var getUsersInRole = /*#__PURE__*/function () {
               _context6.next = 6;
               break;
             }
-            throw _commons["default"].newError('RoleE003');
+            throw _commons["default"].newError('roleE003');
           case 6:
             _helpers$paginationHe2 = _helpers["default"].paginationHelper(req.query), skip = _helpers$paginationHe2.skip, limit = _helpers$paginationHe2.limit;
             sort = _helpers["default"].sortHelper(req.query);
@@ -482,7 +482,7 @@ var getPermissionsInRole = /*#__PURE__*/function () {
               _context7.next = 6;
               break;
             }
-            throw _commons["default"].newError('RoleE003');
+            throw _commons["default"].newError('roleE003');
           case 6:
             _helpers$paginationHe3 = _helpers["default"].paginationHelper(req.query), skip = _helpers$paginationHe3.skip, limit = _helpers$paginationHe3.limit;
             sort = _helpers["default"].queryHelper(req.query);

@@ -76,7 +76,7 @@ const authMiddleware = async (req, res, next) => {
           message: 'Not found token in header or cookie'
         }
       });
-      const tokenNotFoundError = commons.newError('AuthE005');
+      const tokenNotFoundError = commons.newError('authE005');
       return builds.errorResponse(toolBox, tokenNotFoundError);
     }
 
@@ -96,10 +96,10 @@ const authMiddleware = async (req, res, next) => {
         let tokenError;
         switch (true) {
           case err instanceof jwt.TokenExpiredError:
-            tokenError = commons.newError('AuthE006');
+            tokenError = commons.newError('authE006');
             break;
           case err instanceof jwt.JsonWebTokenError:
-            tokenError = commons.newError('AuthE007');
+            tokenError = commons.newError('authE007');
             break;
           default:
             break;
@@ -121,7 +121,7 @@ const authMiddleware = async (req, res, next) => {
               }
             }
           );
-          const tokenBlackListError = commons.newError('AuthE009');
+          const tokenBlackListError = commons.newError('authE009');
           return builds.errorResponse(toolBox, tokenBlackListError);
         }
         /**
@@ -198,7 +198,7 @@ const authMiddleware = async (req, res, next) => {
                 }
               }
             );
-            const tokenForbiddenError = commons.newError('AuthE008');
+            const tokenForbiddenError = commons.newError('authE008');
             return builds.errorResponse(toolBox, tokenForbiddenError);
           }
         } catch (err) {

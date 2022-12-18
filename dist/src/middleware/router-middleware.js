@@ -23,7 +23,7 @@ var routerMiddleware = function routerMiddleware(req, res, next) {
     res: res,
     next: next
   };
-  var routerNotFoundError = _commons["default"].newError('E002');
+  var routerNotFoundError = _commons["default"].newError('e002');
   loggerFactory.warn(_resources.R0005);
   return _builds["default"].errorResponse(toolBox, routerNotFoundError);
 };

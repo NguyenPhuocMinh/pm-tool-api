@@ -16,7 +16,7 @@ const errorMiddleware = (_err, req, res, next) => {
   loggerFactory.error('Function errorMiddleware has been start');
 
   const toolBox = { req, res, next };
-  const internalServerError = commons.newError('E001');
+  const internalServerError = commons.newError('e001');
 
   if (_err.stack) {
     loggerFactory.error(

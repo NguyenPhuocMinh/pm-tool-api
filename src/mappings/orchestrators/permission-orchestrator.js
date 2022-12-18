@@ -64,7 +64,7 @@ const getAllPermission = async (toolBox) => {
         data: response,
         total
       },
-      msg: 'PerS001'
+      msg: 'perS001'
     };
   } catch (err) {
     loggerFactory.error(`Function getAllPermission has error`, {
@@ -88,7 +88,7 @@ const createPermission = async (toolBox) => {
     const error = validators.validatorPermission(req.body);
 
     if (error) {
-      throw commons.newError('PerE001');
+      throw commons.newError('perE001');
     }
 
     const { name } = req.body;
@@ -100,7 +100,7 @@ const createPermission = async (toolBox) => {
     });
 
     if (isDuplicate) {
-      throw commons.newError('PerE002');
+      throw commons.newError('perE002');
     }
 
     let permission = assign(req.body, {
@@ -122,7 +122,7 @@ const createPermission = async (toolBox) => {
       result: {
         data: result
       },
-      msg: 'PerS002'
+      msg: 'perS002'
     };
   } catch (err) {
     loggerFactory.error(`Function createPermission has error`, {
@@ -144,7 +144,7 @@ const getPermission = async (toolBox) => {
     const { id } = req.params;
 
     if (isEmpty(id)) {
-      throw commons.newError('PerE003');
+      throw commons.newError('perE003');
     }
 
     const permission = await repository.getOne({
@@ -171,7 +171,7 @@ const getPermission = async (toolBox) => {
       result: {
         data: result
       },
-      msg: 'PerS003'
+      msg: 'perS003'
     };
   } catch (err) {
     loggerFactory.error(`Function getPermission has error`, {
@@ -192,13 +192,13 @@ const updatePermission = async (toolBox) => {
     const { id } = req.params;
 
     if (isEmpty(id)) {
-      throw commons.newError('PerE003');
+      throw commons.newError('perE003');
     }
 
     const error = validators.validatorPermission(req.body);
 
     if (error) {
-      throw commons.newError('PerE001');
+      throw commons.newError('perE001');
     }
 
     const { name, activated } = req.body;
@@ -210,7 +210,7 @@ const updatePermission = async (toolBox) => {
     });
 
     if (isDuplicate) {
-      throw commons.newError('PerE002');
+      throw commons.newError('perE002');
     }
 
     let permission = assign(req.body, {
@@ -259,7 +259,7 @@ const updatePermission = async (toolBox) => {
       result: {
         data: result
       },
-      msg: 'PerS004'
+      msg: 'perS004'
     };
   } catch (err) {
     loggerFactory.error(`Function updatePermission has error`, {
@@ -283,7 +283,7 @@ const deletePermission = async (toolBox) => {
     const { updatedAt, updatedBy } = req.body;
 
     if (isEmpty(id)) {
-      throw commons.newError('PerE003');
+      throw commons.newError('perE003');
     }
 
     const result = await repository.deleteOne({
@@ -299,7 +299,7 @@ const deletePermission = async (toolBox) => {
       result: {
         data: result
       },
-      msg: 'PerS005'
+      msg: 'perS005'
     };
   } catch (err) {
     loggerFactory.error(`Function deletePermission has error`, {
@@ -392,7 +392,7 @@ const addRolesToPermission = async (toolBox) => {
       result: {
         data: result
       },
-      msg: 'PerS006'
+      msg: 'perS006'
     };
   } catch (err) {
     loggerFactory.error(`Function addRolesToPermission has error`, {

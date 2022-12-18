@@ -1,7 +1,7 @@
 'use strict';
 
 export default {
-  UserSessionE001: {
+  userSessionE001: {
     message: 'resources.userSessions.notifications.errors.e001',
     description: 'ID Not Found',
     returnCode: 0,

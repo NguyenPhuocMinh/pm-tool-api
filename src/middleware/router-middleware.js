@@ -18,7 +18,7 @@ const routerMiddleware = (req, res, next) => {
   loggerFactory.warn(R0004);
 
   const toolBox = { req, res, next };
-  const routerNotFoundError = commons.newError('E002');
+  const routerNotFoundError = commons.newError('e002');
 
   loggerFactory.warn(R0005);
 
