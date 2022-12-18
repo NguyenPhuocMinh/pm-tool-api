@@ -82,8 +82,12 @@ var Init = /*#__PURE__*/function () {
                   return _ref3.apply(this, arguments);
                 };
               }());
-              socket.on('disconnect', function () {
-                loggerFactory.warn('User has disconnect');
+              socket.on('disconnect', function (reason) {
+                loggerFactory.warn('User has disconnect', {
+                  args: {
+                    reason: reason
+                  }
+                });
                 _workers["default"].handlerWorkerSocketUserDisconnect();
               });
             });
