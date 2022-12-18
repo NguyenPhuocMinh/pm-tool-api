@@ -7,7 +7,6 @@ Object.defineProperty(exports, "__esModule", {
 exports["default"] = void 0;
 require("source-map-support/register");
 var _socket = require("socket.io");
-var _conf = require("../../conf");
 var _constants = _interopRequireDefault(require("../../constants"));
 var _utils = _interopRequireDefault(require("../../utils"));
 var _logger = _interopRequireDefault(require("../../core/logger"));
@@ -29,7 +28,7 @@ var Init = /*#__PURE__*/function () {
             _context3.prev = 0;
             io = new _socket.Server(httpServer, {
               cors: {
-                origin: [_conf.profiles.APP_DOMAIN_PATH, 'http://localhost:3500']
+                origin: '*'
               }
             });
             io.on('connection', function (socket) {
