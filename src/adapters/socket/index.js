@@ -1,6 +1,6 @@
 'use strict';
 
-import socketIo from 'socket.io';
+import { Server } from 'socket.io';
 
 // conf
 import { profiles } from '@conf';
@@ -22,20 +22,15 @@ const SOCKET_USER_LOGOUT = constants.SOCKET_EVENTS.SOCKET_USER_LOGOUT;
 
 const Init = async (httpServer) => {
   try {
-    const io = socketIo(httpServer, {
+    const io = new Server(httpServer, {
       cors: {
-        origin: profiles.APP_DOMAIN_PATH
-      }
+        origin: profiles.APP_DOMAIN_PATH,
+        methods: ['GET', 'POST'],
+        credentials: true
+      },
+      transports: ['websocket', 'polling'],
+      allowEIO3: true
     });
-    // const io = new Server(httpServer, {
-    //   cors: {
-    //     origin: profiles.APP_DOMAIN_PATH,
-    //     methods: ['GET', 'POST'],
-    //     credentials: true
-    //   },
-    //   transports: ['websocket', 'polling'],
-    //   allowEIO3: true
-    // });
 
     io.on('connection', (socket) => {
       loggerFactory.info('Socket io has been connection');
