@@ -64,7 +64,7 @@ const getAllRole = async (toolBox) => {
         data: response,
         total
       },
-      msg: 'RoleS001'
+      msg: 'roleS001'
     };
   } catch (err) {
     loggerFactory.info(`Function getAllRole has error`, {
@@ -88,7 +88,7 @@ const createRole = async (toolBox) => {
     const error = validators.validatorRole(req.body);
 
     if (error) {
-      throw commons.newError('RoleE001');
+      throw commons.newError('roleE001');
     }
 
     const { name } = req.body;
@@ -101,7 +101,7 @@ const createRole = async (toolBox) => {
     });
 
     if (isDuplicate) {
-      throw commons.newError('RoleE002');
+      throw commons.newError('roleE002');
     }
 
     let role = assign(req.body, {
@@ -123,7 +123,7 @@ const createRole = async (toolBox) => {
       result: {
         data: result
       },
-      msg: 'RoleS002'
+      msg: 'roleS002'
     };
   } catch (err) {
     loggerFactory.info(`Function createRole has error`, {
@@ -145,7 +145,7 @@ const getRole = async (toolBox) => {
     const { id } = req.params;
 
     if (isEmpty(id)) {
-      throw commons.newError('RoleE003');
+      throw commons.newError('roleE003');
     }
 
     const role = await repository.getOne({
@@ -164,7 +164,7 @@ const getRole = async (toolBox) => {
       result: {
         data: result
       },
-      msg: 'RoleS003'
+      msg: 'roleS003'
     };
   } catch (err) {
     loggerFactory.info(`Function getRole Orchestrator has error`, {
@@ -186,13 +186,13 @@ const updateRole = async (toolBox) => {
     const { id } = req.params;
 
     if (isEmpty(id)) {
-      throw commons.newError('RoleE003');
+      throw commons.newError('roleE003');
     }
 
     const error = validators.validatorRole(req.body);
 
     if (error) {
-      throw commons.newError('RoleE001');
+      throw commons.newError('roleE001');
     }
 
     const { name, activated } = req.body;
@@ -205,7 +205,7 @@ const updateRole = async (toolBox) => {
     });
 
     if (isDuplicate) {
-      throw commons.newError('RoleE002');
+      throw commons.newError('roleE002');
     }
 
     let role = assign(req.body, {
@@ -232,7 +232,7 @@ const updateRole = async (toolBox) => {
       result: {
         data: result
       },
-      msg: 'RoleS004'
+      msg: 'roleS004'
     };
   } catch (err) {
     loggerFactory.info(`Function updateRole has error`, {
@@ -254,7 +254,7 @@ const deleteRole = async (toolBox) => {
     const { id } = req.params;
 
     if (isEmpty(id)) {
-      throw commons.newError('RoleE003');
+      throw commons.newError('roleE003');
     }
 
     req.body = helpers.attributeHelper(req, req.body);
@@ -273,7 +273,7 @@ const deleteRole = async (toolBox) => {
       result: {
         data: result
       },
-      msg: 'RoleS005'
+      msg: 'roleS005'
     };
   } catch (err) {
     loggerFactory.error(`Function deleteRole has error`, {
@@ -294,7 +294,7 @@ const getUsersInRole = async (toolBox) => {
     const { id } = req.params;
 
     if (isEmpty(id)) {
-      throw commons.newError('RoleE003');
+      throw commons.newError('roleE003');
     }
 
     const { skip, limit } = helpers.paginationHelper(req.query);
@@ -361,7 +361,7 @@ const getPermissionsInRole = async (toolBox) => {
     const { id } = req.params;
 
     if (isEmpty(id)) {
-      throw commons.newError('RoleE003');
+      throw commons.newError('roleE003');
     }
 
     const { skip, limit } = helpers.paginationHelper(req.query);

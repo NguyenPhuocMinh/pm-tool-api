@@ -52,7 +52,7 @@ var baseController = /*#__PURE__*/function () {
                 msgAction: msgAction
               }
             });
-            throw _commons["default"].newError('E003');
+            throw _commons["default"].newError('e003');
           case 7:
             if ((0, _lodash.isEmpty)(schema)) {
               _context.next = 14;

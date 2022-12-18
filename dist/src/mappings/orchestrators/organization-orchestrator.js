@@ -73,7 +73,7 @@ var getAllOrganization = /*#__PURE__*/function () {
                 data: result,
                 total: total
               },
-              msg: 'OrganizationS001'
+              msg: 'organizationS001'
             });
           case 19:
             _context.prev = 19;
@@ -115,7 +115,7 @@ var createOrganization = /*#__PURE__*/function () {
               _context2.next = 6;
               break;
             }
-            throw _commons["default"].newError('OrganizationE001');
+            throw _commons["default"].newError('organizationE001');
           case 6:
             name = req.body.name;
             slug = _helpers["default"].slugHelper(name); // check duplicate slug
@@ -129,7 +129,7 @@ var createOrganization = /*#__PURE__*/function () {
               _context2.next = 13;
               break;
             }
-            throw _commons["default"].newError('OrganizationE002');
+            throw _commons["default"].newError('organizationE002');
           case 13:
             organization = (0, _lodash.assign)(req.body, {
               slug: slug
@@ -148,7 +148,7 @@ var createOrganization = /*#__PURE__*/function () {
               result: {
                 data: result
               },
-              msg: 'OrganizationS002'
+              msg: 'organizationS002'
             });
           case 23:
             _context2.prev = 23;
@@ -188,7 +188,7 @@ var getOrganization = /*#__PURE__*/function () {
               _context3.next = 6;
               break;
             }
-            throw _commons["default"].newError('OrganizationE003');
+            throw _commons["default"].newError('organizationE003');
           case 6:
             _context3.next = 8;
             return _repository["default"].getOne({
@@ -206,7 +206,7 @@ var getOrganization = /*#__PURE__*/function () {
               result: {
                 data: result
               },
-              msg: 'OrganizationS003'
+              msg: 'organizationS003'
             });
           case 14:
             _context3.prev = 14;
@@ -246,7 +246,7 @@ var updateOrganization = /*#__PURE__*/function () {
               _context4.next = 6;
               break;
             }
-            throw _commons["default"].newError('OrganizationE003');
+            throw _commons["default"].newError('organizationE003');
           case 6:
             // validate inputs
             error = _validators["default"].validatorOrganization(req.body);
@@ -254,7 +254,7 @@ var updateOrganization = /*#__PURE__*/function () {
               _context4.next = 9;
               break;
             }
-            throw _commons["default"].newError('OrganizationE001');
+            throw _commons["default"].newError('organizationE001');
           case 9:
             name = req.body.name;
             slug = _helpers["default"].slugHelper(name); // check duplicate slug
@@ -271,7 +271,7 @@ var updateOrganization = /*#__PURE__*/function () {
               _context4.next = 16;
               break;
             }
-            throw _commons["default"].newError('OrganizationE002');
+            throw _commons["default"].newError('organizationE002');
           case 16:
             organization = (0, _lodash.assign)(req.body, {
               slug: slug
@@ -291,7 +291,7 @@ var updateOrganization = /*#__PURE__*/function () {
               result: {
                 data: result
               },
-              msg: 'OrganizationS004'
+              msg: 'organizationS004'
             });
           case 26:
             _context4.prev = 26;
@@ -331,7 +331,7 @@ var deleteOrganization = /*#__PURE__*/function () {
               _context5.next = 6;
               break;
             }
-            throw _commons["default"].newError('OrganizationE003');
+            throw _commons["default"].newError('organizationE003');
           case 6:
             _context5.next = 8;
             return _repository["default"].deleteOne({
@@ -345,7 +345,7 @@ var deleteOrganization = /*#__PURE__*/function () {
               result: {
                 data: result
               },
-              msg: 'OrganizationS005'
+              msg: 'organizationS005'
             });
           case 13:
             _context5.prev = 13;

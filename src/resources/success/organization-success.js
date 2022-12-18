@@ -1,31 +1,31 @@
 'use strict';
 
 export default {
-  OrganizationS001: {
+  organizationS001: {
     message: 'resources.organizations.notifications.success.s001',
     description: 'Get List Organization Success',
     returnCode: 1,
     statusCode: 200
   },
-  OrganizationS002: {
+  organizationS002: {
     message: 'resources.organizations.notifications.success.s002',
     description: 'Create Organization Success',
     returnCode: 1,
     statusCode: 201
   },
-  OrganizationS003: {
+  organizationS003: {
     message: 'resources.organizations.notifications.success.s003',
     description: 'Get Organization By Id Success',
     returnCode: 1,
     statusCode: 200
   },
-  OrganizationS004: {
+  organizationS004: {
     message: 'resources.organizations.notifications.success.s004',
     description: 'Update Organization Success',
     returnCode: 1,
     statusCode: 200
   },
-  OrganizationS005: {
+  organizationS005: {
     message: 'resources.organizations.notifications.success.s005',
     description: 'Delete Organization Success',
     returnCode: 1,

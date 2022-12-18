@@ -64,7 +64,7 @@ const getAllOrganization = async (toolBox) => {
         data: result,
         total
       },
-      msg: 'OrganizationS001'
+      msg: 'organizationS001'
     };
   } catch (err) {
     loggerFactory.error(`Function getAllOrganization has error`, {
@@ -88,7 +88,7 @@ const createOrganization = async (toolBox) => {
     const error = validators.validatorOrganization(req.body);
 
     if (error) {
-      throw commons.newError('OrganizationE001');
+      throw commons.newError('organizationE001');
     }
 
     const { name } = req.body;
@@ -100,7 +100,7 @@ const createOrganization = async (toolBox) => {
     });
 
     if (isDuplicate) {
-      throw commons.newError('OrganizationE002');
+      throw commons.newError('organizationE002');
     }
 
     let organization = assign(req.body, {
@@ -122,7 +122,7 @@ const createOrganization = async (toolBox) => {
       result: {
         data: result
       },
-      msg: 'OrganizationS002'
+      msg: 'organizationS002'
     };
   } catch (err) {
     loggerFactory.error(`Function createOrganization has error`, {
@@ -144,7 +144,7 @@ const getOrganization = async (toolBox) => {
     const { id } = req.params;
 
     if (isEmpty(id)) {
-      throw commons.newError('OrganizationE003');
+      throw commons.newError('organizationE003');
     }
 
     const organization = await repository.getOne({
@@ -163,7 +163,7 @@ const getOrganization = async (toolBox) => {
       result: {
         data: result
       },
-      msg: 'OrganizationS003'
+      msg: 'organizationS003'
     };
   } catch (err) {
     loggerFactory.error(`Function getOrganization has error`, {
@@ -185,14 +185,14 @@ const updateOrganization = async (toolBox) => {
     const { id } = req.params;
 
     if (isEmpty(id)) {
-      throw commons.newError('OrganizationE003');
+      throw commons.newError('organizationE003');
     }
 
     // validate inputs
     const error = validators.validatorOrganization(req.body);
 
     if (error) {
-      throw commons.newError('OrganizationE001');
+      throw commons.newError('organizationE001');
     }
 
     const { name } = req.body;
@@ -204,7 +204,7 @@ const updateOrganization = async (toolBox) => {
     });
 
     if (isDuplicate) {
-      throw commons.newError('OrganizationE002');
+      throw commons.newError('organizationE002');
     }
 
     let organization = assign(req.body, {
@@ -227,7 +227,7 @@ const updateOrganization = async (toolBox) => {
       result: {
         data: result
       },
-      msg: 'OrganizationS004'
+      msg: 'organizationS004'
     };
   } catch (err) {
     loggerFactory.error(`Function updateOrganization has error`, {
@@ -248,7 +248,7 @@ const deleteOrganization = async (toolBox) => {
     const { id } = req.params;
 
     if (isEmpty(id)) {
-      throw commons.newError('OrganizationE003');
+      throw commons.newError('organizationE003');
     }
 
     const result = await repository.deleteOne({
@@ -262,7 +262,7 @@ const deleteOrganization = async (toolBox) => {
       result: {
         data: result
       },
-      msg: 'OrganizationS005'
+      msg: 'organizationS005'
     };
   } catch (err) {
     loggerFactory.info(`Function deleteOrganization has error`, {

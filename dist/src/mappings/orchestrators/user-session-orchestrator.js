@@ -75,7 +75,7 @@ var getUserTimelineSession = /*#__PURE__*/function () {
                 data: response,
                 total: total
               },
-              msg: 'UserSessionS001'
+              msg: 'userSessionS001'
             });
           case 20:
             _context.prev = 20;
@@ -131,7 +131,7 @@ var createUserSession = /*#__PURE__*/function () {
               result: {
                 data: data
               },
-              msg: 'UserSessionS002'
+              msg: 'userSessionS002'
             });
           case 15:
             _context2.prev = 15;
@@ -181,7 +181,7 @@ var updateUserSession = /*#__PURE__*/function () {
               result: {
                 data: data
               },
-              msg: 'UserSessionS003'
+              msg: 'userSessionS003'
             });
           case 16:
             _context3.prev = 16;
@@ -233,7 +233,7 @@ var deleteUserSession = /*#__PURE__*/function () {
               result: {
                 data: null
               },
-              msg: 'UserSessionS004'
+              msg: 'userSessionS004'
             });
           case 17:
             _context4.prev = 17;
@@ -270,7 +270,7 @@ var getUserSession = /*#__PURE__*/function () {
               _context5.next = 3;
               break;
             }
-            throw _commons["default"].newError('UserSessionE001');
+            throw _commons["default"].newError('userSessionE001');
           case 3:
             _context5.next = 5;
             return _repository["default"].getOne({

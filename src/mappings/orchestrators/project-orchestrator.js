@@ -65,7 +65,7 @@ const getAllProject = async (toolBox) => {
         data: response,
         total
       },
-      msg: 'ProjectS001'
+      msg: 'projectS001'
     };
   } catch (err) {
     loggerFactory.info(`Function getAllProject Orchestrator has error`, {
@@ -89,7 +89,7 @@ const createProject = async (toolBox) => {
     const error = validators.validatorProject(req.body);
 
     if (error) {
-      throw commons.newError('ProjectE001');
+      throw commons.newError('projectE001');
     }
 
     const { name } = req.body;
@@ -101,7 +101,7 @@ const createProject = async (toolBox) => {
     });
 
     if (isDuplicate) {
-      throw commons.newError('ProjectE002');
+      throw commons.newError('projectE002');
     }
 
     let doc = assign(req.body, {
@@ -123,7 +123,7 @@ const createProject = async (toolBox) => {
       result: {
         data: result
       },
-      msg: 'ProjectS002'
+      msg: 'projectS002'
     };
   } catch (err) {
     loggerFactory.info(`Function createProject Orchestrator has error`, {

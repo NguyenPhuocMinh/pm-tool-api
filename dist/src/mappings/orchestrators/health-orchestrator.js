@@ -32,7 +32,7 @@ var healthCheck = /*#__PURE__*/function () {
               result: {
                 data: 'Service has been start success'
               },
-              msg: 'S002'
+              msg: 's002'
             });
           case 5:
             _context.prev = 5;

@@ -45,7 +45,7 @@ const baseController = async (toolBox, msgType, msgAction) => {
           msgAction
         }
       });
-      throw commons.newError('E003');
+      throw commons.newError('e003');
     }
 
     if (!isEmpty(schema)) {

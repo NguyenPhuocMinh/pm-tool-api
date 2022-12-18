@@ -63,7 +63,7 @@ const getAllNotifyTemplate = async (toolBox) => {
         data,
         total
       },
-      msg: 'NotifyTemplateS001'
+      msg: 'notifyTemplateS001'
     };
   } catch (err) {
     loggerFactory.error(`Function getAllNotifyTemplate has error`, {
@@ -86,7 +86,7 @@ const createNotifyTemplate = async (toolBox) => {
     const error = validators.validatorNotifyTemplateCreate(req.body);
 
     if (error) {
-      throw commons.newError('NotifyTemplateE001');
+      throw commons.newError('notifyTemplateE001');
     }
 
     req.body = helpers.attributeHelper(req, req.body, 'create');
@@ -110,7 +110,7 @@ const createNotifyTemplate = async (toolBox) => {
       result: {
         data
       },
-      msg: 'NotifyTemplateS002'
+      msg: 'notifyTemplateS002'
     };
   } catch (err) {
     loggerFactory.error(`Function createNotifyTemplate has error`, {

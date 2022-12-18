@@ -75,7 +75,7 @@ var getAllNotifyTemplate = /*#__PURE__*/function () {
                 data: data,
                 total: total
               },
-              msg: 'NotifyTemplateS001'
+              msg: 'notifyTemplateS001'
             });
           case 19:
             _context.prev = 19;
@@ -117,7 +117,7 @@ var createNotifyTemplate = /*#__PURE__*/function () {
               _context2.next = 6;
               break;
             }
-            throw _commons["default"].newError('NotifyTemplateE001');
+            throw _commons["default"].newError('notifyTemplateE001');
           case 6:
             req.body = _helpers["default"].attributeHelper(req, req.body, 'create');
             topic = req.body.topic;
@@ -137,7 +137,7 @@ var createNotifyTemplate = /*#__PURE__*/function () {
               result: {
                 data: data
               },
-              msg: 'NotifyTemplateS002'
+              msg: 'notifyTemplateS002'
             });
           case 17:
             _context2.prev = 17;

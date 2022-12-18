@@ -73,7 +73,7 @@ var getAllPermission = /*#__PURE__*/function () {
                 data: response,
                 total: total
               },
-              msg: 'PerS001'
+              msg: 'perS001'
             });
           case 19:
             _context.prev = 19;
@@ -115,7 +115,7 @@ var createPermission = /*#__PURE__*/function () {
               _context2.next = 6;
               break;
             }
-            throw _commons["default"].newError('PerE001');
+            throw _commons["default"].newError('perE001');
           case 6:
             name = req.body.name;
             slug = _helpers["default"].slugHelper(name); // check duplicate slug
@@ -129,7 +129,7 @@ var createPermission = /*#__PURE__*/function () {
               _context2.next = 13;
               break;
             }
-            throw _commons["default"].newError('PerE002');
+            throw _commons["default"].newError('perE002');
           case 13:
             permission = (0, _lodash.assign)(req.body, {
               slug: slug
@@ -151,7 +151,7 @@ var createPermission = /*#__PURE__*/function () {
               result: {
                 data: result
               },
-              msg: 'PerS002'
+              msg: 'perS002'
             });
           case 25:
             _context2.prev = 25;
@@ -191,7 +191,7 @@ var getPermission = /*#__PURE__*/function () {
               _context3.next = 6;
               break;
             }
-            throw _commons["default"].newError('PerE003');
+            throw _commons["default"].newError('perE003');
           case 6:
             _context3.next = 8;
             return _repository["default"].getOne({
@@ -218,7 +218,7 @@ var getPermission = /*#__PURE__*/function () {
               result: {
                 data: result
               },
-              msg: 'PerS003'
+              msg: 'perS003'
             });
           case 16:
             _context3.prev = 16;
@@ -258,14 +258,14 @@ var updatePermission = /*#__PURE__*/function () {
               _context4.next = 6;
               break;
             }
-            throw _commons["default"].newError('PerE003');
+            throw _commons["default"].newError('perE003');
           case 6:
             error = _validators["default"].validatorPermission(req.body);
             if (!error) {
               _context4.next = 9;
               break;
             }
-            throw _commons["default"].newError('PerE001');
+            throw _commons["default"].newError('perE001');
           case 9:
             _req$body = req.body, name = _req$body.name, activated = _req$body.activated;
             slug = _utils["default"].formatSlug(name); // check duplicate slug
@@ -282,7 +282,7 @@ var updatePermission = /*#__PURE__*/function () {
               _context4.next = 16;
               break;
             }
-            throw _commons["default"].newError('PerE002');
+            throw _commons["default"].newError('perE002');
           case 16:
             permission = (0, _lodash.assign)(req.body, {
               slug: slug
@@ -332,7 +332,7 @@ var updatePermission = /*#__PURE__*/function () {
               result: {
                 data: result
               },
-              msg: 'PerS004'
+              msg: 'perS004'
             });
           case 35:
             _context4.prev = 35;
@@ -374,7 +374,7 @@ var deletePermission = /*#__PURE__*/function () {
               _context5.next = 8;
               break;
             }
-            throw _commons["default"].newError('PerE003');
+            throw _commons["default"].newError('perE003');
           case 8:
             _context5.next = 10;
             return _repository["default"].deleteOne({
@@ -391,7 +391,7 @@ var deletePermission = /*#__PURE__*/function () {
               result: {
                 data: result
               },
-              msg: 'PerS005'
+              msg: 'perS005'
             });
           case 17:
             _context5.prev = 17;
@@ -498,7 +498,7 @@ var addRolesToPermission = /*#__PURE__*/function () {
               result: {
                 data: result
               },
-              msg: 'PerS006'
+              msg: 'perS006'
             });
           case 20:
             _context6.prev = 20;

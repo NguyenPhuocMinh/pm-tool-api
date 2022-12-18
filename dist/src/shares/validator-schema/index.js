@@ -58,7 +58,7 @@ var validatorSchema = /*#__PURE__*/function () {
             _context.next = 10;
             break;
           case 9:
-            throw _commons["default"].newError('E004');
+            throw _commons["default"].newError('e004');
           case 10:
             loggerFactory.info("Function validatorSchema has been end");
             return _context.abrupt("return", errors);

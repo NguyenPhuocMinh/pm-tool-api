@@ -52,7 +52,7 @@ const signIn = async (toolBox) => {
     const error = validators.validatorLogin(req.body);
 
     if (error) {
-      throw commons.newError('AuthE002');
+      throw commons.newError('authE002');
     }
 
     const { email, password } = req.body;
@@ -61,7 +61,7 @@ const signIn = async (toolBox) => {
 
     // compare password
     if (!bcrypt.compareSync(password, user.password)) {
-      throw commons.newError('AuthE004');
+      throw commons.newError('authE004');
     }
 
     const data = await transfers.authTransfer(user);
@@ -109,7 +109,7 @@ const signIn = async (toolBox) => {
       result: {
         token
       },
-      msg: 'AuthS001'
+      msg: 'authS001'
     };
   } catch (err) {
     loggerFactory.error(`Function signIn has error`, {
@@ -151,7 +151,7 @@ const signOut = async (toolBox) => {
       result: {
         data: null
       },
-      msg: 'AuthS002'
+      msg: 'authS002'
     };
   } catch (err) {
     loggerFactory.error(`Function signOut has error`, {
@@ -182,7 +182,7 @@ const whoami = async (toolBox) => {
       result: {
         data: result
       },
-      msg: 'AuthS003'
+      msg: 'authS003'
     };
   } catch (err) {
     loggerFactory.error(`Function whoami has error`, {
@@ -204,7 +204,7 @@ const refreshToken = async (toolBox) => {
     const { email, sessionID } = req.body;
 
     if (isEmpty(email)) {
-      throw commons.newError('AuthE001');
+      throw commons.newError('authE001');
     }
 
     const user = await getUser(email);
@@ -241,7 +241,7 @@ const refreshToken = async (toolBox) => {
           // delete token into whitelist in redis
           await redisManager.deleteValue(wlKey);
 
-          throw commons.newError('AuthE006');
+          throw commons.newError('authE006');
         } else {
           delete decoded.aud;
           delete decoded.iss;
@@ -271,7 +271,7 @@ const refreshToken = async (toolBox) => {
       result: {
         token: newToken
       },
-      msg: 'AuthS004'
+      msg: 'authS004'
     };
   } catch (err) {
     loggerFactory.error(`Function refreshToken has error`, {
@@ -322,7 +322,7 @@ const revokeToken = async (toolBox) => {
       result: {
         data: null
       },
-      msg: 'AuthS005'
+      msg: 'authS005'
     };
   } catch (err) {
     loggerFactory.error(`Function revokeToken has error`, {
@@ -361,7 +361,7 @@ const getUser = async (email) => {
     });
 
     if (isEmpty(user)) {
-      throw commons.newError('AuthE003');
+      throw commons.newError('authE003');
     }
 
     return user;

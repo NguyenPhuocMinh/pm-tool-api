@@ -75,7 +75,7 @@ const getAllUser = async (toolBox) => {
         data: response,
         total
       },
-      msg: 'UserS001'
+      msg: 'userS001'
     };
   } catch (err) {
     loggerFactory.info(`Function getAllUser has error`, {
@@ -98,7 +98,7 @@ const createUser = async (toolBox) => {
     const error = validators.validatorUser(req.body);
 
     if (error) {
-      throw commons.newError('UserE001');
+      throw commons.newError('userE001');
     }
 
     const { firstName, lastName, email } = req.body;
@@ -112,7 +112,7 @@ const createUser = async (toolBox) => {
     });
 
     if (isDuplicate) {
-      throw commons.newError('UserE002');
+      throw commons.newError('userE002');
     }
 
     let user = assign(req.body, {
@@ -142,7 +142,7 @@ const createUser = async (toolBox) => {
       result: {
         data: result
       },
-      msg: 'UserS002'
+      msg: 'userS002'
     };
   } catch (err) {
     loggerFactory.info(`Function createUser has error`, {
@@ -164,7 +164,7 @@ const getUser = async (toolBox) => {
     const { id } = req.params;
 
     if (isEmpty(id)) {
-      throw commons.newError('UserE003');
+      throw commons.newError('userE003');
     }
 
     const user = await repository.getOne({
@@ -191,7 +191,7 @@ const getUser = async (toolBox) => {
       result: {
         data: result
       },
-      msg: 'UserS003'
+      msg: 'userS003'
     };
   } catch (err) {
     loggerFactory.error(`Function getUser Orchestrator has error`, {
@@ -213,14 +213,14 @@ const updateUser = async (toolBox) => {
     const { id } = req.params;
 
     if (isEmpty(id)) {
-      throw commons.newError('UserE003');
+      throw commons.newError('userE003');
     }
 
     // validate inputs
     const error = validators.validatorUser(req.body);
 
     if (error) {
-      throw commons.newError('UserE001');
+      throw commons.newError('userE001');
     }
 
     const { firstName, lastName, email } = req.body;
@@ -235,7 +235,7 @@ const updateUser = async (toolBox) => {
     });
 
     if (isDuplicate) {
-      throw commons.newError('UserE002');
+      throw commons.newError('userE002');
     }
 
     let user = assign(req.body, {
@@ -258,7 +258,7 @@ const updateUser = async (toolBox) => {
       result: {
         data: result
       },
-      msg: 'UserS004'
+      msg: 'userS004'
     };
   } catch (err) {
     loggerFactory.error(`Function updateUser Orchestrator has error`, {
@@ -280,7 +280,7 @@ const deleteUser = async (toolBox) => {
     const { id } = req.params;
 
     if (isEmpty(id)) {
-      throw commons.newError('UserE003');
+      throw commons.newError('userE003');
     }
 
     req.body = helpers.attributeHelper(req, req.body);
@@ -299,7 +299,7 @@ const deleteUser = async (toolBox) => {
       result: {
         data: result
       },
-      msg: 'UserS005'
+      msg: 'userS005'
     };
   } catch (err) {
     loggerFactory.error(`Function deleteUser Orchestrator has error`, {
@@ -321,14 +321,14 @@ const changePassUser = async (toolBox) => {
     const { id } = req.params;
 
     if (isEmpty(id)) {
-      throw commons.newError('UserE003');
+      throw commons.newError('userE003');
     }
 
     // validate inputs
     const error = validators.validatorUserChangePass(req.body);
 
     if (error) {
-      throw commons.newError('UserE004');
+      throw commons.newError('userE004');
     }
 
     req.body = helpers.attributeHelper(req, req.body);
@@ -347,7 +347,7 @@ const changePassUser = async (toolBox) => {
     // compare password in db
     const isValidCompare = await bcrypt.compare(currentPassword, user.password);
     if (!isValidCompare) {
-      throw commons.newError('UserE005');
+      throw commons.newError('userE005');
     }
 
     // create new password
@@ -371,7 +371,7 @@ const changePassUser = async (toolBox) => {
       result: {
         data: result
       },
-      msg: 'UserS006'
+      msg: 'userS006'
     };
   } catch (err) {
     loggerFactory.error(`Function changePassUser Orchestrator has error`, {
@@ -393,14 +393,14 @@ const setPassUser = async (toolBox) => {
     const { id } = req.params;
 
     if (isEmpty(id)) {
-      throw commons.newError('UserE003');
+      throw commons.newError('userE003');
     }
 
     /// validate inputs
     const error = validators.validatorUserSetPass(req.body);
 
     if (error) {
-      throw commons.newError('UserE006');
+      throw commons.newError('userE006');
     }
 
     req.body = helpers.attributeHelper(req, req.body);
@@ -438,7 +438,7 @@ const setPassUser = async (toolBox) => {
       result: {
         data: result
       },
-      msg: 'UserS007'
+      msg: 'userS007'
     };
   } catch (err) {
     loggerFactory.error(`Function setPassUser Orchestrator has error`, {
@@ -460,14 +460,14 @@ const resetPassUser = async (toolBox) => {
     const { id } = req.params;
 
     if (isEmpty(id)) {
-      throw commons.newError('UserE003');
+      throw commons.newError('userE003');
     }
 
     // validate inputs
     const error = validators.validatorUserResetPass(req.body);
 
     if (error) {
-      throw commons.newError('UserE007');
+      throw commons.newError('userE007');
     }
 
     req.body = helpers.attributeHelper(req, req.body);
@@ -493,7 +493,7 @@ const resetPassUser = async (toolBox) => {
       result: {
         data: null
       },
-      msg: 'UserS008'
+      msg: 'userS008'
     };
   } catch (err) {
     loggerFactory.error(`Function resetPassUser Orchestrator has error`, {
@@ -515,7 +515,7 @@ const addRolesToUser = async (toolBox) => {
     const { id } = req.params;
 
     if (isEmpty(id)) {
-      throw commons.newError('UserE003');
+      throw commons.newError('userE003');
     }
 
     req.body = helpers.attributeHelper(req, req.body);
@@ -590,7 +590,7 @@ const addRolesToUser = async (toolBox) => {
       result: {
         data: result
       },
-      msg: 'UserS009'
+      msg: 'userS009'
     };
   } catch (err) {
     loggerFactory.error(`Function addRolesToUser has error`, {

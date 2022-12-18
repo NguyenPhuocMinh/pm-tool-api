@@ -24,7 +24,7 @@ const healthCheck = async (toolBox) => {
       result: {
         data: 'Service has been start success'
       },
-      msg: 'S002'
+      msg: 's002'
     };
   } catch (err) {
     loggerFactory.error(`Function healthCheck has error`, {

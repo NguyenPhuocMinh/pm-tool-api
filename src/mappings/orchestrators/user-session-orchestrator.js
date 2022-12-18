@@ -63,7 +63,7 @@ const getUserTimelineSession = async (toolBox) => {
         data: response,
         total
       },
-      msg: 'UserSessionS001'
+      msg: 'userSessionS001'
     };
   } catch (err) {
     loggerFactory.error(`Function getUserTimelineSession has error`, {
@@ -110,7 +110,7 @@ const createUserSession = async (toolBox) => {
       result: {
         data
       },
-      msg: 'UserSessionS002'
+      msg: 'userSessionS002'
     };
   } catch (err) {
     loggerFactory.error(`Function createSession has error`, {
@@ -147,7 +147,7 @@ const updateUserSession = async (toolBox, records) => {
       result: {
         data
       },
-      msg: 'UserSessionS003'
+      msg: 'userSessionS003'
     };
   } catch (err) {
     loggerFactory.error(`Function updateUserSession has error`, {
@@ -184,7 +184,7 @@ const deleteUserSession = async (toolBox) => {
       result: {
         data: null
       },
-      msg: 'UserSessionS004'
+      msg: 'userSessionS004'
     };
   } catch (err) {
     loggerFactory.error(`Function deleteUserSession has error`, {
@@ -201,7 +201,7 @@ const deleteUserSession = async (toolBox) => {
 const getUserSession = async (id) => {
   try {
     if (isEmpty(id)) {
-      throw commons.newError('UserSessionE001');
+      throw commons.newError('userSessionE001');
     }
 
     const session = await repository.getOne({

@@ -80,7 +80,7 @@ var authMiddleware = /*#__PURE__*/function () {
                 message: 'Not found token in header or cookie'
               }
             });
-            tokenNotFoundError = _commons["default"].newError('AuthE005');
+            tokenNotFoundError = _commons["default"].newError('authE005');
             return _context2.abrupt("return", _builds["default"].errorResponse(toolBox, tokenNotFoundError));
           case 17:
             /**
@@ -105,10 +105,10 @@ var authMiddleware = /*#__PURE__*/function () {
                         _context.next = _context.t0 === err instanceof _jsonwebtoken["default"].TokenExpiredError ? 5 : _context.t0 === err instanceof _jsonwebtoken["default"].JsonWebTokenError ? 7 : 9;
                         break;
                       case 5:
-                        tokenError = _commons["default"].newError('AuthE006');
+                        tokenError = _commons["default"].newError('authE006');
                         return _context.abrupt("break", 10);
                       case 7:
-                        tokenError = _commons["default"].newError('AuthE007');
+                        tokenError = _commons["default"].newError('authE007');
                         return _context.abrupt("break", 10);
                       case 9:
                         return _context.abrupt("break", 10);
@@ -128,7 +128,7 @@ var authMiddleware = /*#__PURE__*/function () {
                             message: 'Token in black list in redis'
                           }
                         });
-                        tokenBlackListError = _commons["default"].newError('AuthE009');
+                        tokenBlackListError = _commons["default"].newError('authE009');
                         return _context.abrupt("return", _builds["default"].errorResponse(toolBox, tokenBlackListError));
                       case 20:
                         /**
@@ -195,7 +195,7 @@ var authMiddleware = /*#__PURE__*/function () {
                             message: 'Permission not found'
                           }
                         });
-                        tokenForbiddenError = _commons["default"].newError('AuthE008');
+                        tokenForbiddenError = _commons["default"].newError('authE008');
                         return _context.abrupt("return", _builds["default"].errorResponse(toolBox, tokenForbiddenError));
                       case 43:
                         _context.next = 49;
