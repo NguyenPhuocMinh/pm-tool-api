@@ -28,12 +28,8 @@ var Init = /*#__PURE__*/function () {
           case 0:
             _context3.prev = 0;
             io = new _socket.Server(httpServer, {
-              allowRequest: function allowRequest(req, cb) {
-                var isAllowed = req.headers.origin === _conf.profiles.APP_DOMAIN_PATH;
-                cb(null, isAllowed);
-              },
               cors: {
-                credentials: true
+                origin: [_conf.profiles.APP_DOMAIN_PATH, 'http://localhost:3500']
               }
             });
             io.on('connection', function (socket) {
