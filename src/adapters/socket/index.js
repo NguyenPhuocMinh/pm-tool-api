@@ -22,7 +22,9 @@ const SOCKET_USER_LOGOUT = constants.SOCKET_EVENTS.SOCKET_USER_LOGOUT;
 
 const Init = async (httpServer) => {
   try {
-    const io = new Server(httpServer);
+    const io = new Server(httpServer, {
+      transports: ['websocket']
+    });
 
     io.on('connection', (socket) => {
       loggerFactory.info('Socket io has been connection');
