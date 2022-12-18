@@ -46,7 +46,7 @@ const app = express();
 const server = http.createServer(app);
 
 const main = async () => {
-  app.use(cors());
+  app.use(cors(options.corsOptions));
   app.use(sessionParser(options.sessionOptions));
   app.use(cookieParser());
   app.use(helmet());
