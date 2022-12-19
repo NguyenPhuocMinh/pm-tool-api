@@ -40,7 +40,7 @@ var main = /*#__PURE__*/function () {
         switch (_context.prev = _context.next) {
           case 0:
             app.use((0, _cors["default"])({
-              origin: ['https://pm-tool-ui.netlify.app/', 'https://pm-tool-ui.netlify.app/*']
+              origin: ['https://pm-tool-ui.netlify.app/', 'https://pm-tool-ui.netlify.app/*', 'http://localhost:3500']
             }));
             app.use((0, _expressSession["default"])(_conf.options.sessionOptions));
             app.use((0, _cookieParser["default"])());

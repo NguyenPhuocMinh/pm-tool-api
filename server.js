@@ -50,7 +50,8 @@ const main = async () => {
     cors({
       origin: [
         'https://pm-tool-ui.netlify.app/',
-        'https://pm-tool-ui.netlify.app/*'
+        'https://pm-tool-ui.netlify.app/*',
+        'http://localhost:3500'
       ]
     })
   );

@@ -28,9 +28,8 @@ var Init = /*#__PURE__*/function () {
             _context3.prev = 0;
             io = new _socket.Server(httpServer, {
               cors: {
-                origin: 'https://pm-tool-ui.netlify.app/',
+                origin: true,
                 methods: ['GET', 'POST'],
-                allowedHeaders: ['my-custom-header'],
                 credentials: true
               }
             });
