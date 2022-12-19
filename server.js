@@ -2,7 +2,7 @@
 
 import http from 'http';
 import express from 'express';
-import cors from 'cors';
+// import cors from 'cors';
 import helmet from 'helmet';
 import morgan from 'morgan';
 import sessionParser from 'express-session';
@@ -11,7 +11,6 @@ import bodyParser from 'body-parser';
 import swaggerUI from 'swagger-ui-express';
 import YAML from 'yamljs';
 import path from 'path';
-import socketIo from 'socket.io';
 
 // conf
 import { options, profiles } from '@conf';
@@ -25,7 +24,7 @@ import dbManager from '@core/database';
 import routers from '@routers';
 // adapters
 import redisAdapter from '@adapters/redis';
-// import socketAdapter from '@adapters/socket';
+import socketAdapter from '@adapters/socket';
 
 // middleware
 import {
@@ -45,14 +44,9 @@ const APP_DOCS_PATH = profiles.APP_DOCS_PATH;
 
 const app = express();
 const server = http.createServer(app);
-const io = socketIo(server, {
-  cors: {
-    origin: '*'
-  }
-});
 
 const main = async () => {
-  app.use(cors());
+  // app.use(cors());
   app.use(sessionParser(options.sessionOptions));
   app.use(cookieParser());
   app.use(helmet());
@@ -100,14 +94,7 @@ const main = async () => {
   /**
    * Socket.IO
    */
-  // await socketAdapter.Init(server);
-  io.on('connection', (socket) => {
-    console.info('client connected:', socket.id);
-
-    socket.on('disconnect', (reason) => {
-      console.info('reason', reason);
-    });
-  });
+  await socketAdapter.Init(server);
 
   server.listen(APP_PORT, APP_HOST, () => {
     loggerFactory.http(`The server is running on`, {

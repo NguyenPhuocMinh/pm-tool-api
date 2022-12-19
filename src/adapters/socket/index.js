@@ -22,17 +22,14 @@ const SOCKET_USER_LOGOUT = constants.SOCKET_EVENTS.SOCKET_USER_LOGOUT;
 
 const Init = async (httpServer) => {
   try {
-    const io = new Server(httpServer, {
-      cors: {
-        origin: [
-          'https://pm-tool-ui.netlify.app',
-          'https://pm-tool-ui.netlify.app/*'
-        ]
-      }
-    });
+    const io = new Server(httpServer);
 
     io.on('connection', (socket) => {
-      loggerFactory.info('Socket io has been connection');
+      loggerFactory.info('Socket io has been connection', {
+        args: {
+          socketID: socket.id
+        }
+      });
 
       socket.on(SOCKET_USER_LOGIN, async (data) => {
         await workers.handlerSocketWorkerUserLogin(data, { socket, io });

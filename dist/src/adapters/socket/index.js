@@ -26,13 +26,13 @@ var Init = /*#__PURE__*/function () {
         switch (_context3.prev = _context3.next) {
           case 0:
             _context3.prev = 0;
-            io = new _socket.Server(httpServer, {
-              cors: {
-                origin: ['https://pm-tool-ui.netlify.app', 'https://pm-tool-ui.netlify.app/*']
-              }
-            });
+            io = new _socket.Server(httpServer);
             io.on('connection', function (socket) {
-              loggerFactory.info('Socket io has been connection');
+              loggerFactory.info('Socket io has been connection', {
+                args: {
+                  socketID: socket.id
+                }
+              });
               socket.on(SOCKET_USER_LOGIN, /*#__PURE__*/function () {
                 var _ref2 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee(data) {
                   return _regeneratorRuntime().wrap(function _callee$(_context) {
