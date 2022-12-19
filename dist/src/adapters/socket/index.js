@@ -26,7 +26,14 @@ var Init = /*#__PURE__*/function () {
         switch (_context3.prev = _context3.next) {
           case 0:
             _context3.prev = 0;
-            io = new _socket.Server(httpServer);
+            io = new _socket.Server(httpServer, {
+              cors: {
+                origin: 'https://pm-tool-ui.netlify.app/',
+                methods: ['GET', 'POST'],
+                allowedHeaders: ['my-custom-header'],
+                credentials: true
+              }
+            });
             io.on('connection', function (socket) {
               loggerFactory.info('Socket io has been connection', {
                 args: {

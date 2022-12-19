@@ -2,18 +2,18 @@
 
 import http from 'http';
 import express from 'express';
-// import cors from 'cors';
-import helmet from 'helmet';
+import cors from 'cors';
+// import helmet from 'helmet';
 import morgan from 'morgan';
-import sessionParser from 'express-session';
-import cookieParser from 'cookie-parser';
+// import sessionParser from 'express-session';
+// import cookieParser from 'cookie-parser';
 import bodyParser from 'body-parser';
 import swaggerUI from 'swagger-ui-express';
 import YAML from 'yamljs';
 import path from 'path';
 
 // conf
-import { options, profiles } from '@conf';
+import { profiles } from '@conf';
 import constants from '@constants';
 import utils from '@utils';
 
@@ -46,10 +46,14 @@ const app = express();
 const server = http.createServer(app);
 
 const main = async () => {
-  // app.use(cors());
-  app.use(sessionParser(options.sessionOptions));
-  app.use(cookieParser());
-  app.use(helmet());
+  app.use(
+    cors({
+      origin: 'https://pm-tool-ui.netlify.app/'
+    })
+  );
+  // app.use(sessionParser(options.sessionOptions));
+  // app.use(cookieParser());
+  // app.use(helmet());
   app.use(bodyParser.json({ limit: '100mb' }));
   app.use(bodyParser.urlencoded({ limit: '100mb', extended: true }));
   app.use(morgan(loggerMiddleware));

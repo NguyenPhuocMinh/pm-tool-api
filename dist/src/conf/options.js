@@ -11,8 +11,7 @@ var _expressSession = _interopRequireDefault(require("express-session"));
 var _profiles = _interopRequireDefault(require("./profiles"));
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 var corsOptions = {
-  origin: [_profiles["default"].APP_DOMAIN_PATH],
-  credentials: true
+  origin: 'https://pm-tool-ui.netlify.app/'
 };
 var cookieOptions = {
   maxAge: 1000 * 60 * 15,
