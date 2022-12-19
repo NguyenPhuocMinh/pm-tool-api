@@ -5,7 +5,10 @@ require("source-map-support/register");
 var _http = _interopRequireDefault(require("http"));
 var _express = _interopRequireDefault(require("express"));
 var _cors = _interopRequireDefault(require("cors"));
+var _helmet = _interopRequireDefault(require("helmet"));
 var _morgan = _interopRequireDefault(require("morgan"));
+var _expressSession = _interopRequireDefault(require("express-session"));
+var _cookieParser = _interopRequireDefault(require("cookie-parser"));
 var _bodyParser = _interopRequireDefault(require("body-parser"));
 var _swaggerUiExpress = _interopRequireDefault(require("swagger-ui-express"));
 var _yamljs = _interopRequireDefault(require("yamljs"));
@@ -37,11 +40,11 @@ var main = /*#__PURE__*/function () {
         switch (_context.prev = _context.next) {
           case 0:
             app.use((0, _cors["default"])({
-              origin: 'https://pm-tool-ui.netlify.app/'
+              origin: ['https://pm-tool-ui.netlify.app/', 'https://pm-tool-ui.netlify.app/*']
             }));
-            // app.use(sessionParser(options.sessionOptions));
-            // app.use(cookieParser());
-            // app.use(helmet());
+            app.use((0, _expressSession["default"])(_conf.options.sessionOptions));
+            app.use((0, _cookieParser["default"])());
+            app.use((0, _helmet["default"])());
             app.use(_bodyParser["default"].json({
               limit: '100mb'
             }));
@@ -78,21 +81,21 @@ var main = /*#__PURE__*/function () {
             /**
              * Database
              */
-            _context.next = 12;
+            _context.next = 15;
             return _database["default"].Init();
-          case 12:
-            _context.next = 14;
+          case 15:
+            _context.next = 17;
             return _redis["default"].Init();
-          case 14:
-            _context.next = 16;
+          case 17:
+            _context.next = 19;
             return _socket["default"].Init(server);
-          case 16:
+          case 19:
             server.listen(APP_PORT, APP_HOST, function () {
               loggerFactory.http("The server is running on", {
                 args: "[http://".concat(APP_HOST, ":").concat(APP_PORT, "]")
               });
             });
-          case 17:
+          case 20:
           case "end":
             return _context.stop();
         }
