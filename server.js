@@ -11,6 +11,7 @@ import bodyParser from 'body-parser';
 import swaggerUI from 'swagger-ui-express';
 import YAML from 'yamljs';
 import path from 'path';
+import socketIo from 'socket.io';
 
 // conf
 import { options, profiles } from '@conf';
@@ -24,7 +25,7 @@ import dbManager from '@core/database';
 import routers from '@routers';
 // adapters
 import redisAdapter from '@adapters/redis';
-import socketAdapter from '@adapters/socket';
+// import socketAdapter from '@adapters/socket';
 
 // middleware
 import {
@@ -44,6 +45,11 @@ const APP_DOCS_PATH = profiles.APP_DOCS_PATH;
 
 const app = express();
 const server = http.createServer(app);
+const io = socketIo(server, {
+  cors: {
+    origin: '*'
+  }
+});
 
 const main = async () => {
   app.use(cors());
@@ -94,7 +100,14 @@ const main = async () => {
   /**
    * Socket.IO
    */
-  await socketAdapter.Init(server);
+  // await socketAdapter.Init(server);
+  io.on('connection', (socket) => {
+    console.info('client connected:', socket.id);
+
+    socket.on('disconnect', (reason) => {
+      console.info('reason', reason);
+    });
+  });
 
   server.listen(APP_PORT, APP_HOST, () => {
     loggerFactory.http(`The server is running on`, {
@@ -107,4 +120,5 @@ main().catch((err) => {
   loggerFactory.error(`The server has been error`, {
     args: utils.formatErrorMsg(err)
   });
+  process.exit(1);
 });

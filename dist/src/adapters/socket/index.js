@@ -7,7 +7,6 @@ Object.defineProperty(exports, "__esModule", {
 exports["default"] = void 0;
 require("source-map-support/register");
 var _socket = require("socket.io");
-var _conf = require("../../conf");
 var _constants = _interopRequireDefault(require("../../constants"));
 var _utils = _interopRequireDefault(require("../../utils"));
 var _logger = _interopRequireDefault(require("../../core/logger"));
