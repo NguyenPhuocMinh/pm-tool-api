@@ -24,8 +24,12 @@ const Init = async (httpServer) => {
   try {
     const io = new Server(httpServer, {
       cors: {
-        origin: true,
-        methods: ['GET', 'POST'],
+        origin: [
+          'https://pm-tool-ui.netlify.app/',
+          'https://pm-tool-ui.netlify.app/*',
+          'http://localhost:3500',
+          'http://localhost:3500/*'
+        ],
         credentials: true
       }
     });
@@ -33,7 +37,14 @@ const Init = async (httpServer) => {
     io.on('connection', (socket) => {
       loggerFactory.info('Socket io has been connection', {
         args: {
-          socketID: socket.id
+          socketID: socket.id,
+          auth: socket.handshake.auth
+        }
+      });
+
+      socket.on('connect_error', (err) => {
+        if (err && err.message === 'unauthorized event') {
+          socket.disconnect();
         }
       });
 
