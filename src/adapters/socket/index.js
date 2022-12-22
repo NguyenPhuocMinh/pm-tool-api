@@ -24,7 +24,7 @@ const Init = async (httpServer) => {
   try {
     const io = new Server(httpServer, {
       cors: {
-        origin: options.allowList,
+        origin: 'https://pm-tool-ui.netlify.app',
         preflightContinue: true,
         credentials: true
       },

@@ -5,12 +5,7 @@ import { nanoid } from 'nanoid';
 import session from 'express-session';
 import profiles from './profiles';
 
-const allowList = [
-  'https://pm-tool-ui.netlify.app',
-  'https://pm-tool-ui.netlify.app/*',
-  'http://localhost:3500',
-  'http://localhost:3500/*'
-];
+const allowList = ['https://pm-tool-ui.netlify.app', 'http://localhost:3500'];
 
 const corsOptions = (req, callback) => {
   let corsOptions;
