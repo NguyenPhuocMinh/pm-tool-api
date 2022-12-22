@@ -59,7 +59,8 @@ module.exports = {
       '@transfers': path.resolve(__dirname, './src/transfers'),
       '@schemas': path.resolve(__dirname, './src/schemas'),
       '@builds': path.resolve(__dirname, './src/builds'),
-      '@resources': path.resolve(__dirname, './src/resources')
+      '@resources': path.resolve(__dirname, './src/resources'),
+      '@data': path.resolve(__dirname, './src/data')
     },
     modules: [
       'node_modules',

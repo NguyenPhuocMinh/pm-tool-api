@@ -1,7 +1,5 @@
 'use strict';
 
-import fs from 'fs';
-import path from 'path';
 import Promise from 'bluebird';
 
 import constants from '@constants';
@@ -9,6 +7,8 @@ import utils from '@utils';
 
 // core
 import loggerManager from '@core/logger';
+// data
+import data from '@data';
 
 const loggerFactory = loggerManager(
   constants.APP_NAME,
@@ -26,15 +26,13 @@ const getDataConfigJson = async (toolBox) => {
 
     const { name } = req.query;
 
-    const configurePath = path.join(process.cwd(), `./src/data/${name}.json`);
-    const json = fs.readFileSync(configurePath);
-    const data = JSON.parse(json.toString());
+    const dataConfig = data[name];
 
     loggerFactory.info(`Function getDataConfigJson has been end`);
 
     return {
       result: {
-        data: data
+        data: dataConfig
       },
       msg: 's003'
     };

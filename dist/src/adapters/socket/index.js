@@ -29,7 +29,7 @@ var Init = /*#__PURE__*/function () {
             _context3.prev = 0;
             io = new _socket.Server(httpServer, {
               cors: {
-                origin: 'https://pm-tool-ui.netlify.app',
+                origin: _conf.options.allowList,
                 preflightContinue: true,
                 credentials: true
               },

@@ -24,7 +24,8 @@
       "@transfers": ["src/transfers/index"],
       "@schemas": ["src/schemas/index"],
       "@builds": ["src/builds/index"],
-      "@resources": ["src/resources/index"]
+      "@resources": ["src/resources/index"],
+      "@data": ["src/data/index"]
     }
   },
   "exclude": ["node_modules"]

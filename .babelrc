@@ -29,7 +29,8 @@
           "@transfers": "./src/transfers",
           "@schemas": "./src/schemas",
           "@builds": "./src/builds",
-          "@resources": "./src/resources"
+          "@resources": "./src/resources",
+          "@data": "./src/data"
         }
       }
     ]
