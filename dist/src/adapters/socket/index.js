@@ -7,6 +7,7 @@ Object.defineProperty(exports, "__esModule", {
 exports["default"] = void 0;
 require("source-map-support/register");
 var _socket = require("socket.io");
+var _conf = require("../../conf");
 var _constants = _interopRequireDefault(require("../../constants"));
 var _utils = _interopRequireDefault(require("../../utils"));
 var _logger = _interopRequireDefault(require("../../core/logger"));
@@ -20,21 +21,20 @@ var SOCKET_USER_LOGIN = _constants["default"].SOCKET_EVENTS.SOCKET_USER_LOGIN;
 var SOCKET_USER_LOGOUT = _constants["default"].SOCKET_EVENTS.SOCKET_USER_LOGOUT;
 var Init = /*#__PURE__*/function () {
   var _ref = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee3(httpServer) {
-    var allowlist, io;
+    var io;
     return _regeneratorRuntime().wrap(function _callee3$(_context3) {
       while (1) {
         switch (_context3.prev = _context3.next) {
           case 0:
             _context3.prev = 0;
-            allowlist = ['https://pm-tool-ui.netlify.app', 'https://pm-tool-ui.netlify.app/*', 'http://localhost:3500', 'http://localhost:3500/*'];
             io = new _socket.Server(httpServer, {
               cors: {
-                origin: allowlist,
+                origin: _conf.options.allowList,
                 preflightContinue: true,
                 credentials: true
               },
               allowRequest: function allowRequest(req, callback) {
-                var isDomainAllowed = allowlist.indexOf(req.headers.origin) !== -1;
+                var isDomainAllowed = _conf.options.allowList.indexOf(req.headers.origin) !== -1;
                 callback(null, isDomainAllowed);
               }
             });
@@ -102,21 +102,21 @@ var Init = /*#__PURE__*/function () {
                 _workers["default"].handlerWorkerSocketUserDisconnect();
               });
             });
-            _context3.next = 10;
+            _context3.next = 9;
             break;
-          case 6:
-            _context3.prev = 6;
+          case 5:
+            _context3.prev = 5;
             _context3.t0 = _context3["catch"](0);
             loggerFactory.error('Connect socket has error', {
               args: _utils["default"].formatErrorMsg(_context3.t0)
             });
             throw _context3.t0;
-          case 10:
+          case 9:
           case "end":
             return _context3.stop();
         }
       }
-    }, _callee3, null, [[0, 6]]);
+    }, _callee3, null, [[0, 5]]);
   }));
   return function Init(_x) {
     return _ref.apply(this, arguments);

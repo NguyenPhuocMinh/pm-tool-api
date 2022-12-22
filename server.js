@@ -46,27 +46,7 @@ const app = express();
 const server = http.createServer(app);
 
 const main = async () => {
-  const allowlist = [
-    'https://pm-tool-ui.netlify.app',
-    'http://localhost:3500',
-    'http://localhost:3500/*'
-  ];
-
-  const corsOptionsDelegate = (req, callback) => {
-    let corsOptions;
-
-    const isDomainAllowed = allowlist.indexOf(req.header('Origin')) !== -1;
-
-    if (isDomainAllowed) {
-      // Enable CORS for this request
-      corsOptions = { origin: true };
-    } else {
-      // Disable CORS for this request
-      corsOptions = { origin: false };
-    }
-    callback(null, corsOptions);
-  };
-  app.use(cors(corsOptionsDelegate));
+  app.use(cors(options.corsOptions));
   app.use(sessionParser(options.sessionOptions));
   app.use(cookieParser());
   app.use(helmet());

@@ -5,8 +5,26 @@ import { nanoid } from 'nanoid';
 import session from 'express-session';
 import profiles from './profiles';
 
-const corsOptions = {
-  origin: 'https://pm-tool-ui.netlify.app/'
+const allowList = [
+  'https://pm-tool-ui.netlify.app',
+  'https://pm-tool-ui.netlify.app/*',
+  'http://localhost:3500',
+  'http://localhost:3500/*'
+];
+
+const corsOptions = (req, callback) => {
+  let corsOptions;
+
+  const isDomainAllowed = allowList.indexOf(req.header('Origin')) !== -1;
+
+  if (isDomainAllowed) {
+    // Enable CORS for this request
+    corsOptions = { origin: true };
+  } else {
+    // Disable CORS for this request
+    corsOptions = { origin: false };
+  }
+  callback(null, corsOptions);
 };
 
 const cookieOptions = {
@@ -97,6 +115,7 @@ const socketOptions = {
 };
 
 const options = {
+  allowList,
   corsOptions,
   cookieOptions,
   sessionOptions,

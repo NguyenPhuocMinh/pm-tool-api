@@ -10,8 +10,22 @@ var _nanoid = require("nanoid");
 var _expressSession = _interopRequireDefault(require("express-session"));
 var _profiles = _interopRequireDefault(require("./profiles"));
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
-var corsOptions = {
-  origin: 'https://pm-tool-ui.netlify.app/'
+var allowList = ['https://pm-tool-ui.netlify.app', 'https://pm-tool-ui.netlify.app/*', 'http://localhost:3500', 'http://localhost:3500/*'];
+var corsOptions = function corsOptions(req, callback) {
+  var corsOptions;
+  var isDomainAllowed = allowList.indexOf(req.header('Origin')) !== -1;
+  if (isDomainAllowed) {
+    // Enable CORS for this request
+    corsOptions = {
+      origin: true
+    };
+  } else {
+    // Disable CORS for this request
+    corsOptions = {
+      origin: false
+    };
+  }
+  callback(null, corsOptions);
 };
 var cookieOptions = {
   maxAge: 1000 * 60 * 15,
@@ -93,6 +107,7 @@ var socketOptions = {
   }
 };
 var options = {
+  allowList: allowList,
   corsOptions: corsOptions,
   cookieOptions: cookieOptions,
   sessionOptions: sessionOptions,

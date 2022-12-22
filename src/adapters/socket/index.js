@@ -3,7 +3,7 @@
 import { Server } from 'socket.io';
 
 // conf
-// import { profiles } from '@conf';
+import { options } from '@conf';
 import constants from '@constants';
 import utils from '@utils';
 
@@ -22,20 +22,15 @@ const SOCKET_USER_LOGOUT = constants.SOCKET_EVENTS.SOCKET_USER_LOGOUT;
 
 const Init = async (httpServer) => {
   try {
-    const allowlist = [
-      'https://pm-tool-ui.netlify.app',
-      'https://pm-tool-ui.netlify.app/*',
-      'http://localhost:3500',
-      'http://localhost:3500/*'
-    ];
     const io = new Server(httpServer, {
       cors: {
-        origin: allowlist,
+        origin: options.allowList,
         preflightContinue: true,
         credentials: true
       },
       allowRequest: (req, callback) => {
-        const isDomainAllowed = allowlist.indexOf(req.headers.origin) !== -1;
+        const isDomainAllowed =
+          options.allowList.indexOf(req.headers.origin) !== -1;
         callback(null, isDomainAllowed);
       }
     });
