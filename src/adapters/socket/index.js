@@ -22,15 +22,21 @@ const SOCKET_USER_LOGOUT = constants.SOCKET_EVENTS.SOCKET_USER_LOGOUT;
 
 const Init = async (httpServer) => {
   try {
+    const allowlist = [
+      'https://pm-tool-ui.netlify.app',
+      'https://pm-tool-ui.netlify.app/*',
+      'http://localhost:3500',
+      'http://localhost:3500/*'
+    ];
     const io = new Server(httpServer, {
       cors: {
-        origin: [
-          'https://pm-tool-ui.netlify.app/',
-          'https://pm-tool-ui.netlify.app/*',
-          'http://localhost:3500',
-          'http://localhost:3500/*'
-        ],
+        origin: allowlist,
+        preflightContinue: true,
         credentials: true
+      },
+      allowRequest: (req, callback) => {
+        const isDomainAllowed = allowlist.indexOf(req.headers.origin) !== -1;
+        callback(null, isDomainAllowed);
       }
     });
 
