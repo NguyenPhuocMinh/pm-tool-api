@@ -35,8 +35,7 @@ var Init = /*#__PURE__*/function () {
             io.on('connection', function (socket) {
               loggerFactory.info('Socket io has been connection', {
                 args: {
-                  socketID: socket.id,
-                  auth: socket.handshake.auth
+                  socketID: socket.id
                 }
               });
               socket.on('connect_error', function (err) {

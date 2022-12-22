@@ -34,14 +34,40 @@ var app = (0, _express["default"])();
 var server = _http["default"].createServer(app);
 var main = /*#__PURE__*/function () {
   var _ref = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee() {
-    var swaggerYaml;
+    var allowlist, corsOptionsDelegate, swaggerYaml;
     return _regeneratorRuntime().wrap(function _callee$(_context) {
       while (1) {
         switch (_context.prev = _context.next) {
           case 0:
-            app.use((0, _cors["default"])({
-              origin: ['https://pm-tool-ui.netlify.app/', 'https://pm-tool-ui.netlify.app/*', 'http://localhost:3500']
-            }));
+            allowlist = ['https://pm-tool-ui.netlify.app', 'http://localhost:3500', 'http://localhost:3500/*'];
+            corsOptionsDelegate = function corsOptionsDelegate(req, callback) {
+              console.log("🚀 ~ file: server.js:56 ~ corsOptionsDelegate ~ req", req.header('Origin'));
+              var corsOptions;
+              var isDomainAllowed = allowlist.indexOf(req.header('Origin')) !== -1;
+              console.log("🚀 ~ file: server.js:60 ~ corsOptionsDelegate ~ isDomainAllowed", isDomainAllowed);
+              if (isDomainAllowed) {
+                // Enable CORS for this request
+                corsOptions = {
+                  origin: true
+                };
+              } else {
+                // Disable CORS for this request
+                corsOptions = {
+                  origin: false
+                };
+              }
+              callback(null, corsOptions);
+            };
+            app.use((0, _cors["default"])(corsOptionsDelegate));
+            // app.use(
+            //   cors({
+            //     origin: [
+            //       'https://pm-tool-ui.netlify.app/',
+            //       'https://pm-tool-ui.netlify.app/*',
+            //       'http://localhost:3500'
+            //     ]
+            //   })
+            // );
             app.use((0, _expressSession["default"])(_conf.options.sessionOptions));
             app.use((0, _cookieParser["default"])());
             app.use((0, _helmet["default"])());
@@ -81,21 +107,21 @@ var main = /*#__PURE__*/function () {
             /**
              * Database
              */
-            _context.next = 15;
-            return _database["default"].Init();
-          case 15:
             _context.next = 17;
-            return _redis["default"].Init();
+            return _database["default"].Init();
           case 17:
             _context.next = 19;
-            return _socket["default"].Init(server);
+            return _redis["default"].Init();
           case 19:
+            _context.next = 21;
+            return _socket["default"].Init(server);
+          case 21:
             server.listen(APP_PORT, APP_HOST, function () {
               loggerFactory.http("The server is running on", {
                 args: "[http://".concat(APP_HOST, ":").concat(APP_PORT, "]")
               });
             });
-          case 20:
+          case 22:
           case "end":
             return _context.stop();
         }

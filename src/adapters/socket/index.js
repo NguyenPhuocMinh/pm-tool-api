@@ -37,8 +37,7 @@ const Init = async (httpServer) => {
     io.on('connection', (socket) => {
       loggerFactory.info('Socket io has been connection', {
         args: {
-          socketID: socket.id,
-          auth: socket.handshake.auth
+          socketID: socket.id
         }
       });
 

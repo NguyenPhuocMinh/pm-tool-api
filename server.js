@@ -46,15 +46,44 @@ const app = express();
 const server = http.createServer(app);
 
 const main = async () => {
-  app.use(
-    cors({
-      origin: [
-        'https://pm-tool-ui.netlify.app/',
-        'https://pm-tool-ui.netlify.app/*',
-        'http://localhost:3500'
-      ]
-    })
-  );
+  const allowlist = [
+    'https://pm-tool-ui.netlify.app',
+    'http://localhost:3500',
+    'http://localhost:3500/*'
+  ];
+
+  const corsOptionsDelegate = (req, callback) => {
+    console.info(
+      '🚀 ~ file: server.js:56 ~ corsOptionsDelegate ~ req',
+      req.header('Origin')
+    );
+    let corsOptions;
+
+    const isDomainAllowed = allowlist.indexOf(req.header('Origin')) !== -1;
+    console.info(
+      '🚀 ~ file: server.js:60 ~ corsOptionsDelegate ~ isDomainAllowed',
+      isDomainAllowed
+    );
+
+    if (isDomainAllowed) {
+      // Enable CORS for this request
+      corsOptions = { origin: true };
+    } else {
+      // Disable CORS for this request
+      corsOptions = { origin: false };
+    }
+    callback(null, corsOptions);
+  };
+  app.use(cors(corsOptionsDelegate));
+  // app.use(
+  //   cors({
+  //     origin: [
+  //       'https://pm-tool-ui.netlify.app/',
+  //       'https://pm-tool-ui.netlify.app/*',
+  //       'http://localhost:3500'
+  //     ]
+  //   })
+  // );
   app.use(sessionParser(options.sessionOptions));
   app.use(cookieParser());
   app.use(helmet());
