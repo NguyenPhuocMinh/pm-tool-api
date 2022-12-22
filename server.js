@@ -53,17 +53,9 @@ const main = async () => {
   ];
 
   const corsOptionsDelegate = (req, callback) => {
-    console.info(
-      '🚀 ~ file: server.js:56 ~ corsOptionsDelegate ~ req',
-      req.header('Origin')
-    );
     let corsOptions;
 
     const isDomainAllowed = allowlist.indexOf(req.header('Origin')) !== -1;
-    console.info(
-      '🚀 ~ file: server.js:60 ~ corsOptionsDelegate ~ isDomainAllowed',
-      isDomainAllowed
-    );
 
     if (isDomainAllowed) {
       // Enable CORS for this request
@@ -75,15 +67,6 @@ const main = async () => {
     callback(null, corsOptions);
   };
   app.use(cors(corsOptionsDelegate));
-  // app.use(
-  //   cors({
-  //     origin: [
-  //       'https://pm-tool-ui.netlify.app/',
-  //       'https://pm-tool-ui.netlify.app/*',
-  //       'http://localhost:3500'
-  //     ]
-  //   })
-  // );
   app.use(sessionParser(options.sessionOptions));
   app.use(cookieParser());
   app.use(helmet());

@@ -41,10 +41,8 @@ var main = /*#__PURE__*/function () {
           case 0:
             allowlist = ['https://pm-tool-ui.netlify.app', 'http://localhost:3500', 'http://localhost:3500/*'];
             corsOptionsDelegate = function corsOptionsDelegate(req, callback) {
-              console.log("🚀 ~ file: server.js:56 ~ corsOptionsDelegate ~ req", req.header('Origin'));
               var corsOptions;
               var isDomainAllowed = allowlist.indexOf(req.header('Origin')) !== -1;
-              console.log("🚀 ~ file: server.js:60 ~ corsOptionsDelegate ~ isDomainAllowed", isDomainAllowed);
               if (isDomainAllowed) {
                 // Enable CORS for this request
                 corsOptions = {
@@ -59,15 +57,6 @@ var main = /*#__PURE__*/function () {
               callback(null, corsOptions);
             };
             app.use((0, _cors["default"])(corsOptionsDelegate));
-            // app.use(
-            //   cors({
-            //     origin: [
-            //       'https://pm-tool-ui.netlify.app/',
-            //       'https://pm-tool-ui.netlify.app/*',
-            //       'http://localhost:3500'
-            //     ]
-            //   })
-            // );
             app.use((0, _expressSession["default"])(_conf.options.sessionOptions));
             app.use((0, _cookieParser["default"])());
             app.use((0, _helmet["default"])());
