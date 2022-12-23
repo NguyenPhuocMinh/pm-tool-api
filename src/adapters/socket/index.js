@@ -23,6 +23,7 @@ const SOCKET_USER_LOGOUT = constants.SOCKET_EVENTS.SOCKET_USER_LOGOUT;
 const Init = async (httpServer) => {
   try {
     const io = new Server(httpServer, {
+      path: '/socket.io',
       cors: {
         origin: options.allowList,
         credentials: true,
