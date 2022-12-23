@@ -26,7 +26,9 @@ const getDataConfigJson = async (toolBox) => {
 
     const { name } = req.query;
 
-    const dataConfig = data[name];
+    const dataConfig = {
+      [name]: data[name]
+    };
 
     loggerFactory.info(`Function getDataConfigJson has been end`);
 
