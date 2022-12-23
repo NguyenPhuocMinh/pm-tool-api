@@ -23,11 +23,6 @@ const SOCKET_USER_LOGOUT = constants.SOCKET_EVENTS.SOCKET_USER_LOGOUT;
 const Init = async (httpServer) => {
   try {
     const io = new Server(httpServer, {
-      cors: {
-        origin: options.allowList,
-        preflightContinue: true,
-        credentials: true
-      },
       allowRequest: (req, callback) => {
         const isDomainAllowed =
           options.allowList.indexOf(req.headers.origin) !== -1;

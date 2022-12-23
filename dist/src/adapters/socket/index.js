@@ -28,11 +28,6 @@ var Init = /*#__PURE__*/function () {
           case 0:
             _context3.prev = 0;
             io = new _socket.Server(httpServer, {
-              cors: {
-                origin: _conf.options.allowList,
-                preflightContinue: true,
-                credentials: true
-              },
               allowRequest: function allowRequest(req, callback) {
                 var isDomainAllowed = _conf.options.allowList.indexOf(req.headers.origin) !== -1;
                 callback(null, isDomainAllowed);
