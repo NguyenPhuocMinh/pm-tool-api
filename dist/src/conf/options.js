@@ -10,7 +10,7 @@ var _nanoid = require("nanoid");
 var _expressSession = _interopRequireDefault(require("express-session"));
 var _profiles = _interopRequireDefault(require("./profiles"));
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
-var allowList = ['https://pm-tool-ui.netlify.app', 'http://localhost:3500'];
+var allowList = ['https://pm-tool-ui.netlify.app', 'http://localhost:3500', 'http://localhost:3500/*'];
 var corsOptions = function corsOptions(req, callback) {
   var corsOptions;
   var isDomainAllowed = allowList.indexOf(req.header('Origin')) !== -1;
