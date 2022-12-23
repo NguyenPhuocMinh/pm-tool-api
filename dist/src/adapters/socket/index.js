@@ -41,9 +41,7 @@ var Init = /*#__PURE__*/function () {
                 });
                 var isDomainAllowed = _conf.options.allowList.indexOf(req.headers.origin) !== -1;
                 callback(null, isDomainAllowed);
-              },
-              allowUpgrades: true,
-              allowEIO3: true
+              }
             });
             io.on('connection', function (socket) {
               loggerFactory.debug('Socket io has been connection', {
@@ -52,6 +50,11 @@ var Init = /*#__PURE__*/function () {
                 }
               });
               socket.on('connect_error', function (err) {
+                loggerFactory.error('Socket io has been error', {
+                  args: {
+                    err: err.message
+                  }
+                });
                 if (err && err.message === 'unauthorized event') {
                   socket.disconnect();
                 }

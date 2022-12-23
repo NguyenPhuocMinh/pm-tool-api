@@ -37,9 +37,7 @@ const Init = async (httpServer) => {
         const isDomainAllowed =
           options.allowList.indexOf(req.headers.origin) !== -1;
         callback(null, isDomainAllowed);
-      },
-      allowUpgrades: true,
-      allowEIO3: true
+      }
     });
 
     io.on('connection', (socket) => {
@@ -50,6 +48,11 @@ const Init = async (httpServer) => {
       });
 
       socket.on('connect_error', (err) => {
+        loggerFactory.error('Socket io has been error', {
+          args: {
+            err: err.message
+          }
+        });
         if (err && err.message === 'unauthorized event') {
           socket.disconnect();
         }
