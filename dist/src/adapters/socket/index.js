@@ -30,8 +30,7 @@ var Init = /*#__PURE__*/function () {
             io = new _socket.Server(httpServer, {
               cors: {
                 origin: _conf.options.allowList,
-                credentials: true,
-                preflightContinue: true
+                credentials: true
               },
               allowRequest: function allowRequest(req, callback) {
                 loggerFactory.debug('Socket io allowed request', {
