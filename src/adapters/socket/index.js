@@ -25,7 +25,8 @@ const Init = async (httpServer) => {
     const io = new Server(httpServer, {
       cors: {
         origin: options.allowList,
-        credentials: true
+        credentials: true,
+        preflightContinue: true
       },
       allowRequest: (req, callback) => {
         loggerFactory.debug('Socket io allowed request', {
@@ -36,7 +37,9 @@ const Init = async (httpServer) => {
         const isDomainAllowed =
           options.allowList.indexOf(req.headers.origin) !== -1;
         callback(null, isDomainAllowed);
-      }
+      },
+      allowUpgrades: true,
+      allowEIO3: true
     });
 
     io.on('connection', (socket) => {

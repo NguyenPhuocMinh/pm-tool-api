@@ -30,7 +30,8 @@ var Init = /*#__PURE__*/function () {
             io = new _socket.Server(httpServer, {
               cors: {
                 origin: _conf.options.allowList,
-                credentials: true
+                credentials: true,
+                preflightContinue: true
               },
               allowRequest: function allowRequest(req, callback) {
                 loggerFactory.debug('Socket io allowed request', {
@@ -40,7 +41,9 @@ var Init = /*#__PURE__*/function () {
                 });
                 var isDomainAllowed = _conf.options.allowList.indexOf(req.headers.origin) !== -1;
                 callback(null, isDomainAllowed);
-              }
+              },
+              allowUpgrades: true,
+              allowEIO3: true
             });
             io.on('connection', function (socket) {
               loggerFactory.debug('Socket io has been connection', {

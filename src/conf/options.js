@@ -7,6 +7,7 @@ import profiles from './profiles';
 
 const allowList = [
   'https://pm-tool-ui.netlify.app',
+  'https://pm-tool-ui.netlify.app/*',
   'http://localhost:3500',
   'http://localhost:3500/*'
 ];
@@ -106,13 +107,6 @@ const jwtOptions = {
   jwtid: uuidV4()
 };
 
-const socketOptions = {
-  cors: {
-    origin: profiles.APP_DOMAIN_PATH,
-    methods: ['GET', 'POST']
-  }
-};
-
 const options = {
   allowList,
   corsOptions,
@@ -122,8 +116,7 @@ const options = {
   mongooseOptions,
   retryOptions,
   bcryptOptions,
-  jwtOptions,
-  socketOptions
+  jwtOptions
 };
 
 export default options;
