@@ -23,7 +23,17 @@ const SOCKET_USER_LOGOUT = constants.SOCKET_EVENTS.SOCKET_USER_LOGOUT;
 const Init = async (httpServer) => {
   try {
     const io = new Server(httpServer, {
+      cors: {
+        origin: options.allowList,
+        credentials: true,
+        preflightContinue: true
+      },
       allowRequest: (req, callback) => {
+        loggerFactory.debug('Socket io allowed request', {
+          args: {
+            domain: req.headers.origin
+          }
+        });
         const isDomainAllowed =
           options.allowList.indexOf(req.headers.origin) !== -1;
         callback(null, isDomainAllowed);
@@ -31,7 +41,7 @@ const Init = async (httpServer) => {
     });
 
     io.on('connection', (socket) => {
-      loggerFactory.info('Socket io has been connection', {
+      loggerFactory.debug('Socket io has been connection', {
         args: {
           socketID: socket.id
         }

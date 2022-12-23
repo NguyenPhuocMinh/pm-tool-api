@@ -28,13 +28,23 @@ var Init = /*#__PURE__*/function () {
           case 0:
             _context3.prev = 0;
             io = new _socket.Server(httpServer, {
+              cors: {
+                origin: _conf.options.allowList,
+                credentials: true,
+                preflightContinue: true
+              },
               allowRequest: function allowRequest(req, callback) {
+                loggerFactory.debug('Socket io allowed request', {
+                  args: {
+                    domain: req.headers.origin
+                  }
+                });
                 var isDomainAllowed = _conf.options.allowList.indexOf(req.headers.origin) !== -1;
                 callback(null, isDomainAllowed);
               }
             });
             io.on('connection', function (socket) {
-              loggerFactory.info('Socket io has been connection', {
+              loggerFactory.debug('Socket io has been connection', {
                 args: {
                   socketID: socket.id
                 }

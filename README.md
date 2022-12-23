@@ -11,6 +11,7 @@
 - [Build](#build)
 - [Circle CI/CD](#circle-cicd)
 - [Helm and k8s](#helm-and-k8s)
+- [Server testing vercel app](#server-testing-vercel-app)
 
 ---
 
@@ -251,3 +252,7 @@ $ aws ecr describe-images \
     ```sh
     $ helm install --set username=$USERNAME [chart name] [chart path]
     ```
+
+## Server testing vercel app
+
+- https://pm-tool-api.vercel.app
