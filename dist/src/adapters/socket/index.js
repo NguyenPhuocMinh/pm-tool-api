@@ -30,9 +30,7 @@ var Init = /*#__PURE__*/function () {
             io = new _socket.Server(httpServer, {
               cors: {
                 origin: _conf.options.allowList,
-                credentials: true,
                 preflightContinue: true,
-                allowedHeaders: ['Access-Control-Allow-Origin', 'Access-Control-Expose-Headers'],
                 optionsSuccessStatus: 200
               },
               allowRequest: function allowRequest(req, callback) {

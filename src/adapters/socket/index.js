@@ -25,12 +25,7 @@ const Init = async (httpServer) => {
     const io = new Server(httpServer, {
       cors: {
         origin: options.allowList,
-        credentials: true,
         preflightContinue: true,
-        allowedHeaders: [
-          'Access-Control-Allow-Origin',
-          'Access-Control-Expose-Headers'
-        ],
         optionsSuccessStatus: 200
       },
       allowRequest: (req, callback) => {
