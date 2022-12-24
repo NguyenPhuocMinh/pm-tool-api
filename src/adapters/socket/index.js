@@ -1,6 +1,6 @@
 'use strict';
 
-import { Server } from 'socket.io';
+import socketIO from 'socket.io';
 
 // conf
 import { options } from '@conf';
@@ -22,23 +22,28 @@ const SOCKET_USER_LOGOUT = constants.SOCKET_EVENTS.SOCKET_USER_LOGOUT;
 
 const Init = async (httpServer) => {
   try {
-    const io = new Server(httpServer, {
+    const io = socketIO(httpServer, {
       cors: {
-        origin: options.allowList,
-        methods: ['GET', 'POST'],
-        credentials: true
-      },
-      allowRequest: (req, callback) => {
-        loggerFactory.debug('Socket io allowed request', {
-          args: {
-            domain: req.headers.origin
-          }
-        });
-        const isDomainAllowed =
-          options.allowList.indexOf(req.headers.origin) !== -1;
-        callback(null, isDomainAllowed);
+        origin: options.allowList
       }
     });
+    // const io = new Server(httpServer, {
+    //   cors: {
+    //     origin: options.allowList,
+    //     methods: ['GET', 'POST'],
+    //     credentials: true
+    //   },
+    //   allowRequest: (req, callback) => {
+    //     loggerFactory.debug('Socket io allowed request', {
+    //       args: {
+    //         domain: req.headers.origin
+    //       }
+    //     });
+    //     const isDomainAllowed =
+    //       options.allowList.indexOf(req.headers.origin) !== -1;
+    //     callback(null, isDomainAllowed);
+    //   }
+    // });
 
     io.on('connection', (socket) => {
       loggerFactory.debug('Socket io has been connection', {
