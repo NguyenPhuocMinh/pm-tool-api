@@ -338,10 +338,10 @@ const getUsersInRole = async (toolBox) => {
         data: result,
         total
       },
-      msg: 'RoleGetUsersSuccess'
+      msg: 'roleS006'
     };
   } catch (err) {
-    loggerFactory.info(`Function getUsersInRole Orchestrator has error`, {
+    loggerFactory.error(`Function getUsersInRole Orchestrator has error`, {
       args: utils.formatErrorMsg(err)
     });
     return Promise.reject(err);
@@ -365,7 +365,7 @@ const getPermissionsInRole = async (toolBox) => {
     }
 
     const { skip, limit } = helpers.paginationHelper(req.query);
-    const sort = helpers.queryHelper(req.query);
+    const sort = helpers.sortHelper(req.query);
 
     const query = {
       roles: {
@@ -406,10 +406,10 @@ const getPermissionsInRole = async (toolBox) => {
         data: result,
         total
       },
-      msg: 'RoleS007'
+      msg: 'roleS007'
     };
   } catch (err) {
-    loggerFactory.info(
+    loggerFactory.error(
       `Function getPermissionsByRoleID Orchestrator has error`,
       {
         args: utils.formatErrorMsg(err)

@@ -442,12 +442,12 @@ var getUsersInRole = /*#__PURE__*/function () {
                 data: result,
                 total: total
               },
-              msg: 'RoleGetUsersSuccess'
+              msg: 'roleS006'
             });
           case 22:
             _context6.prev = 22;
             _context6.t0 = _context6["catch"](1);
-            loggerFactory.info("Function getUsersInRole Orchestrator has error", {
+            loggerFactory.error("Function getUsersInRole Orchestrator has error", {
               args: _utils["default"].formatErrorMsg(_context6.t0)
             });
             return _context6.abrupt("return", _bluebird["default"].reject(_context6.t0));
@@ -485,7 +485,7 @@ var getPermissionsInRole = /*#__PURE__*/function () {
             throw _commons["default"].newError('roleE003');
           case 6:
             _helpers$paginationHe3 = _helpers["default"].paginationHelper(req.query), skip = _helpers$paginationHe3.skip, limit = _helpers$paginationHe3.limit;
-            sort = _helpers["default"].queryHelper(req.query);
+            sort = _helpers["default"].sortHelper(req.query);
             query = {
               roles: {
                 $elemMatch: {
@@ -527,12 +527,12 @@ var getPermissionsInRole = /*#__PURE__*/function () {
                 data: result,
                 total: total
               },
-              msg: 'RoleS007'
+              msg: 'roleS007'
             });
           case 22:
             _context7.prev = 22;
             _context7.t0 = _context7["catch"](1);
-            loggerFactory.info("Function getPermissionsByRoleID Orchestrator has error", {
+            loggerFactory.error("Function getPermissionsByRoleID Orchestrator has error", {
               args: _utils["default"].formatErrorMsg(_context7.t0)
             });
             return _context7.abrupt("return", _bluebird["default"].reject(_context7.t0));
