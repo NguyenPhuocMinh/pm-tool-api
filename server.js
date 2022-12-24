@@ -26,6 +26,8 @@ import routers from '@routers';
 import redisAdapter from '@adapters/redis';
 import socketAdapter from '@adapters/socket';
 
+import { Server } from 'socket.io';
+
 // middleware
 import {
   loggerMiddleware,
@@ -44,6 +46,11 @@ const APP_DOCS_PATH = profiles.APP_DOCS_PATH;
 
 const app = express();
 const server = http.createServer(app);
+const io = new Server(server, {
+  cors: {
+    origin: '*'
+  }
+});
 
 const main = async () => {
   app.use(cors(options.corsOptions));
@@ -94,7 +101,14 @@ const main = async () => {
   /**
    * Socket.IO
    */
-  await socketAdapter.Init(server);
+  // await socketAdapter.Init(server);
+  io.on('connection', (socket) => {
+    loggerFactory.debug('Socket io has been connection', {
+      args: {
+        socketID: socket.id
+      }
+    });
+  });
 
   server.listen(APP_PORT, APP_HOST, () => {
     loggerFactory.http(`The server is running on`, {

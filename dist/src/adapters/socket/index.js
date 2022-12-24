@@ -6,7 +6,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports["default"] = void 0;
 require("source-map-support/register");
-var _socket = _interopRequireDefault(require("socket.io"));
+var _socket = require("socket.io");
 var _conf = require("../../conf");
 var _constants = _interopRequireDefault(require("../../constants"));
 var _utils = _interopRequireDefault(require("../../utils"));
@@ -27,27 +27,22 @@ var Init = /*#__PURE__*/function () {
         switch (_context3.prev = _context3.next) {
           case 0:
             _context3.prev = 0;
-            io = (0, _socket["default"])(httpServer, {
+            io = new _socket.Server(httpServer, {
               cors: {
-                origin: _conf.options.allowList
+                origin: _conf.options.allowList,
+                methods: ['GET', 'POST'],
+                credentials: true
+              },
+              allowRequest: function allowRequest(req, callback) {
+                loggerFactory.debug('Socket io allowed request', {
+                  args: {
+                    domain: req.headers.origin
+                  }
+                });
+                var isDomainAllowed = _conf.options.allowList.indexOf(req.headers.origin) !== -1;
+                callback(null, isDomainAllowed);
               }
-            }); // const io = new Server(httpServer, {
-            //   cors: {
-            //     origin: options.allowList,
-            //     methods: ['GET', 'POST'],
-            //     credentials: true
-            //   },
-            //   allowRequest: (req, callback) => {
-            //     loggerFactory.debug('Socket io allowed request', {
-            //       args: {
-            //         domain: req.headers.origin
-            //       }
-            //     });
-            //     const isDomainAllowed =
-            //       options.allowList.indexOf(req.headers.origin) !== -1;
-            //     callback(null, isDomainAllowed);
-            //   }
-            // });
+            });
             io.on('connection', function (socket) {
               loggerFactory.debug('Socket io has been connection', {
                 args: {
