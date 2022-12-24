@@ -48,7 +48,7 @@ const app = express();
 const server = http.createServer(app);
 const io = new Server(server, {
   cors: {
-    origin: '*'
+    origin: ['https://pm-tool-ui.netlify.app', 'http://localhost:3500']
   }
 });
 
@@ -119,7 +119,7 @@ const main = async () => {
 
       socket.join('pm-tool-room');
 
-      if (!onlineUsers.some((user) => user.id === data?.id)) {
+      if (data && !onlineUsers.some((user) => user.id === data?.id)) {
         onlineUsers.unshift({
           socketID: socket.id,
           id: data?.id,

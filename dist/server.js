@@ -34,7 +34,7 @@ var app = (0, _express["default"])();
 var server = _http["default"].createServer(app);
 var io = new _socket.Server(server, {
   cors: {
-    origin: '*'
+    origin: ['https://pm-tool-ui.netlify.app', 'http://localhost:3500']
   }
 });
 var main = /*#__PURE__*/function () {
@@ -106,7 +106,7 @@ var main = /*#__PURE__*/function () {
                 var ipAddress = handshake.address;
                 var userAgent = handshake.headers['user-agent'];
                 socket.join('pm-tool-room');
-                if (!onlineUsers.some(function (user) {
+                if (data && !onlineUsers.some(function (user) {
                   return user.id === (data === null || data === void 0 ? void 0 : data.id);
                 })) {
                   onlineUsers.unshift({
