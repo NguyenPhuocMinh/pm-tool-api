@@ -23,11 +23,14 @@ const SOCKET_USER_LOGOUT = constants.SOCKET_EVENTS.SOCKET_USER_LOGOUT;
 const Init = async (httpServer) => {
   try {
     const io = new Server(httpServer, {
-      path: '/socket.io',
       cors: {
         origin: options.allowList,
         credentials: true,
-        preflightContinue: true
+        preflightContinue: true,
+        allowedHeaders: [
+          'Access-Control-Allow-Origin',
+          'Access-Control-Expose-Headers'
+        ]
       },
       allowRequest: (req, callback) => {
         loggerFactory.debug('Socket io allowed request', {

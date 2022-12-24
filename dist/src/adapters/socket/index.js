@@ -31,7 +31,8 @@ var Init = /*#__PURE__*/function () {
               cors: {
                 origin: _conf.options.allowList,
                 credentials: true,
-                preflightContinue: true
+                preflightContinue: true,
+                allowedHeaders: ['Access-Control-Allow-Origin', 'Access-Control-Expose-Headers']
               },
               allowRequest: function allowRequest(req, callback) {
                 loggerFactory.debug('Socket io allowed request', {
