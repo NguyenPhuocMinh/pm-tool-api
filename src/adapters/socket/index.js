@@ -30,7 +30,8 @@ const Init = async (httpServer) => {
         allowedHeaders: [
           'Access-Control-Allow-Origin',
           'Access-Control-Expose-Headers'
-        ]
+        ],
+        optionsSuccessStatus: 200
       },
       allowRequest: (req, callback) => {
         loggerFactory.debug('Socket io allowed request', {
