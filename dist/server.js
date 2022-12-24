@@ -34,7 +34,9 @@ var app = (0, _express["default"])();
 var server = _http["default"].createServer(app);
 var io = new _socket.Server(server, {
   cors: {
-    origin: ['https://pm-tool-ui.netlify.app', 'http://localhost:3500']
+    origin: ['https://pm-tool-ui.netlify.app', 'http://localhost:3500'],
+    credentials: true,
+    preflightContinue: true
   }
 });
 var main = /*#__PURE__*/function () {
@@ -101,6 +103,10 @@ var main = /*#__PURE__*/function () {
                   socketID: socket.id
                 }
               });
+              var token = socket.handshake.auth.token;
+              if (token !== '123') {
+                socket.disconnect();
+              }
               var handshake = socket.handshake;
               socket.on('socket_user_login', function (data) {
                 var ipAddress = handshake.address;

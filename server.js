@@ -48,7 +48,9 @@ const app = express();
 const server = http.createServer(app);
 const io = new Server(server, {
   cors: {
-    origin: ['https://pm-tool-ui.netlify.app', 'http://localhost:3500']
+    origin: ['https://pm-tool-ui.netlify.app', 'http://localhost:3500'],
+    credentials: true,
+    preflightContinue: true
   }
 });
 
@@ -110,6 +112,12 @@ const main = async () => {
         socketID: socket.id
       }
     });
+
+    const token = socket.handshake.auth.token;
+
+    if (token !== '123') {
+      socket.disconnect();
+    }
 
     const { handshake } = socket;
 
