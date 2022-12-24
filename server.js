@@ -24,7 +24,7 @@ import dbManager from '@core/database';
 import routers from '@routers';
 // adapters
 import redisAdapter from '@adapters/redis';
-import socketAdapter from '@adapters/socket';
+// import socketAdapter from '@adapters/socket';
 
 import { Server } from 'socket.io';
 
@@ -98,6 +98,8 @@ const main = async () => {
    */
   await redisAdapter.Init();
 
+  const onlineUsers = [];
+
   /**
    * Socket.IO
    */
@@ -107,6 +109,27 @@ const main = async () => {
       args: {
         socketID: socket.id
       }
+    });
+
+    const { handshake } = socket;
+
+    socket.on('socket_user_login', (data) => {
+      const ipAddress = handshake.address;
+      const userAgent = handshake.headers['user-agent'];
+
+      socket.join('pm-tool-room');
+
+      if (!onlineUsers.some((user) => user.id === data?.id)) {
+        onlineUsers.unshift({
+          socketID: socket.id,
+          id: data?.id,
+          fullName: data?.fullName,
+          userAgent,
+          ipAddress
+        });
+      }
+      // send all active users to new user
+      io.emit('socket_user_online', onlineUsers);
     });
   });
 
