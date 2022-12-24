@@ -25,8 +25,7 @@ const Init = async (httpServer) => {
     const io = new Server(httpServer, {
       cors: {
         origin: options.allowList,
-        preflightContinue: true,
-        optionsSuccessStatus: 200
+        methods: ['GET', 'POST']
       },
       allowRequest: (req, callback) => {
         loggerFactory.debug('Socket io allowed request', {
