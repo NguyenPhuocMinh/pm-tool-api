@@ -200,13 +200,13 @@ export default [
    */
   {
     enable: true,
-    pathName: '/users/sessions/:userID',
+    pathName: '/users-session/:userID',
     method: 'GET',
     controller: permissions.admin.userSessions.TIME_LINE
   },
   {
     enable: true,
-    pathName: '/users/sessions',
+    pathName: '/users-sessions',
     method: 'DELETE',
     controller: permissions.admin.userSessions.DELETE
   },

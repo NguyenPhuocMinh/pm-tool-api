@@ -63,12 +63,12 @@ export default [
   {
     enable: true,
     method: 'POST',
-    pathName: '/users/sessions'
+    pathName: '/users-session'
   },
   {
     enable: true,
     method: 'PATCH',
-    pathName: '/users/sessions/:id'
+    pathName: '/users-session/:id'
   },
   /**
    * NOTIFY

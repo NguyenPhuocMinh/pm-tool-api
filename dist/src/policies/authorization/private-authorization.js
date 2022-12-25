@@ -182,12 +182,12 @@ var _default = [
  */
 {
   enable: true,
-  pathName: '/users/sessions/:userID',
+  pathName: '/users-session/:userID',
   method: 'GET',
   controller: _permissions["default"].admin.userSessions.TIME_LINE
 }, {
   enable: true,
-  pathName: '/users/sessions',
+  pathName: '/users-sessions',
   method: 'DELETE',
   controller: _permissions["default"].admin.userSessions.DELETE
 },
