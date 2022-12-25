@@ -94,6 +94,7 @@ const signIn = async (toolBox) => {
 
     // save refresh token into db
     user.refreshToken = refreshToken;
+    user.isOnline = true;
     await user.save();
 
     // save token in session
@@ -144,6 +145,9 @@ const signOut = async (toolBox) => {
     // store token into blacklist in redis
     const blKey = `blacklist_${user._id}`;
     await redisManager.setExValue(blKey, token, tokenExp);
+
+    user.isOnline = false;
+    await user.save();
 
     loggerFactory.info(`Function signOut has been end`);
 
@@ -315,6 +319,10 @@ const revokeToken = async (toolBox) => {
 
     // delete token whitelist in redis
     await redisManager.deleteValue(wlKey);
+
+    // set isOnline is false
+    user.isOnline = false;
+    await user.save();
 
     loggerFactory.info(`Function revokeToken has been end`);
 

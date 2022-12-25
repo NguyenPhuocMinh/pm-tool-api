@@ -22,6 +22,7 @@ import roleRouter from './role-router';
 import permissionRouter from './permission-router';
 import userRouter from './user-router';
 import userSessionRouter from './user-session-router';
+import userOnlineRouter from './user-online-router';
 import notifyRouter from './notify-router';
 import notifyUserRouter from './notify-user-router';
 import notifyTemplateRouter from './notify-template-router';
@@ -44,6 +45,7 @@ const routes = [
   ...permissionRouter,
   ...userRouter,
   ...userSessionRouter,
+  ...userOnlineRouter,
   ...notifyRouter,
   ...notifyUserRouter,
   ...notifyTemplateRouter

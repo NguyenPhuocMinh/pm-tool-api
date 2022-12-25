@@ -24,9 +24,7 @@ import dbManager from '@core/database';
 import routers from '@routers';
 // adapters
 import redisAdapter from '@adapters/redis';
-// import socketAdapter from '@adapters/socket';
-
-import { Server } from 'socket.io';
+import socketAdapter from '@adapters/socket';
 
 // middleware
 import {
@@ -46,13 +44,6 @@ const APP_DOCS_PATH = profiles.APP_DOCS_PATH;
 
 const app = express();
 const server = http.createServer(app);
-const io = new Server(server, {
-  cors: {
-    origin: ['https://pm-tool-ui.netlify.app', 'http://localhost:3500'],
-    credentials: true,
-    preflightContinue: true
-  }
-});
 
 const main = async () => {
   app.use(cors(options.corsOptions));
@@ -100,46 +91,10 @@ const main = async () => {
    */
   await redisAdapter.Init();
 
-  const onlineUsers = [];
-
   /**
    * Socket.IO
    */
-  // await socketAdapter.Init(server);
-  io.on('connection', (socket) => {
-    loggerFactory.debug('Socket io has been connection', {
-      args: {
-        socketID: socket.id
-      }
-    });
-
-    const token = socket.handshake.auth.token;
-
-    if (token !== '123') {
-      socket.disconnect();
-    }
-
-    const { handshake } = socket;
-
-    socket.on('socket_user_login', (data) => {
-      const ipAddress = handshake.address;
-      const userAgent = handshake.headers['user-agent'];
-
-      socket.join('pm-tool-room');
-
-      if (data && !onlineUsers.some((user) => user.id === data?.id)) {
-        onlineUsers.unshift({
-          socketID: socket.id,
-          id: data?.id,
-          fullName: data?.fullName,
-          userAgent,
-          ipAddress
-        });
-      }
-      // send all active users to new user
-      io.emit('socket_user_online', onlineUsers);
-    });
-  });
+  await socketAdapter.Init(server);
 
   server.listen(APP_PORT, APP_HOST, () => {
     loggerFactory.http(`The server is running on`, {

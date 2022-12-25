@@ -49,6 +49,7 @@ const ROLE_CONTROLLER = 'role-controller';
 const PERMISSION_CONTROLLER = 'permission-controller';
 const USER_CONTROLLER = 'user-controller';
 const USER_SESSION_CONTROLLER = 'user-session-controller';
+const USER_ONLINE_CONTROLLER = 'user-online-controller';
 const NOTIFY_CONTROLLER = 'notify-controller';
 const NOTIFY_USER_CONTROLLER = 'notify-user-controller';
 const NOTIFY_TEMPLATE_CONTROLLER = 'notify-template-controller';
@@ -65,6 +66,7 @@ const STRUCT_CONTROLLERS = {
   PERMISSION_CONTROLLER,
   USER_CONTROLLER,
   USER_SESSION_CONTROLLER,
+  USER_ONLINE_CONTROLLER,
   NOTIFY_CONTROLLER,
   NOTIFY_USER_CONTROLLER,
   NOTIFY_TEMPLATE_CONTROLLER
@@ -84,6 +86,7 @@ const ROLE_ORCHESTRATOR = 'role-orchestrator';
 const PERMISSION_ORCHESTRATOR = 'permission-orchestrator';
 const USER_ORCHESTRATOR = 'user-orchestrator';
 const USER_SESSION_ORCHESTRATOR = 'user-session-orchestrator';
+const USER_ONLINE_ORCHESTRATOR = 'user-online-orchestrator';
 const NOTIFY_ORCHESTRATOR = 'notify-orchestrator';
 const NOTIFY_USER_ORCHESTRATOR = 'notify-user-orchestrator';
 const NOTIFY_TEMPLATE_ORCHESTRATOR = 'notify-template-orchestrator';
@@ -100,6 +103,7 @@ const STRUCT_ORCHESTRATORS = {
   PERMISSION_ORCHESTRATOR,
   USER_ORCHESTRATOR,
   USER_SESSION_ORCHESTRATOR,
+  USER_ONLINE_ORCHESTRATOR,
   NOTIFY_ORCHESTRATOR,
   NOTIFY_USER_ORCHESTRATOR,
   NOTIFY_TEMPLATE_ORCHESTRATOR
@@ -143,7 +147,8 @@ const PROJECT_TRANSFER = 'project-transfer';
 const ROLE_TRANSFER = 'role-transfer';
 const PERMISSION_TRANSFER = 'permission-transfer';
 const USER_TRANSFER = 'user-transfer';
-const USER_SESSION_TRANSFER = 'user-transfer';
+const USER_SESSION_TRANSFER = 'user-session-transfer';
+const USER_ONLINE_TRANSFER = 'user--online-transfer';
 const NOTIFY_TRANSFER = 'notify-transfer';
 const NOTIFY_USER_TRANSFER = 'notify-user-transfer';
 const NOTIFY_TEMPLATE_TRANSFER = 'notify-template-transfer';
@@ -156,6 +161,7 @@ const STRUCT_TRANSFERS = {
   PERMISSION_TRANSFER,
   USER_TRANSFER,
   USER_SESSION_TRANSFER,
+  USER_ONLINE_TRANSFER,
   NOTIFY_TRANSFER,
   NOTIFY_USER_TRANSFER,
   NOTIFY_TEMPLATE_TRANSFER
@@ -257,6 +263,7 @@ const types = {
   MsgTypePermission: 'PERMISSION',
   MsgTypeUser: 'USER',
   MsgTypeUserSession: 'USER_SESSION',
+  MsgTypeUserOnline: 'USER_ONLINE',
   MsgTypeNotify: 'NOTIFY',
   MsgTypeNotifyUser: 'NOTIFY_USER',
   MsgTypeNotifyTemplate: 'NOTIFY_TEMPLATE'
@@ -366,6 +373,13 @@ const userSessionActions = {
 };
 
 /**
+ * @description USER ONLINE ACTIONS
+ */
+const userOnlineActions = {
+  MsgActionUserOnlineGetAll: 'USER_ONLINE_GET_ALL'
+};
+
+/**
  * @description NOTIFY ACTIONS
  */
 const notifyActions = {
@@ -425,6 +439,7 @@ const actions = {
   ...permissionActions,
   ...userActions,
   ...userSessionActions,
+  ...userOnlineActions,
   ...notifyActions,
   ...notifyUserActions,
   ...notifyTemplateActions

@@ -18,6 +18,7 @@ export default {
     picture: { type: String },
     // filter
     isAdmin: { type: Boolean, default: false },
+    isOnline: { type: Boolean, default: false },
     slug: { type: String },
     deleted: { type: Boolean, default: false },
     createdAt: { type: Date },

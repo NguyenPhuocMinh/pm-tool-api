@@ -192,6 +192,15 @@ var _default = [
   controller: _permissions["default"].admin.userSessions.DELETE
 },
 /**
+ * USER ONLINE
+ */
+{
+  enable: true,
+  pathName: '/users/onlines',
+  method: 'GET',
+  controller: _permissions["default"].admin.userOnlines.GET_ALL
+},
+/**
  * NOTIFY TEMPLATE
  */
 {

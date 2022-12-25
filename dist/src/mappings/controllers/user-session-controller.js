@@ -80,11 +80,11 @@ var deleteUserSession = function deleteUserSession(req, res, next) {
   (0, _baseController["default"])(toolBox, _constants["default"].types.MsgTypeUserSession, _constants["default"].actions.MsgActionUserSessionDelete);
   loggerFactory.info("Function deleteUserSession Controller has been end");
 };
-var sessionController = {
+var userSessionController = {
   getUserTimelineSession: getUserTimelineSession,
   createUserSession: createUserSession,
   updateUserSession: updateUserSession,
   deleteUserSession: deleteUserSession
 };
-var _default = sessionController;
+var _default = userSessionController;
 exports["default"] = _default;

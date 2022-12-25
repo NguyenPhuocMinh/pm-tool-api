@@ -12,6 +12,7 @@ import roleOrchestrator from './role-orchestrator';
 import permissionOrchestrator from './permission-orchestrator';
 import userOrchestrator from './user-orchestrator';
 import userSessionOrchestrator from './user-session-orchestrator';
+import userOnlineOrchestrator from './user-online-orchestrator';
 import notifyOrchestrator from './notify-orchestrator';
 import notifyUserOrchestrator from './notify-user-orchestrator';
 import notifyTemplateOrchestrator from './notify-template-orchestrator';
@@ -296,6 +297,17 @@ const orchestratorUserSession = [
 ];
 
 /**
+ * USER ONLINE
+ */
+const orchestratorUserOnline = [
+  {
+    type: constants.types.MsgTypeUserOnline,
+    action: constants.actions.MsgActionUserOnlineGetAll,
+    orchestrator: userOnlineOrchestrator.getAllUserOnline
+  }
+];
+
+/**
  * NOTIFY
  */
 const orchestratorNotify = [
@@ -383,6 +395,7 @@ const orchestrators = [
   ...orchestratorPermission,
   ...orchestratorUser,
   ...orchestratorUserSession,
+  ...orchestratorUserOnline,
   ...orchestratorNotify,
   ...orchestratorNotifyUser,
   ...orchestratorNotifyTemplate

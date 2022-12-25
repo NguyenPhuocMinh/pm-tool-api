@@ -12,6 +12,7 @@ var _roleTransfer = _interopRequireDefault(require("./role-transfer"));
 var _permissionTransfer = _interopRequireDefault(require("./permission-transfer"));
 var _userTransfer = _interopRequireDefault(require("./user-transfer"));
 var _userSessionTransfer = _interopRequireDefault(require("./user-session-transfer"));
+var _userOnlineTransfer = _interopRequireDefault(require("./user-online-transfer"));
 var _notifyTransfer = _interopRequireDefault(require("./notify-transfer"));
 var _notifyUserTransfer = _interopRequireDefault(require("./notify-user-transfer"));
 var _notifyTemplateTransfer = _interopRequireDefault(require("./notify-template-transfer"));
@@ -24,6 +25,7 @@ var _default = {
   permissionTransfer: _permissionTransfer["default"],
   userTransfer: _userTransfer["default"],
   userSessionTransfer: _userSessionTransfer["default"],
+  userOnlineTransfer: _userOnlineTransfer["default"],
   notifyTransfer: _notifyTransfer["default"],
   notifyUserTransfer: _notifyUserTransfer["default"],
   notifyTemplateTransfer: _notifyTemplateTransfer["default"]

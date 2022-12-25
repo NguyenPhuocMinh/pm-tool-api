@@ -16,6 +16,7 @@ var _roleOrchestrator = _interopRequireDefault(require("./role-orchestrator"));
 var _permissionOrchestrator = _interopRequireDefault(require("./permission-orchestrator"));
 var _userOrchestrator = _interopRequireDefault(require("./user-orchestrator"));
 var _userSessionOrchestrator = _interopRequireDefault(require("./user-session-orchestrator"));
+var _userOnlineOrchestrator = _interopRequireDefault(require("./user-online-orchestrator"));
 var _notifyOrchestrator = _interopRequireDefault(require("./notify-orchestrator"));
 var _notifyUserOrchestrator = _interopRequireDefault(require("./notify-user-orchestrator"));
 var _notifyTemplateOrchestrator = _interopRequireDefault(require("./notify-template-orchestrator"));
@@ -249,6 +250,15 @@ var orchestratorUserSession = [{
 }];
 
 /**
+ * USER ONLINE
+ */
+var orchestratorUserOnline = [{
+  type: _constants["default"].types.MsgTypeUserOnline,
+  action: _constants["default"].actions.MsgActionUserOnlineGetAll,
+  orchestrator: _userOnlineOrchestrator["default"].getAllUserOnline
+}];
+
+/**
  * NOTIFY
  */
 var orchestratorNotify = [{
@@ -311,6 +321,6 @@ var orchestratorNotifyTemplate = [{
 /**
  * BASE
  */
-var orchestrators = [].concat(orchestratorAuth, orchestratorConfig, orchestratorHome, orchestratorHealth, orchestratorOrganization, orchestratorProject, orchestratorRole, orchestratorPermission, orchestratorUser, orchestratorUserSession, orchestratorNotify, orchestratorNotifyUser, orchestratorNotifyTemplate);
+var orchestrators = [].concat(orchestratorAuth, orchestratorConfig, orchestratorHome, orchestratorHealth, orchestratorOrganization, orchestratorProject, orchestratorRole, orchestratorPermission, orchestratorUser, orchestratorUserSession, orchestratorUserOnline, orchestratorNotify, orchestratorNotifyUser, orchestratorNotifyTemplate);
 var _default = orchestrators;
 exports["default"] = _default;

@@ -211,6 +211,15 @@ export default [
     controller: permissions.admin.userSessions.DELETE
   },
   /**
+   * USER ONLINE
+   */
+  {
+    enable: true,
+    pathName: '/users/onlines',
+    method: 'GET',
+    controller: permissions.admin.userOnlines.GET_ALL
+  },
+  /**
    * NOTIFY TEMPLATE
    */
   {

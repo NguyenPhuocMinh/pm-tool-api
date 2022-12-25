@@ -12,6 +12,7 @@ var _rolePermission = _interopRequireDefault(require("./role-permission"));
 var _perPermission = _interopRequireDefault(require("./per-permission"));
 var _userPermission = _interopRequireDefault(require("./user-permission"));
 var _userSessionPermission = _interopRequireDefault(require("./user-session-permission"));
+var _userOnlinePermission = _interopRequireDefault(require("./user-online-permission"));
 var _notifyTemplatePermission = _interopRequireDefault(require("./notify-template-permission"));
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 var permissions = {
@@ -23,6 +24,7 @@ var permissions = {
     permissions: _perPermission["default"],
     users: _userPermission["default"],
     userSessions: _userSessionPermission["default"],
+    userOnlines: _userOnlinePermission["default"],
     notifyTemplates: _notifyTemplatePermission["default"]
   }
 };

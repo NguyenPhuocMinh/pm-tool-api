@@ -54,6 +54,7 @@ var ROLE_CONTROLLER = 'role-controller';
 var PERMISSION_CONTROLLER = 'permission-controller';
 var USER_CONTROLLER = 'user-controller';
 var USER_SESSION_CONTROLLER = 'user-session-controller';
+var USER_ONLINE_CONTROLLER = 'user-online-controller';
 var NOTIFY_CONTROLLER = 'notify-controller';
 var NOTIFY_USER_CONTROLLER = 'notify-user-controller';
 var NOTIFY_TEMPLATE_CONTROLLER = 'notify-template-controller';
@@ -69,6 +70,7 @@ var STRUCT_CONTROLLERS = {
   PERMISSION_CONTROLLER: PERMISSION_CONTROLLER,
   USER_CONTROLLER: USER_CONTROLLER,
   USER_SESSION_CONTROLLER: USER_SESSION_CONTROLLER,
+  USER_ONLINE_CONTROLLER: USER_ONLINE_CONTROLLER,
   NOTIFY_CONTROLLER: NOTIFY_CONTROLLER,
   NOTIFY_USER_CONTROLLER: NOTIFY_USER_CONTROLLER,
   NOTIFY_TEMPLATE_CONTROLLER: NOTIFY_TEMPLATE_CONTROLLER
@@ -88,6 +90,7 @@ var ROLE_ORCHESTRATOR = 'role-orchestrator';
 var PERMISSION_ORCHESTRATOR = 'permission-orchestrator';
 var USER_ORCHESTRATOR = 'user-orchestrator';
 var USER_SESSION_ORCHESTRATOR = 'user-session-orchestrator';
+var USER_ONLINE_ORCHESTRATOR = 'user-online-orchestrator';
 var NOTIFY_ORCHESTRATOR = 'notify-orchestrator';
 var NOTIFY_USER_ORCHESTRATOR = 'notify-user-orchestrator';
 var NOTIFY_TEMPLATE_ORCHESTRATOR = 'notify-template-orchestrator';
@@ -103,6 +106,7 @@ var STRUCT_ORCHESTRATORS = {
   PERMISSION_ORCHESTRATOR: PERMISSION_ORCHESTRATOR,
   USER_ORCHESTRATOR: USER_ORCHESTRATOR,
   USER_SESSION_ORCHESTRATOR: USER_SESSION_ORCHESTRATOR,
+  USER_ONLINE_ORCHESTRATOR: USER_ONLINE_ORCHESTRATOR,
   NOTIFY_ORCHESTRATOR: NOTIFY_ORCHESTRATOR,
   NOTIFY_USER_ORCHESTRATOR: NOTIFY_USER_ORCHESTRATOR,
   NOTIFY_TEMPLATE_ORCHESTRATOR: NOTIFY_TEMPLATE_ORCHESTRATOR
@@ -144,7 +148,8 @@ var PROJECT_TRANSFER = 'project-transfer';
 var ROLE_TRANSFER = 'role-transfer';
 var PERMISSION_TRANSFER = 'permission-transfer';
 var USER_TRANSFER = 'user-transfer';
-var USER_SESSION_TRANSFER = 'user-transfer';
+var USER_SESSION_TRANSFER = 'user-session-transfer';
+var USER_ONLINE_TRANSFER = 'user--online-transfer';
 var NOTIFY_TRANSFER = 'notify-transfer';
 var NOTIFY_USER_TRANSFER = 'notify-user-transfer';
 var NOTIFY_TEMPLATE_TRANSFER = 'notify-template-transfer';
@@ -156,6 +161,7 @@ var STRUCT_TRANSFERS = {
   PERMISSION_TRANSFER: PERMISSION_TRANSFER,
   USER_TRANSFER: USER_TRANSFER,
   USER_SESSION_TRANSFER: USER_SESSION_TRANSFER,
+  USER_ONLINE_TRANSFER: USER_ONLINE_TRANSFER,
   NOTIFY_TRANSFER: NOTIFY_TRANSFER,
   NOTIFY_USER_TRANSFER: NOTIFY_USER_TRANSFER,
   NOTIFY_TEMPLATE_TRANSFER: NOTIFY_TEMPLATE_TRANSFER
@@ -250,6 +256,7 @@ var types = {
   MsgTypePermission: 'PERMISSION',
   MsgTypeUser: 'USER',
   MsgTypeUserSession: 'USER_SESSION',
+  MsgTypeUserOnline: 'USER_ONLINE',
   MsgTypeNotify: 'NOTIFY',
   MsgTypeNotifyUser: 'NOTIFY_USER',
   MsgTypeNotifyTemplate: 'NOTIFY_TEMPLATE'
@@ -359,6 +366,13 @@ var userSessionActions = {
 };
 
 /**
+ * @description USER ONLINE ACTIONS
+ */
+var userOnlineActions = {
+  MsgActionUserOnlineGetAll: 'USER_ONLINE_GET_ALL'
+};
+
+/**
  * @description NOTIFY ACTIONS
  */
 var notifyActions = {
@@ -405,7 +419,7 @@ var notifyTypes = {
 var senders = {
   SENDER_SYSTEM: 'SYSTEM'
 };
-var actions = _objectSpread(_objectSpread(_objectSpread(_objectSpread(_objectSpread(_objectSpread(_objectSpread(_objectSpread(_objectSpread(_objectSpread(_objectSpread(_objectSpread(_objectSpread({}, authActions), configActions), homeActions), HealthActions), organizationActions), projectActions), roleActions), permissionActions), userActions), userSessionActions), notifyActions), notifyUserActions), notifyTemplateActions);
+var actions = _objectSpread(_objectSpread(_objectSpread(_objectSpread(_objectSpread(_objectSpread(_objectSpread(_objectSpread(_objectSpread(_objectSpread(_objectSpread(_objectSpread(_objectSpread(_objectSpread({}, authActions), configActions), homeActions), HealthActions), organizationActions), projectActions), roleActions), permissionActions), userActions), userSessionActions), userOnlineActions), notifyActions), notifyUserActions), notifyTemplateActions);
 var constants = {
   types: types,
   actions: actions,

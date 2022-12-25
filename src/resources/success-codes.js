@@ -8,6 +8,7 @@ import roleSuccess from './success/role-success';
 import permissionSuccess from './success/permission-success';
 import userSuccess from './success/user-success';
 import userSessionSuccess from './success/user-session-success';
+import userOnlineSuccess from './success/user-online-success';
 import notifySuccess from './success/notify-success';
 import notifyUserSuccess from './success/notify-user-success';
 import notifyTemplateSuccess from './success/notify-template-success';
@@ -21,6 +22,7 @@ const successCodes = {
   ...permissionSuccess,
   ...userSuccess,
   ...userSessionSuccess,
+  ...userOnlineSuccess,
   ...notifySuccess,
   ...notifyUserSuccess,
   ...notifyTemplateSuccess

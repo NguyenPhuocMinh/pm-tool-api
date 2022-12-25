@@ -3,33 +3,33 @@
 import { userSessionController } from '@mappings/controllers';
 
 /**
- * @description Session router
+ * @description User Session router
  */
-const sessionRouter = [
+const userSessionRouter = [
   {
-    pathName: '/users/sessions/:userID',
+    pathName: '/users-session/:userID',
     method: 'GET',
     methodName: 'getUserTimelineSession',
     controller: userSessionController.getUserTimelineSession
   },
   {
-    pathName: '/users/sessions',
+    pathName: '/users-session',
     method: 'POST',
     methodName: 'createUserSession',
     controller: userSessionController.createUserSession
   },
   {
-    pathName: '/users/sessions/:id',
+    pathName: '/users-session/:id',
     method: 'PATCH',
     methodName: 'updateUserSession',
     controller: userSessionController.updateUserSession
   },
   {
-    pathName: '/users/sessions/:id',
+    pathName: '/users-session/:id',
     method: 'DELETE',
     methodName: 'deleteUserSession',
     controller: userSessionController.deleteUserSession
   }
 ];
 
-export default sessionRouter;
+export default userSessionRouter;

@@ -50,6 +50,10 @@ var _default = {
       type: Boolean,
       "default": false
     },
+    isOnline: {
+      type: Boolean,
+      "default": false
+    },
     slug: {
       type: String
     },

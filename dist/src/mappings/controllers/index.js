@@ -75,6 +75,12 @@ Object.defineProperty(exports, "userController", {
     return _userController["default"];
   }
 });
+Object.defineProperty(exports, "userOnlineController", {
+  enumerable: true,
+  get: function get() {
+    return _userOnlineController["default"];
+  }
+});
 Object.defineProperty(exports, "userSessionController", {
   enumerable: true,
   get: function get() {
@@ -92,6 +98,7 @@ var _roleController = _interopRequireDefault(require("./role-controller"));
 var _permissionController = _interopRequireDefault(require("./permission-controller"));
 var _userController = _interopRequireDefault(require("./user-controller"));
 var _userSessionController = _interopRequireDefault(require("./user-session-controller"));
+var _userOnlineController = _interopRequireDefault(require("./user-online-controller"));
 var _notifyController = _interopRequireDefault(require("./notify-controller"));
 var _notifyUserController = _interopRequireDefault(require("./notify-user-controller"));
 var _notifyTemplateController = _interopRequireDefault(require("./notify-template-controller"));

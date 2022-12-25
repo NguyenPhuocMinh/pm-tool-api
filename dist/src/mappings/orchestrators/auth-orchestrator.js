@@ -93,17 +93,18 @@ var signIn = /*#__PURE__*/function () {
               expiresIn: DEFAULT_EXPIRES_REFRESH_TOKEN
             }, _conf.options.jwtOptions)); // save refresh token into db
             user.refreshToken = _refreshToken;
-            _context.next = 23;
+            user.isOnline = true;
+            _context.next = 24;
             return user.save();
-          case 23:
+          case 24:
             // save token in session
             (0, _stores.sessionStore)(req, token);
 
             // save whitelist token in redis
             wlKey = "whitelist_".concat(data.id);
-            _context.next = 27;
+            _context.next = 28;
             return _redis["default"].setExValue(wlKey, token, DEFAULT_EXPIRES_TOKEN);
-          case 27:
+          case 28:
             loggerFactory.info("Function signIn has been end");
             return _context.abrupt("return", {
               result: {
@@ -111,19 +112,19 @@ var signIn = /*#__PURE__*/function () {
               },
               msg: 'authS001'
             });
-          case 31:
-            _context.prev = 31;
+          case 32:
+            _context.prev = 32;
             _context.t0 = _context["catch"](1);
             loggerFactory.error("Function signIn has error", {
               args: _utils["default"].formatErrorMsg(_context.t0)
             });
             return _context.abrupt("return", _bluebird["default"].reject(_context.t0));
-          case 35:
+          case 36:
           case "end":
             return _context.stop();
         }
       }
-    }, _callee, null, [[1, 31]]);
+    }, _callee, null, [[1, 32]]);
   }));
   return function signIn(_x) {
     return _ref.apply(this, arguments);
@@ -164,6 +165,10 @@ var signOut = /*#__PURE__*/function () {
             _context2.next = 15;
             return _redis["default"].setExValue(blKey, token, tokenExp);
           case 15:
+            user.isOnline = false;
+            _context2.next = 18;
+            return user.save();
+          case 18:
             loggerFactory.info("Function signOut has been end");
             return _context2.abrupt("return", {
               result: {
@@ -171,19 +176,19 @@ var signOut = /*#__PURE__*/function () {
               },
               msg: 'authS002'
             });
-          case 19:
-            _context2.prev = 19;
+          case 22:
+            _context2.prev = 22;
             _context2.t0 = _context2["catch"](2);
             loggerFactory.error("Function signOut has error", {
               args: _utils["default"].formatErrorMsg(_context2.t0)
             });
             return _context2.abrupt("return", _bluebird["default"].reject(_context2.t0));
-          case 23:
+          case 26:
           case "end":
             return _context2.stop();
         }
       }
-    }, _callee2, null, [[2, 19]]);
+    }, _callee2, null, [[2, 22]]);
   }));
   return function signOut(_x2) {
     return _ref2.apply(this, arguments);
@@ -392,6 +397,11 @@ var revokeToken = /*#__PURE__*/function () {
             _context6.next = 19;
             return _redis["default"].deleteValue(wlKey);
           case 19:
+            // set isOnline is false
+            user.isOnline = false;
+            _context6.next = 22;
+            return user.save();
+          case 22:
             loggerFactory.info("Function revokeToken has been end");
             return _context6.abrupt("return", {
               result: {
@@ -399,19 +409,19 @@ var revokeToken = /*#__PURE__*/function () {
               },
               msg: 'authS005'
             });
-          case 23:
-            _context6.prev = 23;
+          case 26:
+            _context6.prev = 26;
             _context6.t0 = _context6["catch"](2);
             loggerFactory.error("Function revokeToken has error", {
               args: _utils["default"].formatErrorMsg(_context6.t0)
             });
             return _context6.abrupt("return", _bluebird["default"].reject(_context6.t0));
-          case 27:
+          case 30:
           case "end":
             return _context6.stop();
         }
       }
-    }, _callee6, null, [[2, 23]]);
+    }, _callee6, null, [[2, 26]]);
   }));
   return function revokeToken(_x7) {
     return _ref6.apply(this, arguments);

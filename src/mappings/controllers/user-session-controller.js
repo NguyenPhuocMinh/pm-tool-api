@@ -19,7 +19,9 @@ const loggerFactory = loggerManager(
  * @param {*} next
  */
 const getUserTimelineSession = (req, res, next) => {
-  loggerFactory.info(`Function getUserTimelineSession Controller has been start`);
+  loggerFactory.info(
+    `Function getUserTimelineSession Controller has been start`
+  );
   const toolBox = { req, res, next };
   baseController(
     toolBox,
@@ -70,9 +72,7 @@ const updateUserSession = (req, res, next) => {
  * @param {*} next
  */
 const deleteUserSession = (req, res, next) => {
-  loggerFactory.info(
-    `Function deleteUserSession Controller has been start`
-  );
+  loggerFactory.info(`Function deleteUserSession Controller has been start`);
   const toolBox = { req, res, next };
   baseController(
     toolBox,
@@ -82,11 +82,11 @@ const deleteUserSession = (req, res, next) => {
   loggerFactory.info(`Function deleteUserSession Controller has been end`);
 };
 
-const sessionController = {
+const userSessionController = {
   getUserTimelineSession,
   createUserSession,
   updateUserSession,
   deleteUserSession
 };
 
-export default sessionController;
+export default userSessionController;

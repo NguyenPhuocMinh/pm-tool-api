@@ -27,16 +27,6 @@ const Init = async (httpServer) => {
         origin: options.allowList,
         methods: ['GET', 'POST'],
         credentials: true
-      },
-      allowRequest: (req, callback) => {
-        loggerFactory.debug('Socket io allowed request', {
-          args: {
-            domain: req.headers.origin
-          }
-        });
-        const isDomainAllowed =
-          options.allowList.indexOf(req.headers.origin) !== -1;
-        callback(null, isDomainAllowed);
       }
     });
 
@@ -67,7 +57,7 @@ const Init = async (httpServer) => {
       });
 
       socket.on('disconnect', (reason) => {
-        loggerFactory.warn('User has disconnect', {
+        loggerFactory.warn('Socket has disconnect', {
           args: {
             reason
           }

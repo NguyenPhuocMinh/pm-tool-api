@@ -10,6 +10,7 @@ import roleController from './role-controller';
 import permissionController from './permission-controller';
 import userController from './user-controller';
 import userSessionController from './user-session-controller';
+import userOnlineController from './user-online-controller';
 import notifyController from './notify-controller';
 import notifyUserController from './notify-user-controller';
 import notifyTemplateController from './notify-template-controller';
@@ -25,6 +26,7 @@ export {
   permissionController,
   userController,
   userSessionController,
+  userOnlineController,
   notifyController,
   notifyUserController,
   notifyTemplateController
