@@ -56,7 +56,7 @@ export const validatorUserSetPass = (data) => {
     }
   );
 
-  const { error } = schemaSetPass.validate(data);
+  const { error } = schemaSetPass.validate(data, { allowUnknown: true });
 
   if (error) {
     loggerFactory.debug(

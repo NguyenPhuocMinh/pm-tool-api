@@ -41,7 +41,9 @@ var validatorUserSetPass = function validatorUserSetPass(data) {
   loggerFactory.debug('Function validatorUserSetPass has been start with data', {
     args: data
   });
-  var _schemaSetPass$valida = schemaSetPass.validate(data),
+  var _schemaSetPass$valida = schemaSetPass.validate(data, {
+      allowUnknown: true
+    }),
     error = _schemaSetPass$valida.error;
   if (error) {
     loggerFactory.debug('Function validatorUserSetPass has been end with error', {
