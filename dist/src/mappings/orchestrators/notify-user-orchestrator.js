@@ -162,7 +162,7 @@ var getDetailNotifyUser = /*#__PURE__*/function () {
  */
 var getAllDataNotifyUser = /*#__PURE__*/function () {
   var _ref3 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee3(toolBox) {
-    var req, _req$query, id, isNew, _helpers$paginationHe2, skip, limit, query, sort, notifyUsers, total, result;
+    var req, id, _helpers$paginationHe2, skip, limit, query, sort, notifyUsers, total, result;
     return _regeneratorRuntime().wrap(function _callee3$(_context3) {
       while (1) {
         switch (_context3.prev = _context3.next) {
@@ -170,12 +170,10 @@ var getAllDataNotifyUser = /*#__PURE__*/function () {
             req = toolBox.req;
             _context3.prev = 1;
             loggerFactory.info("Function getAllDataNotifyUser has been start");
-            _req$query = req.query, id = _req$query.id, isNew = _req$query.isNew;
+            id = req.query.id;
             _helpers$paginationHe2 = _helpers["default"].paginationHelper(req.query), skip = _helpers$paginationHe2.skip, limit = _helpers$paginationHe2.limit;
             query = _helpers["default"].queryHelper(req.query, null, [{
               user: id
-            }, {
-              'details.isNew': isNew
             }]);
             sort = _helpers["default"].sortHelper(req.query);
             _context3.next = 9;
@@ -208,10 +206,7 @@ var getAllDataNotifyUser = /*#__PURE__*/function () {
             _context3.next = 12;
             return _repository["default"].count({
               type: 'NotifyModel',
-              filter: {
-                user: id,
-                'details.isRead': false
-              }
+              filter: query
             });
           case 12:
             total = _context3.sent;

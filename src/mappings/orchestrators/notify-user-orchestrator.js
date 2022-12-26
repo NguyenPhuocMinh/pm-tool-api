@@ -128,13 +128,10 @@ const getAllDataNotifyUser = async (toolBox) => {
   try {
     loggerFactory.info(`Function getAllDataNotifyUser has been start`);
 
-    const { id, isNew } = req.query;
+    const { id } = req.query;
 
     const { skip, limit } = helpers.paginationHelper(req.query);
-    const query = helpers.queryHelper(req.query, null, [
-      { user: id },
-      { 'details.isNew': isNew }
-    ]);
+    const query = helpers.queryHelper(req.query, null, [{ user: id }]);
     const sort = helpers.sortHelper(req.query);
 
     const notifyUsers = await repository.findAll({
@@ -168,10 +165,7 @@ const getAllDataNotifyUser = async (toolBox) => {
 
     const total = await repository.count({
       type: 'NotifyModel',
-      filter: {
-        user: id,
-        'details.isRead': false
-      }
+      filter: query
     });
 
     const result = await commons.dataResponsesMapper(notifyUsers);
