@@ -17,12 +17,14 @@ var corsOptions = function corsOptions(req, callback) {
   if (isDomainAllowed) {
     // Enable CORS for this request
     corsOptions = {
-      origin: true
+      origin: true,
+      credentials: true
     };
   } else {
     // Disable CORS for this request
     corsOptions = {
-      origin: false
+      origin: false,
+      credentials: false
     };
   }
   callback(null, corsOptions);

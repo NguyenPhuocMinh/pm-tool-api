@@ -397,7 +397,9 @@ const notifyUserActions = {
   MsgActionNotifyUserGetAll: 'NOTIFY_USER_GET_ALL',
   MsgActionNotifyUserGetId: 'NOTIFY_USER_GET_ID',
   MsgActionNotifyUserGetAllData: 'NOTIFY_USER_GET_ALL_DATA',
-  MsgActionNotifyUserGetAllUnRead: 'NOTIFY_USER_GET_ALL_UNREAD'
+  MsgActionNotifyUserGetAllUnRead: 'NOTIFY_USER_GET_ALL_UNREAD',
+  MsgActionNotifyUserRead: 'NOTIFY_USER_READ',
+  MsgActionNotifyUserReadAll: 'NOTIFY_USER_READ_ALL'
 };
 
 /**

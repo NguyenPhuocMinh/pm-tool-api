@@ -109,5 +109,13 @@ var _default = [
   enable: true,
   method: 'GET',
   pathName: '/notify/users-unread'
+}, {
+  enable: true,
+  method: 'PATCH',
+  pathName: '/notify/users-read'
+}, {
+  enable: true,
+  method: 'PATCH',
+  pathName: '/notify/users-reads'
 }];
 exports["default"] = _default;

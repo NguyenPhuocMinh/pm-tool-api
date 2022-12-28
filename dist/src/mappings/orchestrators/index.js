@@ -302,6 +302,14 @@ var orchestratorNotifyUser = [{
   type: _constants["default"].types.MsgTypeNotifyUser,
   action: _constants["default"].actions.MsgActionNotifyUserGetAllUnRead,
   orchestrator: _notifyUserOrchestrator["default"].getAllUnReadNotifyUser
+}, {
+  type: _constants["default"].types.MsgTypeNotifyUser,
+  action: _constants["default"].actions.MsgActionNotifyUserRead,
+  orchestrator: _notifyUserOrchestrator["default"].readNotifyUser
+}, {
+  type: _constants["default"].types.MsgTypeNotifyUser,
+  action: _constants["default"].actions.MsgActionNotifyUserReadAll,
+  orchestrator: _notifyUserOrchestrator["default"].readAllNotifyUser
 }];
 
 /**

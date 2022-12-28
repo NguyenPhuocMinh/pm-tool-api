@@ -361,6 +361,16 @@ const orchestratorNotifyUser = [
     type: constants.types.MsgTypeNotifyUser,
     action: constants.actions.MsgActionNotifyUserGetAllUnRead,
     orchestrator: notifyUserOrchestrator.getAllUnReadNotifyUser
+  },
+  {
+    type: constants.types.MsgTypeNotifyUser,
+    action: constants.actions.MsgActionNotifyUserRead,
+    orchestrator: notifyUserOrchestrator.readNotifyUser
+  },
+  {
+    type: constants.types.MsgTypeNotifyUser,
+    action: constants.actions.MsgActionNotifyUserReadAll,
+    orchestrator: notifyUserOrchestrator.readAllNotifyUser
   }
 ];
 

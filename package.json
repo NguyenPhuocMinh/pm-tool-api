@@ -1,6 +1,6 @@
 {
   "name": "pm-tool-api",
-  "version": "1.0.0",
+  "version": "0.2.0",
   "description": "Building pm-tool-api",
   "main": "server.js",
   "scripts": {
@@ -43,6 +43,7 @@
     "node-fetch": "^2.6.7",
     "redis": "^4.5.0",
     "retry": "^0.13.1",
+    "serve-favicon": "^2.5.0",
     "slugify": "^1.6.5",
     "socket.io": "^4.5.3",
     "source-map-support": "^0.5.21",

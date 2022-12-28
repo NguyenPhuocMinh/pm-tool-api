@@ -29,6 +29,18 @@ const notifyUserRouter = [
     method: 'GET',
     methodName: 'getAllUnReadNotifyUser',
     controller: notifyUserController.getAllUnReadNotifyUser
+  },
+  {
+    pathName: '/notify/users-read',
+    method: 'PATCH',
+    methodName: 'readNotifyUser',
+    controller: notifyUserController.readNotifyUser
+  },
+  {
+    pathName: '/notify/users-reads',
+    method: 'PATCH',
+    methodName: 'readAllNotifyUser',
+    controller: notifyUserController.readAllNotifyUser
   }
 ];
 

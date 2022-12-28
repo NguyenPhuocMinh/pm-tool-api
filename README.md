@@ -19,6 +19,7 @@
 
 - **Setup Eslint extension**
 - **Setup prettier extension**
+- **Setup redis cli**
 - **Setup aws cli**
 - **Setup docker**
 - **Setup CircleCI**
@@ -39,21 +40,22 @@ $ npm install
 
 ## Ex .env
 
-- APP_PORT=8080
+- APP_PORT=7979
 - APP_HOST=0.0.0.0
 - APP_DOCS_PATH=/docs
 - APP_MONGO_URI=mongodb://127.0.0.1:27017/pm-tool
+- APP_REDIS_URI=redis://localhost:6379
 - APP_DOMAIN_PATH=http://localhost:3500
 - APP_SECRET_KEY=do-biet-day-secret
-- APP_AUDIENCE=http://localhost:3500
-- APP_ISSUER=pm-tool-iss
+- APP_AUDIENCE=pm-tool-aud
+- APP_ISSUER=http://localhost:3500
 
 ## Run
 
 - **Start local**
 
 ```sh
-$ npm start
+$ npm run dev
 ```
 
 or
@@ -77,7 +79,7 @@ $ npm run lint:check
 ## Docs
 
 ```sh
-$ http://localhost:8080/docs
+$ http://localhost:7979/docs
 ```
 
 ## Docker
@@ -256,4 +258,4 @@ $ aws ecr describe-images \
 ## Server testing vercel app
 
 - https://pm-tool-api.vercel.app
-- curl "https://pm-tool-api.vercel.app/socket.io/?EIO=4&transport=polling"
+- check connect socket => curl "https://pm-tool-api.vercel.app/socket.io/?EIO=4&transport=polling"

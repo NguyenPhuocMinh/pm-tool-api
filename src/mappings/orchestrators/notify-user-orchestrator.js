@@ -259,6 +259,114 @@ const getAllUnReadNotifyUser = async (toolBox) => {
 };
 
 /**
+ * @description Read Notify Of User Orchestrator
+ * @param {*} toolBox { req, res, next }
+ */
+const readNotifyUser = async (toolBox) => {
+  const { req } = toolBox;
+  try {
+    loggerFactory.info(`Function readNotifyUser has been start`);
+
+    const { id } = req.body;
+
+    const { updatedAt, updatedBy } = helpers.attributeHelper(req, {});
+
+    const response = await repository.updateOne({
+      type: 'NotifyModel',
+      id,
+      doc: {
+        details: {
+          isNew: false,
+          isRead: true,
+          readAt: updatedAt
+        },
+        updatedAt,
+        updatedBy
+      }
+    });
+
+    loggerFactory.info(`Function readNotifyUser has been start`);
+
+    return {
+      result: {
+        data: {
+          id: response._id
+        }
+      },
+      msg: 'notifyUserS005'
+    };
+  } catch (err) {
+    loggerFactory.error(`Function readNotifyUser has error`, {
+      args: utils.formatErrorMsg(err)
+    });
+    return Promise.reject(err);
+  }
+};
+
+/**
+ * @description Read All Notify Of User Orchestrator
+ * @param {*} toolBox { req, res, next }
+ */
+const readAllNotifyUser = async (toolBox) => {
+  const { req } = toolBox;
+  try {
+    loggerFactory.info(`Function readAllNotifyUser has been start`);
+
+    const { id } = req.body;
+
+    const { updatedAt, updatedBy } = helpers.attributeHelper(req, {});
+
+    // find all by userId and isRead false
+    const notifyUsersUnread = await repository.findAll({
+      type: 'NotifyModel',
+      filter: {
+        user: id,
+        'details.isRead': false,
+        deleted: false
+      },
+      projection: {
+        _id: 1
+      }
+    });
+
+    // map to list id
+    const idsUnread = notifyUsersUnread.map((e) => e._id);
+
+    const response = await repository.updateMany({
+      type: 'NotifyModel',
+      filter: {
+        _id: {
+          $in: idsUnread
+        }
+      },
+      doc: {
+        details: {
+          isNew: false,
+          isRead: true,
+          readAt: updatedAt
+        },
+        updatedAt: updatedAt,
+        updatedBy: updatedBy
+      }
+    });
+
+    loggerFactory.info(`Function readAllNotifyUser has been start`);
+
+    return {
+      result: {
+        data: response
+      },
+      msg: 'notifyUserS006'
+    };
+  } catch (err) {
+    loggerFactory.error(`Function readAllNotifyUser has error`, {
+      args: utils.formatErrorMsg(err)
+    });
+    return Promise.reject(err);
+  }
+};
+
+/**
  * @description Get Notify User Func
  * @param {*} id
  */
@@ -305,7 +413,9 @@ const notifyUserOrchestrator = {
   getAllNotifyUser,
   getDetailNotifyUser,
   getAllDataNotifyUser,
-  getAllUnReadNotifyUser
+  getAllUnReadNotifyUser,
+  readNotifyUser,
+  readAllNotifyUser
 };
 
 export default notifyUserOrchestrator;

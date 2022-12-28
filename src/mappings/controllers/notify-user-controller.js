@@ -82,11 +82,47 @@ const getAllUnReadNotifyUser = (req, res, next) => {
   loggerFactory.info(`Function getAllUnReadNotifyUser Controller has been end`);
 };
 
+/**
+ * @description Read One Notify Of User Controller
+ * @param {*} req
+ * @param {*} res
+ * @param {*} next
+ */
+const readNotifyUser = (req, res, next) => {
+  loggerFactory.info(`Function readNotifyUser Controller has been start`);
+  const toolBox = { req, res, next };
+  baseController(
+    toolBox,
+    constants.types.MsgTypeNotifyUser,
+    constants.actions.MsgActionNotifyUserRead
+  );
+  loggerFactory.info(`Function readNotifyUser Controller has been end`);
+};
+
+/**
+ * @description Read All Notify Of User Controller
+ * @param {*} req
+ * @param {*} res
+ * @param {*} next
+ */
+const readAllNotifyUser = (req, res, next) => {
+  loggerFactory.info(`Function readAllNotifyUser Controller has been start`);
+  const toolBox = { req, res, next };
+  baseController(
+    toolBox,
+    constants.types.MsgTypeNotifyUser,
+    constants.actions.MsgActionNotifyUserReadAll
+  );
+  loggerFactory.info(`Function readAllNotifyUser Controller has been end`);
+};
+
 const notifyUserController = {
   getAllNotifyUser,
   getDetailNotifyUser,
   getAllDataNotifyUser,
-  getAllUnReadNotifyUser
+  getAllUnReadNotifyUser,
+  readNotifyUser,
+  readAllNotifyUser
 };
 
 export default notifyUserController;

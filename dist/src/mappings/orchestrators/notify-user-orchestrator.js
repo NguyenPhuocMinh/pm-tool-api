@@ -329,24 +329,164 @@ var getAllUnReadNotifyUser = /*#__PURE__*/function () {
 }();
 
 /**
- * @description Get Notify User Func
- * @param {*} id
+ * @description Read Notify Of User Orchestrator
+ * @param {*} toolBox { req, res, next }
  */
-var getNotifyUserFunc = /*#__PURE__*/function () {
-  var _ref5 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee5(id) {
-    var notify;
+var readNotifyUser = /*#__PURE__*/function () {
+  var _ref5 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee5(toolBox) {
+    var req, id, _helpers$attributeHel, updatedAt, updatedBy, response;
     return _regeneratorRuntime().wrap(function _callee5$(_context5) {
       while (1) {
         switch (_context5.prev = _context5.next) {
           case 0:
-            _context5.prev = 0;
+            req = toolBox.req;
+            _context5.prev = 1;
+            loggerFactory.info("Function readNotifyUser has been start");
+            id = req.body.id;
+            _helpers$attributeHel = _helpers["default"].attributeHelper(req, {}), updatedAt = _helpers$attributeHel.updatedAt, updatedBy = _helpers$attributeHel.updatedBy;
+            _context5.next = 7;
+            return _repository["default"].updateOne({
+              type: 'NotifyModel',
+              id: id,
+              doc: {
+                details: {
+                  isNew: false,
+                  isRead: true,
+                  readAt: updatedAt
+                },
+                updatedAt: updatedAt,
+                updatedBy: updatedBy
+              }
+            });
+          case 7:
+            response = _context5.sent;
+            loggerFactory.info("Function readNotifyUser has been start");
+            return _context5.abrupt("return", {
+              result: {
+                data: {
+                  id: response._id
+                }
+              },
+              msg: 'notifyUserS005'
+            });
+          case 12:
+            _context5.prev = 12;
+            _context5.t0 = _context5["catch"](1);
+            loggerFactory.error("Function readNotifyUser has error", {
+              args: _utils["default"].formatErrorMsg(_context5.t0)
+            });
+            return _context5.abrupt("return", _bluebird["default"].reject(_context5.t0));
+          case 16:
+          case "end":
+            return _context5.stop();
+        }
+      }
+    }, _callee5, null, [[1, 12]]);
+  }));
+  return function readNotifyUser(_x5) {
+    return _ref5.apply(this, arguments);
+  };
+}();
+
+/**
+ * @description Read All Notify Of User Orchestrator
+ * @param {*} toolBox { req, res, next }
+ */
+var readAllNotifyUser = /*#__PURE__*/function () {
+  var _ref6 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee6(toolBox) {
+    var req, id, _helpers$attributeHel2, updatedAt, updatedBy, notifyUsersUnread, idsUnread, response;
+    return _regeneratorRuntime().wrap(function _callee6$(_context6) {
+      while (1) {
+        switch (_context6.prev = _context6.next) {
+          case 0:
+            req = toolBox.req;
+            _context6.prev = 1;
+            loggerFactory.info("Function readAllNotifyUser has been start");
+            id = req.body.id;
+            _helpers$attributeHel2 = _helpers["default"].attributeHelper(req, {}), updatedAt = _helpers$attributeHel2.updatedAt, updatedBy = _helpers$attributeHel2.updatedBy; // find all by userId and isRead false
+            _context6.next = 7;
+            return _repository["default"].findAll({
+              type: 'NotifyModel',
+              filter: {
+                user: id,
+                'details.isRead': false,
+                deleted: false
+              },
+              projection: {
+                _id: 1
+              }
+            });
+          case 7:
+            notifyUsersUnread = _context6.sent;
+            // map to list id
+            idsUnread = notifyUsersUnread.map(function (e) {
+              return e._id;
+            });
+            _context6.next = 11;
+            return _repository["default"].updateMany({
+              type: 'NotifyModel',
+              filter: {
+                _id: {
+                  $in: idsUnread
+                }
+              },
+              doc: {
+                details: {
+                  isNew: false,
+                  isRead: true,
+                  readAt: updatedAt
+                },
+                updatedAt: updatedAt,
+                updatedBy: updatedBy
+              }
+            });
+          case 11:
+            response = _context6.sent;
+            loggerFactory.info("Function readAllNotifyUser has been start");
+            return _context6.abrupt("return", {
+              result: {
+                data: response
+              },
+              msg: 'notifyUserS006'
+            });
+          case 16:
+            _context6.prev = 16;
+            _context6.t0 = _context6["catch"](1);
+            loggerFactory.error("Function readAllNotifyUser has error", {
+              args: _utils["default"].formatErrorMsg(_context6.t0)
+            });
+            return _context6.abrupt("return", _bluebird["default"].reject(_context6.t0));
+          case 20:
+          case "end":
+            return _context6.stop();
+        }
+      }
+    }, _callee6, null, [[1, 16]]);
+  }));
+  return function readAllNotifyUser(_x6) {
+    return _ref6.apply(this, arguments);
+  };
+}();
+
+/**
+ * @description Get Notify User Func
+ * @param {*} id
+ */
+var getNotifyUserFunc = /*#__PURE__*/function () {
+  var _ref7 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee7(id) {
+    var notify;
+    return _regeneratorRuntime().wrap(function _callee7$(_context7) {
+      while (1) {
+        switch (_context7.prev = _context7.next) {
+          case 0:
+            _context7.prev = 0;
             if (!(0, _lodash.isEmpty)(id)) {
-              _context5.next = 3;
+              _context7.next = 3;
               break;
             }
             throw _commons["default"].newError('notifyUserE001');
           case 3:
-            _context5.next = 5;
+            _context7.next = 5;
             return _repository["default"].getOne({
               type: 'NotifyModel',
               id: id,
@@ -367,31 +507,33 @@ var getNotifyUserFunc = /*#__PURE__*/function () {
               }
             });
           case 5:
-            notify = _context5.sent;
-            return _context5.abrupt("return", notify);
+            notify = _context7.sent;
+            return _context7.abrupt("return", notify);
           case 9:
-            _context5.prev = 9;
-            _context5.t0 = _context5["catch"](0);
+            _context7.prev = 9;
+            _context7.t0 = _context7["catch"](0);
             loggerFactory.error("Function getNotifyUser has error", {
-              args: _utils["default"].formatErrorMsg(_context5.t0)
+              args: _utils["default"].formatErrorMsg(_context7.t0)
             });
-            return _context5.abrupt("return", _bluebird["default"].reject(_context5.t0));
+            return _context7.abrupt("return", _bluebird["default"].reject(_context7.t0));
           case 13:
           case "end":
-            return _context5.stop();
+            return _context7.stop();
         }
       }
-    }, _callee5, null, [[0, 9]]);
+    }, _callee7, null, [[0, 9]]);
   }));
-  return function getNotifyUserFunc(_x5) {
-    return _ref5.apply(this, arguments);
+  return function getNotifyUserFunc(_x7) {
+    return _ref7.apply(this, arguments);
   };
 }();
 var notifyUserOrchestrator = {
   getAllNotifyUser: getAllNotifyUser,
   getDetailNotifyUser: getDetailNotifyUser,
   getAllDataNotifyUser: getAllDataNotifyUser,
-  getAllUnReadNotifyUser: getAllUnReadNotifyUser
+  getAllUnReadNotifyUser: getAllUnReadNotifyUser,
+  readNotifyUser: readNotifyUser,
+  readAllNotifyUser: readAllNotifyUser
 };
 var _default = notifyUserOrchestrator;
 exports["default"] = _default;

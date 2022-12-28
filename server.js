@@ -11,6 +11,7 @@ import bodyParser from 'body-parser';
 import swaggerUI from 'swagger-ui-express';
 import YAML from 'yamljs';
 import path from 'path';
+import favicon from 'serve-favicon';
 
 // conf
 import { options, profiles } from '@conf';
@@ -53,6 +54,7 @@ const main = async () => {
   app.use(bodyParser.json({ limit: '100mb' }));
   app.use(bodyParser.urlencoded({ limit: '100mb', extended: true }));
   app.use(morgan(loggerMiddleware));
+  app.use(favicon(path.resolve(__dirname, '../src/public', 'favicon.ico')));
 
   /**
    * Docs

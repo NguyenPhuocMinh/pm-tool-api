@@ -29,6 +29,16 @@ var notifyUserRouter = [{
   method: 'GET',
   methodName: 'getAllUnReadNotifyUser',
   controller: _controllers.notifyUserController.getAllUnReadNotifyUser
+}, {
+  pathName: '/notify/users-read',
+  method: 'PATCH',
+  methodName: 'readNotifyUser',
+  controller: _controllers.notifyUserController.readNotifyUser
+}, {
+  pathName: '/notify/users-reads',
+  method: 'PATCH',
+  methodName: 'readAllNotifyUser',
+  controller: _controllers.notifyUserController.readAllNotifyUser
 }];
 var _default = notifyUserRouter;
 exports["default"] = _default;

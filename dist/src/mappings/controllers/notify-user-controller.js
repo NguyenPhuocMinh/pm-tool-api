@@ -80,11 +80,47 @@ var getAllUnReadNotifyUser = function getAllUnReadNotifyUser(req, res, next) {
   (0, _baseController["default"])(toolBox, _constants["default"].types.MsgTypeNotifyUser, _constants["default"].actions.MsgActionNotifyUserGetAllUnRead);
   loggerFactory.info("Function getAllUnReadNotifyUser Controller has been end");
 };
+
+/**
+ * @description Read One Notify Of User Controller
+ * @param {*} req
+ * @param {*} res
+ * @param {*} next
+ */
+var readNotifyUser = function readNotifyUser(req, res, next) {
+  loggerFactory.info("Function readNotifyUser Controller has been start");
+  var toolBox = {
+    req: req,
+    res: res,
+    next: next
+  };
+  (0, _baseController["default"])(toolBox, _constants["default"].types.MsgTypeNotifyUser, _constants["default"].actions.MsgActionNotifyUserRead);
+  loggerFactory.info("Function readNotifyUser Controller has been end");
+};
+
+/**
+ * @description Read All Notify Of User Controller
+ * @param {*} req
+ * @param {*} res
+ * @param {*} next
+ */
+var readAllNotifyUser = function readAllNotifyUser(req, res, next) {
+  loggerFactory.info("Function readAllNotifyUser Controller has been start");
+  var toolBox = {
+    req: req,
+    res: res,
+    next: next
+  };
+  (0, _baseController["default"])(toolBox, _constants["default"].types.MsgTypeNotifyUser, _constants["default"].actions.MsgActionNotifyUserReadAll);
+  loggerFactory.info("Function readAllNotifyUser Controller has been end");
+};
 var notifyUserController = {
   getAllNotifyUser: getAllNotifyUser,
   getDetailNotifyUser: getDetailNotifyUser,
   getAllDataNotifyUser: getAllDataNotifyUser,
-  getAllUnReadNotifyUser: getAllUnReadNotifyUser
+  getAllUnReadNotifyUser: getAllUnReadNotifyUser,
+  readNotifyUser: readNotifyUser,
+  readAllNotifyUser: readAllNotifyUser
 };
 var _default = notifyUserController;
 exports["default"] = _default;

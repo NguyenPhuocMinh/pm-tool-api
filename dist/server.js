@@ -13,6 +13,7 @@ var _bodyParser = _interopRequireDefault(require("body-parser"));
 var _swaggerUiExpress = _interopRequireDefault(require("swagger-ui-express"));
 var _yamljs = _interopRequireDefault(require("yamljs"));
 var _path = _interopRequireDefault(require("path"));
+var _serveFavicon = _interopRequireDefault(require("serve-favicon"));
 var _conf = require("./src/conf");
 var _constants = _interopRequireDefault(require("./src/constants"));
 var _utils = _interopRequireDefault(require("./src/utils"));
@@ -51,6 +52,7 @@ var main = /*#__PURE__*/function () {
               extended: true
             }));
             app.use((0, _morgan["default"])(_middleware.loggerMiddleware));
+            app.use((0, _serveFavicon["default"])(_path["default"].resolve(__dirname, '../src/public', 'favicon.ico')));
 
             /**
              * Docs
@@ -79,21 +81,21 @@ var main = /*#__PURE__*/function () {
             /**
              * Database
              */
-            _context.next = 15;
+            _context.next = 16;
             return _database["default"].Init();
-          case 15:
-            _context.next = 17;
+          case 16:
+            _context.next = 18;
             return _redis["default"].Init();
-          case 17:
-            _context.next = 19;
+          case 18:
+            _context.next = 20;
             return _socket["default"].Init(server);
-          case 19:
+          case 20:
             server.listen(APP_PORT, APP_HOST, function () {
               loggerFactory.http("The server is running on", {
                 args: "[http://".concat(APP_HOST, ":").concat(APP_PORT, "]")
               });
             });
-          case 20:
+          case 21:
           case "end":
             return _context.stop();
         }
