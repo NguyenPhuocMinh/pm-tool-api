@@ -310,6 +310,26 @@ var orchestratorNotifyUser = [{
   type: _constants["default"].types.MsgTypeNotifyUser,
   action: _constants["default"].actions.MsgActionNotifyUserReadAll,
   orchestrator: _notifyUserOrchestrator["default"].readAllNotifyUser
+}, {
+  type: _constants["default"].types.MsgTypeNotifyUser,
+  action: _constants["default"].actions.MsgActionNotifyUserTrash,
+  orchestrator: _notifyUserOrchestrator["default"].trashNotifyUser
+}, {
+  type: _constants["default"].types.MsgTypeNotifyUser,
+  action: _constants["default"].actions.MsgActionNotifyUserTrashAll,
+  orchestrator: _notifyUserOrchestrator["default"].trashAllNotifyUser
+}, {
+  type: _constants["default"].types.MsgTypeNotifyUser,
+  action: _constants["default"].actions.MsgActionNotifyUserGetAllDataTrash,
+  orchestrator: _notifyUserOrchestrator["default"].getAllDataTrashNotifyUser
+}, {
+  type: _constants["default"].types.MsgTypeNotifyUser,
+  action: _constants["default"].actions.MsgActionNotifyUserRollBackDataTrash,
+  orchestrator: _notifyUserOrchestrator["default"].rollBackNotifyUser
+}, {
+  type: _constants["default"].types.MsgTypeNotifyUser,
+  action: _constants["default"].actions.MsgActionNotifyUserRollBackAllDataTrash,
+  orchestrator: _notifyUserOrchestrator["default"].rollBackAllNotifyUser
 }];
 
 /**

@@ -399,7 +399,13 @@ const notifyUserActions = {
   MsgActionNotifyUserGetAllData: 'NOTIFY_USER_GET_ALL_DATA',
   MsgActionNotifyUserGetAllUnRead: 'NOTIFY_USER_GET_ALL_UNREAD',
   MsgActionNotifyUserRead: 'NOTIFY_USER_READ',
-  MsgActionNotifyUserReadAll: 'NOTIFY_USER_READ_ALL'
+  MsgActionNotifyUserReadAll: 'NOTIFY_USER_READ_ALL',
+  MsgActionNotifyUserTrash: 'NOTIFY_USER_TRASH',
+  MsgActionNotifyUserTrashAll: 'NOTIFY_USER_TRASH_ALL',
+  MsgActionNotifyUserGetAllDataTrash: 'NOTIFY_USER_GET_ALL_DATA_TRASH',
+  MsgActionNotifyUserRollBackDataTrash: 'NOTIFY_USER_ROLL_BACK_DATA_TRASH',
+  MsgActionNotifyUserRollBackAllDataTrash:
+    'NOTIFY_USER_ROLL_BACK_ALL_DATA_TRASH'
 };
 
 /**

@@ -39,6 +39,31 @@ var notifyUserRouter = [{
   method: 'PATCH',
   methodName: 'readAllNotifyUser',
   controller: _controllers.notifyUserController.readAllNotifyUser
+}, {
+  pathName: '/notify/users-trash',
+  method: 'PATCH',
+  methodName: 'trashNotifyUser',
+  controller: _controllers.notifyUserController.trashNotifyUser
+}, {
+  pathName: '/notify/users-trashes',
+  method: 'DELETE',
+  methodName: 'trashAllNotifyUser',
+  controller: _controllers.notifyUserController.trashAllNotifyUser
+}, {
+  pathName: '/notify/users-trashes',
+  method: 'GET',
+  methodName: 'getAllDataTrashNotifyUser',
+  controller: _controllers.notifyUserController.getAllDataTrashNotifyUser
+}, {
+  pathName: '/notify/users-rollback',
+  method: 'PATCH',
+  methodName: 'getAllDataTrashNotifyUser',
+  controller: _controllers.notifyUserController.rollBackDataTrashNotifyUser
+}, {
+  pathName: '/notify/users-rollbacks',
+  method: 'PATCH',
+  methodName: 'getAllDataTrashNotifyUser',
+  controller: _controllers.notifyUserController.rollBackAllDataTrashNotifyUser
 }];
 var _default = notifyUserRouter;
 exports["default"] = _default;

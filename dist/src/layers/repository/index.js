@@ -328,6 +328,54 @@ var deleteOne = /*#__PURE__*/function () {
 }();
 
 /**
+ * @description Delete by id
+ * @example
+ * const data = await database.deleteMany({
+ *    type: 'UserModel',
+ *    filter: {
+ *      id: 123
+ *    },
+ * })
+ * @see https://mongoosejs.com/docs/api/model.html#model_Model-deleteMany
+ * @returns
+ */
+var deleteMany = /*#__PURE__*/function () {
+  var _ref14 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee7(_ref13) {
+    var type, filter, options, model, data;
+    return _regeneratorRuntime().wrap(function _callee7$(_context7) {
+      while (1) {
+        switch (_context7.prev = _context7.next) {
+          case 0:
+            type = _ref13.type, filter = _ref13.filter, options = _ref13.options;
+            _context7.prev = 1;
+            loggerFactory.data('Function deleteMany has been start');
+            model = _builds["default"].modelLookup(_schemaLayer["default"], type);
+            _context7.next = 6;
+            return model.deleteMany(filter, options).exec();
+          case 6:
+            data = _context7.sent;
+            loggerFactory.data('Function deleteMany has been end');
+            return _context7.abrupt("return", data);
+          case 11:
+            _context7.prev = 11;
+            _context7.t0 = _context7["catch"](1);
+            loggerFactory.error('Function deleteMany has been error', {
+              args: _utils["default"].formatErrorMsg(_context7.t0)
+            });
+            throw _context7.t0;
+          case 15:
+          case "end":
+            return _context7.stop();
+        }
+      }
+    }, _callee7, null, [[1, 11]]);
+  }));
+  return function deleteMany(_x7) {
+    return _ref14.apply(this, arguments);
+  };
+}();
+
+/**
  * @description Count docs
  * @example
  * const data = await database.count({
@@ -339,38 +387,38 @@ var deleteOne = /*#__PURE__*/function () {
  * @returns
  */
 var count = /*#__PURE__*/function () {
-  var _ref14 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee7(_ref13) {
-    var type, _ref13$filter, filter, model, _count;
-    return _regeneratorRuntime().wrap(function _callee7$(_context7) {
+  var _ref16 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee8(_ref15) {
+    var type, _ref15$filter, filter, model, _count;
+    return _regeneratorRuntime().wrap(function _callee8$(_context8) {
       while (1) {
-        switch (_context7.prev = _context7.next) {
+        switch (_context8.prev = _context8.next) {
           case 0:
-            type = _ref13.type, _ref13$filter = _ref13.filter, filter = _ref13$filter === void 0 ? {} : _ref13$filter;
-            _context7.prev = 1;
+            type = _ref15.type, _ref15$filter = _ref15.filter, filter = _ref15$filter === void 0 ? {} : _ref15$filter;
+            _context8.prev = 1;
             loggerFactory.data('Function count has been start');
             model = _builds["default"].modelLookup(_schemaLayer["default"], type);
-            _context7.next = 6;
+            _context8.next = 6;
             return model.countDocuments(filter).exec();
           case 6:
-            _count = _context7.sent;
+            _count = _context8.sent;
             loggerFactory.data('Function count has been end');
-            return _context7.abrupt("return", _count);
+            return _context8.abrupt("return", _count);
           case 11:
-            _context7.prev = 11;
-            _context7.t0 = _context7["catch"](1);
+            _context8.prev = 11;
+            _context8.t0 = _context8["catch"](1);
             loggerFactory.error('Function count has been error', {
-              args: _utils["default"].formatErrorMsg(_context7.t0)
+              args: _utils["default"].formatErrorMsg(_context8.t0)
             });
-            throw _context7.t0;
+            throw _context8.t0;
           case 15:
           case "end":
-            return _context7.stop();
+            return _context8.stop();
         }
       }
-    }, _callee7, null, [[1, 11]]);
+    }, _callee8, null, [[1, 11]]);
   }));
-  return function count(_x7) {
-    return _ref14.apply(this, arguments);
+  return function count(_x8) {
+    return _ref16.apply(this, arguments);
   };
 }();
 
@@ -388,38 +436,38 @@ var count = /*#__PURE__*/function () {
  * @returns
  */
 var updateMany = /*#__PURE__*/function () {
-  var _ref16 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee8(_ref15) {
+  var _ref18 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee9(_ref17) {
     var type, filter, doc, options, model, data;
-    return _regeneratorRuntime().wrap(function _callee8$(_context8) {
+    return _regeneratorRuntime().wrap(function _callee9$(_context9) {
       while (1) {
-        switch (_context8.prev = _context8.next) {
+        switch (_context9.prev = _context9.next) {
           case 0:
-            type = _ref15.type, filter = _ref15.filter, doc = _ref15.doc, options = _ref15.options;
-            _context8.prev = 1;
+            type = _ref17.type, filter = _ref17.filter, doc = _ref17.doc, options = _ref17.options;
+            _context9.prev = 1;
             loggerFactory.data('Function updateMany has been start');
             model = _builds["default"].modelLookup(_schemaLayer["default"], type);
-            _context8.next = 6;
+            _context9.next = 6;
             return model.updateMany(filter, doc, options).exec();
           case 6:
-            data = _context8.sent;
+            data = _context9.sent;
             loggerFactory.data('Function updateMany has been end');
-            return _context8.abrupt("return", data);
+            return _context9.abrupt("return", data);
           case 11:
-            _context8.prev = 11;
-            _context8.t0 = _context8["catch"](1);
+            _context9.prev = 11;
+            _context9.t0 = _context9["catch"](1);
             loggerFactory.error('Function updateMany has been error', {
-              args: _utils["default"].formatErrorMsg(_context8.t0)
+              args: _utils["default"].formatErrorMsg(_context9.t0)
             });
-            throw _context8.t0;
+            throw _context9.t0;
           case 15:
           case "end":
-            return _context8.stop();
+            return _context9.stop();
         }
       }
-    }, _callee8, null, [[1, 11]]);
+    }, _callee9, null, [[1, 11]]);
   }));
-  return function updateMany(_x8) {
-    return _ref16.apply(this, arguments);
+  return function updateMany(_x9) {
+    return _ref18.apply(this, arguments);
   };
 }();
 
@@ -429,35 +477,35 @@ var updateMany = /*#__PURE__*/function () {
  * @returns
  */
 var bulkWrite = /*#__PURE__*/function () {
-  var _ref18 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee9(_ref17) {
-    var type, _ref17$pipelines, pipelines, options, model, data;
-    return _regeneratorRuntime().wrap(function _callee9$(_context9) {
+  var _ref20 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee10(_ref19) {
+    var type, _ref19$pipelines, pipelines, options, model, data;
+    return _regeneratorRuntime().wrap(function _callee10$(_context10) {
       while (1) {
-        switch (_context9.prev = _context9.next) {
+        switch (_context10.prev = _context10.next) {
           case 0:
-            type = _ref17.type, _ref17$pipelines = _ref17.pipelines, pipelines = _ref17$pipelines === void 0 ? [] : _ref17$pipelines, options = _ref17.options;
-            _context9.prev = 1;
+            type = _ref19.type, _ref19$pipelines = _ref19.pipelines, pipelines = _ref19$pipelines === void 0 ? [] : _ref19$pipelines, options = _ref19.options;
+            _context10.prev = 1;
             loggerFactory.data('Function bulkWrite has been start');
             model = _builds["default"].modelLookup(_schemaLayer["default"], type);
             data = model.bulkWrite(pipelines, options);
             loggerFactory.data('Function bulkWrite has been end');
-            return _context9.abrupt("return", data);
+            return _context10.abrupt("return", data);
           case 9:
-            _context9.prev = 9;
-            _context9.t0 = _context9["catch"](1);
+            _context10.prev = 9;
+            _context10.t0 = _context10["catch"](1);
             loggerFactory.error('Function bulkWrite has been error', {
-              args: _utils["default"].formatErrorMsg(_context9.t0)
+              args: _utils["default"].formatErrorMsg(_context10.t0)
             });
-            throw _context9.t0;
+            throw _context10.t0;
           case 13:
           case "end":
-            return _context9.stop();
+            return _context10.stop();
         }
       }
-    }, _callee9, null, [[1, 9]]);
+    }, _callee10, null, [[1, 9]]);
   }));
-  return function bulkWrite(_x9) {
-    return _ref18.apply(this, arguments);
+  return function bulkWrite(_x10) {
+    return _ref20.apply(this, arguments);
   };
 }();
 var _default = {
@@ -467,6 +515,7 @@ var _default = {
   createOne: createOne,
   updateOne: updateOne,
   deleteOne: deleteOne,
+  deleteMany: deleteMany,
   count: count,
   updateMany: updateMany,
   bulkWrite: bulkWrite

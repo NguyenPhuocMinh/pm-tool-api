@@ -41,6 +41,36 @@ var _default = {
     description: 'Read All Notify User Success',
     returnCode: 1,
     statusCode: 200
+  },
+  notifyUserS007: {
+    message: 'resources.notifyUsers.notifications.success.s007',
+    description: 'Move To Trash Notify User Success',
+    returnCode: 1,
+    statusCode: 200
+  },
+  notifyUserS008: {
+    message: 'resources.notifyUsers.notifications.success.s008',
+    description: 'Deleted All Notify User Success',
+    returnCode: 1,
+    statusCode: 200
+  },
+  notifyUserS009: {
+    message: 'resources.notifyUsers.notifications.success.s009',
+    description: 'Get All Data Trash Notify User Success',
+    returnCode: 1,
+    statusCode: 200
+  },
+  notifyUserS0010: {
+    message: 'resources.notifyUsers.notifications.success.s0010',
+    description: 'Roll Back Notify User Success',
+    returnCode: 1,
+    statusCode: 200
+  },
+  notifyUserS0011: {
+    message: 'resources.notifyUsers.notifications.success.s0011',
+    description: 'Roll Back All Notify User Success',
+    returnCode: 1,
+    statusCode: 200
   }
 };
 exports["default"] = _default;

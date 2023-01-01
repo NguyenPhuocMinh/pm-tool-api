@@ -117,5 +117,25 @@ var _default = [
   enable: true,
   method: 'PATCH',
   pathName: '/notify/users-reads'
+}, {
+  enable: true,
+  method: 'PATCH',
+  pathName: '/notify/users-trash'
+}, {
+  enable: true,
+  method: 'DELETE',
+  pathName: '/notify/users-trashes'
+}, {
+  enable: true,
+  method: 'GET',
+  pathName: '/notify/users-trashes'
+}, {
+  enable: true,
+  method: 'PATCH',
+  pathName: '/notify/users-rollback'
+}, {
+  enable: true,
+  method: 'PATCH',
+  pathName: '/notify/users-rollbacks'
 }];
 exports["default"] = _default;

@@ -7,11 +7,7 @@ const queryHelper = (query = {}, attributes = [], fields = []) => {
   const { search } = query;
 
   const _query = {
-    $and: [
-      {
-        deleted: false
-      }
-    ]
+    $and: []
   };
 
   if (!isEmpty(search)) {
@@ -24,7 +20,7 @@ const queryHelper = (query = {}, attributes = [], fields = []) => {
 
     searchAttributes.forEach((property) => {
       const searchRegex = {};
-      searchRegex[property] = { $regexp: _search };
+      searchRegex[property] = { $regexp: _search, $options: 'i' };
       // eslint-disable-next-line dot-notation
       querySearch['$or'].push(searchRegex);
     });

@@ -20,9 +20,7 @@ var queryHelper = function queryHelper() {
   var fields = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : [];
   var search = query.search;
   var _query = {
-    $and: [{
-      deleted: false
-    }]
+    $and: []
   };
   if (!(0, _lodash.isEmpty)(search)) {
     var _search = (0, _slugHelper["default"])(search);
@@ -34,7 +32,8 @@ var queryHelper = function queryHelper() {
     searchAttributes.forEach(function (property) {
       var searchRegex = {};
       searchRegex[property] = {
-        $regexp: _search
+        $regexp: _search,
+        $options: 'i'
       };
       // eslint-disable-next-line dot-notation
       querySearch['$or'].push(searchRegex);

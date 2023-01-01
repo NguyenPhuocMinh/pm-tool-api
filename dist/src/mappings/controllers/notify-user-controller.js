@@ -114,13 +114,103 @@ var readAllNotifyUser = function readAllNotifyUser(req, res, next) {
   (0, _baseController["default"])(toolBox, _constants["default"].types.MsgTypeNotifyUser, _constants["default"].actions.MsgActionNotifyUserReadAll);
   loggerFactory.info("Function readAllNotifyUser Controller has been end");
 };
+
+/**
+ * @description Trash Notify Of User Controller
+ * @param {*} req
+ * @param {*} res
+ * @param {*} next
+ */
+var trashNotifyUser = function trashNotifyUser(req, res, next) {
+  loggerFactory.info("Function trashNotifyUser Controller has been start");
+  var toolBox = {
+    req: req,
+    res: res,
+    next: next
+  };
+  (0, _baseController["default"])(toolBox, _constants["default"].types.MsgTypeNotifyUser, _constants["default"].actions.MsgActionNotifyUserTrash);
+  loggerFactory.info("Function trashNotifyUser Controller has been end");
+};
+
+/**
+ * @description Trash All Notify Of User Controller
+ * @param {*} req
+ * @param {*} res
+ * @param {*} next
+ */
+var trashAllNotifyUser = function trashAllNotifyUser(req, res, next) {
+  loggerFactory.info("Function trashAllNotifyUser Controller has been start");
+  var toolBox = {
+    req: req,
+    res: res,
+    next: next
+  };
+  (0, _baseController["default"])(toolBox, _constants["default"].types.MsgTypeNotifyUser, _constants["default"].actions.MsgActionNotifyUserTrashAll);
+  loggerFactory.info("Function trashAllNotifyUser Controller has been end");
+};
+
+/**
+ * @description Trash All Notify Of User Controller
+ * @param {*} req
+ * @param {*} res
+ * @param {*} next
+ */
+var getAllDataTrashNotifyUser = function getAllDataTrashNotifyUser(req, res, next) {
+  loggerFactory.info("Function getAllDataTrashNotifyUser Controller has been start");
+  var toolBox = {
+    req: req,
+    res: res,
+    next: next
+  };
+  (0, _baseController["default"])(toolBox, _constants["default"].types.MsgTypeNotifyUser, _constants["default"].actions.MsgActionNotifyUserGetAllDataTrash);
+  loggerFactory.info("Function getAllDataTrashNotifyUser Controller has been end");
+};
+
+/**
+ * @description Roll Back Data Notify Of User Controller
+ * @param {*} req
+ * @param {*} res
+ * @param {*} next
+ */
+var rollBackDataTrashNotifyUser = function rollBackDataTrashNotifyUser(req, res, next) {
+  loggerFactory.info("Function rollBackDataTrashNotifyUser Controller has been start");
+  var toolBox = {
+    req: req,
+    res: res,
+    next: next
+  };
+  (0, _baseController["default"])(toolBox, _constants["default"].types.MsgTypeNotifyUser, _constants["default"].actions.MsgActionNotifyUserRollBackDataTrash);
+  loggerFactory.info("Function rollBackDataTrashNotifyUser Controller has been end");
+};
+
+/**
+ * @description Roll Back Data Notify Of User Controller
+ * @param {*} req
+ * @param {*} res
+ * @param {*} next
+ */
+var rollBackAllDataTrashNotifyUser = function rollBackAllDataTrashNotifyUser(req, res, next) {
+  loggerFactory.info("Function rollBackAllDataTrashNotifyUser Controller has been start");
+  var toolBox = {
+    req: req,
+    res: res,
+    next: next
+  };
+  (0, _baseController["default"])(toolBox, _constants["default"].types.MsgTypeNotifyUser, _constants["default"].actions.MsgActionNotifyUserRollBackAllDataTrash);
+  loggerFactory.info("Function rollBackAllDataTrashNotifyUser Controller has been end");
+};
 var notifyUserController = {
   getAllNotifyUser: getAllNotifyUser,
   getDetailNotifyUser: getDetailNotifyUser,
   getAllDataNotifyUser: getAllDataNotifyUser,
   getAllUnReadNotifyUser: getAllUnReadNotifyUser,
   readNotifyUser: readNotifyUser,
-  readAllNotifyUser: readAllNotifyUser
+  readAllNotifyUser: readAllNotifyUser,
+  trashNotifyUser: trashNotifyUser,
+  trashAllNotifyUser: trashAllNotifyUser,
+  getAllDataTrashNotifyUser: getAllDataTrashNotifyUser,
+  rollBackDataTrashNotifyUser: rollBackDataTrashNotifyUser,
+  rollBackAllDataTrashNotifyUser: rollBackAllDataTrashNotifyUser
 };
 var _default = notifyUserController;
 exports["default"] = _default;
