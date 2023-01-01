@@ -36,8 +36,10 @@ var getAllNotifyUser = /*#__PURE__*/function () {
             loggerFactory.info("Function getAllNotifyUser has been start");
             id = req.query.id;
             _helpers$paginationHe = _helpers["default"].paginationHelper(req.query), skip = _helpers$paginationHe.skip, limit = _helpers$paginationHe.limit;
-            query = _helpers["default"].queryHelper(req.query, [{
+            query = _helpers["default"].queryHelper(req.query, null, [{
               user: id
+            }, {
+              deleted: false
             }]);
             sort = _helpers["default"].sortHelper(req.query);
             _context.next = 9;
@@ -70,9 +72,7 @@ var getAllNotifyUser = /*#__PURE__*/function () {
             _context.next = 12;
             return _repository["default"].count({
               type: 'NotifyModel',
-              filter: {
-                user: id
-              }
+              filter: query
             });
           case 12:
             total = _context.sent;
@@ -174,6 +174,8 @@ var getAllDataNotifyUser = /*#__PURE__*/function () {
             _helpers$paginationHe2 = _helpers["default"].paginationHelper(req.query), skip = _helpers$paginationHe2.skip, limit = _helpers$paginationHe2.limit;
             query = _helpers["default"].queryHelper(req.query, null, [{
               user: id
+            }, {
+              deleted: false
             }]);
             sort = _helpers["default"].sortHelper(req.query);
             _context3.next = 9;
@@ -259,6 +261,8 @@ var getAllUnReadNotifyUser = /*#__PURE__*/function () {
             _helpers$paginationHe3 = _helpers["default"].paginationHelper(req.query), skip = _helpers$paginationHe3.skip, limit = _helpers$paginationHe3.limit;
             query = _helpers["default"].queryHelper(req.query, null, [{
               user: id
+            }, {
+              deleted: false
             }, {
               'details.isRead': false
             }]);
@@ -469,24 +473,381 @@ var readAllNotifyUser = /*#__PURE__*/function () {
 }();
 
 /**
- * @description Get Notify User Func
- * @param {*} id
+ * @description Trash Notify Of User Orchestrator
+ * @param {*} toolBox { req, res, next }
  */
-var getNotifyUserFunc = /*#__PURE__*/function () {
-  var _ref7 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee7(id) {
-    var notify;
+var trashNotifyUser = /*#__PURE__*/function () {
+  var _ref7 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee7(toolBox) {
+    var req, id, _helpers$attributeHel3, updatedAt, updatedBy, response;
     return _regeneratorRuntime().wrap(function _callee7$(_context7) {
       while (1) {
         switch (_context7.prev = _context7.next) {
           case 0:
-            _context7.prev = 0;
+            req = toolBox.req;
+            _context7.prev = 1;
+            loggerFactory.info("Function trashNotifyUser has been start");
+            id = req.body.id;
+            _helpers$attributeHel3 = _helpers["default"].attributeHelper(req, req.body), updatedAt = _helpers$attributeHel3.updatedAt, updatedBy = _helpers$attributeHel3.updatedBy;
+            _context7.next = 7;
+            return _repository["default"].updateOne({
+              type: 'NotifyModel',
+              id: id,
+              doc: {
+                deleted: true,
+                updatedAt: updatedAt,
+                updatedBy: updatedBy
+              }
+            });
+          case 7:
+            response = _context7.sent;
+            loggerFactory.info("Function trashNotifyUser has been start");
+            return _context7.abrupt("return", {
+              result: {
+                data: {
+                  id: response._id
+                }
+              },
+              msg: 'notifyUserS007'
+            });
+          case 12:
+            _context7.prev = 12;
+            _context7.t0 = _context7["catch"](1);
+            loggerFactory.error("Function trashNotifyUser has error", {
+              args: _utils["default"].formatErrorMsg(_context7.t0)
+            });
+            return _context7.abrupt("return", _bluebird["default"].reject(_context7.t0));
+          case 16:
+          case "end":
+            return _context7.stop();
+        }
+      }
+    }, _callee7, null, [[1, 12]]);
+  }));
+  return function trashNotifyUser(_x7) {
+    return _ref7.apply(this, arguments);
+  };
+}();
+
+/**
+ * @description Trash All Notify Of User Orchestrator
+ * @param {*} toolBox { req, res, next }
+ */
+var trashAllNotifyUser = /*#__PURE__*/function () {
+  var _ref8 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee8(toolBox) {
+    var req, id, notifyUsers, ids, response;
+    return _regeneratorRuntime().wrap(function _callee8$(_context8) {
+      while (1) {
+        switch (_context8.prev = _context8.next) {
+          case 0:
+            req = toolBox.req;
+            _context8.prev = 1;
+            loggerFactory.info("Function trashAllNotifyUser has been start");
+            id = req.query.id; // find all by userId is deleted true
+            _context8.next = 6;
+            return _repository["default"].findAll({
+              type: 'NotifyModel',
+              filter: {
+                user: id,
+                deleted: true
+              },
+              projection: {
+                _id: 1
+              }
+            });
+          case 6:
+            notifyUsers = _context8.sent;
+            if (!(0, _lodash.isEmpty)(notifyUsers)) {
+              _context8.next = 9;
+              break;
+            }
+            throw _commons["default"].newError('notifyUserE002');
+          case 9:
+            // map to list id
+            ids = notifyUsers.map(function (e) {
+              return e._id;
+            });
+            _context8.next = 12;
+            return _repository["default"].deleteMany({
+              type: 'NotifyModel',
+              filter: {
+                _id: {
+                  $in: ids
+                }
+              }
+            });
+          case 12:
+            response = _context8.sent;
+            loggerFactory.info("Function trashAllNotifyUser has been start");
+            return _context8.abrupt("return", {
+              result: {
+                data: response
+              },
+              msg: 'notifyUserS008'
+            });
+          case 17:
+            _context8.prev = 17;
+            _context8.t0 = _context8["catch"](1);
+            loggerFactory.error("Function trashAllNotifyUser has error", {
+              args: _utils["default"].formatErrorMsg(_context8.t0)
+            });
+            return _context8.abrupt("return", _bluebird["default"].reject(_context8.t0));
+          case 21:
+          case "end":
+            return _context8.stop();
+        }
+      }
+    }, _callee8, null, [[1, 17]]);
+  }));
+  return function trashAllNotifyUser(_x8) {
+    return _ref8.apply(this, arguments);
+  };
+}();
+
+/**
+ * @description Get All Data Trash Notify Of User Orchestrator
+ * @param {*} toolBox { req, res, next }
+ */
+var getAllDataTrashNotifyUser = /*#__PURE__*/function () {
+  var _ref9 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee9(toolBox) {
+    var req, id, _helpers$paginationHe4, skip, limit, query, sort, notifyUsers, total, result;
+    return _regeneratorRuntime().wrap(function _callee9$(_context9) {
+      while (1) {
+        switch (_context9.prev = _context9.next) {
+          case 0:
+            req = toolBox.req;
+            _context9.prev = 1;
+            loggerFactory.info("Function getAllDataTrashNotifyUser has been start");
+            id = req.query.id;
+            _helpers$paginationHe4 = _helpers["default"].paginationHelper(req.query), skip = _helpers$paginationHe4.skip, limit = _helpers$paginationHe4.limit;
+            query = _helpers["default"].queryHelper(req.query, null, [{
+              user: id
+            }, {
+              deleted: true
+            }]);
+            sort = _helpers["default"].sortHelper(req.query);
+            _context9.next = 9;
+            return _repository["default"].findAll({
+              type: 'NotifyModel',
+              filter: query,
+              projection: {
+                __v: 0,
+                createdBy: 0,
+                updatedBy: 0
+              },
+              options: {
+                skip: skip,
+                limit: limit,
+                sort: sort,
+                populate: [{
+                  path: 'user',
+                  select: 'firstName lastName'
+                }, {
+                  path: 'sender',
+                  select: 'firstName lastName'
+                }, {
+                  path: 'template',
+                  select: 'topic description content type'
+                }]
+              }
+            });
+          case 9:
+            notifyUsers = _context9.sent;
+            _context9.next = 12;
+            return _repository["default"].count({
+              type: 'NotifyModel',
+              filter: query
+            });
+          case 12:
+            total = _context9.sent;
+            _context9.next = 15;
+            return _commons["default"].dataResponsesMapper(notifyUsers);
+          case 15:
+            result = _context9.sent;
+            loggerFactory.info("Function getAllDataTrashNotifyUser has been start");
+            return _context9.abrupt("return", {
+              result: {
+                data: result,
+                total: total
+              },
+              msg: 'notifyUserS009'
+            });
+          case 20:
+            _context9.prev = 20;
+            _context9.t0 = _context9["catch"](1);
+            loggerFactory.error("Function getAllDataTrashNotifyUser has error", {
+              args: _utils["default"].formatErrorMsg(_context9.t0)
+            });
+            return _context9.abrupt("return", _bluebird["default"].reject(_context9.t0));
+          case 24:
+          case "end":
+            return _context9.stop();
+        }
+      }
+    }, _callee9, null, [[1, 20]]);
+  }));
+  return function getAllDataTrashNotifyUser(_x9) {
+    return _ref9.apply(this, arguments);
+  };
+}();
+
+/**
+ * @description Roll Back Notify Of User Orchestrator
+ * @param {*} toolBox { req, res, next }
+ */
+var rollBackNotifyUser = /*#__PURE__*/function () {
+  var _ref10 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee10(toolBox) {
+    var req, id, _helpers$attributeHel4, updatedAt, updatedBy, response;
+    return _regeneratorRuntime().wrap(function _callee10$(_context10) {
+      while (1) {
+        switch (_context10.prev = _context10.next) {
+          case 0:
+            req = toolBox.req;
+            _context10.prev = 1;
+            loggerFactory.info("Function rollBackNotifyUser has been start");
+            id = req.body.id;
+            _helpers$attributeHel4 = _helpers["default"].attributeHelper(req, req.body), updatedAt = _helpers$attributeHel4.updatedAt, updatedBy = _helpers$attributeHel4.updatedBy;
+            _context10.next = 7;
+            return _repository["default"].updateOne({
+              type: 'NotifyModel',
+              id: id,
+              doc: {
+                deleted: false,
+                updatedAt: updatedAt,
+                updatedBy: updatedBy
+              }
+            });
+          case 7:
+            response = _context10.sent;
+            loggerFactory.info("Function rollBackNotifyUser has been start");
+            return _context10.abrupt("return", {
+              result: {
+                data: {
+                  id: response._id
+                }
+              },
+              msg: 'notifyUserS0010'
+            });
+          case 12:
+            _context10.prev = 12;
+            _context10.t0 = _context10["catch"](1);
+            loggerFactory.error("Function rollBackNotifyUser has error", {
+              args: _utils["default"].formatErrorMsg(_context10.t0)
+            });
+            return _context10.abrupt("return", _bluebird["default"].reject(_context10.t0));
+          case 16:
+          case "end":
+            return _context10.stop();
+        }
+      }
+    }, _callee10, null, [[1, 12]]);
+  }));
+  return function rollBackNotifyUser(_x10) {
+    return _ref10.apply(this, arguments);
+  };
+}();
+
+/**
+ * @description Roll Back All Notify Of User Orchestrator
+ * @param {*} toolBox { req, res, next }
+ */
+var rollBackAllNotifyUser = /*#__PURE__*/function () {
+  var _ref11 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee11(toolBox) {
+    var req, id, _helpers$attributeHel5, updatedAt, updatedBy, notifyUsers, ids, response;
+    return _regeneratorRuntime().wrap(function _callee11$(_context11) {
+      while (1) {
+        switch (_context11.prev = _context11.next) {
+          case 0:
+            req = toolBox.req;
+            _context11.prev = 1;
+            loggerFactory.info("Function rollBackAllNotifyUser has been start");
+            id = req.body.id;
+            _helpers$attributeHel5 = _helpers["default"].attributeHelper(req, req.body), updatedAt = _helpers$attributeHel5.updatedAt, updatedBy = _helpers$attributeHel5.updatedBy; // find all by userId is deleted true
+            _context11.next = 7;
+            return _repository["default"].findAll({
+              type: 'NotifyModel',
+              filter: {
+                user: id,
+                deleted: true
+              },
+              projection: {
+                _id: 1
+              }
+            });
+          case 7:
+            notifyUsers = _context11.sent;
+            if (!(0, _lodash.isEmpty)(notifyUsers)) {
+              _context11.next = 10;
+              break;
+            }
+            throw _commons["default"].newError('notifyUserE002');
+          case 10:
+            // map to list id
+            ids = notifyUsers.map(function (e) {
+              return e._id;
+            });
+            _context11.next = 13;
+            return _repository["default"].updateMany({
+              type: 'NotifyModel',
+              filter: {
+                _id: {
+                  $in: ids
+                }
+              },
+              doc: {
+                deleted: false,
+                updatedAt: updatedAt,
+                updatedBy: updatedBy
+              }
+            });
+          case 13:
+            response = _context11.sent;
+            loggerFactory.info("Function rollBackAllNotifyUser has been start");
+            return _context11.abrupt("return", {
+              result: {
+                data: {
+                  id: response._id
+                }
+              },
+              msg: 'notifyUserS0011'
+            });
+          case 18:
+            _context11.prev = 18;
+            _context11.t0 = _context11["catch"](1);
+            loggerFactory.error("Function rollBackAllNotifyUser has error", {
+              args: _utils["default"].formatErrorMsg(_context11.t0)
+            });
+            return _context11.abrupt("return", _bluebird["default"].reject(_context11.t0));
+          case 22:
+          case "end":
+            return _context11.stop();
+        }
+      }
+    }, _callee11, null, [[1, 18]]);
+  }));
+  return function rollBackAllNotifyUser(_x11) {
+    return _ref11.apply(this, arguments);
+  };
+}();
+
+/**
+ * @description Get Notify User Func
+ * @param {*} id
+ */
+var getNotifyUserFunc = /*#__PURE__*/function () {
+  var _ref12 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee12(id) {
+    var notify;
+    return _regeneratorRuntime().wrap(function _callee12$(_context12) {
+      while (1) {
+        switch (_context12.prev = _context12.next) {
+          case 0:
+            _context12.prev = 0;
             if (!(0, _lodash.isEmpty)(id)) {
-              _context7.next = 3;
+              _context12.next = 3;
               break;
             }
             throw _commons["default"].newError('notifyUserE001');
           case 3:
-            _context7.next = 5;
+            _context12.next = 5;
             return _repository["default"].getOne({
               type: 'NotifyModel',
               id: id,
@@ -507,24 +868,24 @@ var getNotifyUserFunc = /*#__PURE__*/function () {
               }
             });
           case 5:
-            notify = _context7.sent;
-            return _context7.abrupt("return", notify);
+            notify = _context12.sent;
+            return _context12.abrupt("return", notify);
           case 9:
-            _context7.prev = 9;
-            _context7.t0 = _context7["catch"](0);
+            _context12.prev = 9;
+            _context12.t0 = _context12["catch"](0);
             loggerFactory.error("Function getNotifyUser has error", {
-              args: _utils["default"].formatErrorMsg(_context7.t0)
+              args: _utils["default"].formatErrorMsg(_context12.t0)
             });
-            return _context7.abrupt("return", _bluebird["default"].reject(_context7.t0));
+            return _context12.abrupt("return", _bluebird["default"].reject(_context12.t0));
           case 13:
           case "end":
-            return _context7.stop();
+            return _context12.stop();
         }
       }
-    }, _callee7, null, [[0, 9]]);
+    }, _callee12, null, [[0, 9]]);
   }));
-  return function getNotifyUserFunc(_x7) {
-    return _ref7.apply(this, arguments);
+  return function getNotifyUserFunc(_x12) {
+    return _ref12.apply(this, arguments);
   };
 }();
 var notifyUserOrchestrator = {
@@ -533,7 +894,12 @@ var notifyUserOrchestrator = {
   getAllDataNotifyUser: getAllDataNotifyUser,
   getAllUnReadNotifyUser: getAllUnReadNotifyUser,
   readNotifyUser: readNotifyUser,
-  readAllNotifyUser: readAllNotifyUser
+  readAllNotifyUser: readAllNotifyUser,
+  trashNotifyUser: trashNotifyUser,
+  trashAllNotifyUser: trashAllNotifyUser,
+  getAllDataTrashNotifyUser: getAllDataTrashNotifyUser,
+  rollBackNotifyUser: rollBackNotifyUser,
+  rollBackAllNotifyUser: rollBackAllNotifyUser
 };
 var _default = notifyUserOrchestrator;
 exports["default"] = _default;

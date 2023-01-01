@@ -116,13 +116,115 @@ const readAllNotifyUser = (req, res, next) => {
   loggerFactory.info(`Function readAllNotifyUser Controller has been end`);
 };
 
+/**
+ * @description Trash Notify Of User Controller
+ * @param {*} req
+ * @param {*} res
+ * @param {*} next
+ */
+const trashNotifyUser = (req, res, next) => {
+  loggerFactory.info(`Function trashNotifyUser Controller has been start`);
+  const toolBox = { req, res, next };
+  baseController(
+    toolBox,
+    constants.types.MsgTypeNotifyUser,
+    constants.actions.MsgActionNotifyUserTrash
+  );
+  loggerFactory.info(`Function trashNotifyUser Controller has been end`);
+};
+
+/**
+ * @description Trash All Notify Of User Controller
+ * @param {*} req
+ * @param {*} res
+ * @param {*} next
+ */
+const trashAllNotifyUser = (req, res, next) => {
+  loggerFactory.info(`Function trashAllNotifyUser Controller has been start`);
+  const toolBox = { req, res, next };
+  baseController(
+    toolBox,
+    constants.types.MsgTypeNotifyUser,
+    constants.actions.MsgActionNotifyUserTrashAll
+  );
+  loggerFactory.info(`Function trashAllNotifyUser Controller has been end`);
+};
+
+/**
+ * @description Trash All Notify Of User Controller
+ * @param {*} req
+ * @param {*} res
+ * @param {*} next
+ */
+const getAllDataTrashNotifyUser = (req, res, next) => {
+  loggerFactory.info(
+    `Function getAllDataTrashNotifyUser Controller has been start`
+  );
+  const toolBox = { req, res, next };
+  baseController(
+    toolBox,
+    constants.types.MsgTypeNotifyUser,
+    constants.actions.MsgActionNotifyUserGetAllDataTrash
+  );
+  loggerFactory.info(
+    `Function getAllDataTrashNotifyUser Controller has been end`
+  );
+};
+
+/**
+ * @description Roll Back Data Notify Of User Controller
+ * @param {*} req
+ * @param {*} res
+ * @param {*} next
+ */
+const rollBackDataTrashNotifyUser = (req, res, next) => {
+  loggerFactory.info(
+    `Function rollBackDataTrashNotifyUser Controller has been start`
+  );
+  const toolBox = { req, res, next };
+  baseController(
+    toolBox,
+    constants.types.MsgTypeNotifyUser,
+    constants.actions.MsgActionNotifyUserRollBackDataTrash
+  );
+  loggerFactory.info(
+    `Function rollBackDataTrashNotifyUser Controller has been end`
+  );
+};
+
+/**
+ * @description Roll Back Data Notify Of User Controller
+ * @param {*} req
+ * @param {*} res
+ * @param {*} next
+ */
+const rollBackAllDataTrashNotifyUser = (req, res, next) => {
+  loggerFactory.info(
+    `Function rollBackAllDataTrashNotifyUser Controller has been start`
+  );
+  const toolBox = { req, res, next };
+  baseController(
+    toolBox,
+    constants.types.MsgTypeNotifyUser,
+    constants.actions.MsgActionNotifyUserRollBackAllDataTrash
+  );
+  loggerFactory.info(
+    `Function rollBackAllDataTrashNotifyUser Controller has been end`
+  );
+};
+
 const notifyUserController = {
   getAllNotifyUser,
   getDetailNotifyUser,
   getAllDataNotifyUser,
   getAllUnReadNotifyUser,
   readNotifyUser,
-  readAllNotifyUser
+  readAllNotifyUser,
+  trashNotifyUser,
+  trashAllNotifyUser,
+  getAllDataTrashNotifyUser,
+  rollBackDataTrashNotifyUser,
+  rollBackAllDataTrashNotifyUser
 };
 
 export default notifyUserController;

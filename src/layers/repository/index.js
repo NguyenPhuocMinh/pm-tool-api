@@ -217,6 +217,36 @@ const deleteOne = async ({ type, id, options }) => {
 };
 
 /**
+ * @description Delete by id
+ * @example
+ * const data = await database.deleteMany({
+ *    type: 'UserModel',
+ *    filter: {
+ *      id: 123
+ *    },
+ * })
+ * @see https://mongoosejs.com/docs/api/model.html#model_Model-deleteMany
+ * @returns
+ */
+const deleteMany = async ({ type, filter, options }) => {
+  try {
+    loggerFactory.data('Function deleteMany has been start');
+
+    const model = builds.modelLookup(schemaLayers, type);
+
+    const data = await model.deleteMany(filter, options).exec();
+
+    loggerFactory.data('Function deleteMany has been end');
+    return data;
+  } catch (err) {
+    loggerFactory.error('Function deleteMany has been error', {
+      args: utils.formatErrorMsg(err)
+    });
+    throw err;
+  }
+};
+
+/**
  * @description Count docs
  * @example
  * const data = await database.count({
@@ -306,6 +336,7 @@ export default {
   createOne,
   updateOne,
   deleteOne,
+  deleteMany,
   count,
   updateMany,
   bulkWrite

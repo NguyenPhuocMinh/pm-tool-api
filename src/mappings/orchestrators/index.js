@@ -371,6 +371,31 @@ const orchestratorNotifyUser = [
     type: constants.types.MsgTypeNotifyUser,
     action: constants.actions.MsgActionNotifyUserReadAll,
     orchestrator: notifyUserOrchestrator.readAllNotifyUser
+  },
+  {
+    type: constants.types.MsgTypeNotifyUser,
+    action: constants.actions.MsgActionNotifyUserTrash,
+    orchestrator: notifyUserOrchestrator.trashNotifyUser
+  },
+  {
+    type: constants.types.MsgTypeNotifyUser,
+    action: constants.actions.MsgActionNotifyUserTrashAll,
+    orchestrator: notifyUserOrchestrator.trashAllNotifyUser
+  },
+  {
+    type: constants.types.MsgTypeNotifyUser,
+    action: constants.actions.MsgActionNotifyUserGetAllDataTrash,
+    orchestrator: notifyUserOrchestrator.getAllDataTrashNotifyUser
+  },
+  {
+    type: constants.types.MsgTypeNotifyUser,
+    action: constants.actions.MsgActionNotifyUserRollBackDataTrash,
+    orchestrator: notifyUserOrchestrator.rollBackNotifyUser
+  },
+  {
+    type: constants.types.MsgTypeNotifyUser,
+    action: constants.actions.MsgActionNotifyUserRollBackAllDataTrash,
+    orchestrator: notifyUserOrchestrator.rollBackAllNotifyUser
   }
 ];
 

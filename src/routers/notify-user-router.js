@@ -41,6 +41,36 @@ const notifyUserRouter = [
     method: 'PATCH',
     methodName: 'readAllNotifyUser',
     controller: notifyUserController.readAllNotifyUser
+  },
+  {
+    pathName: '/notify/users-trash',
+    method: 'PATCH',
+    methodName: 'trashNotifyUser',
+    controller: notifyUserController.trashNotifyUser
+  },
+  {
+    pathName: '/notify/users-trashes',
+    method: 'DELETE',
+    methodName: 'trashAllNotifyUser',
+    controller: notifyUserController.trashAllNotifyUser
+  },
+  {
+    pathName: '/notify/users-trashes',
+    method: 'GET',
+    methodName: 'getAllDataTrashNotifyUser',
+    controller: notifyUserController.getAllDataTrashNotifyUser
+  },
+  {
+    pathName: '/notify/users-rollback',
+    method: 'PATCH',
+    methodName: 'getAllDataTrashNotifyUser',
+    controller: notifyUserController.rollBackDataTrashNotifyUser
+  },
+  {
+    pathName: '/notify/users-rollbacks',
+    method: 'PATCH',
+    methodName: 'getAllDataTrashNotifyUser',
+    controller: notifyUserController.rollBackAllDataTrashNotifyUser
   }
 ];
 
