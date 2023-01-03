@@ -21,6 +21,9 @@ const APP_REDIS_URI = profiles.APP_REDIS_URI;
 
 let redisClient = null;
 
+/**
+ * @description Init Redis
+ */
 const Init = async () => {
   try {
     redisClient = createClient({ url: profiles.APP_REDIS_URI });

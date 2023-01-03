@@ -20,6 +20,9 @@ const loggerFactory = loggerManager(
 const SOCKET_USER_LOGIN = constants.SOCKET_EVENTS.SOCKET_USER_LOGIN;
 const SOCKET_USER_LOGOUT = constants.SOCKET_EVENTS.SOCKET_USER_LOGOUT;
 
+/**
+ * @description Init SocketIO
+ */
 const Init = async (httpServer) => {
   try {
     const io = new Server(httpServer, {

@@ -19,6 +19,10 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 var loggerFactory = (0, _logger["default"])(_constants["default"].APP_NAME, _constants["default"].STRUCT_ADAPTERS.SOCKET_ADAPTER);
 var SOCKET_USER_LOGIN = _constants["default"].SOCKET_EVENTS.SOCKET_USER_LOGIN;
 var SOCKET_USER_LOGOUT = _constants["default"].SOCKET_EVENTS.SOCKET_USER_LOGOUT;
+
+/**
+ * @description Init SocketIO
+ */
 var Init = /*#__PURE__*/function () {
   var _ref = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee3(httpServer) {
     var io;

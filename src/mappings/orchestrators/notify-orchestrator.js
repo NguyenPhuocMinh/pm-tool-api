@@ -14,8 +14,10 @@ import loggerManager from '@core/logger';
 import repository from '@layers/repository';
 // transfers
 import transfers from '@transfers';
+// adapters
+import amqpAdapter from '@adapters/amqp';
 
-const loggerFactory = loggerManager(
+const logger = loggerManager(
   constants.APP_NAME,
   constants.STRUCT_ORCHESTRATORS.NOTIFY_ORCHESTRATOR
 );
@@ -29,15 +31,15 @@ const NOTIFY_REMIND_CHANGE_PASSWORD_TEMPORARY =
  */
 const getAllNotify = async (toolBox) => {
   try {
-    loggerFactory.info(`Function getAllNotify has been start`);
-    loggerFactory.info(`Function getAllNotify has been start`);
+    logger.info(`Function getAllNotify has been start`);
+    logger.info(`Function getAllNotify has been start`);
 
     return {
       result: {},
       msg: 'NotifyGetAllSuccess'
     };
   } catch (err) {
-    loggerFactory.error(`Function getAllNotify has error`, {
+    logger.error(`Function getAllNotify has error`, {
       args: utils.formatErrorMsg(err)
     });
     return Promise.reject(err);
@@ -51,14 +53,14 @@ const getAllNotify = async (toolBox) => {
 const getNotifyById = async (toolBox) => {
   const { req } = toolBox;
   try {
-    loggerFactory.info(`Function getNotifyById has been start`);
+    logger.info(`Function getNotifyById has been start`);
     const { id } = req.params;
 
     const notify = await getNotify(id);
 
     const result = transfers.notifyTransfer(notify);
 
-    loggerFactory.info(`Function getNotifyById has been start`);
+    logger.info(`Function getNotifyById has been start`);
 
     return {
       result: {
@@ -67,7 +69,7 @@ const getNotifyById = async (toolBox) => {
       msg: 'NotifyGetIDSuccess'
     };
   } catch (err) {
-    loggerFactory.error(`Function getNotifyById has error`, {
+    logger.error(`Function getNotifyById has error`, {
       args: utils.formatErrorMsg(err)
     });
     return Promise.reject(err);
@@ -81,7 +83,7 @@ const getNotifyById = async (toolBox) => {
 const getAllNotifyOfUser = async (toolBox) => {
   const { req } = toolBox;
   try {
-    loggerFactory.info(`Function getAllNotifyOfUser has been start`);
+    logger.info(`Function getAllNotifyOfUser has been start`);
 
     const { userID, isNew } = req.query;
 
@@ -128,7 +130,7 @@ const getAllNotifyOfUser = async (toolBox) => {
 
     const result = await commons.dataResponsesMapper(notifiesOfUser);
 
-    loggerFactory.info(`Function getAllNotifyOfUser has been start`);
+    logger.info(`Function getAllNotifyOfUser has been start`);
 
     return {
       result: {
@@ -138,7 +140,7 @@ const getAllNotifyOfUser = async (toolBox) => {
       msg: 'NotifyOfUserGetAllSuccess'
     };
   } catch (err) {
-    loggerFactory.error(`Function getAllNotifyOfUser has error`, {
+    logger.error(`Function getAllNotifyOfUser has error`, {
       args: utils.formatErrorMsg(err)
     });
     return Promise.reject(err);
@@ -152,7 +154,12 @@ const getAllNotifyOfUser = async (toolBox) => {
 const notifyChangePasswordTemporary = async (toolBox) => {
   const { req } = toolBox;
   try {
-    loggerFactory.info(`Function notifyChangePasswordTemporary has been start`);
+    logger.log({
+      level: constants.LOG_LEVELS.INFO,
+      message: 'Function notifyChangePasswordTemporary has been start'
+    });
+
+    const requestId = req.requestId;
 
     // find template change password temporary
     const notifyTemplate = await repository.findOne({
@@ -192,12 +199,23 @@ const notifyChangePasswordTemporary = async (toolBox) => {
       }
     });
 
+    // send message queue for notify
+    const dataPublisher = {
+      message: 'Test'
+    };
+    await amqpAdapter.publisher(
+      constants.AMQP_QUEUES.SEND_NOTIFY_CHANGE_PASSWORD_QUEUE,
+      constants.types.MsgTypeNotify,
+      requestId,
+      dataPublisher
+    );
+
     // get notify by id when just created
     const data = await getNotify(notify._id);
 
     const result = transfers.notifyTransfer(data);
 
-    loggerFactory.info(`Function notifyChangePasswordTemporary has been start`);
+    logger.info(`Function notifyChangePasswordTemporary has been start`);
 
     return {
       result: {
@@ -206,27 +224,7 @@ const notifyChangePasswordTemporary = async (toolBox) => {
       msg: 'NotifyChangePasswordTemporarySuccess'
     };
   } catch (err) {
-    loggerFactory.error(`Function notifyChangePasswordTemporary has error`, {
-      args: utils.formatErrorMsg(err)
-    });
-    return Promise.reject(err);
-  }
-};
-
-/**
- * @description Notify Update Read Orchestrator
- * @param {*} toolBox { req, res, next }
- */
-const notifyUpdateRead = async (toolBox) => {
-  try {
-    loggerFactory.info(`Function notifyUpdateRead has been start`);
-    loggerFactory.info(`Function notifyUpdateRead has been start`);
-    return {
-      result: {},
-      msg: 'NotifyUpdateReadSuccess'
-    };
-  } catch (err) {
-    loggerFactory.error(`Function notifyUpdateRead has error`, {
+    logger.error(`Function notifyChangePasswordTemporary has error`, {
       args: utils.formatErrorMsg(err)
     });
     return Promise.reject(err);
@@ -265,7 +263,7 @@ const getNotify = async (id) => {
 
     return notify;
   } catch (err) {
-    loggerFactory.error(`Function getNotify has error`, {
+    logger.error(`Function getNotify has error`, {
       args: utils.formatErrorMsg(err)
     });
     return Promise.reject(err);
@@ -276,8 +274,7 @@ const notifyOrchestrator = {
   getAllNotify,
   getNotifyById,
   getAllNotifyOfUser,
-  notifyChangePasswordTemporary,
-  notifyUpdateRead
+  notifyChangePasswordTemporary
 };
 
 export default notifyOrchestrator;

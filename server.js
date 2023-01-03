@@ -5,6 +5,7 @@ import express from 'express';
 import cors from 'cors';
 import helmet from 'helmet';
 import morgan from 'morgan';
+import rateLimit from 'express-rate-limit';
 import sessionParser from 'express-session';
 import cookieParser from 'cookie-parser';
 import bodyParser from 'body-parser';
@@ -16,7 +17,6 @@ import favicon from 'serve-favicon';
 // conf
 import { options, profiles } from '@conf';
 import constants from '@constants';
-import utils from '@utils';
 
 // core
 import loggerManager from '@core/logger';
@@ -26,6 +26,7 @@ import routers from '@routers';
 // adapters
 import redisAdapter from '@adapters/redis';
 import socketAdapter from '@adapters/socket';
+import amqpAdapter from '@adapters/amqp';
 
 // middleware
 import {
@@ -34,10 +35,7 @@ import {
   errorMiddleware
 } from '@middleware';
 
-const loggerFactory = loggerManager(
-  constants.APP_NAME,
-  constants.STRUCT_NAME_SERVER
-);
+const logger = loggerManager(constants.APP_NAME, constants.STRUCT_NAME_SERVER);
 
 const APP_PORT = profiles.APP_PORT;
 const APP_HOST = profiles.APP_HOST;
@@ -51,6 +49,7 @@ const main = async () => {
   app.use(sessionParser(options.sessionOptions));
   app.use(cookieParser());
   app.use(helmet());
+  app.use(rateLimit(options.rateLimitOptions));
   app.use(bodyParser.json({ limit: '100mb' }));
   app.use(bodyParser.urlencoded({ limit: '100mb', extended: true }));
   app.use(morgan(loggerMiddleware));
@@ -64,8 +63,10 @@ const main = async () => {
   );
   app.use(APP_DOCS_PATH, swaggerUI.serve, swaggerUI.setup(swaggerYaml));
 
-  loggerFactory.info(`The documents is running on`, {
-    args: `[${APP_DOCS_PATH}]`
+  logger.log({
+    level: constants.LOG_LEVELS.INFO,
+    message: 'The documents is running on path',
+    args: APP_DOCS_PATH
   });
 
   /**
@@ -94,20 +95,33 @@ const main = async () => {
   await redisAdapter.Init();
 
   /**
+   * Rabbit MQ
+   */
+  await amqpAdapter.Init();
+
+  /**
    * Socket.IO
    */
   await socketAdapter.Init(server);
 
   server.listen(APP_PORT, APP_HOST, () => {
-    loggerFactory.http(`The server is running on`, {
-      args: `[http://${APP_HOST}:${APP_PORT}]`
+    const port = server.address().port;
+    const host = server.address().address;
+    logger.log({
+      level: constants.LOG_LEVELS.HTTP,
+      message: 'The server is running on',
+      args: `[${host}:${port}]`
     });
   });
 };
 
 main().catch((err) => {
-  loggerFactory.error(`The server has been error`, {
-    args: utils.formatErrorMsg(err)
+  logger.log({
+    level: constants.LOG_LEVELS.ERROR,
+    message: 'The server has been error',
+    args: {
+      errName: err.name,
+      errMsg: err.message
+    }
   });
-  process.exit(1);
 });
