@@ -12,7 +12,6 @@ var _bcrypt = _interopRequireDefault(require("bcrypt"));
 var _conf = require("../../conf");
 var _constants = _interopRequireDefault(require("../../constants"));
 var _helpers = _interopRequireDefault(require("../../helpers"));
-var _utils = _interopRequireDefault(require("../../utils"));
 var _repository = _interopRequireDefault(require("../../layers/repository"));
 var _logger = _interopRequireDefault(require("../logger"));
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
@@ -25,7 +24,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 var APP_MONGO_URI = _conf.profiles.APP_MONGO_URI;
 _mongoose["default"].Promise = global.Promise;
 _mongoose["default"].set('debug', true);
-var loggerFactory = (0, _logger["default"])(_constants["default"].APP_NAME, _constants["default"].STRUCT_NAME_DATABASE);
+var logger = (0, _logger["default"])(_constants["default"].APP_NAME, _constants["default"].STRUCT_NAME_DATABASE);
 var Init = /*#__PURE__*/function () {
   var _ref = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee() {
     var secret, _secret$admin, email, password, existsAdmin, hashPass, data, operation;
@@ -52,7 +51,10 @@ var Init = /*#__PURE__*/function () {
               _context.next = 12;
               break;
             }
-            loggerFactory.info("User admin has been exists in database");
+            logger.log({
+              level: _constants["default"].LOG_LEVELS.INFO,
+              message: 'User admin has been exists in database'
+            });
             _context.next = 18;
             break;
           case 12:
@@ -72,9 +74,14 @@ var Init = /*#__PURE__*/function () {
               })
             });
           case 17:
-            loggerFactory.info("User admin has been create in database");
+            logger.log({
+              level: _constants["default"].LOG_LEVELS.INFO,
+              message: 'User admin has been create in database'
+            });
           case 18:
-            loggerFactory.info("The database is running on", {
+            logger.log({
+              level: _constants["default"].LOG_LEVELS.INFO,
+              message: 'The database is running on',
               args: "[".concat(APP_MONGO_URI, "]")
             });
             _context.next = 27;
@@ -82,13 +89,22 @@ var Init = /*#__PURE__*/function () {
           case 21:
             _context.prev = 21;
             _context.t0 = _context["catch"](0);
-            loggerFactory.error('Connect database has error', {
-              args: _utils["default"].formatErrorMsg(_context.t0)
+            logger.log({
+              level: _constants["default"].LOG_LEVELS.ERROR,
+              message: 'Connect database has error',
+              args: _context.t0
             });
             operation = _retry["default"].operation(_conf.options.retryOptions);
             operation.attempt(function (current) {
               if (operation.retry(_context.t0)) {
-                loggerFactory.error("Unable to connect to the database. Retrying(".concat(current, ")"));
+                logger.log({
+                  level: _constants["default"].LOG_LEVELS.ERROR,
+                  message: "Unable to connect to the database. Retrying(".concat(current, ")"),
+                  args: _context.t0
+                });
+                if (current >= _conf.options.retryOptions.retries) {
+                  process.exit(1);
+                }
                 return _context.t0;
               }
             });

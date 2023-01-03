@@ -2,6 +2,7 @@
 
 import jwt from 'jsonwebtoken';
 import { isEmpty, get, includes, find, toUpper, isEqual } from 'lodash';
+import * as uuid from 'uuid';
 
 import constants from '@constants';
 import commons from '@commons';
@@ -29,6 +30,9 @@ const ATTRIBUTE_TOKEN_KEY = constants.ATTRIBUTE_TOKEN_KEY;
 const authMiddleware = async (req, res, next) => {
   const { route, method } = req;
   const toolBox = { req, res, next };
+
+  // set request id to request
+  req.requestID = uuid.v4();
 
   const findPublicAuth = find(
     publicAuthorization,

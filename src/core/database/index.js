@@ -9,7 +9,6 @@ import { options, profiles } from '@conf';
 
 import constants from '@constants';
 import helpers from '@helpers';
-import utils from '@utils';
 
 // layers
 import repository from '@layers/repository';
@@ -22,7 +21,7 @@ const APP_MONGO_URI = profiles.APP_MONGO_URI;
 mongoose.Promise = global.Promise;
 mongoose.set('debug', true);
 
-const loggerFactory = loggerManager(
+const logger = loggerManager(
   constants.APP_NAME,
   constants.STRUCT_NAME_DATABASE
 );
@@ -46,7 +45,10 @@ const Init = async () => {
     });
 
     if (existsAdmin) {
-      loggerFactory.info(`User admin has been exists in database`);
+      logger.log({
+        level: constants.LOG_LEVELS.INFO,
+        message: 'User admin has been exists in database'
+      });
     } else {
       const hashPass = bcrypt.hashSync(password, options.bcryptOptions.salt);
 
@@ -67,23 +69,35 @@ const Init = async () => {
         }
       });
 
-      loggerFactory.info(`User admin has been create in database`);
+      logger.log({
+        level: constants.LOG_LEVELS.INFO,
+        message: 'User admin has been create in database'
+      });
     }
 
-    loggerFactory.info(`The database is running on`, {
+    logger.log({
+      level: constants.LOG_LEVELS.INFO,
+      message: 'The database is running on',
       args: `[${APP_MONGO_URI}]`
     });
   } catch (err) {
-    loggerFactory.error('Connect database has error', {
-      args: utils.formatErrorMsg(err)
+    logger.log({
+      level: constants.LOG_LEVELS.ERROR,
+      message: 'Connect database has error',
+      args: err
     });
 
     const operation = retry.operation(options.retryOptions);
     operation.attempt((current) => {
       if (operation.retry(err)) {
-        loggerFactory.error(
-          `Unable to connect to the database. Retrying(${current})`
-        );
+        logger.log({
+          level: constants.LOG_LEVELS.ERROR,
+          message: `Unable to connect to the database. Retrying(${current})`,
+          args: err
+        });
+        if (current >= options.retryOptions.retries) {
+          process.exit(1);
+        }
         return err;
       }
     });

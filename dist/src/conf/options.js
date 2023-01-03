@@ -8,6 +8,7 @@ require("source-map-support/register");
 var _uuid = require("uuid");
 var _nanoid = require("nanoid");
 var _expressSession = _interopRequireDefault(require("express-session"));
+var _constants = _interopRequireDefault(require("../constants"));
 var _profiles = _interopRequireDefault(require("./profiles"));
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 var allowList = ['https://pm-tool-ui.netlify.app', 'https://pm-tool-ui.netlify.app/*', 'http://localhost:3500', 'http://localhost:3500/*'];
@@ -102,6 +103,20 @@ var jwtOptions = {
   keyid: (0, _nanoid.nanoid)(30),
   jwtid: (0, _uuid.v4)()
 };
+var rateLimitOptions = {
+  windowMs: 15 * 60 * 1000,
+  // 15 minutes
+  max: 100,
+  // Limit each IP to 100 requests per `window` (here, per 15 minutes)
+  standardHeaders: true,
+  // Return rate limit info in the `RateLimit-*` headers
+  legacyHeaders: false // Disable the `X-RateLimit-*` headers
+};
+
+var cronJobOptions = {
+  scheduled: true,
+  timezone: _constants["default"].TIMEZONE_DEFAULT
+};
 var options = {
   allowList: allowList,
   corsOptions: corsOptions,
@@ -111,7 +126,9 @@ var options = {
   mongooseOptions: mongooseOptions,
   retryOptions: retryOptions,
   bcryptOptions: bcryptOptions,
-  jwtOptions: jwtOptions
+  jwtOptions: jwtOptions,
+  rateLimitOptions: rateLimitOptions,
+  cronJobOptions: cronJobOptions
 };
 var _default = options;
 exports["default"] = _default;

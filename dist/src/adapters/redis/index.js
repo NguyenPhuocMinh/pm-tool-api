@@ -19,6 +19,10 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 var loggerFactory = (0, _logger["default"])(_constants["default"].APP_NAME, _constants["default"].STRUCT_ADAPTERS.REDIS_ADAPTER);
 var APP_REDIS_URI = _conf.profiles.APP_REDIS_URI;
 var redisClient = null;
+
+/**
+ * @description Init Redis
+ */
 var Init = /*#__PURE__*/function () {
   var _ref = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee() {
     var operation;

@@ -3,6 +3,7 @@
 import { v4 as uuidV4 } from 'uuid';
 import { nanoid } from 'nanoid';
 import session from 'express-session';
+import constants from '@constants';
 import profiles from './profiles';
 
 const allowList = [
@@ -107,6 +108,18 @@ const jwtOptions = {
   jwtid: uuidV4()
 };
 
+const rateLimitOptions = {
+  windowMs: 15 * 60 * 1000, // 15 minutes
+  max: 100, // Limit each IP to 100 requests per `window` (here, per 15 minutes)
+  standardHeaders: true, // Return rate limit info in the `RateLimit-*` headers
+  legacyHeaders: false // Disable the `X-RateLimit-*` headers
+};
+
+const cronJobOptions = {
+  scheduled: true,
+  timezone: constants.TIMEZONE_DEFAULT
+};
+
 const options = {
   allowList,
   corsOptions,
@@ -116,7 +129,9 @@ const options = {
   mongooseOptions,
   retryOptions,
   bcryptOptions,
-  jwtOptions
+  jwtOptions,
+  rateLimitOptions,
+  cronJobOptions
 };
 
 export default options;

@@ -6,6 +6,7 @@ const STRUCT_NAME_SERVER = 'server';
 const STRUCT_NAME_ROUTER = 'router';
 const STRUCT_NAME_DATABASE = 'database';
 const STRUCT_NAME_ORCHESTRATOR = 'orchestrator';
+const STRUCT_NAME_PUBLISHER = 'publisher';
 
 /**
  * @description MIDDLEWARE
@@ -110,16 +111,6 @@ const STRUCT_ORCHESTRATORS = {
 };
 
 /**
- * @description SERVICES
- */
-
-const REDIS_SERVICE = 'redis-service';
-
-const STRUCT_SERVICES = {
-  REDIS_SERVICE
-};
-
-/**
  * @description VALIDATORS
  */
 const AUTH_VALIDATOR = 'auth-validator';
@@ -183,10 +174,14 @@ const STRUCT_COMMON = {
  */
 const REDIS_ADAPTER = 'redis-adapter';
 const SOCKET_ADAPTER = 'socket-adapter';
+const CRON_ADAPTER = 'cron-adapter';
+const AMQP_ADAPTER = 'amqp-adapter';
 
 const STRUCT_ADAPTERS = {
   REDIS_ADAPTER,
-  SOCKET_ADAPTER
+  SOCKET_ADAPTER,
+  CRON_ADAPTER,
+  AMQP_ADAPTER
 };
 
 /**
@@ -226,6 +221,13 @@ const SOCKET_EVENTS = {
   SOCKET_USER_ONLINE: 'socket_user_online'
 };
 
+/**
+ * @description QUEUE
+ */
+const AMQP_QUEUES = {
+  SEND_NOTIFY_CHANGE_PASSWORD_QUEUE: 'SEND_NOTIFY_CHANGE_PASSWORD_QUEUE'
+};
+
 const DATE_TIMESTAMP_FORMAT = 'YYYY-MM-DD HH:mm:ss';
 const TIMEZONE_DEFAULT = 'Asia/Ho_Chi_Minh';
 const DEFAULT_SYSTEM = 'SYSTEM';
@@ -247,6 +249,17 @@ const HTTP_STATUS = {
   METHOD_NOT_ALLOW: '405',
   DUPLICATE: '409',
   INTERNAL_SERVER_ERROR: '500'
+};
+
+const LOG_LEVELS = {
+  ERROR: 'error',
+  WARN: 'warn',
+  INFO: 'info',
+  HTTP: 'http',
+  VERBOSE: 'verbose',
+  DEBUG: 'debug',
+  SILLY: 'silly',
+  DATA: 'data'
 };
 
 /**
@@ -466,16 +479,17 @@ const constants = {
   DEFAULT_EXPIRES_TOKEN,
   DEFAULT_EXPIRES_REFRESH_TOKEN,
   HTTP_STATUS,
+  LOG_LEVELS,
   APP_NAME,
   STRUCT_NAME_SERVER,
   STRUCT_NAME_ROUTER,
   STRUCT_NAME_DATABASE,
   STRUCT_NAME_ORCHESTRATOR,
+  STRUCT_NAME_PUBLISHER,
   STRUCT_MIDDLEWARE,
   STRUCT_BUILDS,
   STRUCT_CONTROLLERS,
   STRUCT_ORCHESTRATORS,
-  STRUCT_SERVICES,
   STRUCT_VALIDATORS,
   STRUCT_COMMON,
   STRUCT_ADAPTERS,
@@ -484,6 +498,7 @@ const constants = {
   STRUCT_WORKER,
   STRUCT_SHARES,
   SOCKET_EVENTS,
+  AMQP_QUEUES,
   notifyTypes,
   senders
 };

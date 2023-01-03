@@ -8,6 +8,7 @@
 - [Run](#run)
 - [Docs](#docs)
 - [Docker](#docker)
+- [RabbitMQ](#rabbitmq)
 - [Build](#build)
 - [Circle CI/CD](#circle-cicd)
 - [Helm and k8s](#helm-and-k8s)
@@ -45,6 +46,7 @@ $ npm install
 - APP_DOCS_PATH=/docs
 - APP_MONGO_URI=mongodb://127.0.0.1:27017/pm-tool
 - APP_REDIS_URI=redis://localhost:6379
+- APP_RABBIT_URI=amqp://localhost ## 5672
 - APP_DOMAIN_PATH=http://localhost:3500
 - APP_SECRET_KEY=do-biet-day-secret
 - APP_AUDIENCE=pm-tool-aud
@@ -95,6 +97,22 @@ $ docker build -t <username>/pm-tool-api:<version> .
 ```sh
 $ docker run -d -p 8080:8080 pm-tool-api
 ```
+
+## RabbitMQ
+
+- **Run RabbitMQ local docker images**
+
+```sh
+$ docker run -p 5672:5672 rabbitmq
+```
+
+- **Run RabbitMQ Management**
+  
+```sh
+$ $ docker run -d --hostname my-rabbit --name some-rabbit -p 8080:15672 rabbitmq:3-management
+```
+
+- [Login management with guest / guest](https://localhost:8080)
 
 ## Build
 
@@ -257,5 +275,5 @@ $ aws ecr describe-images \
 
 ## Server testing vercel app
 
-- https://pm-tool-api.vercel.app
-- check connect socket => curl "https://pm-tool-api.vercel.app/socket.io/?EIO=4&transport=polling"
+- [Vercel App](https://pm-tool-api.vercel.app)
+- CURL => curl "https://pm-tool-api.vercel.app/socket.io/?EIO=4&transport=polling"
