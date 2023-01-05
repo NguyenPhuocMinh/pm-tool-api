@@ -8,7 +8,7 @@ import constants from '@constants';
 // core
 import loggerManager from '@core/logger';
 
-const loggerFactory = loggerManager(
+const logger = loggerManager(
   constants.APP_NAME,
   constants.STRUCT_COMMON.MAPPER_COMMON
 );
@@ -18,11 +18,17 @@ const loggerFactory = loggerManager(
  * @param {*} responses
  */
 export const dataResponsesMapper = async (responses = []) => {
-  loggerFactory.data(`Function dataResponsesMapper has been start`);
+  logger.log({
+    level: constants.LOG_LEVELS.DATA,
+    message: 'Function dataResponsesMapper has been start'
+  });
   return Promise.map(
     responses,
     (data) => {
-      loggerFactory.data(`Function dataResponsesMapper has been end`);
+      logger.log({
+        level: constants.LOG_LEVELS.DATA,
+        message: 'Function dataResponsesMapper has been end'
+      });
       return dataResponseMapper(data);
     },
     { concurrency: 5 }
@@ -34,7 +40,10 @@ export const dataResponsesMapper = async (responses = []) => {
  * @param {*} data
  */
 export const dataResponseMapper = async (data = {}) => {
-  loggerFactory.data(`Function dataResponseMapper has been start`);
+  logger.log({
+    level: constants.LOG_LEVELS.DATA,
+    message: 'Function dataResponseMapper has been start'
+  });
 
   let response = {};
 
@@ -48,7 +57,10 @@ export const dataResponseMapper = async (data = {}) => {
     return Promise.resolve(response);
   }
 
-  loggerFactory.data(`Function dataResponseMapper has been end`);
+  logger.log({
+    level: constants.LOG_LEVELS.DATA,
+    message: 'Function dataResponseMapper has been end'
+  });
 
   return Promise.resolve();
 };
