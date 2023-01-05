@@ -7,7 +7,7 @@ import constants from '@constants';
 // core
 import loggerManager from '@core/logger';
 
-const loggerFactory = loggerManager(
+const logger = loggerManager(
   constants.APP_NAME,
   constants.STRUCT_CONTROLLERS.CONFIG_CONTROLLER
 );
@@ -19,14 +19,20 @@ const loggerFactory = loggerManager(
  * @param {*} next
  */
 const getDataConfigJson = (req, res, next) => {
-  loggerFactory.info(`Function getDataConfigJson Controller has been start`);
+  logger.log({
+    level: constants.LOG_LEVELS.INFO,
+    message: 'Function getDataConfigJson Controller has been start'
+  });
   const toolBox = { req, res, next };
   baseController(
     toolBox,
     constants.types.MsgTypeConfig,
     constants.actions.MsgActionGetDataConfigJson
   );
-  loggerFactory.info(`Function getDataConfigJson Controller has been end`);
+  logger.log({
+    level: constants.LOG_LEVELS.INFO,
+    message: 'Function getDataConfigJson Controller has been end'
+  });
 };
 
 const configController = {

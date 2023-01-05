@@ -7,7 +7,7 @@ import constants from '@constants';
 // core
 import loggerManager from '@core/logger';
 
-const loggerFactory = loggerManager(
+const logger = loggerManager(
   constants.APP_NAME,
   constants.STRUCT_CONTROLLERS.USER_SESSION_CONTROLLER
 );
@@ -19,16 +19,20 @@ const loggerFactory = loggerManager(
  * @param {*} next
  */
 const getUserTimelineSession = (req, res, next) => {
-  loggerFactory.info(
-    `Function getUserTimelineSession Controller has been start`
-  );
+  logger.log({
+    level: constants.LOG_LEVELS.INFO,
+    message: 'Function getUserTimelineSession Controller has been start'
+  });
   const toolBox = { req, res, next };
   baseController(
     toolBox,
     constants.types.MsgTypeUserSession,
     constants.actions.MsgActionUserSessionTimeline
   );
-  loggerFactory.info(`Function getUserTimelineSession Controller has been end`);
+  logger.log({
+    level: constants.LOG_LEVELS.INFO,
+    message: 'Function getUserTimelineSession Controller has been end'
+  });
 };
 
 /**
@@ -38,14 +42,20 @@ const getUserTimelineSession = (req, res, next) => {
  * @param {*} next
  */
 const createUserSession = (req, res, next) => {
-  loggerFactory.info(`Function createUserSession Controller has been start`);
+  logger.log({
+    level: constants.LOG_LEVELS.INFO,
+    message: 'Function createUserSession Controller has been start'
+  });
   const toolBox = { req, res, next };
   baseController(
     toolBox,
     constants.types.MsgTypeUserSession,
     constants.actions.MsgActionUserSessionCreate
   );
-  loggerFactory.info(`Function createUserSession Controller has been end`);
+  logger.log({
+    level: constants.LOG_LEVELS.INFO,
+    message: 'Function createUserSession Controller has been end'
+  });
 };
 
 /**
@@ -55,14 +65,20 @@ const createUserSession = (req, res, next) => {
  * @param {*} next
  */
 const updateUserSession = (req, res, next) => {
-  loggerFactory.info(`Function updateUserSession Controller has been start`);
+  logger.log({
+    level: constants.LOG_LEVELS.INFO,
+    message: 'Function updateUserSession Controller has been start'
+  });
   const toolBox = { req, res, next };
   baseController(
     toolBox,
     constants.types.MsgTypeUserSession,
     constants.actions.MsgActionUserSessionUpdate
   );
-  loggerFactory.info(`Function updateUserSession Controller has been end`);
+  logger.log({
+    level: constants.LOG_LEVELS.INFO,
+    message: 'Function updateUserSession Controller has been end'
+  });
 };
 
 /**
@@ -72,14 +88,20 @@ const updateUserSession = (req, res, next) => {
  * @param {*} next
  */
 const deleteUserSession = (req, res, next) => {
-  loggerFactory.info(`Function deleteUserSession Controller has been start`);
+  logger.log({
+    level: constants.LOG_LEVELS.INFO,
+    message: 'Function deleteUserSession Controller has been start'
+  });
   const toolBox = { req, res, next };
   baseController(
     toolBox,
     constants.types.MsgTypeUserSession,
     constants.actions.MsgActionUserSessionDelete
   );
-  loggerFactory.info(`Function deleteUserSession Controller has been end`);
+  logger.log({
+    level: constants.LOG_LEVELS.INFO,
+    message: 'Function deleteUserSession Controller has been end'
+  });
 };
 
 const userSessionController = {

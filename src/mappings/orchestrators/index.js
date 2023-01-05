@@ -2,6 +2,7 @@
 
 import constants from '@constants';
 
+import testOrchestrator from './test-orchestrator';
 import authOrchestrator from './auth-orchestrator';
 import configOrchestrator from './config-orchestrator';
 import homeOrchestrator from './home-orchestrator';
@@ -16,6 +17,17 @@ import userOnlineOrchestrator from './user-online-orchestrator';
 import notifyOrchestrator from './notify-orchestrator';
 import notifyUserOrchestrator from './notify-user-orchestrator';
 import notifyTemplateOrchestrator from './notify-template-orchestrator';
+
+/**
+ * AUTH
+ */
+const orchestratorTest = [
+  {
+    type: constants.types.MsgTypeTest,
+    action: constants.actions.MsgActionTestSendQueue,
+    orchestrator: testOrchestrator.testSendQueue
+  }
+];
 
 /**
  * AUTH
@@ -330,11 +342,6 @@ const orchestratorNotify = [
     type: constants.types.MsgTypeNotify,
     action: constants.actions.MsgActionNotifyChangePasswordTemporary,
     orchestrator: notifyOrchestrator.notifyChangePasswordTemporary
-  },
-  {
-    type: constants.types.MsgTypeNotify,
-    action: constants.actions.MsgActionNotifyUpdateRead,
-    orchestrator: notifyOrchestrator.notifyUpdateRead
   }
 ];
 
@@ -420,6 +427,7 @@ const orchestratorNotifyTemplate = [
  * BASE
  */
 const orchestrators = [
+  ...orchestratorTest,
   ...orchestratorAuth,
   ...orchestratorConfig,
   ...orchestratorHome,

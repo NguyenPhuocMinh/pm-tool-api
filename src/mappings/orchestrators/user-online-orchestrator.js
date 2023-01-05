@@ -13,7 +13,7 @@ import repository from '@layers/repository';
 // transfers
 import transfers from '@transfers';
 
-const loggerFactory = loggerManager(
+const logger = loggerManager(
   constants.APP_NAME,
   constants.STRUCT_ORCHESTRATORS.USER_SESSION_ORCHESTRATOR
 );
@@ -25,7 +25,10 @@ const loggerFactory = loggerManager(
 const getAllUserOnline = async (toolBox) => {
   const { req } = toolBox;
   try {
-    loggerFactory.info(`Function getAllUserOnline has been start`);
+    logger.log({
+      level: constants.LOG_LEVELS.INFO,
+      message: 'Function getAllUserOnline Orchestrator has been start'
+    });
 
     const { skip, limit } = helpers.paginationHelper(req.query);
     const query = helpers.queryHelper(req.query, null, [{ isOnline: true }]);
@@ -54,13 +57,16 @@ const getAllUserOnline = async (toolBox) => {
     const response = await Promise.map(
       usersOnline,
       (data) => {
-        loggerFactory.data(`Function dataResponsesMapper has been end`);
+        logger.data(`Function dataResponsesMapper has been end`);
         return transfers.userOnlineTransfer(data, req);
       },
       { concurrency: 5 }
     );
 
-    loggerFactory.info(`Function getAllUserOnline has been end`);
+    logger.log({
+      level: constants.LOG_LEVELS.INFO,
+      message: 'Function getAllUserOnline Orchestrator has been end'
+    });
 
     return {
       result: {
@@ -70,8 +76,10 @@ const getAllUserOnline = async (toolBox) => {
       msg: 'userOnlineS001'
     };
   } catch (err) {
-    loggerFactory.error(`Function getAllUserOnline has error`, {
-      args: utils.formatErrorMsg(err)
+    logger.log({
+      level: constants.LOG_LEVELS.ERROR,
+      message: 'Function getAllUserOnline Orchestrator has been error',
+      args: utils.parseError(err)
     });
     return Promise.reject(err);
   }

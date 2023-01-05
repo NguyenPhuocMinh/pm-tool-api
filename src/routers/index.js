@@ -12,6 +12,9 @@ import loggerManager from '@core/logger';
 // middleware
 import { authMiddleware } from '@middleware';
 
+// test
+import testRouter from './test-router';
+
 import authRouter from './auth-router';
 import configRouter from './config-router';
 import homeRouter from './home-router';
@@ -35,6 +38,7 @@ const loggerFactory = loggerManager(
 );
 
 const routes = [
+  ...testRouter,
   ...authRouter,
   ...configRouter,
   ...homeRouter,

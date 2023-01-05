@@ -9,14 +9,17 @@ import utils from '@utils';
 // core
 import loggerManager from '@core/logger';
 
-const loggerFactory = loggerManager(
+const logger = loggerManager(
   constants.APP_NAME,
   constants.STRUCT_BUILDS.RESPONSE_BUILD
 );
 
 export const successResponse = (toolBox, args) => {
   try {
-    loggerFactory.info(`SuccessResponse has been start`);
+    logger.log({
+      level: constants.LOG_LEVELS.INFO,
+      message: 'Function successResponse has been start'
+    });
     const { res } = toolBox;
     const header = get(args, 'headers');
 
@@ -26,15 +29,20 @@ export const successResponse = (toolBox, args) => {
       'X-Return-Code': templateSuccessResponse.returnCode
     });
 
-    loggerFactory.info(`SuccessResponse has been end`);
+    logger.log({
+      level: constants.LOG_LEVELS.INFO,
+      message: 'Function successResponse has been end'
+    });
 
     return res
       .status(templateSuccessResponse.statusCode)
       .set(headers)
       .send(templateSuccessResponse);
   } catch (err) {
-    loggerFactory.error(`SuccessResponse has error`, {
-      args: utils.formatErrorMsg(err)
+    logger.log({
+      level: constants.LOG_LEVELS.INFO,
+      message: 'Function successResponse has been error',
+      args: utils.parseError(err)
     });
     throw err;
   }
@@ -42,7 +50,11 @@ export const successResponse = (toolBox, args) => {
 
 export const errorResponse = (toolBox, args) => {
   try {
-    loggerFactory.error(`ErrorResponse has been start`);
+    logger.log({
+      level: constants.LOG_LEVELS.ERROR,
+      message: 'Function errorResponse has been start',
+      args
+    });
     const { res } = toolBox;
 
     const templateErrorResponse = builds.newErrorTemplate(toolBox, args);
@@ -51,15 +63,20 @@ export const errorResponse = (toolBox, args) => {
       'X-Return-Code': templateErrorResponse.returnCode
     };
 
-    loggerFactory.error(`ErrorResponse has been end`);
+    logger.log({
+      level: constants.LOG_LEVELS.ERROR,
+      message: 'Function errorResponse has been end'
+    });
 
     return res
       .status(templateErrorResponse.statusCode)
       .set(headers)
       .send(templateErrorResponse);
   } catch (err) {
-    loggerFactory.error(`ErrorResponse has been error`, {
-      args: utils.formatErrorMsg(err)
+    logger.log({
+      level: constants.LOG_LEVELS.ERROR,
+      message: 'Function errorResponse has been error',
+      args: utils.parseError(err)
     });
     throw err;
   }

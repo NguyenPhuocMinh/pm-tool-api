@@ -16,7 +16,7 @@ import repository from '@layers/repository';
 // validators
 import validators from '@validators';
 
-const loggerFactory = loggerManager(
+const logger = loggerManager(
   constants.APP_NAME,
   constants.STRUCT_ORCHESTRATORS.PROJECT_ORCHESTRATOR
 );
@@ -28,7 +28,10 @@ const loggerFactory = loggerManager(
 const getAllProject = async (toolBox) => {
   const { req } = toolBox;
   try {
-    loggerFactory.info(`Function getAllProject Orchestrator has been start`);
+    logger.log({
+      level: constants.LOG_LEVELS.INFO,
+      message: 'Function getAllProject Orchestrator has been start'
+    });
 
     const { skip, limit } = helpers.paginationHelper(req.query);
     const query = helpers.queryHelper(req.query);
@@ -58,7 +61,10 @@ const getAllProject = async (toolBox) => {
 
     const response = await commons.dataResponsesMapper(projects);
 
-    loggerFactory.info(`Function getAllProject Orchestrator has been end`);
+    logger.log({
+      level: constants.LOG_LEVELS.INFO,
+      message: 'Function getAllProject Orchestrator has been end'
+    });
 
     return {
       result: {
@@ -68,8 +74,10 @@ const getAllProject = async (toolBox) => {
       msg: 'projectS001'
     };
   } catch (err) {
-    loggerFactory.info(`Function getAllProject Orchestrator has error`, {
-      args: utils.formatErrorMsg(err)
+    logger.log({
+      level: constants.LOG_LEVELS.ERROR,
+      message: 'Function getAllProject Orchestrator has been error',
+      args: utils.parseError(err)
     });
     return Promise.reject(err);
   }
@@ -83,7 +91,10 @@ const createProject = async (toolBox) => {
   const { req } = toolBox;
 
   try {
-    loggerFactory.info(`Function createProject Orchestrator has been start`);
+    logger.log({
+      level: constants.LOG_LEVELS.INFO,
+      message: 'Function createProject Orchestrator has been start'
+    });
 
     // validate inputs
     const error = validators.validatorProject(req.body);
@@ -117,7 +128,10 @@ const createProject = async (toolBox) => {
 
     const result = transfers.projectTransfer(data);
 
-    loggerFactory.info(`Function createProject Orchestrator has been end`);
+    logger.log({
+      level: constants.LOG_LEVELS.INFO,
+      message: 'Function createProject Orchestrator has been end'
+    });
 
     return {
       result: {
@@ -126,8 +140,10 @@ const createProject = async (toolBox) => {
       msg: 'projectS002'
     };
   } catch (err) {
-    loggerFactory.info(`Function createProject Orchestrator has error`, {
-      args: utils.formatErrorMsg(err)
+    logger.log({
+      level: constants.LOG_LEVELS.ERROR,
+      message: 'Function createProject Orchestrator has been error',
+      args: utils.parseError(err)
     });
     return Promise.reject(err);
   }

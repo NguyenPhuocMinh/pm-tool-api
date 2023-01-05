@@ -7,7 +7,7 @@ import constants from '@constants';
 // core
 import loggerManager from '@core/logger';
 
-const loggerFactory = loggerManager(
+const logger = loggerManager(
   constants.APP_NAME,
   constants.STRUCT_CONTROLLERS.USER_ONLINE_CONTROLLER
 );
@@ -19,14 +19,20 @@ const loggerFactory = loggerManager(
  * @param {*} next
  */
 const getAllUserOnline = (req, res, next) => {
-  loggerFactory.info(`Function getAllUserOnline Controller has been start`);
+  logger.log({
+    level: constants.LOG_LEVELS.INFO,
+    message: 'Function getAllUserOnline Controller has been start'
+  });
   const toolBox = { req, res, next };
   baseController(
     toolBox,
     constants.types.MsgTypeUserOnline,
     constants.actions.MsgActionUserOnlineGetAll
   );
-  loggerFactory.info(`Function getAllUserOnline Controller has been end`);
+  logger.log({
+    level: constants.LOG_LEVELS.INFO,
+    message: 'Function getAllUserOnline Controller has been end'
+  });
 };
 
 const userOnlineController = {

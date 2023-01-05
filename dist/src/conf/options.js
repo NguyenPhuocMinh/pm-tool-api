@@ -8,7 +8,6 @@ require("source-map-support/register");
 var _uuid = require("uuid");
 var _nanoid = require("nanoid");
 var _expressSession = _interopRequireDefault(require("express-session"));
-var _constants = _interopRequireDefault(require("../constants"));
 var _profiles = _interopRequireDefault(require("./profiles"));
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 var allowList = ['https://pm-tool-ui.netlify.app', 'https://pm-tool-ui.netlify.app/*', 'http://localhost:3500', 'http://localhost:3500/*'];
@@ -114,8 +113,7 @@ var rateLimitOptions = {
 };
 
 var cronJobOptions = {
-  scheduled: true,
-  timezone: _constants["default"].TIMEZONE_DEFAULT
+  scheduled: true
 };
 var options = {
   allowList: allowList,

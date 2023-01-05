@@ -7,7 +7,7 @@ import constants from '@constants';
 // core
 import loggerManager from '@core/logger';
 
-const loggerFactory = loggerManager(
+const logger = loggerManager(
   constants.APP_NAME,
   constants.STRUCT_CONTROLLERS.USER_CONTROLLER
 );
@@ -19,14 +19,20 @@ const loggerFactory = loggerManager(
  * @param {*} next
  */
 const getAllUser = (req, res, next) => {
-  loggerFactory.info(`Function getAllUser Controller has been start`);
+  logger.log({
+    level: constants.LOG_LEVELS.INFO,
+    message: 'Function getAllUser Controller has been start'
+  });
   const toolBox = { req, res, next };
   baseController(
     toolBox,
     constants.types.MsgTypeUser,
     constants.actions.MsgActionUserGetAll
   );
-  loggerFactory.info(`Function getAllUser Controller has been end`);
+  logger.log({
+    level: constants.LOG_LEVELS.INFO,
+    message: 'Function getAllUser Controller has been end'
+  });
 };
 
 /**
@@ -36,14 +42,20 @@ const getAllUser = (req, res, next) => {
  * @param {*} next
  */
 const createUser = (req, res, next) => {
-  loggerFactory.info(`Function createUser Controller has been start`);
+  logger.log({
+    level: constants.LOG_LEVELS.INFO,
+    message: 'Function createUser Controller has been start'
+  });
   const toolBox = { req, res, next };
   baseController(
     toolBox,
     constants.types.MsgTypeUser,
     constants.actions.MsgActionUserCreate
   );
-  loggerFactory.info(`Function createUser Controller has been end`);
+  logger.log({
+    level: constants.LOG_LEVELS.INFO,
+    message: 'Function createUser Controller has been end'
+  });
 };
 
 /**
@@ -53,14 +65,20 @@ const createUser = (req, res, next) => {
  * @param {*} next
  */
 const getUser = (req, res, next) => {
-  loggerFactory.info(`Function getUser Controller has been start`);
+  logger.log({
+    level: constants.LOG_LEVELS.INFO,
+    message: 'Function getUser Controller has been start'
+  });
   const toolBox = { req, res, next };
   baseController(
     toolBox,
     constants.types.MsgTypeUser,
     constants.actions.MsgActionUserGet
   );
-  loggerFactory.info(`Function getUser Controller has been end`);
+  logger.log({
+    level: constants.LOG_LEVELS.INFO,
+    message: 'Function getUser Controller has been end'
+  });
 };
 
 /**
@@ -70,14 +88,20 @@ const getUser = (req, res, next) => {
  * @param {*} next
  */
 const updateUser = (req, res, next) => {
-  loggerFactory.info(`Function updateUser Controller has been start`);
+  logger.log({
+    level: constants.LOG_LEVELS.INFO,
+    message: 'Function updateUser Controller has been start'
+  });
   const toolBox = { req, res, next };
   baseController(
     toolBox,
     constants.types.MsgTypeUser,
     constants.actions.MsgActionUserUpdate
   );
-  loggerFactory.info(`Function updateUser Controller has been end`);
+  logger.log({
+    level: constants.LOG_LEVELS.INFO,
+    message: 'Function updateUser Controller has been end'
+  });
 };
 
 /**
@@ -87,14 +111,20 @@ const updateUser = (req, res, next) => {
  * @param {*} next
  */
 const deleteUser = (req, res, next) => {
-  loggerFactory.info(`Function deleteUser Controller has been start`);
+  logger.log({
+    level: constants.LOG_LEVELS.INFO,
+    message: 'Function deleteUser Controller has been start'
+  });
   const toolBox = { req, res, next };
   baseController(
     toolBox,
     constants.types.MsgTypeUser,
     constants.actions.MsgActionUserDelete
   );
-  loggerFactory.info(`Function deleteUser Controller has been end`);
+  logger.log({
+    level: constants.LOG_LEVELS.INFO,
+    message: 'Function deleteUser Controller has been end'
+  });
 };
 
 /**
@@ -104,14 +134,20 @@ const deleteUser = (req, res, next) => {
  * @param {*} next
  */
 const changePassUser = (req, res, next) => {
-  loggerFactory.info(`Function changePassUser Controller has been start`);
+  logger.log({
+    level: constants.LOG_LEVELS.INFO,
+    message: 'Function changePassUser Controller has been start'
+  });
   const toolBox = { req, res, next };
   baseController(
     toolBox,
     constants.types.MsgTypeUser,
     constants.actions.MsgActionUserChangePass
   );
-  loggerFactory.info(`Function changePassUser Controller has been end`);
+  logger.log({
+    level: constants.LOG_LEVELS.INFO,
+    message: 'Function changePassUser Controller has been end'
+  });
 };
 
 /**
@@ -121,14 +157,20 @@ const changePassUser = (req, res, next) => {
  * @param {*} next
  */
 const setPassUser = (req, res, next) => {
-  loggerFactory.info(`Function setPassUser Controller has been start`);
+  logger.log({
+    level: constants.LOG_LEVELS.INFO,
+    message: 'Function setPassUser Controller has been start'
+  });
   const toolBox = { req, res, next };
   baseController(
     toolBox,
     constants.types.MsgTypeUser,
     constants.actions.MsgActionUserSetPass
   );
-  loggerFactory.info(`Function setPassUser Controller has been end`);
+  logger.log({
+    level: constants.LOG_LEVELS.INFO,
+    message: 'Function setPassUser Controller has been end'
+  });
 };
 
 /**
@@ -138,14 +180,20 @@ const setPassUser = (req, res, next) => {
  * @param {*} next
  */
 const resetPassUser = (req, res, next) => {
-  loggerFactory.info(`Function resetPassUser Controller has been start`);
+  logger.log({
+    level: constants.LOG_LEVELS.INFO,
+    message: 'Function resetPassUser Controller has been start'
+  });
   const toolBox = { req, res, next };
   baseController(
     toolBox,
     constants.types.MsgTypeUser,
     constants.actions.MsgActionUserResetPass
   );
-  loggerFactory.info(`Function resetPassUser Controller has been end`);
+  logger.log({
+    level: constants.LOG_LEVELS.INFO,
+    message: 'Function resetPassUser Controller has been end'
+  });
 };
 
 /**
@@ -155,14 +203,20 @@ const resetPassUser = (req, res, next) => {
  * @param {*} next
  */
 const addRolesToUser = (req, res, next) => {
-  loggerFactory.info(`Function addRolesToUser Controller has been start`);
+  logger.log({
+    level: constants.LOG_LEVELS.INFO,
+    message: 'Function addRolesToUser Controller has been start'
+  });
   const toolBox = { req, res, next };
   baseController(
     toolBox,
     constants.types.MsgTypeUser,
     constants.actions.MsgActionUserAddRoles
   );
-  loggerFactory.info(`Function addRolesToUser Controller has been end`);
+  logger.log({
+    level: constants.LOG_LEVELS.INFO,
+    message: 'Function addRolesToUser Controller has been end'
+  });
 };
 
 const userController = {

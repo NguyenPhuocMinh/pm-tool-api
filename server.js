@@ -17,6 +17,7 @@ import favicon from 'serve-favicon';
 // conf
 import { options, profiles } from '@conf';
 import constants from '@constants';
+import utils from '@utils';
 
 // core
 import loggerManager from '@core/logger';
@@ -27,6 +28,7 @@ import routers from '@routers';
 import redisAdapter from '@adapters/redis';
 import socketAdapter from '@adapters/socket';
 import amqpAdapter from '@adapters/amqp';
+import cronAdapter from '@adapters/cron';
 
 // middleware
 import {
@@ -100,6 +102,11 @@ const main = async () => {
   await amqpAdapter.Init();
 
   /**
+   * Cron Job
+   */
+  await cronAdapter.Init();
+
+  /**
    * Socket.IO
    */
   await socketAdapter.Init(server);
@@ -119,9 +126,6 @@ main().catch((err) => {
   logger.log({
     level: constants.LOG_LEVELS.ERROR,
     message: 'The server has been error',
-    args: {
-      errName: err.name,
-      errMsg: err.message
-    }
+    args: utils.parseError(err)
   });
 });

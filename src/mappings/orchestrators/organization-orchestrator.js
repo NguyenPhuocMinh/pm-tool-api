@@ -17,7 +17,7 @@ import transfers from '@transfers';
 // validators
 import validators from '@validators';
 
-const loggerFactory = loggerManager(
+const logger = loggerManager(
   constants.APP_NAME,
   constants.STRUCT_ORCHESTRATORS.ORGANIZATION_ORCHESTRATOR
 );
@@ -29,7 +29,10 @@ const loggerFactory = loggerManager(
 const getAllOrganization = async (toolBox) => {
   const { req } = toolBox;
   try {
-    loggerFactory.info(`Function getAllOrganization has been start`);
+    logger.log({
+      level: constants.LOG_LEVELS.INFO,
+      message: 'Function getAllOrganization has been start'
+    });
 
     const { skip, limit } = helpers.paginationHelper(req.query);
     const query = helpers.queryHelper(req.query);
@@ -57,7 +60,10 @@ const getAllOrganization = async (toolBox) => {
 
     const result = await commons.dataResponsesMapper(organizations);
 
-    loggerFactory.info(`Function getAllOrganization has been end`);
+    logger.log({
+      level: constants.LOG_LEVELS.INFO,
+      message: 'Function getAllOrganization has been end'
+    });
 
     return {
       result: {
@@ -67,8 +73,10 @@ const getAllOrganization = async (toolBox) => {
       msg: 'organizationS001'
     };
   } catch (err) {
-    loggerFactory.error(`Function getAllOrganization has error`, {
-      args: utils.formatErrorMsg(err)
+    logger.log({
+      level: constants.LOG_LEVELS.ERROR,
+      message: 'Function getAllOrganization has been error',
+      args: utils.parseError(err)
     });
     return Promise.reject(err);
   }
@@ -82,7 +90,10 @@ const createOrganization = async (toolBox) => {
   const { req } = toolBox;
 
   try {
-    loggerFactory.info(`Function createOrganization has been start`);
+    logger.log({
+      level: constants.LOG_LEVELS.INFO,
+      message: 'Function createOrganization has been start'
+    });
 
     // validate inputs
     const error = validators.validatorOrganization(req.body);
@@ -116,7 +127,10 @@ const createOrganization = async (toolBox) => {
 
     const result = transfers.organizationTransfer(data);
 
-    loggerFactory.info(`Function createOrganization has been end`);
+    logger.log({
+      level: constants.LOG_LEVELS.INFO,
+      message: 'Function createOrganization has been end'
+    });
 
     return {
       result: {
@@ -125,8 +139,10 @@ const createOrganization = async (toolBox) => {
       msg: 'organizationS002'
     };
   } catch (err) {
-    loggerFactory.error(`Function createOrganization has error`, {
-      args: utils.formatErrorMsg(err)
+    logger.log({
+      level: constants.LOG_LEVELS.ERROR,
+      message: 'Function createOrganization has been error',
+      args: utils.parseError(err)
     });
     return Promise.reject(err);
   }
@@ -139,7 +155,10 @@ const createOrganization = async (toolBox) => {
 const getOrganization = async (toolBox) => {
   const { req } = toolBox;
   try {
-    loggerFactory.info(`Function getOrganization has been start`);
+    logger.log({
+      level: constants.LOG_LEVELS.INFO,
+      message: 'Function getOrganization has been start'
+    });
 
     const { id } = req.params;
 
@@ -157,7 +176,10 @@ const getOrganization = async (toolBox) => {
 
     const result = transfers.organizationTransfer(organization);
 
-    loggerFactory.info(`Function getOrganization has been end`);
+    logger.log({
+      level: constants.LOG_LEVELS.INFO,
+      message: 'Function getOrganization has been end'
+    });
 
     return {
       result: {
@@ -166,8 +188,10 @@ const getOrganization = async (toolBox) => {
       msg: 'organizationS003'
     };
   } catch (err) {
-    loggerFactory.error(`Function getOrganization has error`, {
-      args: utils.formatErrorMsg(err)
+    logger.log({
+      level: constants.LOG_LEVELS.ERROR,
+      message: 'Function getOrganization has been error',
+      args: utils.parseError(err)
     });
     return Promise.reject(err);
   }
@@ -180,7 +204,10 @@ const getOrganization = async (toolBox) => {
 const updateOrganization = async (toolBox) => {
   const { req } = toolBox;
   try {
-    loggerFactory.info(`Function updateOrganization has been start`);
+    logger.log({
+      level: constants.LOG_LEVELS.INFO,
+      message: 'Function updateOrganization has been start'
+    });
 
     const { id } = req.params;
 
@@ -221,7 +248,10 @@ const updateOrganization = async (toolBox) => {
 
     const result = transfers.organizationTransfer(data);
 
-    loggerFactory.info(`Function updateOrganization has been end`);
+    logger.log({
+      level: constants.LOG_LEVELS.INFO,
+      message: 'Function updateOrganization has been end'
+    });
 
     return {
       result: {
@@ -230,8 +260,10 @@ const updateOrganization = async (toolBox) => {
       msg: 'organizationS004'
     };
   } catch (err) {
-    loggerFactory.error(`Function updateOrganization has error`, {
-      args: utils.formatErrorMsg(err)
+    logger.log({
+      level: constants.LOG_LEVELS.ERROR,
+      message: 'Function updateOrganization has been error',
+      args: utils.parseError(err)
     });
     return Promise.reject(err);
   }
@@ -244,7 +276,11 @@ const updateOrganization = async (toolBox) => {
 const deleteOrganization = async (toolBox) => {
   const { req } = toolBox;
   try {
-    loggerFactory.info(`Function deleteOrganization has been start`);
+    logger.log({
+      level: constants.LOG_LEVELS.INFO,
+      message: 'Function deleteOrganization has been start'
+    });
+
     const { id } = req.params;
 
     if (isEmpty(id)) {
@@ -256,7 +292,10 @@ const deleteOrganization = async (toolBox) => {
       id
     });
 
-    loggerFactory.info(`Function deleteOrganization has been end`);
+    logger.log({
+      level: constants.LOG_LEVELS.INFO,
+      message: 'Function deleteOrganization has been end'
+    });
 
     return {
       result: {
@@ -265,8 +304,10 @@ const deleteOrganization = async (toolBox) => {
       msg: 'organizationS005'
     };
   } catch (err) {
-    loggerFactory.info(`Function deleteOrganization has error`, {
-      args: utils.formatErrorMsg(err)
+    logger.log({
+      level: constants.LOG_LEVELS.ERROR,
+      message: 'Function deleteOrganization has been error',
+      args: utils.parseError(err)
     });
     return Promise.reject(err);
   }

@@ -53,14 +53,21 @@ const getAllNotify = async (toolBox) => {
 const getNotifyById = async (toolBox) => {
   const { req } = toolBox;
   try {
-    logger.info(`Function getNotifyById has been start`);
+    logger.log({
+      level: constants.LOG_LEVELS.INFO,
+      message: 'Function getNotifyById has been start'
+    });
+
     const { id } = req.params;
 
     const notify = await getNotify(id);
 
     const result = transfers.notifyTransfer(notify);
 
-    logger.info(`Function getNotifyById has been start`);
+    logger.log({
+      level: constants.LOG_LEVELS.INFO,
+      message: 'Function getNotifyById has been end'
+    });
 
     return {
       result: {
@@ -69,8 +76,10 @@ const getNotifyById = async (toolBox) => {
       msg: 'NotifyGetIDSuccess'
     };
   } catch (err) {
-    logger.error(`Function getNotifyById has error`, {
-      args: utils.formatErrorMsg(err)
+    logger.log({
+      level: constants.LOG_LEVELS.ERROR,
+      message: 'Function getNotifyById has been error',
+      args: utils.parseError(err)
     });
     return Promise.reject(err);
   }
@@ -83,7 +92,10 @@ const getNotifyById = async (toolBox) => {
 const getAllNotifyOfUser = async (toolBox) => {
   const { req } = toolBox;
   try {
-    logger.info(`Function getAllNotifyOfUser has been start`);
+    logger.log({
+      level: constants.LOG_LEVELS.INFO,
+      message: 'Function getAllNotifyOfUser has been start'
+    });
 
     const { userID, isNew } = req.query;
 
@@ -130,7 +142,10 @@ const getAllNotifyOfUser = async (toolBox) => {
 
     const result = await commons.dataResponsesMapper(notifiesOfUser);
 
-    logger.info(`Function getAllNotifyOfUser has been start`);
+    logger.log({
+      level: constants.LOG_LEVELS.INFO,
+      message: 'Function getAllNotifyOfUser has been end'
+    });
 
     return {
       result: {
@@ -140,8 +155,10 @@ const getAllNotifyOfUser = async (toolBox) => {
       msg: 'NotifyOfUserGetAllSuccess'
     };
   } catch (err) {
-    logger.error(`Function getAllNotifyOfUser has error`, {
-      args: utils.formatErrorMsg(err)
+    logger.log({
+      level: constants.LOG_LEVELS.ERROR,
+      message: 'Function getAllNotifyOfUser has been error',
+      args: utils.parseError(err)
     });
     return Promise.reject(err);
   }
@@ -215,7 +232,10 @@ const notifyChangePasswordTemporary = async (toolBox) => {
 
     const result = transfers.notifyTransfer(data);
 
-    logger.info(`Function notifyChangePasswordTemporary has been start`);
+    logger.log({
+      level: constants.LOG_LEVELS.INFO,
+      message: 'Function notifyChangePasswordTemporary has been end'
+    });
 
     return {
       result: {
@@ -224,8 +244,10 @@ const notifyChangePasswordTemporary = async (toolBox) => {
       msg: 'NotifyChangePasswordTemporarySuccess'
     };
   } catch (err) {
-    logger.error(`Function notifyChangePasswordTemporary has error`, {
-      args: utils.formatErrorMsg(err)
+    logger.log({
+      level: constants.LOG_LEVELS.ERROR,
+      message: 'Function notifyChangePasswordTemporary has been error',
+      args: utils.parseError(err)
     });
     return Promise.reject(err);
   }
@@ -263,8 +285,10 @@ const getNotify = async (id) => {
 
     return notify;
   } catch (err) {
-    logger.error(`Function getNotify has error`, {
-      args: utils.formatErrorMsg(err)
+    logger.log({
+      level: constants.LOG_LEVELS.ERROR,
+      message: 'Function getNotify has been error',
+      args: utils.parseError(err)
     });
     return Promise.reject(err);
   }

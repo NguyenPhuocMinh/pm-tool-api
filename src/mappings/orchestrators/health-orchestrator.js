@@ -8,7 +8,7 @@ import utils from '@utils';
 // core
 import loggerManager from '@core/logger';
 
-const loggerFactory = loggerManager(
+const logger = loggerManager(
   constants.APP_NAME,
   constants.STRUCT_ORCHESTRATORS.HEALTH_ORCHESTRATOR
 );
@@ -19,7 +19,10 @@ const loggerFactory = loggerManager(
  */
 const healthCheck = async (toolBox) => {
   try {
-    loggerFactory.info(`Function healthCheck has been start`);
+    logger.log({
+      level: constants.LOG_LEVELS.INFO,
+      message: 'Function healthCheck has been start'
+    });
     return {
       result: {
         data: 'Service has been start success'
@@ -27,8 +30,10 @@ const healthCheck = async (toolBox) => {
       msg: 's002'
     };
   } catch (err) {
-    loggerFactory.error(`Function healthCheck has error`, {
-      args: utils.formatErrorMsg(err)
+    logger.log({
+      level: constants.LOG_LEVELS.ERROR,
+      message: 'Function healthCheck has been error',
+      args: utils.parseError(err)
     });
     return Promise.reject(err);
   }

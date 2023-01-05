@@ -7,7 +7,7 @@ import constants from '@constants';
 // core
 import loggerManager from '@core/logger';
 
-const loggerFactory = loggerManager(
+const logger = loggerManager(
   constants.APP_NAME,
   constants.STRUCT_VALIDATORS.USER_VALIDATOR
 );
@@ -19,20 +19,28 @@ const schemaUser = Joi.object({
 });
 
 export const validatorUser = (data) => {
-  loggerFactory.debug('Function validatorUser has been start with data', {
+  logger.log({
+    level: constants.LOG_LEVELS.DEBUG,
+    message: 'Function validatorUser has been start with data',
     args: data
   });
 
   const { error } = schemaUser.validate(data);
 
   if (error) {
-    loggerFactory.debug('Function validatorUser has been end with error', {
+    logger.log({
+      level: constants.LOG_LEVELS.ERROR,
+      message: 'Function validatorUser has been end with error',
       args: error
     });
+
     return error;
   }
 
-  loggerFactory.debug('Function validatorUser has been end without error');
+  logger.log({
+    level: constants.LOG_LEVELS.DEBUG,
+    message: 'Function validatorUser has been end without error'
+  });
   return null;
 };
 
@@ -49,28 +57,28 @@ const schemaSetPass = Joi.object({
 });
 
 export const validatorUserSetPass = (data) => {
-  loggerFactory.debug(
-    'Function validatorUserSetPass has been start with data',
-    {
-      args: data
-    }
-  );
+  logger.log({
+    level: constants.LOG_LEVELS.DEBUG,
+    message: 'Function validatorUserSetPass has been start with data',
+    args: data
+  });
 
   const { error } = schemaSetPass.validate(data, { allowUnknown: true });
 
   if (error) {
-    loggerFactory.debug(
-      'Function validatorUserSetPass has been end with error',
-      {
-        args: error
-      }
-    );
+    logger.log({
+      level: constants.LOG_LEVELS.ERROR,
+      message: 'Function validatorUserSetPass has been end with error',
+      args: error
+    });
+
     return error;
   }
 
-  loggerFactory.debug(
-    'Function validatorUserSetPass has been end without error'
-  );
+  logger.log({
+    level: constants.LOG_LEVELS.DEBUG,
+    message: 'Function validatorUserSetPass has been end without error'
+  });
   return null;
 };
 
@@ -87,28 +95,28 @@ const schemaResetPass = Joi.object({
 });
 
 export const validatorUserResetPass = (data) => {
-  loggerFactory.debug(
-    'Function validatorUserResetPass has been start with data',
-    {
-      args: data
-    }
-  );
+  logger.log({
+    level: constants.LOG_LEVELS.DEBUG,
+    message: 'Function validatorUserResetPass has been start with data',
+    args: data
+  });
 
   const { error } = schemaResetPass.validate(data);
 
   if (error) {
-    loggerFactory.debug(
-      'Function validatorUserResetPass has been end with error',
-      {
-        args: error
-      }
-    );
+    logger.log({
+      level: constants.LOG_LEVELS.ERROR,
+      message: 'Function validatorUserResetPass has been end with error',
+      args: error
+    });
+
     return error;
   }
 
-  loggerFactory.debug(
-    'Function validatorUserResetPass has been end without error'
-  );
+  logger.log({
+    level: constants.LOG_LEVELS.DEBUG,
+    message: 'Function validatorUserResetPass has been end without error'
+  });
   return null;
 };
 
@@ -125,27 +133,27 @@ const schemaChangePass = Joi.object({
 });
 
 export const validatorUserChangePass = (data) => {
-  loggerFactory.debug(
-    'Function validatorUserChangePass has been start with data',
-    {
-      args: data
-    }
-  );
+  logger.log({
+    level: constants.LOG_LEVELS.DEBUG,
+    message: 'Function validatorUserChangePass has been start with data',
+    args: data
+  });
 
   const { error } = schemaChangePass.validate(data);
 
   if (error) {
-    loggerFactory.debug(
-      'Function validatorUserChangePass has been end with error',
-      {
-        args: error
-      }
-    );
+    logger.log({
+      level: constants.LOG_LEVELS.ERROR,
+      message: 'Function validatorUserChangePass has been end with error',
+      args: error
+    });
+
     return error;
   }
 
-  loggerFactory.debug(
-    'Function validatorUserChangePass has been end without error'
-  );
+  logger.log({
+    level: constants.LOG_LEVELS.DEBUG,
+    message: 'Function validatorUserChangePass has been end without error'
+  });
   return null;
 };

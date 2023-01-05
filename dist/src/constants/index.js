@@ -45,6 +45,7 @@ var STRUCT_BUILDS = {
  * @description CONTROLLERS
  */
 var BASE_CONTROLLER = 'base-controller';
+var TEST_CONTROLLER = 'test-controller';
 var AUTH_CONTROLLER = 'auth-controller';
 var CONFIG_CONTROLLER = 'config-controller';
 var HOME_CONTROLLER = 'home-controller';
@@ -61,6 +62,7 @@ var NOTIFY_USER_CONTROLLER = 'notify-user-controller';
 var NOTIFY_TEMPLATE_CONTROLLER = 'notify-template-controller';
 var STRUCT_CONTROLLERS = {
   BASE_CONTROLLER: BASE_CONTROLLER,
+  TEST_CONTROLLER: TEST_CONTROLLER,
   AUTH_CONTROLLER: AUTH_CONTROLLER,
   CONFIG_CONTROLLER: CONFIG_CONTROLLER,
   HOME_CONTROLLER: HOME_CONTROLLER,
@@ -81,6 +83,7 @@ var STRUCT_CONTROLLERS = {
  * @description ORCHESTRATORS
  */
 var BASE_ORCHESTRATOR = 'base-orchestrator';
+var TEST_ORCHESTRATOR = 'test-orchestrator';
 var AUTH_ORCHESTRATOR = 'auth-orchestrator';
 var CONFIG_ORCHESTRATOR = 'config-orchestrator';
 var HOME_ORCHESTRATOR = 'home-orchestrator';
@@ -97,6 +100,7 @@ var NOTIFY_USER_ORCHESTRATOR = 'notify-user-orchestrator';
 var NOTIFY_TEMPLATE_ORCHESTRATOR = 'notify-template-orchestrator';
 var STRUCT_ORCHESTRATORS = {
   BASE_ORCHESTRATOR: BASE_ORCHESTRATOR,
+  TEST_ORCHESTRATOR: TEST_ORCHESTRATOR,
   AUTH_ORCHESTRATOR: AUTH_ORCHESTRATOR,
   CONFIG_ORCHESTRATOR: CONFIG_ORCHESTRATOR,
   HOME_ORCHESTRATOR: HOME_ORCHESTRATOR,
@@ -195,8 +199,10 @@ var STRUCT_LAYERS = {
  * @description WORKERS
  */
 var SOCKET_WORKER = 'socket-worker';
+var CRON_WORKER = 'cron-worker';
 var STRUCT_WORKER = {
-  SOCKET_WORKER: SOCKET_WORKER
+  SOCKET_WORKER: SOCKET_WORKER,
+  CRON_WORKER: CRON_WORKER
 };
 
 /**
@@ -221,6 +227,7 @@ var SOCKET_EVENTS = {
  * @description QUEUE
  */
 var AMQP_QUEUES = {
+  TEST_QUEUE: 'TEST_QUEUE',
   SEND_NOTIFY_CHANGE_PASSWORD_QUEUE: 'SEND_NOTIFY_CHANGE_PASSWORD_QUEUE'
 };
 var DATE_TIMESTAMP_FORMAT = 'YYYY-MM-DD HH:mm:ss';
@@ -254,11 +261,15 @@ var LOG_LEVELS = {
   SILLY: 'silly',
   DATA: 'data'
 };
+var CRON_EXPRESSIONS = {
+  CHANGE_PASSWORD_TEMPORARY: '*/10 * * * *' // At every 30th minute
+};
 
 /**
  * @description TYPES
  */
 var types = {
+  MsgTypeTest: 'TEST',
   MsgTypeAuth: 'AUTH',
   MsgTypeConfig: 'CONFIG',
   MsgTypeHome: 'HOME',
@@ -273,6 +284,13 @@ var types = {
   MsgTypeNotify: 'NOTIFY',
   MsgTypeNotifyUser: 'NOTIFY_USER',
   MsgTypeNotifyTemplate: 'NOTIFY_TEMPLATE'
+};
+
+/**
+ * @description TEST ACTIONS
+ */
+var testActions = {
+  MsgActionTestSendQueue: 'TEST_SEND_QUEUE'
 };
 
 /**
@@ -439,7 +457,7 @@ var notifyTypes = {
 var senders = {
   SENDER_SYSTEM: 'SYSTEM'
 };
-var actions = _objectSpread(_objectSpread(_objectSpread(_objectSpread(_objectSpread(_objectSpread(_objectSpread(_objectSpread(_objectSpread(_objectSpread(_objectSpread(_objectSpread(_objectSpread(_objectSpread({}, authActions), configActions), homeActions), HealthActions), organizationActions), projectActions), roleActions), permissionActions), userActions), userSessionActions), userOnlineActions), notifyActions), notifyUserActions), notifyTemplateActions);
+var actions = _objectSpread(_objectSpread(_objectSpread(_objectSpread(_objectSpread(_objectSpread(_objectSpread(_objectSpread(_objectSpread(_objectSpread(_objectSpread(_objectSpread(_objectSpread(_objectSpread(_objectSpread({}, testActions), authActions), configActions), homeActions), HealthActions), organizationActions), projectActions), roleActions), permissionActions), userActions), userSessionActions), userOnlineActions), notifyActions), notifyUserActions), notifyTemplateActions);
 var constants = {
   types: types,
   actions: actions,
@@ -473,6 +491,7 @@ var constants = {
   STRUCT_SHARES: STRUCT_SHARES,
   SOCKET_EVENTS: SOCKET_EVENTS,
   AMQP_QUEUES: AMQP_QUEUES,
+  CRON_EXPRESSIONS: CRON_EXPRESSIONS,
   notifyTypes: notifyTypes,
   senders: senders
 };

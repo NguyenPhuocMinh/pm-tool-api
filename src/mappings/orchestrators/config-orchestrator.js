@@ -10,7 +10,7 @@ import loggerManager from '@core/logger';
 // data
 import data from '@data';
 
-const loggerFactory = loggerManager(
+const logger = loggerManager(
   constants.APP_NAME,
   constants.STRUCT_ORCHESTRATORS.CONFIG_ORCHESTRATOR
 );
@@ -22,7 +22,10 @@ const loggerFactory = loggerManager(
 const getDataConfigJson = async (toolBox) => {
   const { req } = toolBox;
   try {
-    loggerFactory.info(`Function getDataConfigJson has been start`);
+    logger.log({
+      level: constants.LOG_LEVELS.INFO,
+      message: 'Function getDataConfigJson has been start'
+    });
 
     const { name } = req.query;
 
@@ -30,7 +33,10 @@ const getDataConfigJson = async (toolBox) => {
       [name]: data[name]
     };
 
-    loggerFactory.info(`Function getDataConfigJson has been end`);
+    logger.log({
+      level: constants.LOG_LEVELS.INFO,
+      message: 'Function getDataConfigJson has been end'
+    });
 
     return {
       result: {
@@ -39,8 +45,10 @@ const getDataConfigJson = async (toolBox) => {
       msg: 's003'
     };
   } catch (err) {
-    loggerFactory.error(`Function getDataConfigJson has error`, {
-      args: utils.formatErrorMsg(err)
+    logger.log({
+      level: constants.LOG_LEVELS.ERROR,
+      message: 'Function getDataConfigJson has been error',
+      args: utils.parseError(err)
     });
     return Promise.reject(err);
   }

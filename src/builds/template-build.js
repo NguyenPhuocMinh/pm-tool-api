@@ -9,7 +9,7 @@ import utils from '@utils';
 // core
 import loggerManager from '@core/logger';
 
-const loggerFactory = loggerManager(
+const logger = loggerManager(
   constants.APP_NAME,
   constants.STRUCT_BUILDS.TEMPLATE_BUILD
 );
@@ -23,12 +23,13 @@ export const newSuccessTemplate = (toolBox, args = {}) => {
 
     const template = {};
 
-    loggerFactory.info('NewSuccessTemplate has been start');
+    logger.log({
+      level: constants.LOG_LEVELS.INFO,
+      message: 'Function newSuccessTemplate has been start',
+      args
+    });
 
     if (Object.prototype.hasOwnProperty.call(successCodes, msg)) {
-      loggerFactory.info('Message hasOwnProperty in messageCodes', {
-        args: msg
-      });
       template.result = !isEmpty(result) ? result : null;
       template.method = method;
       template.endpoint = path;
@@ -38,9 +39,6 @@ export const newSuccessTemplate = (toolBox, args = {}) => {
       template.returnCode = successCodes[msg].returnCode;
       template.statusCode = successCodes[msg].statusCode;
     } else {
-      loggerFactory.error('Message not hasOwnProperty in messageCodes', {
-        args: msg
-      });
       template.result = null;
       template.method = method;
       template.endpoint = path;
@@ -51,12 +49,17 @@ export const newSuccessTemplate = (toolBox, args = {}) => {
       template.statusCode = 400;
     }
 
-    loggerFactory.info('NewSuccessTemplate has been end');
+    logger.log({
+      level: constants.LOG_LEVELS.INFO,
+      message: 'Function newSuccessTemplate has been end'
+    });
 
     return template;
   } catch (err) {
-    loggerFactory.error('NewSuccessTemplate has error', {
-      args: utils.formatErrorMsg(err)
+    logger.log({
+      level: constants.LOG_LEVELS.ERROR,
+      message: 'Function newSuccessTemplate has been error',
+      args: utils.parseError(err)
     });
     throw err;
   }
@@ -70,7 +73,10 @@ export const newErrorTemplate = (toolBox, args = {}) => {
 
     const template = {};
 
-    loggerFactory.info('NewErrorTemplate has been start');
+    logger.log({
+      level: constants.LOG_LEVELS.INFO,
+      message: 'Function newErrorTemplate has been start'
+    });
 
     template.result = null;
     template.method = method;
@@ -81,12 +87,17 @@ export const newErrorTemplate = (toolBox, args = {}) => {
     template.returnCode = args.returnCode || 0;
     template.statusCode = args.statusCode || 500;
 
-    loggerFactory.info('NewErrorTemplate has been end');
+    logger.log({
+      level: constants.LOG_LEVELS.INFO,
+      message: 'Function newErrorTemplate has been end'
+    });
 
     return template;
   } catch (err) {
-    loggerFactory.error('NewErrorTemplate has error', {
-      args: utils.formatErrorMsg(err)
+    logger.log({
+      level: constants.LOG_LEVELS.ERROR,
+      message: 'Function newErrorTemplate has been error',
+      args: utils.parseError(err)
     });
     throw err;
   }

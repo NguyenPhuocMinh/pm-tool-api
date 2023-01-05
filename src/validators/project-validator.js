@@ -7,7 +7,7 @@ import constants from '@constants';
 // core
 import loggerManager from '@core/logger';
 
-const loggerFactory = loggerManager(
+const logger = loggerManager(
   constants.APP_NAME,
   constants.STRUCT_VALIDATORS.PROJECT_VALIDATOR
 );
@@ -17,19 +17,27 @@ const schemaProject = Joi.object({
 });
 
 export const validatorProject = (data) => {
-  loggerFactory.debug('Function validatorProject has been start with data', {
+  logger.log({
+    level: constants.LOG_LEVELS.DEBUG,
+    message: 'Function validatorProject has been start with data',
     args: data
   });
 
   const { error } = schemaProject.validate(data);
 
   if (error) {
-    loggerFactory.debug('Function validatorProject has been end with error', {
+    logger.log({
+      level: constants.LOG_LEVELS.ERROR,
+      message: 'Function validatorProject has been end with error',
       args: error
     });
+
     return error;
   }
 
-  loggerFactory.debug('Function validatorProject has been end without error');
+  logger.log({
+    level: constants.LOG_LEVELS.DEBUG,
+    message: 'Function validatorProject has been end without error'
+  });
   return null;
 };

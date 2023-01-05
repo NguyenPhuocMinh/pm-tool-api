@@ -40,6 +40,7 @@ const STRUCT_BUILDS = {
  * @description CONTROLLERS
  */
 const BASE_CONTROLLER = 'base-controller';
+const TEST_CONTROLLER = 'test-controller';
 const AUTH_CONTROLLER = 'auth-controller';
 const CONFIG_CONTROLLER = 'config-controller';
 const HOME_CONTROLLER = 'home-controller';
@@ -57,6 +58,7 @@ const NOTIFY_TEMPLATE_CONTROLLER = 'notify-template-controller';
 
 const STRUCT_CONTROLLERS = {
   BASE_CONTROLLER,
+  TEST_CONTROLLER,
   AUTH_CONTROLLER,
   CONFIG_CONTROLLER,
   HOME_CONTROLLER,
@@ -77,6 +79,7 @@ const STRUCT_CONTROLLERS = {
  * @description ORCHESTRATORS
  */
 const BASE_ORCHESTRATOR = 'base-orchestrator';
+const TEST_ORCHESTRATOR = 'test-orchestrator';
 const AUTH_ORCHESTRATOR = 'auth-orchestrator';
 const CONFIG_ORCHESTRATOR = 'config-orchestrator';
 const HOME_ORCHESTRATOR = 'home-orchestrator';
@@ -94,6 +97,7 @@ const NOTIFY_TEMPLATE_ORCHESTRATOR = 'notify-template-orchestrator';
 
 const STRUCT_ORCHESTRATORS = {
   BASE_ORCHESTRATOR,
+  TEST_ORCHESTRATOR,
   AUTH_ORCHESTRATOR,
   CONFIG_ORCHESTRATOR,
   HOME_ORCHESTRATOR,
@@ -197,9 +201,11 @@ const STRUCT_LAYERS = {
  * @description WORKERS
  */
 const SOCKET_WORKER = 'socket-worker';
+const CRON_WORKER = 'cron-worker';
 
 const STRUCT_WORKER = {
-  SOCKET_WORKER
+  SOCKET_WORKER,
+  CRON_WORKER
 };
 
 /**
@@ -225,6 +231,7 @@ const SOCKET_EVENTS = {
  * @description QUEUE
  */
 const AMQP_QUEUES = {
+  TEST_QUEUE: 'TEST_QUEUE',
   SEND_NOTIFY_CHANGE_PASSWORD_QUEUE: 'SEND_NOTIFY_CHANGE_PASSWORD_QUEUE'
 };
 
@@ -262,10 +269,15 @@ const LOG_LEVELS = {
   DATA: 'data'
 };
 
+const CRON_EXPRESSIONS = {
+  CHANGE_PASSWORD_TEMPORARY: '*/10 * * * *' // At every 30th minute
+};
+
 /**
  * @description TYPES
  */
 const types = {
+  MsgTypeTest: 'TEST',
   MsgTypeAuth: 'AUTH',
   MsgTypeConfig: 'CONFIG',
   MsgTypeHome: 'HOME',
@@ -280,6 +292,13 @@ const types = {
   MsgTypeNotify: 'NOTIFY',
   MsgTypeNotifyUser: 'NOTIFY_USER',
   MsgTypeNotifyTemplate: 'NOTIFY_TEMPLATE'
+};
+
+/**
+ * @description TEST ACTIONS
+ */
+const testActions = {
+  MsgActionTestSendQueue: 'TEST_SEND_QUEUE'
 };
 
 /**
@@ -399,8 +418,7 @@ const notifyActions = {
   MsgActionNotifyGetAll: 'NOTIFY_GET_ALL',
   MsgActionNotifyGet: 'NOTIFY_GET',
   MsgActionNotifyOfUserGetAll: 'NOTIFY_OF_USER_GET_ALL',
-  MsgActionNotifyChangePasswordTemporary: 'NOTIFY_CHANGE_PASSWORD_TEMPORARY',
-  MsgActionNotifyUpdateRead: 'NOTIFY_UPDATE_READ'
+  MsgActionNotifyChangePasswordTemporary: 'NOTIFY_CHANGE_PASSWORD_TEMPORARY'
 };
 
 /**
@@ -450,6 +468,7 @@ const senders = {
 };
 
 const actions = {
+  ...testActions,
   ...authActions,
   ...configActions,
   ...homeActions,
@@ -499,6 +518,7 @@ const constants = {
   STRUCT_SHARES,
   SOCKET_EVENTS,
   AMQP_QUEUES,
+  CRON_EXPRESSIONS,
   notifyTypes,
   senders
 };

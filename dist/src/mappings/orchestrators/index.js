@@ -6,6 +6,7 @@ Object.defineProperty(exports, "__esModule", {
 exports["default"] = void 0;
 require("source-map-support/register");
 var _constants = _interopRequireDefault(require("../../constants"));
+var _testOrchestrator = _interopRequireDefault(require("./test-orchestrator"));
 var _authOrchestrator = _interopRequireDefault(require("./auth-orchestrator"));
 var _configOrchestrator = _interopRequireDefault(require("./config-orchestrator"));
 var _homeOrchestrator = _interopRequireDefault(require("./home-orchestrator"));
@@ -21,6 +22,15 @@ var _notifyOrchestrator = _interopRequireDefault(require("./notify-orchestrator"
 var _notifyUserOrchestrator = _interopRequireDefault(require("./notify-user-orchestrator"));
 var _notifyTemplateOrchestrator = _interopRequireDefault(require("./notify-template-orchestrator"));
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
+/**
+ * AUTH
+ */
+var orchestratorTest = [{
+  type: _constants["default"].types.MsgTypeTest,
+  action: _constants["default"].actions.MsgActionTestSendQueue,
+  orchestrator: _testOrchestrator["default"].testSendQueue
+}];
+
 /**
  * AUTH
  */
@@ -349,6 +359,6 @@ var orchestratorNotifyTemplate = [{
 /**
  * BASE
  */
-var orchestrators = [].concat(orchestratorAuth, orchestratorConfig, orchestratorHome, orchestratorHealth, orchestratorOrganization, orchestratorProject, orchestratorRole, orchestratorPermission, orchestratorUser, orchestratorUserSession, orchestratorUserOnline, orchestratorNotify, orchestratorNotifyUser, orchestratorNotifyTemplate);
+var orchestrators = [].concat(orchestratorTest, orchestratorAuth, orchestratorConfig, orchestratorHome, orchestratorHealth, orchestratorOrganization, orchestratorProject, orchestratorRole, orchestratorPermission, orchestratorUser, orchestratorUserSession, orchestratorUserOnline, orchestratorNotify, orchestratorNotifyUser, orchestratorNotifyTemplate);
 var _default = orchestrators;
 exports["default"] = _default;

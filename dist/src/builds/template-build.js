@@ -13,7 +13,7 @@ var _logger = _interopRequireDefault(require("../core/logger"));
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 // core
 
-var loggerFactory = (0, _logger["default"])(_constants["default"].APP_NAME, _constants["default"].STRUCT_BUILDS.TEMPLATE_BUILD);
+var logger = (0, _logger["default"])(_constants["default"].APP_NAME, _constants["default"].STRUCT_BUILDS.TEMPLATE_BUILD);
 var newSuccessTemplate = function newSuccessTemplate(toolBox) {
   var args = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
   var req = toolBox.req;
@@ -23,11 +23,12 @@ var newSuccessTemplate = function newSuccessTemplate(toolBox) {
     var path = req.path,
       method = req.method;
     var template = {};
-    loggerFactory.info('NewSuccessTemplate has been start');
+    logger.log({
+      level: _constants["default"].LOG_LEVELS.INFO,
+      message: 'Function newSuccessTemplate has been start',
+      args: args
+    });
     if (Object.prototype.hasOwnProperty.call(_resources.successCodes, msg)) {
-      loggerFactory.info('Message hasOwnProperty in messageCodes', {
-        args: msg
-      });
       template.result = !(0, _lodash.isEmpty)(result) ? result : null;
       template.method = method;
       template.endpoint = path;
@@ -37,9 +38,6 @@ var newSuccessTemplate = function newSuccessTemplate(toolBox) {
       template.returnCode = _resources.successCodes[msg].returnCode;
       template.statusCode = _resources.successCodes[msg].statusCode;
     } else {
-      loggerFactory.error('Message not hasOwnProperty in messageCodes', {
-        args: msg
-      });
       template.result = null;
       template.method = method;
       template.endpoint = path;
@@ -49,11 +47,16 @@ var newSuccessTemplate = function newSuccessTemplate(toolBox) {
       template.returnCode = 1000;
       template.statusCode = 400;
     }
-    loggerFactory.info('NewSuccessTemplate has been end');
+    logger.log({
+      level: _constants["default"].LOG_LEVELS.INFO,
+      message: 'Function newSuccessTemplate has been end'
+    });
     return template;
   } catch (err) {
-    loggerFactory.error('NewSuccessTemplate has error', {
-      args: _utils["default"].formatErrorMsg(err)
+    logger.log({
+      level: _constants["default"].LOG_LEVELS.ERROR,
+      message: 'Function newSuccessTemplate has been error',
+      args: _utils["default"].parseError(err)
     });
     throw err;
   }
@@ -66,7 +69,10 @@ var newErrorTemplate = function newErrorTemplate(toolBox) {
     var path = req.path,
       method = req.method;
     var template = {};
-    loggerFactory.info('NewErrorTemplate has been start');
+    logger.log({
+      level: _constants["default"].LOG_LEVELS.INFO,
+      message: 'Function newErrorTemplate has been start'
+    });
     template.result = null;
     template.method = method;
     template.endpoint = path;
@@ -75,11 +81,16 @@ var newErrorTemplate = function newErrorTemplate(toolBox) {
     template.description = args.description;
     template.returnCode = args.returnCode || 0;
     template.statusCode = args.statusCode || 500;
-    loggerFactory.info('NewErrorTemplate has been end');
+    logger.log({
+      level: _constants["default"].LOG_LEVELS.INFO,
+      message: 'Function newErrorTemplate has been end'
+    });
     return template;
   } catch (err) {
-    loggerFactory.error('NewErrorTemplate has error', {
-      args: _utils["default"].formatErrorMsg(err)
+    logger.log({
+      level: _constants["default"].LOG_LEVELS.ERROR,
+      message: 'Function newErrorTemplate has been error',
+      args: _utils["default"].parseError(err)
     });
     throw err;
   }

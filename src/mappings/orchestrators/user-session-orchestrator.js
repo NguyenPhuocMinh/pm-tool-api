@@ -15,7 +15,7 @@ import repository from '@layers/repository';
 // transfers
 import transfers from '@transfers';
 
-const loggerFactory = loggerManager(
+const logger = loggerManager(
   constants.APP_NAME,
   constants.STRUCT_ORCHESTRATORS.USER_SESSION_ORCHESTRATOR
 );
@@ -27,7 +27,10 @@ const loggerFactory = loggerManager(
 const getUserTimelineSession = async (toolBox) => {
   const { req } = toolBox;
   try {
-    loggerFactory.info(`Function getUserTimelineSession has been start`);
+    logger.log({
+      level: constants.LOG_LEVELS.INFO,
+      message: 'Function getUserTimelineSession Orchestrator has been start'
+    });
 
     const { userID } = req.params;
     const { skip, limit } = helpers.paginationHelper(req.query);
@@ -56,7 +59,10 @@ const getUserTimelineSession = async (toolBox) => {
 
     const response = await commons.dataResponsesMapper(timelines);
 
-    loggerFactory.info(`Function getUserTimelineSession has been end`);
+    logger.log({
+      level: constants.LOG_LEVELS.INFO,
+      message: 'Function getUserTimelineSession Orchestrator has been end'
+    });
 
     return {
       result: {
@@ -66,8 +72,10 @@ const getUserTimelineSession = async (toolBox) => {
       msg: 'userSessionS001'
     };
   } catch (err) {
-    loggerFactory.error(`Function getUserTimelineSession has error`, {
-      args: utils.formatErrorMsg(err)
+    logger.log({
+      level: constants.LOG_LEVELS.ERROR,
+      message: 'Function getUserTimelineSession Orchestrator has been error',
+      args: utils.parseError(err)
     });
     return Promise.reject(err);
   }
@@ -80,7 +88,10 @@ const getUserTimelineSession = async (toolBox) => {
 const createUserSession = async (toolBox) => {
   const { req } = toolBox;
   try {
-    loggerFactory.info(`Function createSession has been start`);
+    logger.log({
+      level: constants.LOG_LEVELS.INFO,
+      message: 'Function createSession Orchestrator has been start'
+    });
 
     const { userID } = req.body;
 
@@ -104,7 +115,10 @@ const createUserSession = async (toolBox) => {
 
     data = transfers.userSessionTransfer(userSession);
 
-    loggerFactory.info(`Function createSession has been end`);
+    logger.log({
+      level: constants.LOG_LEVELS.INFO,
+      message: 'Function createSession Orchestrator has been end'
+    });
 
     return {
       result: {
@@ -113,8 +127,10 @@ const createUserSession = async (toolBox) => {
       msg: 'userSessionS002'
     };
   } catch (err) {
-    loggerFactory.error(`Function createSession has error`, {
-      args: utils.formatErrorMsg(err)
+    logger.log({
+      level: constants.LOG_LEVELS.ERROR,
+      message: 'Function createSession Orchestrator has been error',
+      args: utils.parseError(err)
     });
     return Promise.reject(err);
   }
@@ -127,7 +143,10 @@ const createUserSession = async (toolBox) => {
 const updateUserSession = async (toolBox, records) => {
   const { req } = toolBox;
   try {
-    loggerFactory.info(`Function updateUserSession has been start`);
+    logger.log({
+      level: constants.LOG_LEVELS.INFO,
+      message: 'Function updateUserSession Orchestrator has been start'
+    });
 
     const { id, reason } = records;
 
@@ -141,7 +160,10 @@ const updateUserSession = async (toolBox, records) => {
 
     data = transfers.userSessionTransfer(userSession);
 
-    loggerFactory.info(`Function updateUserSession has been end`);
+    logger.log({
+      level: constants.LOG_LEVELS.INFO,
+      message: 'Function updateUserSession Orchestrator has been end'
+    });
 
     return {
       result: {
@@ -150,8 +172,10 @@ const updateUserSession = async (toolBox, records) => {
       msg: 'userSessionS003'
     };
   } catch (err) {
-    loggerFactory.error(`Function updateUserSession has error`, {
-      args: utils.formatErrorMsg(err)
+    logger.log({
+      level: constants.LOG_LEVELS.ERROR,
+      message: 'Function updateUserSession Orchestrator has been error',
+      args: utils.parseError(err)
     });
     return Promise.reject(err);
   }
@@ -164,7 +188,10 @@ const updateUserSession = async (toolBox, records) => {
 const deleteUserSession = async (toolBox) => {
   const { req } = toolBox;
   try {
-    loggerFactory.info(`Function deleteUserSession has been start`);
+    logger.log({
+      level: constants.LOG_LEVELS.INFO,
+      message: 'Function deleteUserSession Orchestrator has been start'
+    });
 
     const { id } = req.params;
 
@@ -178,7 +205,10 @@ const deleteUserSession = async (toolBox) => {
 
     await userSession.save();
 
-    loggerFactory.info(`Function deleteUserSession has been end`);
+    logger.log({
+      level: constants.LOG_LEVELS.INFO,
+      message: 'Function deleteUserSession Orchestrator has been end'
+    });
 
     return {
       result: {
@@ -187,8 +217,10 @@ const deleteUserSession = async (toolBox) => {
       msg: 'userSessionS004'
     };
   } catch (err) {
-    loggerFactory.error(`Function deleteUserSession has error`, {
-      args: utils.formatErrorMsg(err)
+    logger.log({
+      level: constants.LOG_LEVELS.ERROR,
+      message: 'Function deleteUserSession Orchestrator has been error',
+      args: utils.parseError(err)
     });
     return Promise.reject(err);
   }
@@ -222,8 +254,10 @@ const getUserSession = async (id) => {
 
     return session;
   } catch (err) {
-    loggerFactory.error(`Function getSession has error`, {
-      args: utils.formatErrorMsg(err)
+    logger.log({
+      level: constants.LOG_LEVELS.ERROR,
+      message: 'Function getUserSession Orchestrator has been error',
+      args: utils.parseError(err)
     });
     throw err;
   }

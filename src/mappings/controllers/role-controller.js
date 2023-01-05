@@ -7,7 +7,7 @@ import constants from '@constants';
 // core
 import loggerManager from '@core/logger';
 
-const loggerFactory = loggerManager(
+const logger = loggerManager(
   constants.APP_NAME,
   constants.STRUCT_CONTROLLERS.ROLE_CONTROLLER
 );
@@ -19,14 +19,20 @@ const loggerFactory = loggerManager(
  * @param {*} next
  */
 const getAllRole = (req, res, next) => {
-  loggerFactory.info(`Function getAllRole Controller has been start`);
+  logger.log({
+    level: constants.LOG_LEVELS.INFO,
+    message: 'Function getAllRole Controller has been start'
+  });
   const toolBox = { req, res, next };
   baseController(
     toolBox,
     constants.types.MsgTypeRole,
     constants.actions.MsgActionRoleGetAll
   );
-  loggerFactory.info(`Function getAllRole Controller has been end`);
+  logger.log({
+    level: constants.LOG_LEVELS.INFO,
+    message: 'Function getAllRole Controller has been end'
+  });
 };
 
 /**
@@ -36,14 +42,20 @@ const getAllRole = (req, res, next) => {
  * @param {*} next
  */
 const createRole = (req, res, next) => {
-  loggerFactory.info(`Function createRole Controller has been start`);
+  logger.log({
+    level: constants.LOG_LEVELS.INFO,
+    message: 'Function createRole Controller has been start'
+  });
   const toolBox = { req, res, next };
   baseController(
     toolBox,
     constants.types.MsgTypeRole,
     constants.actions.MsgActionRoleCreate
   );
-  loggerFactory.info(`Function createRole Controller has been end`);
+  logger.log({
+    level: constants.LOG_LEVELS.INFO,
+    message: 'Function createRole Controller has been end'
+  });
 };
 
 /**
@@ -53,14 +65,20 @@ const createRole = (req, res, next) => {
  * @param {*} next
  */
 const getRole = (req, res, next) => {
-  loggerFactory.info(`Function getRole Controller has been start`);
+  logger.log({
+    level: constants.LOG_LEVELS.INFO,
+    message: 'Function getRole Controller has been start'
+  });
   const toolBox = { req, res, next };
   baseController(
     toolBox,
     constants.types.MsgTypeRole,
     constants.actions.MsgActionRoleGet
   );
-  loggerFactory.info(`Function getRole Controller has been end`);
+  logger.log({
+    level: constants.LOG_LEVELS.INFO,
+    message: 'Function getRole Controller has been end'
+  });
 };
 
 /**
@@ -70,14 +88,20 @@ const getRole = (req, res, next) => {
  * @param {*} next
  */
 const updateRole = (req, res, next) => {
-  loggerFactory.info(`Function updateRole Controller has been start`);
+  logger.log({
+    level: constants.LOG_LEVELS.INFO,
+    message: 'Function updateRole Controller has been start'
+  });
   const toolBox = { req, res, next };
   baseController(
     toolBox,
     constants.types.MsgTypeRole,
     constants.actions.MsgActionRoleUpdate
   );
-  loggerFactory.info(`Function updateRole Controller has been end`);
+  logger.log({
+    level: constants.LOG_LEVELS.INFO,
+    message: 'Function updateRole Controller has been end'
+  });
 };
 
 /**
@@ -87,14 +111,20 @@ const updateRole = (req, res, next) => {
  * @param {*} next
  */
 const deleteRole = (req, res, next) => {
-  loggerFactory.info(`Function deleteRole Controller has been start`);
+  logger.log({
+    level: constants.LOG_LEVELS.INFO,
+    message: 'Function deleteRole Controller has been start'
+  });
   const toolBox = { req, res, next };
   baseController(
     toolBox,
     constants.types.MsgTypeRole,
     constants.actions.MsgActionRoleDelete
   );
-  loggerFactory.info(`Function deleteRole Controller has been end`);
+  logger.log({
+    level: constants.LOG_LEVELS.INFO,
+    message: 'Function deleteRole Controller has been end'
+  });
 };
 
 /**
@@ -104,14 +134,20 @@ const deleteRole = (req, res, next) => {
  * @param {*} next
  */
 const getUsersInRole = (req, res, next) => {
-  loggerFactory.info(`Function getUsersInRole Controller has been start`);
+  logger.log({
+    level: constants.LOG_LEVELS.INFO,
+    message: 'Function getUsersInRole Controller has been start'
+  });
   const toolBox = { req, res, next };
   baseController(
     toolBox,
     constants.types.MsgTypeRole,
     constants.actions.MsgActionRoleGetUsers
   );
-  loggerFactory.info(`Function getUsersInRole Controller has been end`);
+  logger.log({
+    level: constants.LOG_LEVELS.INFO,
+    message: 'Function getUsersInRole Controller has been end'
+  });
 };
 
 /**
@@ -121,14 +157,20 @@ const getUsersInRole = (req, res, next) => {
  * @param {*} next
  */
 const getPermissionsInRole = (req, res, next) => {
-  loggerFactory.info(`Function getPermissionsInRole Controller has been start`);
+  logger.log({
+    level: constants.LOG_LEVELS.INFO,
+    message: 'Function getPermissionsInRole Controller has been start'
+  });
   const toolBox = { req, res, next };
   baseController(
     toolBox,
     constants.types.MsgTypeRole,
     constants.actions.MsgActionRoleGetPermissions
   );
-  loggerFactory.info(`Function getPermissionsInRole Controller has been end`);
+  logger.log({
+    level: constants.LOG_LEVELS.INFO,
+    message: 'Function getPermissionsInRole Controller has been end'
+  });
 };
 
 const roleController = {

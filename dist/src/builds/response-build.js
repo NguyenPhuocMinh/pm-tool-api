@@ -13,21 +13,29 @@ var _logger = _interopRequireDefault(require("../core/logger"));
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 // core
 
-var loggerFactory = (0, _logger["default"])(_constants["default"].APP_NAME, _constants["default"].STRUCT_BUILDS.RESPONSE_BUILD);
+var logger = (0, _logger["default"])(_constants["default"].APP_NAME, _constants["default"].STRUCT_BUILDS.RESPONSE_BUILD);
 var successResponse = function successResponse(toolBox, args) {
   try {
-    loggerFactory.info("SuccessResponse has been start");
+    logger.log({
+      level: _constants["default"].LOG_LEVELS.INFO,
+      message: 'Function successResponse has been start'
+    });
     var res = toolBox.res;
     var header = (0, _lodash.get)(args, 'headers');
     var templateSuccessResponse = _["default"].newSuccessTemplate(toolBox, args);
     var headers = (0, _lodash.assign)({}, header !== null && header !== void 0 ? header : {}, {
       'X-Return-Code': templateSuccessResponse.returnCode
     });
-    loggerFactory.info("SuccessResponse has been end");
+    logger.log({
+      level: _constants["default"].LOG_LEVELS.INFO,
+      message: 'Function successResponse has been end'
+    });
     return res.status(templateSuccessResponse.statusCode).set(headers).send(templateSuccessResponse);
   } catch (err) {
-    loggerFactory.error("SuccessResponse has error", {
-      args: _utils["default"].formatErrorMsg(err)
+    logger.log({
+      level: _constants["default"].LOG_LEVELS.INFO,
+      message: 'Function successResponse has been error',
+      args: _utils["default"].parseError(err)
     });
     throw err;
   }
@@ -35,17 +43,26 @@ var successResponse = function successResponse(toolBox, args) {
 exports.successResponse = successResponse;
 var errorResponse = function errorResponse(toolBox, args) {
   try {
-    loggerFactory.error("ErrorResponse has been start");
+    logger.log({
+      level: _constants["default"].LOG_LEVELS.ERROR,
+      message: 'Function errorResponse has been start',
+      args: args
+    });
     var res = toolBox.res;
     var templateErrorResponse = _["default"].newErrorTemplate(toolBox, args);
     var headers = {
       'X-Return-Code': templateErrorResponse.returnCode
     };
-    loggerFactory.error("ErrorResponse has been end");
+    logger.log({
+      level: _constants["default"].LOG_LEVELS.ERROR,
+      message: 'Function errorResponse has been end'
+    });
     return res.status(templateErrorResponse.statusCode).set(headers).send(templateErrorResponse);
   } catch (err) {
-    loggerFactory.error("ErrorResponse has been error", {
-      args: _utils["default"].formatErrorMsg(err)
+    logger.log({
+      level: _constants["default"].LOG_LEVELS.ERROR,
+      message: 'Function errorResponse has been error',
+      args: _utils["default"].parseError(err)
     });
     throw err;
   }
