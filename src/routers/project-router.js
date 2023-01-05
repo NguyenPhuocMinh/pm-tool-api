@@ -7,14 +7,12 @@ import { projectController } from '@mappings/controllers';
  */
 const projectRouter = [
   {
-    enable: true,
     pathName: '/projects',
     method: 'GET',
     methodName: 'getAllProject',
     controller: projectController.getAllProject
   },
   {
-    enable: true,
     pathName: '/projects',
     method: 'POST',
     methodName: 'createProject',

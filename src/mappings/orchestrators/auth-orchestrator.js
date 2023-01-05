@@ -28,7 +28,7 @@ import validators from '@validators';
 // orchestrators
 import userSessionOrchestrator from './user-session-orchestrator';
 
-const loggerFactory = loggerManager(
+const logger = loggerManager(
   constants.APP_NAME,
   constants.STRUCT_ORCHESTRATORS.AUTH_ORCHESTRATOR
 );
@@ -46,7 +46,10 @@ const APP_ISSUER = profiles.APP_ISSUER;
 const signIn = async (toolBox) => {
   const { req } = toolBox;
   try {
-    loggerFactory.info(`Function signIn has been start`);
+    logger.log({
+      level: constants.LOG_LEVELS.INFO,
+      message: 'Function signIn has been start'
+    });
 
     // validator
     const error = validators.validatorLogin(req.body);
@@ -104,7 +107,10 @@ const signIn = async (toolBox) => {
     const wlKey = `whitelist_${data.id}`;
     await redisManager.setExValue(wlKey, token, DEFAULT_EXPIRES_TOKEN);
 
-    loggerFactory.info(`Function signIn has been end`);
+    logger.log({
+      level: constants.LOG_LEVELS.INFO,
+      message: 'Function signIn has been end'
+    });
 
     return {
       result: {
@@ -113,8 +119,10 @@ const signIn = async (toolBox) => {
       msg: 'authS001'
     };
   } catch (err) {
-    loggerFactory.error(`Function signIn has error`, {
-      args: utils.formatErrorMsg(err)
+    logger.log({
+      level: constants.LOG_LEVELS.ERROR,
+      message: 'Function signIn has been end',
+      args: utils.parseError(err)
     });
     return Promise.reject(err);
   }
@@ -128,7 +136,10 @@ const signOut = async (toolBox) => {
   const { req } = toolBox;
   const { tokenExp } = req;
   try {
-    loggerFactory.info(`Function signOut has been start`);
+    logger.log({
+      level: constants.LOG_LEVELS.INFO,
+      message: 'Function signOut has been start'
+    });
 
     const { email, token, sessionID } = req.body;
 
@@ -149,7 +160,10 @@ const signOut = async (toolBox) => {
     user.isOnline = false;
     await user.save();
 
-    loggerFactory.info(`Function signOut has been end`);
+    logger.log({
+      level: constants.LOG_LEVELS.INFO,
+      message: 'Function signOut has been end'
+    });
 
     return {
       result: {
@@ -158,8 +172,10 @@ const signOut = async (toolBox) => {
       msg: 'authS002'
     };
   } catch (err) {
-    loggerFactory.error(`Function signOut has error`, {
-      args: utils.formatErrorMsg(err)
+    logger.log({
+      level: constants.LOG_LEVELS.ERROR,
+      message: 'Function signOut has been end',
+      args: utils.parseError(err)
     });
     return Promise.reject(err);
   }
@@ -172,7 +188,10 @@ const signOut = async (toolBox) => {
 const whoami = async (toolBox) => {
   const { req } = toolBox;
   try {
-    loggerFactory.info(`Function whoami has been start`);
+    logger.log({
+      level: constants.LOG_LEVELS.INFO,
+      message: 'Function whoami has been start'
+    });
 
     const { email } = req.body;
 
@@ -180,7 +199,10 @@ const whoami = async (toolBox) => {
 
     const result = await transfers.authTransfer(user);
 
-    loggerFactory.info(`Function whoami has been end`);
+    logger.log({
+      level: constants.LOG_LEVELS.INFO,
+      message: 'Function whoami has been end'
+    });
 
     return {
       result: {
@@ -189,8 +211,10 @@ const whoami = async (toolBox) => {
       msg: 'authS003'
     };
   } catch (err) {
-    loggerFactory.error(`Function whoami has error`, {
-      args: utils.formatErrorMsg(err)
+    logger.log({
+      level: constants.LOG_LEVELS.ERROR,
+      message: 'Function whoami has been error',
+      args: utils.parseError(err)
     });
     return Promise.reject(err);
   }
@@ -203,7 +227,10 @@ const whoami = async (toolBox) => {
 const refreshToken = async (toolBox) => {
   const { req } = toolBox;
   try {
-    loggerFactory.info(`Function refreshToken has been start`);
+    logger.log({
+      level: constants.LOG_LEVELS.INFO,
+      message: 'Function refreshToken has been start'
+    });
 
     const { email, sessionID } = req.body;
 
@@ -227,12 +254,11 @@ const refreshToken = async (toolBox) => {
       },
       async (err, decoded) => {
         if (err) {
-          loggerFactory.error(
-            `Function refreshToken verify token has been error`,
-            {
-              args: utils.formatErrorMsg(err)
-            }
-          );
+          logger.log({
+            level: constants.LOG_LEVELS.ERROR,
+            message: 'Function refreshToken verify token has been error',
+            args: utils.parseError(err)
+          });
 
           await unStoreData(req, user);
 
@@ -269,7 +295,10 @@ const refreshToken = async (toolBox) => {
     // save whitelist token in redis
     await redisManager.setExValue(wlKey, newToken, DEFAULT_EXPIRES_TOKEN);
 
-    loggerFactory.info(`Function refreshToken has been end`);
+    logger.log({
+      level: constants.LOG_LEVELS.INFO,
+      message: 'Function refreshToken has been end'
+    });
 
     return {
       result: {
@@ -278,8 +307,10 @@ const refreshToken = async (toolBox) => {
       msg: 'authS004'
     };
   } catch (err) {
-    loggerFactory.error(`Function refreshToken has error`, {
-      args: utils.formatErrorMsg(err)
+    logger.log({
+      level: constants.LOG_LEVELS.ERROR,
+      message: 'Function refreshToken has been error',
+      args: utils.parseError(err)
     });
     return Promise.reject(err);
   }
@@ -293,7 +324,10 @@ const revokeToken = async (toolBox) => {
   const { req } = toolBox;
   const { tokenExp } = req;
   try {
-    loggerFactory.info(`Function revokeToken has been start`);
+    logger.log({
+      level: constants.LOG_LEVELS.INFO,
+      message: 'Function revokeToken has been start'
+    });
 
     const { id, sessionID } = req.body;
 
@@ -324,7 +358,10 @@ const revokeToken = async (toolBox) => {
     user.isOnline = false;
     await user.save();
 
-    loggerFactory.info(`Function revokeToken has been end`);
+    logger.log({
+      level: constants.LOG_LEVELS.INFO,
+      message: 'Function revokeToken has been end'
+    });
 
     return {
       result: {
@@ -333,8 +370,10 @@ const revokeToken = async (toolBox) => {
       msg: 'authS005'
     };
   } catch (err) {
-    loggerFactory.error(`Function revokeToken has error`, {
-      args: utils.formatErrorMsg(err)
+    logger.log({
+      level: constants.LOG_LEVELS.ERROR,
+      message: 'Function revokeToken has been error',
+      args: utils.parseError(err)
     });
     return Promise.reject(err);
   }
@@ -374,8 +413,10 @@ const getUser = async (email) => {
 
     return user;
   } catch (err) {
-    loggerFactory.error(`Function getUser has error`, {
-      args: utils.formatErrorMsg(err)
+    logger.log({
+      level: constants.LOG_LEVELS.ERROR,
+      message: 'Function getUser has been error',
+      args: utils.parseError(err)
     });
     throw err;
   }
@@ -390,8 +431,10 @@ const unStoreData = async (req, user) => {
     // un store token in session
     sessionUnStore(req);
   } catch (err) {
-    loggerFactory.error(`Function unStoreData has error`, {
-      args: utils.formatErrorMsg(err)
+    logger.log({
+      level: constants.LOG_LEVELS.ERROR,
+      message: 'Function unStoreData has been error',
+      args: utils.parseError(err)
     });
     throw err;
   }

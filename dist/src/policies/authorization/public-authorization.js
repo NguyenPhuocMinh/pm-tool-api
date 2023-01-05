@@ -7,6 +7,14 @@ exports["default"] = void 0;
 require("source-map-support/register");
 var _default = [
 /**
+ * TEST
+ */
+{
+  enable: false,
+  method: 'POST',
+  pathName: '/test-amqp'
+},
+/**
  * LOGIN
  */
 {

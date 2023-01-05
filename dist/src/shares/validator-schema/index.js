@@ -27,7 +27,7 @@ var ajv = new _ajv["default"]({
   keywords: true
 });
 (0, _ajvErrors["default"])(ajv);
-var loggerFactory = (0, _logger["default"])(_constants["default"].APP_NAME, _constants["default"].STRUCT_SHARES.VALIDATOR_SCHEMA);
+var logger = (0, _logger["default"])(_constants["default"].APP_NAME, _constants["default"].STRUCT_SHARES.VALIDATOR_SCHEMA);
 var validatorSchema = /*#__PURE__*/function () {
   var _ref = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee(schema, data) {
     var errors, validate, valid;
@@ -36,8 +36,12 @@ var validatorSchema = /*#__PURE__*/function () {
         switch (_context.prev = _context.next) {
           case 0:
             _context.prev = 0;
-            loggerFactory.info("Function validatorSchema has been start with schema", {
-              args: schema
+            logger.log({
+              level: _constants["default"].LOG_LEVELS.INFO,
+              message: 'Function validatorSchema has been start with schema',
+              args: {
+                schema: schema
+              }
             });
             errors = {};
             if (!Object.prototype.hasOwnProperty.call(_schemas["default"], schema)) {
@@ -47,7 +51,9 @@ var validatorSchema = /*#__PURE__*/function () {
             validate = ajv.compile(_schemas["default"][schema]);
             valid = validate(data);
             if (!valid) {
-              loggerFactory.debug("validate errors", {
+              logger.log({
+                level: _constants["default"].LOG_LEVELS.DEBUG,
+                message: 'Function validatorSchema has been validate errors',
                 args: validate.errors
               });
               errors.name = validate.errors[0].keyword;
@@ -60,13 +66,18 @@ var validatorSchema = /*#__PURE__*/function () {
           case 9:
             throw _commons["default"].newError('e004');
           case 10:
-            loggerFactory.info("Function validatorSchema has been end");
+            logger.log({
+              level: _constants["default"].LOG_LEVELS.INFO,
+              message: 'Function validatorSchema has been end'
+            });
             return _context.abrupt("return", errors);
           case 14:
             _context.prev = 14;
             _context.t0 = _context["catch"](0);
-            loggerFactory.error("Function validatorSchema has error", {
-              args: _utils["default"].formatErrorMsg(_context.t0)
+            logger.log({
+              level: _constants["default"].LOG_LEVELS.ERROR,
+              message: 'Function validatorSchema has been error',
+              args: _utils["default"].parseError(_context.t0)
             });
             throw _context.t0;
           case 18:

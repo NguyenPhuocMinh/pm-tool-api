@@ -7,7 +7,7 @@ import constants from '@constants';
 // core
 import loggerManager from '@core/logger';
 
-const loggerFactory = loggerManager(
+const logger = loggerManager(
   constants.APP_NAME,
   constants.STRUCT_CONTROLLERS.NOTIFY_CONTROLLER
 );
@@ -19,14 +19,20 @@ const loggerFactory = loggerManager(
  * @param {*} next
  */
 const getNotifyById = (req, res, next) => {
-  loggerFactory.info(`Function getNotifyById Controller has been start`);
+  logger.log({
+    level: constants.LOG_LEVELS.INFO,
+    message: 'Function getNotifyById Controller has been start'
+  });
   const toolBox = { req, res, next };
   baseController(
     toolBox,
     constants.types.MsgTypeNotify,
     constants.actions.MsgActionNotifyGet
   );
-  loggerFactory.info(`Function getNotifyById Controller has been end`);
+  logger.log({
+    level: constants.LOG_LEVELS.INFO,
+    message: 'Function getNotifyById Controller has been end'
+  });
 };
 
 /**
@@ -36,14 +42,20 @@ const getNotifyById = (req, res, next) => {
  * @param {*} next
  */
 const getAllNotifyOfUser = (req, res, next) => {
-  loggerFactory.info(`Function getAllNotifyOfUser Controller has been start`);
+  logger.log({
+    level: constants.LOG_LEVELS.INFO,
+    message: 'Function getAllNotifyOfUser Controller has been start'
+  });
   const toolBox = { req, res, next };
   baseController(
     toolBox,
     constants.types.MsgTypeNotify,
     constants.actions.MsgActionNotifyOfUserGetAll
   );
-  loggerFactory.info(`Function getAllNotifyOfUser Controller has been end`);
+  logger.log({
+    level: constants.LOG_LEVELS.INFO,
+    message: 'Function getAllNotifyOfUser Controller has been end'
+  });
 };
 
 /**
@@ -53,42 +65,26 @@ const getAllNotifyOfUser = (req, res, next) => {
  * @param {*} next
  */
 const notifyChangePasswordTemporary = (req, res, next) => {
-  loggerFactory.info(
-    `Function notifyChangePasswordTemporary Controller has been start`
-  );
+  logger.log({
+    level: constants.LOG_LEVELS.INFO,
+    message: 'Function notifyChangePasswordTemporary Controller has been start'
+  });
   const toolBox = { req, res, next };
   baseController(
     toolBox,
     constants.types.MsgTypeNotify,
     constants.actions.MsgActionNotifyChangePasswordTemporary
   );
-  loggerFactory.info(
-    `Function notifyChangePasswordTemporary Controller has been end`
-  );
-};
-
-/**
- * @description Notify Update Read Controller
- * @param {*} req
- * @param {*} res
- * @param {*} next
- */
-const notifyUpdateRead = (req, res, next) => {
-  loggerFactory.info(`Function notifyUpdateRead Controller has been start`);
-  const toolBox = { req, res, next };
-  baseController(
-    toolBox,
-    constants.types.MsgTypeNotify,
-    constants.actions.MsgActionNotifyUpdateRead
-  );
-  loggerFactory.info(`Function notifyUpdateRead Controller has been end`);
+  logger.log({
+    level: constants.LOG_LEVELS.INFO,
+    message: 'Function notifyChangePasswordTemporary Controller has been end'
+  });
 };
 
 const notifyController = {
   getAllNotifyOfUser,
   getNotifyById,
-  notifyChangePasswordTemporary,
-  notifyUpdateRead
+  notifyChangePasswordTemporary
 };
 
 export default notifyController;

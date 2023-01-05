@@ -7,7 +7,7 @@ import constants from '@constants';
 // core
 import loggerManager from '@core/logger';
 
-const loggerFactory = loggerManager(
+const logger = loggerManager(
   constants.APP_NAME,
   constants.STRUCT_VALIDATORS.ROLE_VALIDATOR
 );
@@ -17,19 +17,27 @@ const schemaRole = Joi.object({
 });
 
 export const validatorRole = (data) => {
-  loggerFactory.debug('Function validatorRole has been start with data', {
+  logger.log({
+    level: constants.LOG_LEVELS.DEBUG,
+    message: 'Function validatorRole has been start with data',
     args: data
   });
 
   const { error } = schemaRole.validate(data);
 
   if (error) {
-    loggerFactory.debug('Function validatorRole has been end with error', {
+    logger.log({
+      level: constants.LOG_LEVELS.ERROR,
+      message: 'Function validatorRole has been end with error',
       args: error
     });
+
     return error;
   }
 
-  loggerFactory.debug('Function validatorRole has been end without error');
+  logger.log({
+    level: constants.LOG_LEVELS.DEBUG,
+    message: 'Function validatorRole has been end without error'
+  });
   return null;
 };

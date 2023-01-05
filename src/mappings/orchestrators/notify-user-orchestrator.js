@@ -13,7 +13,7 @@ import loggerManager from '@core/logger';
 // layers
 import repository from '@layers/repository';
 
-const loggerFactory = loggerManager(
+const logger = loggerManager(
   constants.APP_NAME,
   constants.STRUCT_ORCHESTRATORS.NOTIFY_USER_ORCHESTRATOR
 );
@@ -25,7 +25,10 @@ const loggerFactory = loggerManager(
 const getAllNotifyUser = async (toolBox) => {
   const { req } = toolBox;
   try {
-    loggerFactory.info(`Function getAllNotifyUser has been start`);
+    logger.log({
+      level: constants.LOG_LEVELS.INFO,
+      message: 'Function getAllNotifyUser has been start'
+    });
 
     const { id } = req.query;
 
@@ -72,7 +75,10 @@ const getAllNotifyUser = async (toolBox) => {
 
     const result = await commons.dataResponsesMapper(notifyUsers);
 
-    loggerFactory.info(`Function getAllNotifyUser has been start`);
+    logger.log({
+      level: constants.LOG_LEVELS.INFO,
+      message: 'Function getAllNotifyUser has been end'
+    });
 
     return {
       result: {
@@ -82,8 +88,10 @@ const getAllNotifyUser = async (toolBox) => {
       msg: 'notifyUserS001'
     };
   } catch (err) {
-    loggerFactory.error(`Function getAllNotifyUser has error`, {
-      args: utils.formatErrorMsg(err)
+    logger.log({
+      level: constants.LOG_LEVELS.ERROR,
+      message: 'Function getAllNotifyUser has been error',
+      args: utils.parseError(err)
     });
     return Promise.reject(err);
   }
@@ -96,7 +104,10 @@ const getAllNotifyUser = async (toolBox) => {
 const getDetailNotifyUser = async (toolBox) => {
   const { req } = toolBox;
   try {
-    loggerFactory.info(`Function getDetailNotifyUser has been start`);
+    logger.log({
+      level: constants.LOG_LEVELS.INFO,
+      message: 'Function getDetailNotifyUser has been start'
+    });
 
     const { id } = req.params;
 
@@ -104,7 +115,10 @@ const getDetailNotifyUser = async (toolBox) => {
 
     const result = await commons.dataResponseMapper(notifyUser);
 
-    loggerFactory.info(`Function getDetailNotifyUser has been start`);
+    logger.log({
+      level: constants.LOG_LEVELS.INFO,
+      message: 'Function getDetailNotifyUser has been end'
+    });
 
     return {
       result: {
@@ -113,8 +127,10 @@ const getDetailNotifyUser = async (toolBox) => {
       msg: 'notifyUserS002'
     };
   } catch (err) {
-    loggerFactory.error(`Function getDetailNotifyUser has error`, {
-      args: utils.formatErrorMsg(err)
+    logger.log({
+      level: constants.LOG_LEVELS.ERROR,
+      message: 'Function getDetailNotifyUser has been error',
+      args: utils.parseError(err)
     });
     return Promise.reject(err);
   }
@@ -127,7 +143,10 @@ const getDetailNotifyUser = async (toolBox) => {
 const getAllDataNotifyUser = async (toolBox) => {
   const { req } = toolBox;
   try {
-    loggerFactory.info(`Function getAllDataNotifyUser has been start`);
+    logger.log({
+      level: constants.LOG_LEVELS.INFO,
+      message: 'Function getAllDataNotifyUser has been start'
+    });
 
     const { id } = req.query;
 
@@ -174,7 +193,10 @@ const getAllDataNotifyUser = async (toolBox) => {
 
     const result = await commons.dataResponsesMapper(notifyUsers);
 
-    loggerFactory.info(`Function getAllDataNotifyUser has been start`);
+    logger.log({
+      level: constants.LOG_LEVELS.INFO,
+      message: 'Function getAllDataNotifyUser has been end'
+    });
 
     return {
       result: {
@@ -184,8 +206,10 @@ const getAllDataNotifyUser = async (toolBox) => {
       msg: 'notifyUserS003'
     };
   } catch (err) {
-    loggerFactory.error(`Function getAllDataNotifyUser has error`, {
-      args: utils.formatErrorMsg(err)
+    logger.log({
+      level: constants.LOG_LEVELS.ERROR,
+      message: 'Function getAllDataNotifyUser has been error',
+      args: utils.parseError(err)
     });
     return Promise.reject(err);
   }
@@ -198,7 +222,10 @@ const getAllDataNotifyUser = async (toolBox) => {
 const getAllUnReadNotifyUser = async (toolBox) => {
   const { req } = toolBox;
   try {
-    loggerFactory.info(`Function getAllUnReadNotifyUser has been start`);
+    logger.log({
+      level: constants.LOG_LEVELS.INFO,
+      message: 'Function getAllUnReadNotifyUser has been start'
+    });
 
     const { id } = req.query;
 
@@ -246,7 +273,10 @@ const getAllUnReadNotifyUser = async (toolBox) => {
 
     const result = await commons.dataResponsesMapper(notifyUsers);
 
-    loggerFactory.info(`Function getAllUnReadNotifyUser has been start`);
+    logger.log({
+      level: constants.LOG_LEVELS.INFO,
+      message: 'Function getAllUnReadNotifyUser has been end'
+    });
 
     return {
       result: {
@@ -256,8 +286,10 @@ const getAllUnReadNotifyUser = async (toolBox) => {
       msg: 'notifyUserS004'
     };
   } catch (err) {
-    loggerFactory.error(`Function getAllUnReadNotifyUser has error`, {
-      args: utils.formatErrorMsg(err)
+    logger.log({
+      level: constants.LOG_LEVELS.ERROR,
+      message: 'Function getAllUnReadNotifyUser has been error',
+      args: utils.parseError(err)
     });
     return Promise.reject(err);
   }
@@ -270,7 +302,10 @@ const getAllUnReadNotifyUser = async (toolBox) => {
 const readNotifyUser = async (toolBox) => {
   const { req } = toolBox;
   try {
-    loggerFactory.info(`Function readNotifyUser has been start`);
+    logger.log({
+      level: constants.LOG_LEVELS.INFO,
+      message: 'Function readNotifyUser has been start'
+    });
 
     const { id } = req.body;
 
@@ -290,7 +325,10 @@ const readNotifyUser = async (toolBox) => {
       }
     });
 
-    loggerFactory.info(`Function readNotifyUser has been start`);
+    logger.log({
+      level: constants.LOG_LEVELS.INFO,
+      message: 'Function readNotifyUser has been end'
+    });
 
     return {
       result: {
@@ -301,8 +339,10 @@ const readNotifyUser = async (toolBox) => {
       msg: 'notifyUserS005'
     };
   } catch (err) {
-    loggerFactory.error(`Function readNotifyUser has error`, {
-      args: utils.formatErrorMsg(err)
+    logger.log({
+      level: constants.LOG_LEVELS.ERROR,
+      message: 'Function readNotifyUser has been error',
+      args: utils.parseError(err)
     });
     return Promise.reject(err);
   }
@@ -315,7 +355,10 @@ const readNotifyUser = async (toolBox) => {
 const readAllNotifyUser = async (toolBox) => {
   const { req } = toolBox;
   try {
-    loggerFactory.info(`Function readAllNotifyUser has been start`);
+    logger.log({
+      level: constants.LOG_LEVELS.INFO,
+      message: 'Function readAllNotifyUser has been start'
+    });
 
     const { id } = req.body;
 
@@ -355,7 +398,10 @@ const readAllNotifyUser = async (toolBox) => {
       }
     });
 
-    loggerFactory.info(`Function readAllNotifyUser has been start`);
+    logger.log({
+      level: constants.LOG_LEVELS.INFO,
+      message: 'Function readAllNotifyUser has been end'
+    });
 
     return {
       result: {
@@ -364,8 +410,10 @@ const readAllNotifyUser = async (toolBox) => {
       msg: 'notifyUserS006'
     };
   } catch (err) {
-    loggerFactory.error(`Function readAllNotifyUser has error`, {
-      args: utils.formatErrorMsg(err)
+    logger.log({
+      level: constants.LOG_LEVELS.ERROR,
+      message: 'Function readAllNotifyUser has been error',
+      args: utils.parseError(err)
     });
     return Promise.reject(err);
   }
@@ -378,7 +426,10 @@ const readAllNotifyUser = async (toolBox) => {
 const trashNotifyUser = async (toolBox) => {
   const { req } = toolBox;
   try {
-    loggerFactory.info(`Function trashNotifyUser has been start`);
+    logger.log({
+      level: constants.LOG_LEVELS.INFO,
+      message: 'Function trashNotifyUser has been start'
+    });
 
     const { id } = req.body;
 
@@ -394,7 +445,10 @@ const trashNotifyUser = async (toolBox) => {
       }
     });
 
-    loggerFactory.info(`Function trashNotifyUser has been start`);
+    logger.log({
+      level: constants.LOG_LEVELS.INFO,
+      message: 'Function trashNotifyUser has been end'
+    });
 
     return {
       result: {
@@ -405,8 +459,10 @@ const trashNotifyUser = async (toolBox) => {
       msg: 'notifyUserS007'
     };
   } catch (err) {
-    loggerFactory.error(`Function trashNotifyUser has error`, {
-      args: utils.formatErrorMsg(err)
+    logger.log({
+      level: constants.LOG_LEVELS.ERROR,
+      message: 'Function trashNotifyUser has been error',
+      args: utils.parseError(err)
     });
     return Promise.reject(err);
   }
@@ -419,7 +475,10 @@ const trashNotifyUser = async (toolBox) => {
 const trashAllNotifyUser = async (toolBox) => {
   const { req } = toolBox;
   try {
-    loggerFactory.info(`Function trashAllNotifyUser has been start`);
+    logger.log({
+      level: constants.LOG_LEVELS.INFO,
+      message: 'Function trashAllNotifyUser has been start'
+    });
 
     const { id } = req.query;
 
@@ -451,7 +510,10 @@ const trashAllNotifyUser = async (toolBox) => {
       }
     });
 
-    loggerFactory.info(`Function trashAllNotifyUser has been start`);
+    logger.log({
+      level: constants.LOG_LEVELS.INFO,
+      message: 'Function trashAllNotifyUser has been end'
+    });
 
     return {
       result: {
@@ -460,8 +522,10 @@ const trashAllNotifyUser = async (toolBox) => {
       msg: 'notifyUserS008'
     };
   } catch (err) {
-    loggerFactory.error(`Function trashAllNotifyUser has error`, {
-      args: utils.formatErrorMsg(err)
+    logger.log({
+      level: constants.LOG_LEVELS.ERROR,
+      message: 'Function trashAllNotifyUser has been error',
+      args: utils.parseError(err)
     });
     return Promise.reject(err);
   }
@@ -474,7 +538,10 @@ const trashAllNotifyUser = async (toolBox) => {
 const getAllDataTrashNotifyUser = async (toolBox) => {
   const { req } = toolBox;
   try {
-    loggerFactory.info(`Function getAllDataTrashNotifyUser has been start`);
+    logger.log({
+      level: constants.LOG_LEVELS.INFO,
+      message: 'Function getAllDataTrashNotifyUser has been start'
+    });
 
     const { id } = req.query;
 
@@ -521,7 +588,10 @@ const getAllDataTrashNotifyUser = async (toolBox) => {
 
     const result = await commons.dataResponsesMapper(notifyUsers);
 
-    loggerFactory.info(`Function getAllDataTrashNotifyUser has been start`);
+    logger.log({
+      level: constants.LOG_LEVELS.INFO,
+      message: 'Function getAllDataTrashNotifyUser has been end'
+    });
 
     return {
       result: {
@@ -531,8 +601,10 @@ const getAllDataTrashNotifyUser = async (toolBox) => {
       msg: 'notifyUserS009'
     };
   } catch (err) {
-    loggerFactory.error(`Function getAllDataTrashNotifyUser has error`, {
-      args: utils.formatErrorMsg(err)
+    logger.log({
+      level: constants.LOG_LEVELS.ERROR,
+      message: 'Function getAllDataTrashNotifyUser has been error',
+      args: utils.parseError(err)
     });
     return Promise.reject(err);
   }
@@ -545,7 +617,10 @@ const getAllDataTrashNotifyUser = async (toolBox) => {
 const rollBackNotifyUser = async (toolBox) => {
   const { req } = toolBox;
   try {
-    loggerFactory.info(`Function rollBackNotifyUser has been start`);
+    logger.log({
+      level: constants.LOG_LEVELS.INFO,
+      message: 'Function rollBackNotifyUser has been start'
+    });
 
     const { id } = req.body;
 
@@ -561,7 +636,10 @@ const rollBackNotifyUser = async (toolBox) => {
       }
     });
 
-    loggerFactory.info(`Function rollBackNotifyUser has been start`);
+    logger.log({
+      level: constants.LOG_LEVELS.INFO,
+      message: 'Function rollBackNotifyUser has been end'
+    });
 
     return {
       result: {
@@ -572,8 +650,10 @@ const rollBackNotifyUser = async (toolBox) => {
       msg: 'notifyUserS0010'
     };
   } catch (err) {
-    loggerFactory.error(`Function rollBackNotifyUser has error`, {
-      args: utils.formatErrorMsg(err)
+    logger.log({
+      level: constants.LOG_LEVELS.ERROR,
+      message: 'Function rollBackNotifyUser has been error',
+      args: utils.parseError(err)
     });
     return Promise.reject(err);
   }
@@ -586,7 +666,10 @@ const rollBackNotifyUser = async (toolBox) => {
 const rollBackAllNotifyUser = async (toolBox) => {
   const { req } = toolBox;
   try {
-    loggerFactory.info(`Function rollBackAllNotifyUser has been start`);
+    logger.log({
+      level: constants.LOG_LEVELS.INFO,
+      message: 'Function rollBackAllNotifyUser has been start'
+    });
 
     const { id } = req.body;
 
@@ -625,7 +708,10 @@ const rollBackAllNotifyUser = async (toolBox) => {
       }
     });
 
-    loggerFactory.info(`Function rollBackAllNotifyUser has been start`);
+    logger.log({
+      level: constants.LOG_LEVELS.INFO,
+      message: 'Function rollBackAllNotifyUser has been end'
+    });
 
     return {
       result: {
@@ -636,8 +722,10 @@ const rollBackAllNotifyUser = async (toolBox) => {
       msg: 'notifyUserS0011'
     };
   } catch (err) {
-    loggerFactory.error(`Function rollBackAllNotifyUser has error`, {
-      args: utils.formatErrorMsg(err)
+    logger.log({
+      level: constants.LOG_LEVELS.ERROR,
+      message: 'Function rollBackAllNotifyUser has been error',
+      args: utils.parseError(err)
     });
     return Promise.reject(err);
   }
@@ -679,8 +767,10 @@ const getNotifyUserFunc = async (id) => {
 
     return notify;
   } catch (err) {
-    loggerFactory.error(`Function getNotifyUser has error`, {
-      args: utils.formatErrorMsg(err)
+    logger.log({
+      level: constants.LOG_LEVELS.ERROR,
+      message: 'Function getNotifyUserFunc has been error',
+      args: utils.parseError(err)
     });
     return Promise.reject(err);
   }

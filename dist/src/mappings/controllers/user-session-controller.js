@@ -11,7 +11,7 @@ var _logger = _interopRequireDefault(require("../../core/logger"));
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 // core
 
-var loggerFactory = (0, _logger["default"])(_constants["default"].APP_NAME, _constants["default"].STRUCT_CONTROLLERS.USER_SESSION_CONTROLLER);
+var logger = (0, _logger["default"])(_constants["default"].APP_NAME, _constants["default"].STRUCT_CONTROLLERS.USER_SESSION_CONTROLLER);
 
 /**
  * @description Get All User Session Controller
@@ -20,14 +20,20 @@ var loggerFactory = (0, _logger["default"])(_constants["default"].APP_NAME, _con
  * @param {*} next
  */
 var getUserTimelineSession = function getUserTimelineSession(req, res, next) {
-  loggerFactory.info("Function getUserTimelineSession Controller has been start");
+  logger.log({
+    level: _constants["default"].LOG_LEVELS.INFO,
+    message: 'Function getUserTimelineSession Controller has been start'
+  });
   var toolBox = {
     req: req,
     res: res,
     next: next
   };
   (0, _baseController["default"])(toolBox, _constants["default"].types.MsgTypeUserSession, _constants["default"].actions.MsgActionUserSessionTimeline);
-  loggerFactory.info("Function getUserTimelineSession Controller has been end");
+  logger.log({
+    level: _constants["default"].LOG_LEVELS.INFO,
+    message: 'Function getUserTimelineSession Controller has been end'
+  });
 };
 
 /**
@@ -37,14 +43,20 @@ var getUserTimelineSession = function getUserTimelineSession(req, res, next) {
  * @param {*} next
  */
 var createUserSession = function createUserSession(req, res, next) {
-  loggerFactory.info("Function createUserSession Controller has been start");
+  logger.log({
+    level: _constants["default"].LOG_LEVELS.INFO,
+    message: 'Function createUserSession Controller has been start'
+  });
   var toolBox = {
     req: req,
     res: res,
     next: next
   };
   (0, _baseController["default"])(toolBox, _constants["default"].types.MsgTypeUserSession, _constants["default"].actions.MsgActionUserSessionCreate);
-  loggerFactory.info("Function createUserSession Controller has been end");
+  logger.log({
+    level: _constants["default"].LOG_LEVELS.INFO,
+    message: 'Function createUserSession Controller has been end'
+  });
 };
 
 /**
@@ -54,14 +66,20 @@ var createUserSession = function createUserSession(req, res, next) {
  * @param {*} next
  */
 var updateUserSession = function updateUserSession(req, res, next) {
-  loggerFactory.info("Function updateUserSession Controller has been start");
+  logger.log({
+    level: _constants["default"].LOG_LEVELS.INFO,
+    message: 'Function updateUserSession Controller has been start'
+  });
   var toolBox = {
     req: req,
     res: res,
     next: next
   };
   (0, _baseController["default"])(toolBox, _constants["default"].types.MsgTypeUserSession, _constants["default"].actions.MsgActionUserSessionUpdate);
-  loggerFactory.info("Function updateUserSession Controller has been end");
+  logger.log({
+    level: _constants["default"].LOG_LEVELS.INFO,
+    message: 'Function updateUserSession Controller has been end'
+  });
 };
 
 /**
@@ -71,14 +89,20 @@ var updateUserSession = function updateUserSession(req, res, next) {
  * @param {*} next
  */
 var deleteUserSession = function deleteUserSession(req, res, next) {
-  loggerFactory.info("Function deleteUserSession Controller has been start");
+  logger.log({
+    level: _constants["default"].LOG_LEVELS.INFO,
+    message: 'Function deleteUserSession Controller has been start'
+  });
   var toolBox = {
     req: req,
     res: res,
     next: next
   };
   (0, _baseController["default"])(toolBox, _constants["default"].types.MsgTypeUserSession, _constants["default"].actions.MsgActionUserSessionDelete);
-  loggerFactory.info("Function deleteUserSession Controller has been end");
+  logger.log({
+    level: _constants["default"].LOG_LEVELS.INFO,
+    message: 'Function deleteUserSession Controller has been end'
+  });
 };
 var userSessionController = {
   getUserTimelineSession: getUserTimelineSession,

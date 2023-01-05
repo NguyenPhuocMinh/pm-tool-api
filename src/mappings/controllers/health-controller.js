@@ -7,7 +7,7 @@ import constants from '@constants';
 // core
 import loggerManager from '@core/logger';
 
-const loggerFactory = loggerManager(
+const logger = loggerManager(
   constants.APP_NAME,
   constants.STRUCT_CONTROLLERS.HEALTH_CONTROLLER
 );
@@ -19,14 +19,20 @@ const loggerFactory = loggerManager(
  * @param {*} next
  */
 const healthCheck = (req, res, next) => {
-  loggerFactory.info(`Function healthCheck Controller has been start`);
+  logger.log({
+    level: constants.LOG_LEVELS.INFO,
+    message: 'Function healthCheck Controller has been start'
+  });
   const toolBox = { req, res, next };
   baseController(
     toolBox,
     constants.types.MsgTypeHealth,
     constants.actions.MsgActionHealthCheck
   );
-  loggerFactory.info(`Function healthCheck Controller has been end`);
+  logger.log({
+    level: constants.LOG_LEVELS.INFO,
+    message: 'Function healthCheck Controller has been end'
+  });
 };
 
 const healthController = {

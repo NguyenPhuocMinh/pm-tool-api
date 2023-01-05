@@ -20,7 +20,7 @@ import {
   privateAuthorization
 } from '@policies/authorization';
 
-const loggerFactory = loggerManager(
+const logger = loggerManager(
   constants.APP_NAME,
   constants.STRUCT_MIDDLEWARE.AUTH_MIDDLEWARE
 );
@@ -47,17 +47,22 @@ const authMiddleware = async (req, res, next) => {
   const enablePrivateAuth = get(findPrivateAuth, 'enable');
 
   try {
-    loggerFactory.debug(`Function authMiddleware has been start with args`, {
+    logger.log({
+      level: constants.LOG_LEVELS.DEBUG,
+      message: 'Function authMiddleware has been start with args',
       args: {
         route,
         method
       }
     });
+
     /**
      * No need verify token and permission when enable public path is false
      */
     if (!isEmpty(findPublicAuth) && !enablePublicAuth) {
-      loggerFactory.verbose(`Function authMiddleware has been end with`, {
+      logger.log({
+        level: constants.LOG_LEVELS.VERBOSE,
+        message: 'Function authMiddleware has been end with',
         args: {
           msg: 'No need verify token and permission when enable public path is false'
         }
@@ -71,13 +76,19 @@ const authMiddleware = async (req, res, next) => {
       req.header(ATTRIBUTE_TOKEN_KEY) ||
       req.cookies[ATTRIBUTE_TOKEN_KEY] ||
       req.session[ATTRIBUTE_TOKEN_KEY];
-    loggerFactory.verbose(`Function authMiddleware verify data token`, {
+
+    logger.log({
+      level: constants.LOG_LEVELS.VERBOSE,
+      message: 'Function authMiddleware verify data token',
       args: [token]
     });
+
     if (isEmpty(token)) {
-      loggerFactory.error(`Function authMiddleware has been end with message`, {
+      logger.log({
+        level: constants.LOG_LEVELS.ERROR,
+        message: 'Function authMiddleware has been end with message',
         args: {
-          message: 'Not found token in header or cookie'
+          msg: 'Not found token in header or cookie'
         }
       });
       const tokenNotFoundError = commons.newError('authE005');
@@ -90,12 +101,11 @@ const authMiddleware = async (req, res, next) => {
     const { publicSecret } = helpers.getSecretJsonHelper();
     jwt.verify(token, publicSecret, async (err, decoded) => {
       if (err) {
-        loggerFactory.error(
-          `Function authMiddleware verify token has been error`,
-          {
-            args: utils.formatErrorMsg(err)
-          }
-        );
+        logger.log({
+          level: constants.LOG_LEVELS.ERROR,
+          message: 'Function authMiddleware verify token has been error',
+          args: utils.parseError(err)
+        });
 
         let tokenError;
         switch (true) {
@@ -117,14 +127,14 @@ const authMiddleware = async (req, res, next) => {
           `blacklist_${decoded.id}`
         );
         if (!isEmpty(blacklistToken) && isEqual(token, blacklistToken)) {
-          loggerFactory.error(
-            `Function authMiddleware has been end with message`,
-            {
-              args: {
-                message: 'Token in black list in redis'
-              }
+          logger.log({
+            level: constants.LOG_LEVELS.ERROR,
+            message: 'Function authMiddleware has been end with message',
+            args: {
+              msg: 'Token in black list in redis'
             }
-          );
+          });
+
           const tokenBlackListError = commons.newError('authE009');
           return builds.errorResponse(toolBox, tokenBlackListError);
         }
@@ -139,43 +149,42 @@ const authMiddleware = async (req, res, next) => {
          */
         const userIsAdmin = get(decoded, 'isAdmin');
         if (userIsAdmin) {
-          loggerFactory.verbose(
-            `Function authMiddleware has been end with message`,
-            {
-              args: {
-                message: 'User is admin'
-              }
+          logger.log({
+            level: constants.LOG_LEVELS.VERBOSE,
+            message: 'Function authMiddleware has been end with message',
+            args: {
+              msg: 'User is admin'
             }
-          );
+          });
+
           return next();
         }
         /**
          * No need verify permissions if find public paths
          */
         if (!isEmpty(findPublicAuth) && enablePublicAuth) {
-          loggerFactory.verbose(
-            `Function authMiddleware has been end with message`,
-            {
-              args: {
-                message: 'No need verify token if find public paths'
-              }
+          logger.log({
+            level: constants.LOG_LEVELS.VERBOSE,
+            message: 'Function authMiddleware has been end with message',
+            args: {
+              msg: 'No need verify token if find public paths'
             }
-          );
+          });
+
           return next();
         }
         /**
          * No need verify permissions if find private paths and enable private path is false
          */
         if (!isEmpty(findPrivateAuth) && !enablePrivateAuth) {
-          loggerFactory.verbose(
-            `Function authMiddleware has been end with message`,
-            {
-              args: {
-                message:
-                  'No need verify permissions if find private paths and enable private path is false'
-              }
+          logger.log({
+            level: constants.LOG_LEVELS.VERBOSE,
+            message: 'Function authMiddleware has been end with message',
+            args: {
+              msg: 'No need verify permissions if find private paths and enable private path is false'
             }
-          );
+          });
+
           return next();
         }
         /**
@@ -184,38 +193,43 @@ const authMiddleware = async (req, res, next) => {
         const userPermissions = get(decoded, 'permissions');
         try {
           if (includes(userPermissions, findPrivateAuth.permission)) {
-            loggerFactory.verbose(
-              `Function authMiddleware has been end with message`,
-              {
-                args: {
-                  message: 'User has permission'
-                }
+            logger.log({
+              level: constants.LOG_LEVELS.VERBOSE,
+              message: 'Function authMiddleware has been end with message',
+              args: {
+                msg: 'User has permission'
               }
-            );
+            });
+
             return next();
           } else {
-            loggerFactory.error(
-              `Function authMiddleware has been end with message`,
-              {
-                args: {
-                  message: 'Permission not found'
-                }
+            logger.log({
+              level: constants.LOG_LEVELS.ERROR,
+              message: 'Function authMiddleware has been end with message',
+              args: {
+                msg: 'Permission not found'
               }
-            );
+            });
+
             const tokenForbiddenError = commons.newError('authE008');
             return builds.errorResponse(toolBox, tokenForbiddenError);
           }
         } catch (err) {
-          loggerFactory.error(`Function authMiddleware has been error`, {
-            args: utils.formatErrorMsg(err)
+          logger.log({
+            level: constants.LOG_LEVELS.ERROR,
+            message: 'Function authMiddleware has been error',
+            args: utils.parseError(err)
           });
+
           return next(err);
         }
       }
     });
   } catch (err) {
-    loggerFactory.error(`Function authMiddleware has been error`, {
-      args: utils.formatErrorMsg(err)
+    logger.log({
+      level: constants.LOG_LEVELS.ERROR,
+      message: 'Function authMiddleware has been error',
+      args: utils.parseError(err)
     });
     throw err;
   }

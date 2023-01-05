@@ -83,7 +83,7 @@ const Init = async () => {
   } catch (err) {
     logger.log({
       level: constants.LOG_LEVELS.ERROR,
-      message: 'Connect database has error',
+      message: 'The database has been error',
       args: err
     });
 
@@ -105,8 +105,18 @@ const Init = async () => {
   }
 };
 
+const Close = () => {
+  mongoose.connection.close(function () {
+    logger.log({
+      level: constants.LOG_LEVELS.DEBUG,
+      message: 'The database has been close'
+    });
+  });
+};
+
 const dbManager = {
-  Init
+  Init,
+  Close
 };
 
 export default dbManager;

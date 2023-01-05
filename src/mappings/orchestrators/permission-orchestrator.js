@@ -17,7 +17,7 @@ import transfers from '@transfers';
 // validators
 import validators from '@validators';
 
-const loggerFactory = loggerManager(
+const logger = loggerManager(
   constants.APP_NAME,
   constants.STRUCT_ORCHESTRATORS.PERMISSION_ORCHESTRATOR
 );
@@ -29,7 +29,10 @@ const loggerFactory = loggerManager(
 const getAllPermission = async (toolBox) => {
   const { req } = toolBox;
   try {
-    loggerFactory.info(`Function getAllPermission has been start`);
+    logger.log({
+      level: constants.LOG_LEVELS.INFO,
+      message: 'Function getAllPermission Orchestrator has been start'
+    });
 
     const { skip, limit } = helpers.paginationHelper(req.query);
     const query = helpers.queryHelper(req.query);
@@ -57,7 +60,10 @@ const getAllPermission = async (toolBox) => {
 
     const response = await commons.dataResponsesMapper(permissions);
 
-    loggerFactory.info(`Function getAllPermission has been end`);
+    logger.log({
+      level: constants.LOG_LEVELS.INFO,
+      message: 'Function getAllPermission Orchestrator has been end'
+    });
 
     return {
       result: {
@@ -67,8 +73,10 @@ const getAllPermission = async (toolBox) => {
       msg: 'perS001'
     };
   } catch (err) {
-    loggerFactory.error(`Function getAllPermission has error`, {
-      args: utils.formatErrorMsg(err)
+    logger.log({
+      level: constants.LOG_LEVELS.ERROR,
+      message: 'Function getAllPermission Orchestrator has been error',
+      args: utils.parseError(err)
     });
     return Promise.reject(err);
   }
@@ -82,7 +90,10 @@ const createPermission = async (toolBox) => {
   const { req } = toolBox;
 
   try {
-    loggerFactory.info(`Function createPermission has been start`);
+    logger.log({
+      level: constants.LOG_LEVELS.INFO,
+      message: 'Function createPermission Orchestrator has been start'
+    });
 
     // validate inputs
     const error = validators.validatorPermission(req.body);
@@ -116,7 +127,10 @@ const createPermission = async (toolBox) => {
 
     const result = await transfers.permissionTransfer(data);
 
-    loggerFactory.info(`Function createPermission has been end`);
+    logger.log({
+      level: constants.LOG_LEVELS.INFO,
+      message: 'Function createPermission Orchestrator has been end'
+    });
 
     return {
       result: {
@@ -125,8 +139,10 @@ const createPermission = async (toolBox) => {
       msg: 'perS002'
     };
   } catch (err) {
-    loggerFactory.error(`Function createPermission has error`, {
-      args: utils.formatErrorMsg(err)
+    logger.log({
+      level: constants.LOG_LEVELS.ERROR,
+      message: 'Function createPermission Orchestrator has been error',
+      args: utils.parseError(err)
     });
     return Promise.reject(err);
   }
@@ -139,7 +155,10 @@ const createPermission = async (toolBox) => {
 const getPermission = async (toolBox) => {
   const { req } = toolBox;
   try {
-    loggerFactory.info(`Function getPermission has been start`);
+    logger.log({
+      level: constants.LOG_LEVELS.INFO,
+      message: 'Function getPermission Orchestrator has been start'
+    });
 
     const { id } = req.params;
 
@@ -165,7 +184,10 @@ const getPermission = async (toolBox) => {
 
     const result = await transfers.permissionTransfer(permission);
 
-    loggerFactory.info(`Function getPermission has been end`);
+    logger.log({
+      level: constants.LOG_LEVELS.INFO,
+      message: 'Function getPermission Orchestrator has been end'
+    });
 
     return {
       result: {
@@ -174,8 +196,10 @@ const getPermission = async (toolBox) => {
       msg: 'perS003'
     };
   } catch (err) {
-    loggerFactory.error(`Function getPermission has error`, {
-      args: utils.formatErrorMsg(err)
+    logger.log({
+      level: constants.LOG_LEVELS.ERROR,
+      message: 'Function getPermission Orchestrator has been error',
+      args: utils.parseError(err)
     });
     return Promise.reject(err);
   }
@@ -188,7 +212,11 @@ const getPermission = async (toolBox) => {
 const updatePermission = async (toolBox) => {
   const { req } = toolBox;
   try {
-    loggerFactory.info(`Function updatePermission has been start`);
+    logger.log({
+      level: constants.LOG_LEVELS.INFO,
+      message: 'Function updatePermission Orchestrator has been start'
+    });
+
     const { id } = req.params;
 
     if (isEmpty(id)) {
@@ -253,7 +281,10 @@ const updatePermission = async (toolBox) => {
 
     const result = await transfers.permissionTransfer(data);
 
-    loggerFactory.info(`Function updatePermission has been end`);
+    logger.log({
+      level: constants.LOG_LEVELS.INFO,
+      message: 'Function updatePermission Orchestrator has been end'
+    });
 
     return {
       result: {
@@ -262,8 +293,10 @@ const updatePermission = async (toolBox) => {
       msg: 'perS004'
     };
   } catch (err) {
-    loggerFactory.error(`Function updatePermission has error`, {
-      args: utils.formatErrorMsg(err)
+    logger.log({
+      level: constants.LOG_LEVELS.ERROR,
+      message: 'Function updatePermission Orchestrator has been error',
+      args: utils.parseError(err)
     });
     return Promise.reject(err);
   }
@@ -276,7 +309,10 @@ const updatePermission = async (toolBox) => {
 const deletePermission = async (toolBox) => {
   const { req } = toolBox;
   try {
-    loggerFactory.info(`Function deletePermission has been start`);
+    logger.log({
+      level: constants.LOG_LEVELS.INFO,
+      message: 'Function deletePermission Orchestrator has been start'
+    });
 
     const { id } = req.params;
     req.body = helpers.attributeHelper(req, req.body);
@@ -293,7 +329,10 @@ const deletePermission = async (toolBox) => {
 
     await removePermissionsInRoles(id, updatedAt, updatedBy);
 
-    loggerFactory.info(`Function deletePermission has been end`);
+    logger.log({
+      level: constants.LOG_LEVELS.INFO,
+      message: 'Function deletePermission Orchestrator has been end'
+    });
 
     return {
       result: {
@@ -302,8 +341,10 @@ const deletePermission = async (toolBox) => {
       msg: 'perS005'
     };
   } catch (err) {
-    loggerFactory.error(`Function deletePermission has error`, {
-      args: utils.formatErrorMsg(err)
+    logger.log({
+      level: constants.LOG_LEVELS.ERROR,
+      message: 'Function deletePermission Orchestrator has been error',
+      args: utils.parseError(err)
     });
     return Promise.reject(err);
   }
@@ -316,7 +357,10 @@ const deletePermission = async (toolBox) => {
 const addRolesToPermission = async (toolBox) => {
   const { req } = toolBox;
   try {
-    loggerFactory.info(`Function addRolesToPermission has been start`);
+    logger.log({
+      level: constants.LOG_LEVELS.INFO,
+      message: 'Function addRolesToPermission Orchestrator has been start'
+    });
 
     const { id } = req.params;
 
@@ -386,7 +430,10 @@ const addRolesToPermission = async (toolBox) => {
 
     const result = await transfers.permissionTransfer(permission);
 
-    loggerFactory.info(`Function addRolesToPermission has been end`);
+    logger.log({
+      level: constants.LOG_LEVELS.INFO,
+      message: 'Function addRolesToPermission Orchestrator has been end'
+    });
 
     return {
       result: {
@@ -395,8 +442,10 @@ const addRolesToPermission = async (toolBox) => {
       msg: 'perS006'
     };
   } catch (err) {
-    loggerFactory.error(`Function addRolesToPermission has error`, {
-      args: utils.formatErrorMsg(err)
+    logger.log({
+      level: constants.LOG_LEVELS.ERROR,
+      message: 'Function addRolesToPermission has been error',
+      args: utils.parseError(err)
     });
     return Promise.reject(err);
   }
@@ -409,7 +458,10 @@ const addRolesToPermission = async (toolBox) => {
  * @param {*} updatedBy
  */
 const removePermissionsInRoles = async (id, updatedAt, updatedBy) => {
-  loggerFactory.info(`Function removePermissionsInRoles has been start`);
+  logger.log({
+    level: constants.LOG_LEVELS.INFO,
+    message: 'Function removePermissionsInRoles Orchestrator has been start'
+  });
 
   await repository.updateMany({
     type: 'RoleModel',
@@ -429,7 +481,10 @@ const removePermissionsInRoles = async (id, updatedAt, updatedBy) => {
     }
   });
 
-  loggerFactory.info(`Function removePermissionsInRoles has been end`);
+  logger.log({
+    level: constants.LOG_LEVELS.INFO,
+    message: 'Function removePermissionsInRoles has been end'
+  });
 };
 
 const permissionOrchestrator = {

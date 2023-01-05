@@ -11,7 +11,7 @@ var _logger = _interopRequireDefault(require("../../core/logger"));
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 // core
 
-var loggerFactory = (0, _logger["default"])(_constants["default"].APP_NAME, _constants["default"].STRUCT_CONTROLLERS.CONFIG_CONTROLLER);
+var logger = (0, _logger["default"])(_constants["default"].APP_NAME, _constants["default"].STRUCT_CONTROLLERS.CONFIG_CONTROLLER);
 
 /**
  * @description Get Config Data Json Controller
@@ -20,14 +20,20 @@ var loggerFactory = (0, _logger["default"])(_constants["default"].APP_NAME, _con
  * @param {*} next
  */
 var getDataConfigJson = function getDataConfigJson(req, res, next) {
-  loggerFactory.info("Function getDataConfigJson Controller has been start");
+  logger.log({
+    level: _constants["default"].LOG_LEVELS.INFO,
+    message: 'Function getDataConfigJson Controller has been start'
+  });
   var toolBox = {
     req: req,
     res: res,
     next: next
   };
   (0, _baseController["default"])(toolBox, _constants["default"].types.MsgTypeConfig, _constants["default"].actions.MsgActionGetDataConfigJson);
-  loggerFactory.info("Function getDataConfigJson Controller has been end");
+  logger.log({
+    level: _constants["default"].LOG_LEVELS.INFO,
+    message: 'Function getDataConfigJson Controller has been end'
+  });
 };
 var configController = {
   getDataConfigJson: getDataConfigJson

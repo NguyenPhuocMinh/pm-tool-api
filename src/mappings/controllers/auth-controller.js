@@ -7,7 +7,7 @@ import constants from '@constants';
 // core
 import loggerManager from '@core/logger';
 
-const loggerFactory = loggerManager(
+const logger = loggerManager(
   constants.APP_NAME,
   constants.STRUCT_CONTROLLERS.AUTH_CONTROLLER
 );
@@ -19,14 +19,20 @@ const loggerFactory = loggerManager(
  * @param {*} next
  */
 const signIn = (req, res, next) => {
-  loggerFactory.info(`Function signIn Controller has been start`);
+  logger.log({
+    level: constants.LOG_LEVELS.INFO,
+    message: 'Function signIn Controller has been start'
+  });
   const toolBox = { req, res, next };
   baseController(
     toolBox,
     constants.types.MsgTypeAuth,
     constants.actions.MsgActionSignIn
   );
-  loggerFactory.info(`Function signIn Controller has been end`);
+  logger.log({
+    level: constants.LOG_LEVELS.INFO,
+    message: 'Function signIn Controller has been end'
+  });
 };
 
 /**
@@ -36,14 +42,20 @@ const signIn = (req, res, next) => {
  * @param {*} next
  */
 const signOut = (req, res, next) => {
-  loggerFactory.info(`Function signOut Controller has been start`);
+  logger.log({
+    level: constants.LOG_LEVELS.INFO,
+    message: 'Function signOut Controller has been start'
+  });
   const toolBox = { req, res, next };
   baseController(
     toolBox,
     constants.types.MsgTypeAuth,
     constants.actions.MsgActionSignOut
   );
-  loggerFactory.info(`Function signOut Controller has been end`);
+  logger.log({
+    level: constants.LOG_LEVELS.INFO,
+    message: 'Function signOut Controller has been end'
+  });
 };
 
 /**
@@ -53,14 +65,20 @@ const signOut = (req, res, next) => {
  * @param {*} next
  */
 const whoami = (req, res, next) => {
-  loggerFactory.info(`Function whoami Controller has been start`);
+  logger.log({
+    level: constants.LOG_LEVELS.INFO,
+    message: 'Function whoami Controller has been start'
+  });
   const toolBox = { req, res, next };
   baseController(
     toolBox,
     constants.types.MsgTypeAuth,
     constants.actions.MsgActionWhoAmI
   );
-  loggerFactory.info(`Function whoami Controller has been end`);
+  logger.log({
+    level: constants.LOG_LEVELS.INFO,
+    message: 'Function whoami Controller has been end'
+  });
 };
 
 /**
@@ -70,14 +88,20 @@ const whoami = (req, res, next) => {
  * @param {*} next
  */
 const refreshToken = (req, res, next) => {
-  loggerFactory.info(`Function refreshToken Controller has been start`);
+  logger.log({
+    level: constants.LOG_LEVELS.INFO,
+    message: 'Function refreshToken Controller has been start'
+  });
   const toolBox = { req, res, next };
   baseController(
     toolBox,
     constants.types.MsgTypeAuth,
     constants.actions.MsgActionRefreshToken
   );
-  loggerFactory.info(`Function refreshToken Controller has been end`);
+  logger.log({
+    level: constants.LOG_LEVELS.INFO,
+    message: 'Function refreshToken Controller has been end'
+  });
 };
 
 /**
@@ -87,14 +111,20 @@ const refreshToken = (req, res, next) => {
  * @param {*} next
  */
 const revokeToken = (req, res, next) => {
-  loggerFactory.info(`Function refreshToken Controller has been start`);
+  logger.log({
+    level: constants.LOG_LEVELS.INFO,
+    message: 'Function revokeToken Controller has been start'
+  });
   const toolBox = { req, res, next };
   baseController(
     toolBox,
     constants.types.MsgTypeAuth,
     constants.actions.MsgActionRevokeToken
   );
-  loggerFactory.info(`Function refreshToken Controller has been end`);
+  logger.log({
+    level: constants.LOG_LEVELS.INFO,
+    message: 'Function revokeToken Controller has been end'
+  });
 };
 
 const authController = {

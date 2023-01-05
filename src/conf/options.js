@@ -3,7 +3,6 @@
 import { v4 as uuidV4 } from 'uuid';
 import { nanoid } from 'nanoid';
 import session from 'express-session';
-import constants from '@constants';
 import profiles from './profiles';
 
 const allowList = [
@@ -116,8 +115,7 @@ const rateLimitOptions = {
 };
 
 const cronJobOptions = {
-  scheduled: true,
-  timezone: constants.TIMEZONE_DEFAULT
+  scheduled: true
 };
 
 const options = {

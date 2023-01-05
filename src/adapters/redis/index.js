@@ -5,14 +5,13 @@ import { createClient } from 'redis';
 
 // conf
 import { options, profiles } from '@conf';
-
 import constants from '@constants';
 import utils from '@utils';
 
 // core
 import loggerManager from '@core/logger';
 
-const loggerFactory = loggerManager(
+const logger = loggerManager(
   constants.APP_NAME,
   constants.STRUCT_ADAPTERS.REDIS_ADAPTER
 );
@@ -29,26 +28,42 @@ const Init = async () => {
     redisClient = createClient({ url: profiles.APP_REDIS_URI });
 
     await redisClient.connect();
-
-    loggerFactory.info(`The redis is running on`, {
+    logger.log({
+      level: constants.LOG_LEVELS.INFO,
+      message: 'The redis is running on',
       args: `[${APP_REDIS_URI}]`
     });
   } catch (err) {
-    loggerFactory.error('Connect redis has error', {
-      args: utils.formatErrorMsg(err)
+    logger.log({
+      level: constants.LOG_LEVELS.ERROR,
+      message: 'The redis has been error',
+      args: utils.parseError(err)
     });
 
     const operation = retry.operation(options.retryOptions);
     operation.attempt((current) => {
       if (operation.retry(err)) {
-        loggerFactory.error(
-          `Unable to connect to the redis. Retrying(${current})`
-        );
+        logger.log({
+          level: constants.LOG_LEVELS.ERROR,
+          message: `Unable to connect to the redis. Retrying(${current})`
+        });
         return err;
       }
     });
     throw err;
   }
+};
+
+/**
+ * @description Close Redis
+ */
+const Close = () => {
+  redisClient.disconnect().then(() => {
+    logger.log({
+      level: constants.LOG_LEVELS.DEBUG,
+      message: `The redis has been closed`
+    });
+  });
 };
 
 /**
@@ -63,16 +78,21 @@ const Init = async () => {
  */
 const setExValue = async (key, value, ttl) => {
   try {
-    loggerFactory.debug(`Function setExValue has been start with`, {
-      args: {
-        key: key
-      }
+    logger.log({
+      level: constants.LOG_LEVELS.DEBUG,
+      message: 'Function setExValue has been start with',
+      args: key
     });
     await redisClient.setEx(key, ttl, value);
-    loggerFactory.debug(`Function setExValue has been end`);
+    logger.log({
+      level: constants.LOG_LEVELS.DEBUG,
+      message: 'Function setExValue has been end'
+    });
   } catch (err) {
-    loggerFactory.error('Function setExValue has error', {
-      args: utils.formatErrorMsg(err)
+    logger.log({
+      level: constants.LOG_LEVELS.ERROR,
+      message: 'Function setExValue has been error',
+      args: utils.parseError(err)
     });
     throw err;
   }
@@ -87,19 +107,23 @@ const setExValue = async (key, value, ttl) => {
  */
 const getValue = async (key) => {
   try {
-    loggerFactory.debug(`Function getValue has been start with`, {
-      args: {
-        key: key
-      }
+    logger.log({
+      level: constants.LOG_LEVELS.DEBUG,
+      message: 'Function getValue has been start with',
+      args: key
     });
     const data = await redisClient.get(key);
 
-    loggerFactory.debug(`Function getValue has been end`);
-
+    logger.log({
+      level: constants.LOG_LEVELS.DEBUG,
+      message: 'Function getValue has been start end'
+    });
     return data;
   } catch (err) {
-    loggerFactory.error('Function getValue has error', {
-      args: utils.formatErrorMsg(err)
+    logger.log({
+      level: constants.LOG_LEVELS.ERROR,
+      message: 'Function getValue has been start error',
+      args: utils.parseError(err)
     });
     throw err;
   }
@@ -114,17 +138,22 @@ const getValue = async (key) => {
  */
 const deleteValue = async (key) => {
   try {
-    loggerFactory.debug(`Function deleteValue has been start with`, {
-      args: {
-        key: key
-      }
+    logger.log({
+      level: constants.LOG_LEVELS.DEBUG,
+      message: 'Function deleteValue has been start with',
+      args: key
     });
     await redisClient.del(key);
 
-    loggerFactory.debug(`Function deleteValue has been end`);
+    logger.log({
+      level: constants.LOG_LEVELS.DEBUG,
+      message: 'Function deleteValue has been start end'
+    });
   } catch (err) {
-    loggerFactory.error('Function deleteValue has error', {
-      args: utils.formatErrorMsg(err)
+    logger.log({
+      level: constants.LOG_LEVELS.DEBUG,
+      message: 'Function deleteValue has been start error',
+      args: utils.parseError(err)
     });
     throw err;
   }
@@ -132,6 +161,7 @@ const deleteValue = async (key) => {
 
 const redisAdapter = {
   Init,
+  Close,
   setExValue,
   getValue,
   deleteValue

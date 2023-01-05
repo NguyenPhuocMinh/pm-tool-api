@@ -69,6 +69,12 @@ Object.defineProperty(exports, "roleController", {
     return _roleController["default"];
   }
 });
+Object.defineProperty(exports, "testController", {
+  enumerable: true,
+  get: function get() {
+    return _testController["default"];
+  }
+});
 Object.defineProperty(exports, "userController", {
   enumerable: true,
   get: function get() {
@@ -88,6 +94,7 @@ Object.defineProperty(exports, "userSessionController", {
   }
 });
 require("source-map-support/register");
+var _testController = _interopRequireDefault(require("./test-controller"));
 var _authController = _interopRequireDefault(require("./auth-controller"));
 var _configController = _interopRequireDefault(require("./config-controller"));
 var _homeController = _interopRequireDefault(require("./home-controller"));

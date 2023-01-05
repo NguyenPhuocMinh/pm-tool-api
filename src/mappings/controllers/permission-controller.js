@@ -7,7 +7,7 @@ import constants from '@constants';
 // core
 import loggerManager from '@core/logger';
 
-const loggerFactory = loggerManager(
+const logger = loggerManager(
   constants.APP_NAME,
   constants.STRUCT_CONTROLLERS.PERMISSION_CONTROLLER
 );
@@ -19,14 +19,20 @@ const loggerFactory = loggerManager(
  * @param {*} next
  */
 const getAllPermission = (req, res, next) => {
-  loggerFactory.info(`Function getAllPermission Controller has been start`);
+  logger.log({
+    level: constants.LOG_LEVELS.INFO,
+    message: 'Function getAllPermission Controller has been start'
+  });
   const toolBox = { req, res, next };
   baseController(
     toolBox,
     constants.types.MsgTypePermission,
     constants.actions.MsgActionPermissionGetAll
   );
-  loggerFactory.info(`Function getAllPermission Controller has been end`);
+  logger.log({
+    level: constants.LOG_LEVELS.INFO,
+    message: 'Function getAllPermission Controller has been end'
+  });
 };
 
 /**
@@ -36,14 +42,20 @@ const getAllPermission = (req, res, next) => {
  * @param {*} next
  */
 const createPermission = (req, res, next) => {
-  loggerFactory.info(`Function createPermission Controller has been start`);
+  logger.log({
+    level: constants.LOG_LEVELS.INFO,
+    message: 'Function createPermission Controller has been start'
+  });
   const toolBox = { req, res, next };
   baseController(
     toolBox,
     constants.types.MsgTypePermission,
     constants.actions.MsgActionPermissionCreate
   );
-  loggerFactory.info(`Function createPermission Controller has been end`);
+  logger.log({
+    level: constants.LOG_LEVELS.INFO,
+    message: 'Function createPermission Controller has been end'
+  });
 };
 
 /**
@@ -53,14 +65,20 @@ const createPermission = (req, res, next) => {
  * @param {*} next
  */
 const getPermission = (req, res, next) => {
-  loggerFactory.info(`Function getPermission Controller has been start`);
+  logger.log({
+    level: constants.LOG_LEVELS.INFO,
+    message: 'Function getPermission Controller has been start'
+  });
   const toolBox = { req, res, next };
   baseController(
     toolBox,
     constants.types.MsgTypePermission,
     constants.actions.MsgActionPermissionGet
   );
-  loggerFactory.info(`Function getPermission Controller has been end`);
+  logger.log({
+    level: constants.LOG_LEVELS.INFO,
+    message: 'Function getPermission Controller has been end'
+  });
 };
 
 /**
@@ -70,14 +88,20 @@ const getPermission = (req, res, next) => {
  * @param {*} next
  */
 const updatePermission = (req, res, next) => {
-  loggerFactory.info(`Function updatePermission Controller has been start`);
+  logger.log({
+    level: constants.LOG_LEVELS.INFO,
+    message: 'Function updatePermission Controller has been start'
+  });
   const toolBox = { req, res, next };
   baseController(
     toolBox,
     constants.types.MsgTypePermission,
     constants.actions.MsgActionPermissionUpdate
   );
-  loggerFactory.info(`Function updatePermission Controller has been end`);
+  logger.log({
+    level: constants.LOG_LEVELS.INFO,
+    message: 'Function updatePermission Controller has been end'
+  });
 };
 
 /**
@@ -87,14 +111,20 @@ const updatePermission = (req, res, next) => {
  * @param {*} next
  */
 const deletePermission = (req, res, next) => {
-  loggerFactory.info(`Function deletePermissionByID Controller has been start`);
+  logger.log({
+    level: constants.LOG_LEVELS.INFO,
+    message: 'Function deletePermission Controller has been start'
+  });
   const toolBox = { req, res, next };
   baseController(
     toolBox,
     constants.types.MsgTypePermission,
     constants.actions.MsgActionPermissionDelete
   );
-  loggerFactory.info(`Function deletePermissionByID Controller has been end`);
+  logger.log({
+    level: constants.LOG_LEVELS.INFO,
+    message: 'Function deletePermission Controller has been end'
+  });
 };
 
 /**
@@ -104,18 +134,20 @@ const deletePermission = (req, res, next) => {
  * @param {*} next
  */
 const addRolesToPermission = (req, res, next) => {
-  loggerFactory.info(
-    `Function addRolesToPermissionByID Controller has been start`
-  );
+  logger.log({
+    level: constants.LOG_LEVELS.INFO,
+    message: 'Function addRolesToPermission Controller has been start'
+  });
   const toolBox = { req, res, next };
   baseController(
     toolBox,
     constants.types.MsgTypePermission,
     constants.actions.MsgActionPermissionAddRoles
   );
-  loggerFactory.info(
-    `Function addRolesToPermissionByID Controller has been end`
-  );
+  logger.log({
+    level: constants.LOG_LEVELS.INFO,
+    message: 'Function addRolesToPermission Controller has been end'
+  });
 };
 
 const permissionController = {

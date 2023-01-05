@@ -16,22 +16,28 @@ const ajv = new Ajv({ allErrors: true, strict: false });
 addFormats(ajv, { mode: 'fast', keywords: true });
 addErrors(ajv);
 
-const loggerFactory = loggerManager(
+const logger = loggerManager(
   constants.APP_NAME,
   constants.STRUCT_SHARES.VALIDATOR_SCHEMA
 );
 
 const validatorSchema = async (schema, data) => {
   try {
-    loggerFactory.info(`Function validatorSchema has been start with schema`, {
-      args: schema
+    logger.log({
+      level: constants.LOG_LEVELS.INFO,
+      message: 'Function validatorSchema has been start with schema',
+      args: {
+        schema
+      }
     });
     const errors = {};
     if (Object.prototype.hasOwnProperty.call(schemas, schema)) {
       const validate = ajv.compile(schemas[schema]);
       const valid = validate(data);
       if (!valid) {
-        loggerFactory.debug(`validate errors`, {
+        logger.log({
+          level: constants.LOG_LEVELS.DEBUG,
+          message: 'Function validatorSchema has been validate errors',
           args: validate.errors
         });
         errors.name = validate.errors[0].keyword;
@@ -42,11 +48,16 @@ const validatorSchema = async (schema, data) => {
     } else {
       throw commons.newError('e004');
     }
-    loggerFactory.info(`Function validatorSchema has been end`);
+    logger.log({
+      level: constants.LOG_LEVELS.INFO,
+      message: 'Function validatorSchema has been end'
+    });
     return errors;
   } catch (err) {
-    loggerFactory.error(`Function validatorSchema has error`, {
-      args: utils.formatErrorMsg(err)
+    logger.log({
+      level: constants.LOG_LEVELS.ERROR,
+      message: 'Function validatorSchema has been error',
+      args: utils.parseError(err)
     });
     throw err;
   }

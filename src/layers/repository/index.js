@@ -9,7 +9,7 @@ import utils from '@utils';
 // core
 import loggerManager from '@core/logger';
 
-const loggerFactory = loggerManager(
+const logger = loggerManager(
   constants.APP_NAME,
   constants.STRUCT_LAYERS.REPOSITORY_LAYER
 );
@@ -38,17 +38,25 @@ const loggerFactory = loggerManager(
  */
 const findAll = async ({ type, filter = {}, projection = {}, options }) => {
   try {
-    loggerFactory.data('Function findAll has been start');
+    logger.log({
+      level: constants.LOG_LEVELS.DATA,
+      message: 'Function findAll has been start'
+    });
 
     const model = builds.modelLookup(schemaLayers, type);
 
     const data = await model.find(filter, projection, options).exec();
 
-    loggerFactory.data('Function findAll has been end');
+    logger.log({
+      level: constants.LOG_LEVELS.DATA,
+      message: 'Function findAll has been end'
+    });
     return data;
   } catch (err) {
-    loggerFactory.error('Function findAll has been error', {
-      args: utils.formatErrorMsg(err)
+    logger.log({
+      level: constants.LOG_LEVELS.ERROR,
+      message: 'Function findAll has been error',
+      args: utils.parseError(err)
     });
     throw err;
   }
@@ -74,17 +82,25 @@ const findAll = async ({ type, filter = {}, projection = {}, options }) => {
  */
 const findOne = async ({ type, filter = {}, projection = {}, options }) => {
   try {
-    loggerFactory.data('Function findOne has been start');
+    logger.log({
+      level: constants.LOG_LEVELS.DATA,
+      message: 'Function findOne has been start'
+    });
 
     const model = builds.modelLookup(schemaLayers, type);
 
     const data = await model.findOne(filter, projection, options).exec();
 
-    loggerFactory.data('Function findOne has been end');
+    logger.log({
+      level: constants.LOG_LEVELS.DATA,
+      message: 'Function findOne has been end'
+    });
     return data;
   } catch (err) {
-    loggerFactory.error('Function findOne has been error', {
-      args: utils.formatErrorMsg(err)
+    logger.log({
+      level: constants.LOG_LEVELS.ERROR,
+      message: 'Function findOne has been error',
+      args: utils.parseError(err)
     });
     throw err;
   }
@@ -111,17 +127,25 @@ const findOne = async ({ type, filter = {}, projection = {}, options }) => {
  */
 const getOne = async ({ type, id, projection, options }) => {
   try {
-    loggerFactory.data('Function get has been start');
+    logger.log({
+      level: constants.LOG_LEVELS.DATA,
+      message: 'Function getOne has been start'
+    });
 
     const model = builds.modelLookup(schemaLayers, type);
 
     const data = await model.findById(id, projection, options).exec();
 
-    loggerFactory.data('Function get has been end');
+    logger.log({
+      level: constants.LOG_LEVELS.DATA,
+      message: 'Function getOne has been end'
+    });
     return data;
   } catch (err) {
-    loggerFactory.error('Function get has been error', {
-      args: utils.formatErrorMsg(err)
+    logger.log({
+      level: constants.LOG_LEVELS.ERROR,
+      message: 'Function getOne has been error',
+      args: utils.parseError(err)
     });
     throw err;
   }
@@ -138,17 +162,25 @@ const getOne = async ({ type, id, projection, options }) => {
  */
 const createOne = async ({ type, doc }) => {
   try {
-    loggerFactory.data('Function createOne has been start');
+    logger.log({
+      level: constants.LOG_LEVELS.DATA,
+      message: 'Function createOne has been start'
+    });
 
     const model = builds.modelLookup(schemaLayers, type);
 
     const data = await model.create(doc);
 
-    loggerFactory.data('Function createOne has been end');
+    logger.log({
+      level: constants.LOG_LEVELS.DATA,
+      message: 'Function createOne has been end'
+    });
     return data;
   } catch (err) {
-    loggerFactory.error('Function createOne has been error', {
-      args: utils.formatErrorMsg(err)
+    logger.log({
+      level: constants.LOG_LEVELS.ERROR,
+      message: 'Function createOne has been error',
+      args: utils.parseError(err)
     });
     throw err;
   }
@@ -167,7 +199,10 @@ const createOne = async ({ type, doc }) => {
  */
 const updateOne = async ({ type, id, doc, options }) => {
   try {
-    loggerFactory.data('Function updateOne has been start');
+    logger.log({
+      level: constants.LOG_LEVELS.DATA,
+      message: 'Function updateOne has been start'
+    });
 
     const model = builds.modelLookup(schemaLayers, type);
 
@@ -178,11 +213,16 @@ const updateOne = async ({ type, id, doc, options }) => {
       })
       .exec();
 
-    loggerFactory.data('Function updateOne has been end');
+    logger.log({
+      level: constants.LOG_LEVELS.DATA,
+      message: 'Function updateOne has been end'
+    });
     return data;
   } catch (err) {
-    loggerFactory.error('Function updateOne has been error', {
-      args: utils.formatErrorMsg(err)
+    logger.log({
+      level: constants.LOG_LEVELS.ERROR,
+      message: 'Function updateOne has been error',
+      args: utils.parseError(err)
     });
     throw err;
   }
@@ -200,17 +240,25 @@ const updateOne = async ({ type, id, doc, options }) => {
  */
 const deleteOne = async ({ type, id, options }) => {
   try {
-    loggerFactory.data('Function deleteID has been start');
+    logger.log({
+      level: constants.LOG_LEVELS.DATA,
+      message: 'Function deleteOne has been start'
+    });
 
     const model = builds.modelLookup(schemaLayers, type);
 
     const data = await model.findByIdAndRemove(id, options).exec();
 
-    loggerFactory.data('Function deleteID has been end');
+    logger.log({
+      level: constants.LOG_LEVELS.DATA,
+      message: 'Function deleteOne has been end'
+    });
     return data;
   } catch (err) {
-    loggerFactory.error('Function deleteID has been error', {
-      args: utils.formatErrorMsg(err)
+    logger.log({
+      level: constants.LOG_LEVELS.ERROR,
+      message: 'Function deleteOne has been error',
+      args: utils.parseError(err)
     });
     throw err;
   }
@@ -230,17 +278,25 @@ const deleteOne = async ({ type, id, options }) => {
  */
 const deleteMany = async ({ type, filter, options }) => {
   try {
-    loggerFactory.data('Function deleteMany has been start');
+    logger.log({
+      level: constants.LOG_LEVELS.DATA,
+      message: 'Function deleteMany has been start'
+    });
 
     const model = builds.modelLookup(schemaLayers, type);
 
     const data = await model.deleteMany(filter, options).exec();
 
-    loggerFactory.data('Function deleteMany has been end');
+    logger.log({
+      level: constants.LOG_LEVELS.DATA,
+      message: 'Function deleteMany has been end'
+    });
     return data;
   } catch (err) {
-    loggerFactory.error('Function deleteMany has been error', {
-      args: utils.formatErrorMsg(err)
+    logger.log({
+      level: constants.LOG_LEVELS.ERROR,
+      message: 'Function deleteMany has been error',
+      args: utils.parseError(err)
     });
     throw err;
   }
@@ -259,17 +315,25 @@ const deleteMany = async ({ type, filter, options }) => {
  */
 const count = async ({ type, filter = {} }) => {
   try {
-    loggerFactory.data('Function count has been start');
+    logger.log({
+      level: constants.LOG_LEVELS.DATA,
+      message: 'Function count has been start'
+    });
 
     const model = builds.modelLookup(schemaLayers, type);
 
     const count = await model.countDocuments(filter).exec();
 
-    loggerFactory.data('Function count has been end');
+    logger.log({
+      level: constants.LOG_LEVELS.DATA,
+      message: 'Function count has been end'
+    });
     return count;
   } catch (err) {
-    loggerFactory.error('Function count has been error', {
-      args: utils.formatErrorMsg(err)
+    logger.log({
+      level: constants.LOG_LEVELS.ERROR,
+      message: 'Function count has been error',
+      args: utils.parseError(err)
     });
     throw err;
   }
@@ -290,17 +354,25 @@ const count = async ({ type, filter = {} }) => {
  */
 const updateMany = async ({ type, filter, doc, options }) => {
   try {
-    loggerFactory.data('Function updateMany has been start');
+    logger.log({
+      level: constants.LOG_LEVELS.DATA,
+      message: 'Function updateMany has been start'
+    });
 
     const model = builds.modelLookup(schemaLayers, type);
 
     const data = await model.updateMany(filter, doc, options).exec();
 
-    loggerFactory.data('Function updateMany has been end');
+    logger.log({
+      level: constants.LOG_LEVELS.DATA,
+      message: 'Function updateMany has been end'
+    });
     return data;
   } catch (err) {
-    loggerFactory.error('Function updateMany has been error', {
-      args: utils.formatErrorMsg(err)
+    logger.log({
+      level: constants.LOG_LEVELS.ERROR,
+      message: 'Function updateMany has been error',
+      args: utils.parseError(err)
     });
     throw err;
   }
@@ -313,17 +385,25 @@ const updateMany = async ({ type, filter, doc, options }) => {
  */
 const bulkWrite = async ({ type, pipelines = [], options }) => {
   try {
-    loggerFactory.data('Function bulkWrite has been start');
+    logger.log({
+      level: constants.LOG_LEVELS.DATA,
+      message: 'Function bulkWrite has been start'
+    });
 
     const model = builds.modelLookup(schemaLayers, type);
 
     const data = model.bulkWrite(pipelines, options);
 
-    loggerFactory.data('Function bulkWrite has been end');
+    logger.log({
+      level: constants.LOG_LEVELS.DATA,
+      message: 'Function bulkWrite has been end'
+    });
     return data;
   } catch (err) {
-    loggerFactory.error('Function bulkWrite has been error', {
-      args: utils.formatErrorMsg(err)
+    logger.log({
+      level: constants.LOG_LEVELS.ERROR,
+      message: 'Function bulkWrite has been error',
+      args: utils.parseError(err)
     });
     throw err;
   }

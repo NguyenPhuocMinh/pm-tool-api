@@ -12,7 +12,7 @@ import loggerManager from '@core/logger';
 // workers
 import workers from '@workers';
 
-const loggerFactory = loggerManager(
+const logger = loggerManager(
   constants.APP_NAME,
   constants.STRUCT_ADAPTERS.SOCKET_ADAPTER
 );
@@ -34,17 +34,19 @@ const Init = async (httpServer) => {
     });
 
     io.on('connection', (socket) => {
-      loggerFactory.debug('Socket io has been connection', {
+      logger.log({
+        level: constants.LOG_LEVELS.DEBUG,
+        message: 'Socket io has been connection',
         args: {
           socketID: socket.id
         }
       });
 
       socket.on('connect_error', (err) => {
-        loggerFactory.error('Socket io has been error', {
-          args: {
-            err: err.message
-          }
+        logger.log({
+          level: constants.LOG_LEVELS.ERROR,
+          message: 'Socket io has been error',
+          args: utils.parseError(err)
         });
         if (err && err.message === 'unauthorized event') {
           socket.disconnect();
@@ -60,7 +62,9 @@ const Init = async (httpServer) => {
       });
 
       socket.on('disconnect', (reason) => {
-        loggerFactory.warn('Socket has disconnect', {
+        logger.log({
+          level: constants.LOG_LEVELS.WARN,
+          message: 'Socket has disconnect',
           args: {
             reason
           }
@@ -69,8 +73,10 @@ const Init = async (httpServer) => {
       });
     });
   } catch (err) {
-    loggerFactory.error('Connect socket has error', {
-      args: utils.formatErrorMsg(err)
+    logger.log({
+      level: constants.LOG_LEVELS.ERROR,
+      message: 'Socket has been error',
+      args: utils.parseError(err)
     });
     throw err;
   }

@@ -14,7 +14,7 @@ import loggerManager from '@core/logger';
 // shares
 import shares from '@shares';
 
-const loggerFactory = loggerManager(
+const logger = loggerManager(
   constants.APP_NAME,
   constants.STRUCT_CONTROLLERS.BASE_CONTROLLER
 );
@@ -29,7 +29,9 @@ const baseController = async (toolBox, msgType, msgAction) => {
   const { req, next } = toolBox;
 
   try {
-    loggerFactory.info(`Function BaseController has been start`, {
+    logger.log({
+      level: constants.LOG_LEVELS.INFO,
+      message: 'Function BaseController has been start',
       args: {
         msgType,
         msgAction
@@ -39,7 +41,9 @@ const baseController = async (toolBox, msgType, msgAction) => {
       baseOrchestrators.LookupOrchestrator(msgType, msgAction);
 
     if (!isFunction(orchestratorHandler)) {
-      loggerFactory.error(`Not found callback orchestratorHandler with`, {
+      logger.log({
+        level: constants.LOG_LEVELS.ERROR,
+        message: 'Not found callback orchestratorHandler with',
         args: {
           msgType,
           msgAction
@@ -51,21 +55,28 @@ const baseController = async (toolBox, msgType, msgAction) => {
     if (!isEmpty(schema)) {
       const errorSchema = await shares.validatorSchema(schema, req.body);
       if (!isEmpty(errorSchema)) {
-        loggerFactory.error(`Function BaseController has errorSchema`, {
-          args: utils.formatErrorMsg(errorSchema)
+        logger.log({
+          level: constants.LOG_LEVELS.ERROR,
+          message: 'Function BaseController has errorSchema',
+          args: utils.parseError(errorSchema)
         });
         return builds.errorResponse(toolBox, errorSchema);
       }
     }
 
-    loggerFactory.info(`Function BaseController has been end`);
+    logger.log({
+      level: constants.LOG_LEVELS.INFO,
+      message: 'Function BaseController has been end'
+    });
 
     const response = await orchestratorHandler(toolBox);
 
     return builds.successResponse(toolBox, response);
   } catch (err) {
-    loggerFactory.error(`Function BaseController has error`, {
-      args: utils.formatErrorMsg(err)
+    logger.log({
+      level: constants.LOG_LEVELS.ERROR,
+      message: 'Function BaseController has been error',
+      args: utils.parseError(err)
     });
     return next(err);
   }

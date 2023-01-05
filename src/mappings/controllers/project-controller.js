@@ -7,7 +7,7 @@ import constants from '@constants';
 // core
 import loggerManager from '@core/logger';
 
-const loggerFactory = loggerManager(
+const logger = loggerManager(
   constants.APP_NAME,
   constants.STRUCT_CONTROLLERS.PROJECT_CONTROLLER
 );
@@ -19,14 +19,20 @@ const loggerFactory = loggerManager(
  * @param {*} next
  */
 const getAllProject = (req, res, next) => {
-  loggerFactory.info(`Function getAllProject Controller has been start`);
+  logger.log({
+    level: constants.LOG_LEVELS.INFO,
+    message: 'Function getAllProject Controller has been start'
+  });
   const toolBox = { req, res, next };
   baseController(
     toolBox,
     constants.types.MsgTypeProject,
     constants.actions.MsgActionProjectGetAll
   );
-  loggerFactory.info(`Function getAllProject Controller has been end`);
+  logger.log({
+    level: constants.LOG_LEVELS.INFO,
+    message: 'Function getAllProject Controller has been end'
+  });
 };
 
 /**
@@ -36,14 +42,20 @@ const getAllProject = (req, res, next) => {
  * @param {*} next
  */
 const createProject = (req, res, next) => {
-  loggerFactory.info(`Function createProject Controller has been start`);
+  logger.log({
+    level: constants.LOG_LEVELS.INFO,
+    message: 'Function createProject Controller has been start'
+  });
   const toolBox = { req, res, next };
   baseController(
     toolBox,
     constants.types.MsgTypeProject,
     constants.actions.MsgActionProjectCreate
   );
-  loggerFactory.info(`Function createProject Controller has been end`);
+  logger.log({
+    level: constants.LOG_LEVELS.INFO,
+    message: 'Function createProject Controller has been end'
+  });
 };
 
 const projectController = {

@@ -11,7 +11,7 @@ var _logger = _interopRequireDefault(require("../../core/logger"));
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 // core
 
-var loggerFactory = (0, _logger["default"])(_constants["default"].APP_NAME, _constants["default"].STRUCT_CONTROLLERS.ORGANIZATION_CONTROLLER);
+var logger = (0, _logger["default"])(_constants["default"].APP_NAME, _constants["default"].STRUCT_CONTROLLERS.ORGANIZATION_CONTROLLER);
 
 /**
  * @description Get All Organization Controller
@@ -20,14 +20,20 @@ var loggerFactory = (0, _logger["default"])(_constants["default"].APP_NAME, _con
  * @param {*} next
  */
 var getAllOrganization = function getAllOrganization(req, res, next) {
-  loggerFactory.info("Function getAllOrganization Controller has been start");
+  logger.log({
+    level: _constants["default"].LOG_LEVELS.INFO,
+    message: 'Function getAllOrganization Controller has been start'
+  });
   var toolBox = {
     req: req,
     res: res,
     next: next
   };
   (0, _baseController["default"])(toolBox, _constants["default"].types.MsgTypeOrganization, _constants["default"].actions.MsgActionOrganizationGetAll);
-  loggerFactory.info("Function getAllOrganization Controller has been end");
+  logger.log({
+    level: _constants["default"].LOG_LEVELS.INFO,
+    message: 'Function getAllOrganization Controller has been end'
+  });
 };
 
 /**
@@ -37,14 +43,20 @@ var getAllOrganization = function getAllOrganization(req, res, next) {
  * @param {*} next
  */
 var createOrganization = function createOrganization(req, res, next) {
-  loggerFactory.info("Function createOrganization Controller has been start");
+  logger.log({
+    level: _constants["default"].LOG_LEVELS.INFO,
+    message: 'Function createOrganization Controller has been start'
+  });
   var toolBox = {
     req: req,
     res: res,
     next: next
   };
   (0, _baseController["default"])(toolBox, _constants["default"].types.MsgTypeOrganization, _constants["default"].actions.MsgActionOrganizationCreate);
-  loggerFactory.info("Function createOrganization Controller has been end");
+  logger.log({
+    level: _constants["default"].LOG_LEVELS.INFO,
+    message: 'Function createOrganization Controller has been end'
+  });
 };
 
 /**
@@ -54,14 +66,20 @@ var createOrganization = function createOrganization(req, res, next) {
  * @param {*} next
  */
 var getOrganization = function getOrganization(req, res, next) {
-  loggerFactory.info("Function getOrganization Controller has been start");
+  logger.log({
+    level: _constants["default"].LOG_LEVELS.INFO,
+    message: 'Function getOrganization Controller has been start'
+  });
   var toolBox = {
     req: req,
     res: res,
     next: next
   };
   (0, _baseController["default"])(toolBox, _constants["default"].types.MsgTypeOrganization, _constants["default"].actions.MsgActionOrganizationGet);
-  loggerFactory.info("Function getOrganization Controller has been end");
+  logger.log({
+    level: _constants["default"].LOG_LEVELS.INFO,
+    message: 'Function getOrganization Controller has been end'
+  });
 };
 
 /**
@@ -71,14 +89,20 @@ var getOrganization = function getOrganization(req, res, next) {
  * @param {*} next
  */
 var updateOrganization = function updateOrganization(req, res, next) {
-  loggerFactory.info("Function updateOrganization Controller has been start");
+  logger.log({
+    level: _constants["default"].LOG_LEVELS.INFO,
+    message: 'Function updateOrganization Controller has been start'
+  });
   var toolBox = {
     req: req,
     res: res,
     next: next
   };
   (0, _baseController["default"])(toolBox, _constants["default"].types.MsgTypeOrganization, _constants["default"].actions.MsgActionOrganizationUpdate);
-  loggerFactory.info("Function updateOrganization Controller has been end");
+  logger.log({
+    level: _constants["default"].LOG_LEVELS.INFO,
+    message: 'Function updateOrganization Controller has been end'
+  });
 };
 
 /**
@@ -88,14 +112,20 @@ var updateOrganization = function updateOrganization(req, res, next) {
  * @param {*} next
  */
 var deleteOrganization = function deleteOrganization(req, res, next) {
-  loggerFactory.info("Function deleteOrganization Controller has been start");
+  logger.log({
+    level: _constants["default"].LOG_LEVELS.INFO,
+    message: 'Function deleteOrganization Controller has been start'
+  });
   var toolBox = {
     req: req,
     res: res,
     next: next
   };
   (0, _baseController["default"])(toolBox, _constants["default"].types.MsgTypeOrganization, _constants["default"].actions.MsgActionOrganizationDelete);
-  loggerFactory.info("Function deleteOrganization Controller has been end");
+  logger.log({
+    level: _constants["default"].LOG_LEVELS.INFO,
+    message: 'Function deleteOrganization Controller has been end'
+  });
 };
 var organizationController = {
   getAllOrganization: getAllOrganization,

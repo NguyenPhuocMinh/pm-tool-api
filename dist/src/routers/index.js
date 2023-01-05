@@ -11,6 +11,7 @@ var _constants = _interopRequireDefault(require("../constants"));
 var _utils = _interopRequireDefault(require("../utils"));
 var _logger = _interopRequireDefault(require("../core/logger"));
 var _middleware = require("../middleware");
+var _testRouter = _interopRequireDefault(require("./test-router"));
 var _authRouter = _interopRequireDefault(require("./auth-router"));
 var _configRouter = _interopRequireDefault(require("./config-router"));
 var _homeRouter = _interopRequireDefault(require("./home-router"));
@@ -33,8 +34,8 @@ function _iterableToArray(iter) { if (typeof Symbol !== "undefined" && iter[Symb
 function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) return _arrayLikeToArray(arr); }
 function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
 var router = _express["default"].Router();
-var loggerFactory = (0, _logger["default"])(_constants["default"].APP_NAME, _constants["default"].STRUCT_NAME_ROUTER);
-var routes = [].concat(_toConsumableArray(_authRouter["default"]), _toConsumableArray(_configRouter["default"]), _toConsumableArray(_homeRouter["default"]), _toConsumableArray(_healthRouter["default"]), _toConsumableArray(_organizationRouter["default"]), _toConsumableArray(_projectRouter["default"]), _toConsumableArray(_roleRouter["default"]), _toConsumableArray(_permissionRouter["default"]), _toConsumableArray(_userRouter["default"]), _toConsumableArray(_userSessionRouter["default"]), _toConsumableArray(_userOnlineRouter["default"]), _toConsumableArray(_notifyRouter["default"]), _toConsumableArray(_notifyUserRouter["default"]), _toConsumableArray(_notifyTemplateRouter["default"]));
+var logger = (0, _logger["default"])(_constants["default"].APP_NAME, _constants["default"].STRUCT_NAME_ROUTER);
+var routes = [].concat(_toConsumableArray(_testRouter["default"]), _toConsumableArray(_authRouter["default"]), _toConsumableArray(_configRouter["default"]), _toConsumableArray(_homeRouter["default"]), _toConsumableArray(_healthRouter["default"]), _toConsumableArray(_organizationRouter["default"]), _toConsumableArray(_projectRouter["default"]), _toConsumableArray(_roleRouter["default"]), _toConsumableArray(_permissionRouter["default"]), _toConsumableArray(_userRouter["default"]), _toConsumableArray(_userSessionRouter["default"]), _toConsumableArray(_userOnlineRouter["default"]), _toConsumableArray(_notifyRouter["default"]), _toConsumableArray(_notifyUserRouter["default"]), _toConsumableArray(_notifyTemplateRouter["default"]));
 
 /**
  * @description Init layer router
@@ -42,7 +43,9 @@ var routes = [].concat(_toConsumableArray(_authRouter["default"]), _toConsumable
  */
 var routers = routes.map(function (route) {
   try {
-    loggerFactory.data("Layer route", {
+    logger.log({
+      level: _constants["default"].LOG_LEVELS.DATA,
+      message: 'Layer route',
       args: route
     });
     var pathName = (0, _lodash.get)(route, 'pathName');
@@ -51,8 +54,10 @@ var routers = routes.map(function (route) {
     router[(0, _lodash.toLower)(method)](pathName, _middleware.authMiddleware, controller);
     return router;
   } catch (err) {
-    loggerFactory.error("Layer route has error", {
-      args: _utils["default"].formatErrorMsg(err)
+    logger.log({
+      level: _constants["default"].LOG_LEVELS.ERROR,
+      message: 'Layer route has been error',
+      args: _utils["default"].parseError(err)
     });
     throw err;
   }

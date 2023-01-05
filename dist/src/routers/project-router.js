@@ -10,13 +10,11 @@ var _controllers = require("../mappings/controllers");
  * @description Project router
  */
 var projectRouter = [{
-  enable: true,
   pathName: '/projects',
   method: 'GET',
   methodName: 'getAllProject',
   controller: _controllers.projectController.getAllProject
 }, {
-  enable: true,
   pathName: '/projects',
   method: 'POST',
   methodName: 'createProject',

@@ -7,7 +7,7 @@ import constants from '@constants';
 // core
 import loggerManager from '@core/logger';
 
-const loggerFactory = loggerManager(
+const logger = loggerManager(
   constants.APP_NAME,
   constants.STRUCT_VALIDATORS.AUTH_VALIDATOR
 );
@@ -20,29 +20,29 @@ const schemaNotifyTemplateCreate = Joi.object({
 });
 
 export const validatorNotifyTemplateCreate = (data) => {
-  loggerFactory.debug(
-    'Function validatorNotifyTemplateCreate has been start with data',
-    {
-      args: data
-    }
-  );
+  logger.log({
+    level: constants.LOG_LEVELS.DEBUG,
+    message: 'Function validatorNotifyTemplateCreate has been start with data',
+    args: data
+  });
 
   const { error } = schemaNotifyTemplateCreate.validate(data, {
     allowUnknown: true
   });
 
   if (error) {
-    loggerFactory.debug(
-      'Function validatorNotifyTemplateCreate has been end with error',
-      {
-        args: error
-      }
-    );
+    logger.log({
+      level: constants.LOG_LEVELS.ERROR,
+      message: 'Function validatorNotifyTemplateCreate has been end with error',
+      args: error
+    });
+
     return error;
   }
 
-  loggerFactory.debug(
-    'Function validatorNotifyTemplateCreate has been end without error'
-  );
+  logger.log({
+    level: constants.LOG_LEVELS.DEBUG,
+    message: 'Function validatorNotifyTemplateCreate has been end without error'
+  });
   return null;
 };

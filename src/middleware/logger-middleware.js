@@ -5,7 +5,7 @@ import constants from '@constants';
 // core
 import loggerManager from '@core/logger';
 
-const loggerFactory = loggerManager(
+const logger = loggerManager(
   constants.APP_NAME,
   constants.STRUCT_MIDDLEWARE.LOG_MIDDLEWARE
 );
@@ -32,24 +32,24 @@ const loggerMiddleware = (tokens, req, res) => {
     case constants.HTTP_STATUS.UN_AUTHORIZATION:
     case constants.HTTP_STATUS.FORBIDDEN:
     case constants.HTTP_STATUS.NOT_FOUND:
-      loggerFactory.warn(messageLog);
+      logger.warn(messageLog);
       break;
     case constants.HTTP_STATUS.INTERNAL_SERVER_ERROR:
-      loggerFactory.error(messageLog);
+      logger.error(messageLog);
       break;
     case constants.HTTP_STATUS.SUCCESS:
     case constants.HTTP_STATUS.CREATED:
     case constants.HTTP_STATUS.ACCEPTED:
-      loggerFactory.info(messageLog);
+      logger.info(messageLog);
       break;
     case constants.HTTP_STATUS.METHOD_NOT_ALLOW:
-      loggerFactory.verbose(messageLog);
+      logger.verbose(messageLog);
       break;
     case constants.HTTP_STATUS.DUPLICATE:
-      loggerFactory.debug(messageLog);
+      logger.debug(messageLog);
       break;
     default:
-      loggerFactory.silly(messageLog);
+      logger.silly(messageLog);
       break;
   }
 };

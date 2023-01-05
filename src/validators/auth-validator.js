@@ -7,7 +7,7 @@ import constants from '@constants';
 // core
 import loggerManager from '@core/logger';
 
-const loggerFactory = loggerManager(
+const logger = loggerManager(
   constants.APP_NAME,
   constants.STRUCT_VALIDATORS.AUTH_VALIDATOR
 );
@@ -19,19 +19,27 @@ const schemaLogin = Joi.object({
 });
 
 export const validatorLogin = (data) => {
-  loggerFactory.debug('Function validatorLogin has been start with data', {
+  logger.log({
+    level: constants.LOG_LEVELS.DEBUG,
+    message: 'Function validatorLogin has been start with data',
     args: data
   });
 
   const { error } = schemaLogin.validate(data);
 
   if (error) {
-    loggerFactory.debug('Function validatorLogin has been end with error', {
+    logger.log({
+      level: constants.LOG_LEVELS.ERROR,
+      message: 'Function validatorLogin has been end with error',
       args: error
     });
+
     return error;
   }
 
-  loggerFactory.debug('Function validatorLogin has been end without error');
+  logger.log({
+    level: constants.LOG_LEVELS.DEBUG,
+    message: 'Function validatorLogin has been end without error'
+  });
   return null;
 };

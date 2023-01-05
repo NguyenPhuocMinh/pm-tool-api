@@ -1,5 +1,6 @@
 'use strict';
 
+import testController from './test-controller';
 import authController from './auth-controller';
 import configController from './config-controller';
 import homeController from './home-controller';
@@ -16,6 +17,7 @@ import notifyUserController from './notify-user-controller';
 import notifyTemplateController from './notify-template-controller';
 
 export {
+  testController,
   authController,
   configController,
   homeController,

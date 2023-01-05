@@ -5,8 +5,8 @@ import retry from 'retry';
 
 // conf
 import { options, profiles } from '@conf';
-
 import constants from '@constants';
+import utils from '@utils';
 
 // core
 import loggerManager from '@core/logger';
@@ -31,14 +31,14 @@ const Init = async () => {
 
     logger.log({
       level: constants.LOG_LEVELS.INFO,
-      message: 'The RabbitMQ is running on',
+      message: 'The rabbitMQ is running on',
       args: `[${APP_RABBIT_URI}]`
     });
   } catch (err) {
     logger.log({
       level: constants.LOG_LEVELS.ERROR,
-      message: 'The RabbitMQ has error',
-      args: err
+      message: 'The rabbitMQ has error',
+      args: utils.parseError(err)
     });
 
     const operation = retry.operation(options.retryOptions);
@@ -46,11 +46,11 @@ const Init = async () => {
       if (operation.retry(err)) {
         logger.log({
           level: constants.LOG_LEVELS.ERROR,
-          message: `Unable to connect to the RabbitMQ. Retrying(${current})`,
+          message: `Unable to connect to the rabbitMQ. Retrying(${current})`,
           args: err
         });
         if (current >= options.retryOptions.retries) {
-          process.exit(0);
+          process.exit(1);
         }
         return err;
       }
@@ -58,6 +58,15 @@ const Init = async () => {
 
     throw err;
   }
+};
+
+const Close = async () => {
+  logger.log({
+    level: constants.LOG_LEVELS.DEBUG,
+    message: 'The rabbitMQ has been closed'
+  });
+  await channel.close();
+  await conn.close();
 };
 
 /**
@@ -71,7 +80,12 @@ const publisher = async (queueName, messageType, correlationId, payload) => {
   try {
     logger.log({
       level: constants.LOG_LEVELS.INFO,
-      message: 'Func publisher has been start'
+      message: 'Func publisher has been start',
+      args: {
+        queueName,
+        messageType,
+        correlationId
+      }
     });
 
     await channel.assertQueue(queueName, {
@@ -94,17 +108,16 @@ const publisher = async (queueName, messageType, correlationId, payload) => {
     logger.log({
       level: constants.LOG_LEVELS.ERROR,
       message: 'Func publisher has been error',
-      args: {
-        errName: err.name,
-        errMsg: err.message
-      }
+      args: utils.parseError(err)
     });
+    await channel.close();
     throw err;
   }
 };
 
 const amqpAdapter = {
   Init,
+  Close,
   publisher
 };
 

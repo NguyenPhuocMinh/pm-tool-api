@@ -11,7 +11,7 @@ var _logger = _interopRequireDefault(require("../../core/logger"));
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 // core
 
-var loggerFactory = (0, _logger["default"])(_constants["default"].APP_NAME, _constants["default"].STRUCT_CONTROLLERS.NOTIFY_CONTROLLER);
+var logger = (0, _logger["default"])(_constants["default"].APP_NAME, _constants["default"].STRUCT_CONTROLLERS.NOTIFY_CONTROLLER);
 
 /**
  * @description Get Notify Of User Controller
@@ -20,14 +20,20 @@ var loggerFactory = (0, _logger["default"])(_constants["default"].APP_NAME, _con
  * @param {*} next
  */
 var getNotifyById = function getNotifyById(req, res, next) {
-  loggerFactory.info("Function getNotifyById Controller has been start");
+  logger.log({
+    level: _constants["default"].LOG_LEVELS.INFO,
+    message: 'Function getNotifyById Controller has been start'
+  });
   var toolBox = {
     req: req,
     res: res,
     next: next
   };
   (0, _baseController["default"])(toolBox, _constants["default"].types.MsgTypeNotify, _constants["default"].actions.MsgActionNotifyGet);
-  loggerFactory.info("Function getNotifyById Controller has been end");
+  logger.log({
+    level: _constants["default"].LOG_LEVELS.INFO,
+    message: 'Function getNotifyById Controller has been end'
+  });
 };
 
 /**
@@ -37,14 +43,20 @@ var getNotifyById = function getNotifyById(req, res, next) {
  * @param {*} next
  */
 var getAllNotifyOfUser = function getAllNotifyOfUser(req, res, next) {
-  loggerFactory.info("Function getAllNotifyOfUser Controller has been start");
+  logger.log({
+    level: _constants["default"].LOG_LEVELS.INFO,
+    message: 'Function getAllNotifyOfUser Controller has been start'
+  });
   var toolBox = {
     req: req,
     res: res,
     next: next
   };
   (0, _baseController["default"])(toolBox, _constants["default"].types.MsgTypeNotify, _constants["default"].actions.MsgActionNotifyOfUserGetAll);
-  loggerFactory.info("Function getAllNotifyOfUser Controller has been end");
+  logger.log({
+    level: _constants["default"].LOG_LEVELS.INFO,
+    message: 'Function getAllNotifyOfUser Controller has been end'
+  });
 };
 
 /**
@@ -54,37 +66,25 @@ var getAllNotifyOfUser = function getAllNotifyOfUser(req, res, next) {
  * @param {*} next
  */
 var notifyChangePasswordTemporary = function notifyChangePasswordTemporary(req, res, next) {
-  loggerFactory.info("Function notifyChangePasswordTemporary Controller has been start");
+  logger.log({
+    level: _constants["default"].LOG_LEVELS.INFO,
+    message: 'Function notifyChangePasswordTemporary Controller has been start'
+  });
   var toolBox = {
     req: req,
     res: res,
     next: next
   };
   (0, _baseController["default"])(toolBox, _constants["default"].types.MsgTypeNotify, _constants["default"].actions.MsgActionNotifyChangePasswordTemporary);
-  loggerFactory.info("Function notifyChangePasswordTemporary Controller has been end");
-};
-
-/**
- * @description Notify Update Read Controller
- * @param {*} req
- * @param {*} res
- * @param {*} next
- */
-var notifyUpdateRead = function notifyUpdateRead(req, res, next) {
-  loggerFactory.info("Function notifyUpdateRead Controller has been start");
-  var toolBox = {
-    req: req,
-    res: res,
-    next: next
-  };
-  (0, _baseController["default"])(toolBox, _constants["default"].types.MsgTypeNotify, _constants["default"].actions.MsgActionNotifyUpdateRead);
-  loggerFactory.info("Function notifyUpdateRead Controller has been end");
+  logger.log({
+    level: _constants["default"].LOG_LEVELS.INFO,
+    message: 'Function notifyChangePasswordTemporary Controller has been end'
+  });
 };
 var notifyController = {
   getAllNotifyOfUser: getAllNotifyOfUser,
   getNotifyById: getNotifyById,
-  notifyChangePasswordTemporary: notifyChangePasswordTemporary,
-  notifyUpdateRead: notifyUpdateRead
+  notifyChangePasswordTemporary: notifyChangePasswordTemporary
 };
 var _default = notifyController;
 exports["default"] = _default;

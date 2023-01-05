@@ -12,6 +12,9 @@ import loggerManager from '@core/logger';
 // middleware
 import { authMiddleware } from '@middleware';
 
+// test
+import testRouter from './test-router';
+
 import authRouter from './auth-router';
 import configRouter from './config-router';
 import homeRouter from './home-router';
@@ -29,12 +32,10 @@ import notifyTemplateRouter from './notify-template-router';
 
 const router = express.Router();
 
-const loggerFactory = loggerManager(
-  constants.APP_NAME,
-  constants.STRUCT_NAME_ROUTER
-);
+const logger = loggerManager(constants.APP_NAME, constants.STRUCT_NAME_ROUTER);
 
 const routes = [
+  ...testRouter,
   ...authRouter,
   ...configRouter,
   ...homeRouter,
@@ -57,7 +58,9 @@ const routes = [
  */
 const routers = routes.map((route) => {
   try {
-    loggerFactory.data(`Layer route`, {
+    logger.log({
+      level: constants.LOG_LEVELS.DATA,
+      message: 'Layer route',
       args: route
     });
 
@@ -69,8 +72,10 @@ const routers = routes.map((route) => {
 
     return router;
   } catch (err) {
-    loggerFactory.error(`Layer route has error`, {
-      args: utils.formatErrorMsg(err)
+    logger.log({
+      level: constants.LOG_LEVELS.ERROR,
+      message: 'Layer route has been error',
+      args: utils.parseError(err)
     });
     throw err;
   }

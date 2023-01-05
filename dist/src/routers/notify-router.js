@@ -24,11 +24,6 @@ var notifyRouter = [{
   method: 'POST',
   methodName: 'notifyChangePasswordTemporary',
   controller: _controllers.notifyController.notifyChangePasswordTemporary
-}, {
-  pathName: '/notifies/update-read',
-  method: 'PATCH',
-  methodName: 'notifyUpdateRead',
-  controller: _controllers.notifyController.notifyUpdateRead
 }];
 var _default = notifyRouter;
 exports["default"] = _default;

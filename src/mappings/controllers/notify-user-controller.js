@@ -7,7 +7,7 @@ import constants from '@constants';
 // core
 import loggerManager from '@core/logger';
 
-const loggerFactory = loggerManager(
+const logger = loggerManager(
   constants.APP_NAME,
   constants.STRUCT_CONTROLLERS.NOTIFY_USER_CONTROLLER
 );
@@ -19,14 +19,20 @@ const loggerFactory = loggerManager(
  * @param {*} next
  */
 const getAllNotifyUser = (req, res, next) => {
-  loggerFactory.info(`Function getAllNotifyUser Controller has been start`);
+  logger.log({
+    level: constants.LOG_LEVELS.INFO,
+    message: 'Function getAllNotifyUser Controller has been start'
+  });
   const toolBox = { req, res, next };
   baseController(
     toolBox,
     constants.types.MsgTypeNotifyUser,
     constants.actions.MsgActionNotifyUserGetAll
   );
-  loggerFactory.info(`Function getAllNotifyUser Controller has been end`);
+  logger.log({
+    level: constants.LOG_LEVELS.INFO,
+    message: 'Function getAllNotifyUser Controller has been end'
+  });
 };
 
 /**
@@ -36,14 +42,20 @@ const getAllNotifyUser = (req, res, next) => {
  * @param {*} next
  */
 const getDetailNotifyUser = (req, res, next) => {
-  loggerFactory.info(`Function getDetailNotifyUser Controller has been start`);
+  logger.log({
+    level: constants.LOG_LEVELS.INFO,
+    message: 'Function getDetailNotifyUser Controller has been start'
+  });
   const toolBox = { req, res, next };
   baseController(
     toolBox,
     constants.types.MsgTypeNotifyUser,
     constants.actions.MsgActionNotifyUserGetId
   );
-  loggerFactory.info(`Function getDetailNotifyUser Controller has been end`);
+  logger.log({
+    level: constants.LOG_LEVELS.INFO,
+    message: 'Function getDetailNotifyUser Controller has been end'
+  });
 };
 
 /**
@@ -53,14 +65,20 @@ const getDetailNotifyUser = (req, res, next) => {
  * @param {*} next
  */
 const getAllDataNotifyUser = (req, res, next) => {
-  loggerFactory.info(`Function getAllDataNotifyUser Controller has been start`);
+  logger.log({
+    level: constants.LOG_LEVELS.INFO,
+    message: 'Function getAllDataNotifyUser Controller has been start'
+  });
   const toolBox = { req, res, next };
   baseController(
     toolBox,
     constants.types.MsgTypeNotifyUser,
     constants.actions.MsgActionNotifyUserGetAllData
   );
-  loggerFactory.info(`Function getAllDataNotifyUser Controller has been end`);
+  logger.log({
+    level: constants.LOG_LEVELS.INFO,
+    message: 'Function getAllDataNotifyUser Controller has been end'
+  });
 };
 
 /**
@@ -70,16 +88,20 @@ const getAllDataNotifyUser = (req, res, next) => {
  * @param {*} next
  */
 const getAllUnReadNotifyUser = (req, res, next) => {
-  loggerFactory.info(
-    `Function getAllUnReadNotifyUser Controller has been start`
-  );
+  logger.log({
+    level: constants.LOG_LEVELS.INFO,
+    message: 'Function getAllUnReadNotifyUser Controller has been start'
+  });
   const toolBox = { req, res, next };
   baseController(
     toolBox,
     constants.types.MsgTypeNotifyUser,
     constants.actions.MsgActionNotifyUserGetAllUnRead
   );
-  loggerFactory.info(`Function getAllUnReadNotifyUser Controller has been end`);
+  logger.log({
+    level: constants.LOG_LEVELS.INFO,
+    message: 'Function getAllUnReadNotifyUser Controller has been end'
+  });
 };
 
 /**
@@ -89,14 +111,20 @@ const getAllUnReadNotifyUser = (req, res, next) => {
  * @param {*} next
  */
 const readNotifyUser = (req, res, next) => {
-  loggerFactory.info(`Function readNotifyUser Controller has been start`);
+  logger.log({
+    level: constants.LOG_LEVELS.INFO,
+    message: 'Function readNotifyUser Controller has been start'
+  });
   const toolBox = { req, res, next };
   baseController(
     toolBox,
     constants.types.MsgTypeNotifyUser,
     constants.actions.MsgActionNotifyUserRead
   );
-  loggerFactory.info(`Function readNotifyUser Controller has been end`);
+  logger.log({
+    level: constants.LOG_LEVELS.INFO,
+    message: 'Function readNotifyUser Controller has been end'
+  });
 };
 
 /**
@@ -106,14 +134,20 @@ const readNotifyUser = (req, res, next) => {
  * @param {*} next
  */
 const readAllNotifyUser = (req, res, next) => {
-  loggerFactory.info(`Function readAllNotifyUser Controller has been start`);
+  logger.log({
+    level: constants.LOG_LEVELS.INFO,
+    message: 'Function readAllNotifyUser Controller has been start'
+  });
   const toolBox = { req, res, next };
   baseController(
     toolBox,
     constants.types.MsgTypeNotifyUser,
     constants.actions.MsgActionNotifyUserReadAll
   );
-  loggerFactory.info(`Function readAllNotifyUser Controller has been end`);
+  logger.log({
+    level: constants.LOG_LEVELS.INFO,
+    message: 'Function readAllNotifyUser Controller has been end'
+  });
 };
 
 /**
@@ -123,14 +157,20 @@ const readAllNotifyUser = (req, res, next) => {
  * @param {*} next
  */
 const trashNotifyUser = (req, res, next) => {
-  loggerFactory.info(`Function trashNotifyUser Controller has been start`);
+  logger.log({
+    level: constants.LOG_LEVELS.INFO,
+    message: 'Function trashNotifyUser Controller has been start'
+  });
   const toolBox = { req, res, next };
   baseController(
     toolBox,
     constants.types.MsgTypeNotifyUser,
     constants.actions.MsgActionNotifyUserTrash
   );
-  loggerFactory.info(`Function trashNotifyUser Controller has been end`);
+  logger.log({
+    level: constants.LOG_LEVELS.INFO,
+    message: 'Function trashNotifyUser Controller has been end'
+  });
 };
 
 /**
@@ -140,14 +180,20 @@ const trashNotifyUser = (req, res, next) => {
  * @param {*} next
  */
 const trashAllNotifyUser = (req, res, next) => {
-  loggerFactory.info(`Function trashAllNotifyUser Controller has been start`);
+  logger.log({
+    level: constants.LOG_LEVELS.INFO,
+    message: 'Function trashAllNotifyUser Controller has been start'
+  });
   const toolBox = { req, res, next };
   baseController(
     toolBox,
     constants.types.MsgTypeNotifyUser,
     constants.actions.MsgActionNotifyUserTrashAll
   );
-  loggerFactory.info(`Function trashAllNotifyUser Controller has been end`);
+  logger.log({
+    level: constants.LOG_LEVELS.INFO,
+    message: 'Function trashAllNotifyUser Controller has been end'
+  });
 };
 
 /**
@@ -157,18 +203,20 @@ const trashAllNotifyUser = (req, res, next) => {
  * @param {*} next
  */
 const getAllDataTrashNotifyUser = (req, res, next) => {
-  loggerFactory.info(
-    `Function getAllDataTrashNotifyUser Controller has been start`
-  );
+  logger.log({
+    level: constants.LOG_LEVELS.INFO,
+    message: 'Function getAllDataTrashNotifyUser Controller has been start'
+  });
   const toolBox = { req, res, next };
   baseController(
     toolBox,
     constants.types.MsgTypeNotifyUser,
     constants.actions.MsgActionNotifyUserGetAllDataTrash
   );
-  loggerFactory.info(
-    `Function getAllDataTrashNotifyUser Controller has been end`
-  );
+  logger.log({
+    level: constants.LOG_LEVELS.INFO,
+    message: 'Function getAllDataTrashNotifyUser Controller has been end'
+  });
 };
 
 /**
@@ -178,18 +226,20 @@ const getAllDataTrashNotifyUser = (req, res, next) => {
  * @param {*} next
  */
 const rollBackDataTrashNotifyUser = (req, res, next) => {
-  loggerFactory.info(
-    `Function rollBackDataTrashNotifyUser Controller has been start`
-  );
+  logger.log({
+    level: constants.LOG_LEVELS.INFO,
+    message: 'Function rollBackDataTrashNotifyUser Controller has been start'
+  });
   const toolBox = { req, res, next };
   baseController(
     toolBox,
     constants.types.MsgTypeNotifyUser,
     constants.actions.MsgActionNotifyUserRollBackDataTrash
   );
-  loggerFactory.info(
-    `Function rollBackDataTrashNotifyUser Controller has been end`
-  );
+  logger.log({
+    level: constants.LOG_LEVELS.INFO,
+    message: 'Function rollBackDataTrashNotifyUser Controller has been end'
+  });
 };
 
 /**
@@ -199,18 +249,20 @@ const rollBackDataTrashNotifyUser = (req, res, next) => {
  * @param {*} next
  */
 const rollBackAllDataTrashNotifyUser = (req, res, next) => {
-  loggerFactory.info(
-    `Function rollBackAllDataTrashNotifyUser Controller has been start`
-  );
+  logger.log({
+    level: constants.LOG_LEVELS.INFO,
+    message: 'Function rollBackAllDataTrashNotifyUser Controller has been start'
+  });
   const toolBox = { req, res, next };
   baseController(
     toolBox,
     constants.types.MsgTypeNotifyUser,
     constants.actions.MsgActionNotifyUserRollBackAllDataTrash
   );
-  loggerFactory.info(
-    `Function rollBackAllDataTrashNotifyUser Controller has been end`
-  );
+  logger.log({
+    level: constants.LOG_LEVELS.INFO,
+    message: 'Function rollBackAllDataTrashNotifyUser Controller has been end'
+  });
 };
 
 const notifyUserController = {

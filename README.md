@@ -103,7 +103,7 @@ $ docker run -d -p 8080:8080 pm-tool-api
 - **Run RabbitMQ local docker images**
 
 ```sh
-$ docker run -p 5672:5672 rabbitmq
+$ docker run -d -p 5672:5672 rabbitmq
 ```
 
 - **Run RabbitMQ Management**

@@ -11,7 +11,7 @@ import utils from '@utils';
 // core
 import loggerManager from '@core/logger';
 
-const loggerFactory = loggerManager(
+const logger = loggerManager(
   constants.APP_NAME,
   constants.STRUCT_ORCHESTRATORS.BASE_ORCHESTRATOR
 );
@@ -24,7 +24,14 @@ const loggerFactory = loggerManager(
  */
 const LookupOrchestrator = (msgType, msgAction) => {
   try {
-    loggerFactory.info(`Function LookupOrchestrator has been start`);
+    logger.log({
+      level: constants.LOG_LEVELS.INFO,
+      message: 'Function LookupOrchestrator has been start with',
+      args: {
+        msgType,
+        msgAction
+      }
+    });
 
     let fnCallBack;
     let schema;
@@ -41,11 +48,16 @@ const LookupOrchestrator = (msgType, msgAction) => {
       }
     });
 
-    loggerFactory.info(`Function LookupOrchestrator has been end`);
+    logger.log({
+      level: constants.LOG_LEVELS.INFO,
+      message: 'Function LookupOrchestrator has been end'
+    });
     return { orchestratorHandler: fnCallBack, schema };
   } catch (err) {
-    loggerFactory.error(`Function LookupOrchestrator has error`, {
-      args: utils.formatErrorMsg(err)
+    logger.log({
+      level: constants.LOG_LEVELS.INFO,
+      message: 'Function LookupOrchestrator has been error',
+      args: utils.parseError(err)
     });
     return Promise.reject(err);
   }

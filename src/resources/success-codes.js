@@ -1,5 +1,6 @@
 'use strict';
 
+import testSuccess from './success/test-success';
 import authSuccess from './success/auth-success';
 import commonSuccess from './success/common-success';
 import organizationSuccess from './success/organization-success';
@@ -14,6 +15,7 @@ import notifyUserSuccess from './success/notify-user-success';
 import notifyTemplateSuccess from './success/notify-template-success';
 
 const successCodes = {
+  ...testSuccess,
   ...authSuccess,
   ...commonSuccess,
   ...organizationSuccess,

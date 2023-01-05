@@ -16,7 +16,7 @@ import transfers from '@transfers';
 // validators
 import validators from '@validators';
 
-const loggerFactory = loggerManager(
+const logger = loggerManager(
   constants.APP_NAME,
   constants.STRUCT_ORCHESTRATORS.NOTIFY_TEMPLATE_ORCHESTRATOR
 );
@@ -28,7 +28,7 @@ const loggerFactory = loggerManager(
 const getAllNotifyTemplate = async (toolBox) => {
   const { req } = toolBox;
   try {
-    loggerFactory.info(`Function getAllNotifyTemplate has been start`);
+    logger.info(`Function getAllNotifyTemplate has been start`);
 
     const { skip, limit } = helpers.paginationHelper(req.query);
     const query = helpers.queryHelper(req.query);
@@ -56,7 +56,7 @@ const getAllNotifyTemplate = async (toolBox) => {
 
     const data = await commons.dataResponsesMapper(notifyTemplates);
 
-    loggerFactory.info(`Function getAllNotifyTemplate has been end`);
+    logger.info(`Function getAllNotifyTemplate has been end`);
 
     return {
       result: {
@@ -66,7 +66,7 @@ const getAllNotifyTemplate = async (toolBox) => {
       msg: 'notifyTemplateS001'
     };
   } catch (err) {
-    loggerFactory.error(`Function getAllNotifyTemplate has error`, {
+    logger.error(`Function getAllNotifyTemplate has error`, {
       args: utils.formatErrorMsg(err)
     });
     return Promise.reject(err);
@@ -80,7 +80,7 @@ const getAllNotifyTemplate = async (toolBox) => {
 const createNotifyTemplate = async (toolBox) => {
   const { req } = toolBox;
   try {
-    loggerFactory.info(`Function createNotifyTemplate has been start`);
+    logger.info(`Function createNotifyTemplate has been start`);
 
     // validate input
     const error = validators.validatorNotifyTemplateCreate(req.body);
@@ -105,7 +105,7 @@ const createNotifyTemplate = async (toolBox) => {
 
     const data = transfers.notifyTemplateTransfer(notifyTemplate);
 
-    loggerFactory.info(`Function createNotifyTemplate has been end`);
+    logger.info(`Function createNotifyTemplate has been end`);
     return {
       result: {
         data
@@ -113,7 +113,7 @@ const createNotifyTemplate = async (toolBox) => {
       msg: 'notifyTemplateS002'
     };
   } catch (err) {
-    loggerFactory.error(`Function createNotifyTemplate has error`, {
+    logger.error(`Function createNotifyTemplate has error`, {
       args: utils.formatErrorMsg(err)
     });
     return Promise.reject(err);

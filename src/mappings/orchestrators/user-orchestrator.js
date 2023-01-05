@@ -21,7 +21,7 @@ import transfers from '@transfers';
 // validators
 import validators from '@validators';
 
-const loggerFactory = loggerManager(
+const logger = loggerManager(
   constants.APP_NAME,
   constants.STRUCT_ORCHESTRATORS.USER_ORCHESTRATOR
 );
@@ -33,7 +33,10 @@ const loggerFactory = loggerManager(
 const getAllUser = async (toolBox) => {
   const { req } = toolBox;
   try {
-    loggerFactory.info(`Function getAllUser has been start`);
+    logger.log({
+      level: constants.LOG_LEVELS.INFO,
+      message: 'Function getAllUser Orchestrator has been start'
+    });
 
     const { skip, limit } = helpers.paginationHelper(req.query);
     const query = helpers.queryHelper(
@@ -68,7 +71,10 @@ const getAllUser = async (toolBox) => {
 
     const response = await commons.dataResponsesMapper(users);
 
-    loggerFactory.info(`Function getAllUser has been end`);
+    logger.log({
+      level: constants.LOG_LEVELS.INFO,
+      message: 'Function getAllUser Orchestrator has been end'
+    });
 
     return {
       result: {
@@ -78,8 +84,10 @@ const getAllUser = async (toolBox) => {
       msg: 'userS001'
     };
   } catch (err) {
-    loggerFactory.info(`Function getAllUser has error`, {
-      args: utils.formatErrorMsg(err)
+    logger.log({
+      level: constants.LOG_LEVELS.ERROR,
+      message: 'Function getAllUser Orchestrator has been error',
+      args: utils.parseError(err)
     });
     return Promise.reject(err);
   }
@@ -93,7 +101,10 @@ const createUser = async (toolBox) => {
   const { req } = toolBox;
 
   try {
-    loggerFactory.info(`Function createUser has been start`);
+    logger.log({
+      level: constants.LOG_LEVELS.INFO,
+      message: 'Function createUser Orchestrator has been start'
+    });
     // validate inputs
     const error = validators.validatorUser(req.body);
 
@@ -136,7 +147,10 @@ const createUser = async (toolBox) => {
 
     const result = await transfers.userTransfer(data);
 
-    loggerFactory.info(`Function createUser has been end`);
+    logger.log({
+      level: constants.LOG_LEVELS.INFO,
+      message: 'Function createUser Orchestrator has been end'
+    });
 
     return {
       result: {
@@ -145,8 +159,10 @@ const createUser = async (toolBox) => {
       msg: 'userS002'
     };
   } catch (err) {
-    loggerFactory.info(`Function createUser has error`, {
-      args: utils.formatErrorMsg(err)
+    logger.log({
+      level: constants.LOG_LEVELS.ERROR,
+      message: 'Function createUser Orchestrator has been error',
+      args: utils.parseError(err)
     });
     return Promise.reject(err);
   }
@@ -159,7 +175,10 @@ const createUser = async (toolBox) => {
 const getUser = async (toolBox) => {
   const { req } = toolBox;
   try {
-    loggerFactory.info(`Function getUser Orchestrator has been start`);
+    logger.log({
+      level: constants.LOG_LEVELS.INFO,
+      message: 'Function getUser Orchestrator has been start'
+    });
 
     const { id } = req.params;
 
@@ -185,7 +204,10 @@ const getUser = async (toolBox) => {
 
     const result = await transfers.userTransfer(user);
 
-    loggerFactory.info(`Function getUser Orchestrator has been end`);
+    logger.log({
+      level: constants.LOG_LEVELS.INFO,
+      message: 'Function getUser Orchestrator has been end'
+    });
 
     return {
       result: {
@@ -194,8 +216,10 @@ const getUser = async (toolBox) => {
       msg: 'userS003'
     };
   } catch (err) {
-    loggerFactory.error(`Function getUser Orchestrator has error`, {
-      args: utils.formatErrorMsg(err)
+    logger.log({
+      level: constants.LOG_LEVELS.ERROR,
+      message: 'Function getUser Orchestrator has been error',
+      args: utils.parseError(err)
     });
     return Promise.reject(err);
   }
@@ -208,7 +232,10 @@ const getUser = async (toolBox) => {
 const updateUser = async (toolBox) => {
   const { req } = toolBox;
   try {
-    loggerFactory.info(`Function updateUser has been start`);
+    logger.log({
+      level: constants.LOG_LEVELS.INFO,
+      message: 'Function updateUser Orchestrator has been start'
+    });
 
     const { id } = req.params;
 
@@ -244,7 +271,10 @@ const updateUser = async (toolBox) => {
 
     user = helpers.attributeHelper(req, user);
 
-    loggerFactory.info(`Function updateUser Orchestrator has been end`);
+    logger.log({
+      level: constants.LOG_LEVELS.INFO,
+      message: 'Function updateUser Orchestrator has been end'
+    });
 
     const data = await repository.updateOne({
       type: 'UserModel',
@@ -261,8 +291,10 @@ const updateUser = async (toolBox) => {
       msg: 'userS004'
     };
   } catch (err) {
-    loggerFactory.error(`Function updateUser Orchestrator has error`, {
-      args: utils.formatErrorMsg(err)
+    logger.log({
+      level: constants.LOG_LEVELS.ERROR,
+      message: 'Function updateUser Orchestrator has been error',
+      args: utils.parseError(err)
     });
     return Promise.reject(err);
   }
@@ -275,7 +307,10 @@ const updateUser = async (toolBox) => {
 const deleteUser = async (toolBox) => {
   const { req } = toolBox;
   try {
-    loggerFactory.info(`Function deleteUser has been start`);
+    logger.log({
+      level: constants.LOG_LEVELS.INFO,
+      message: 'Function deleteUser Orchestrator has been start'
+    });
 
     const { id } = req.params;
 
@@ -293,7 +328,10 @@ const deleteUser = async (toolBox) => {
 
     await removeUserInRoles(id, updatedAt, updatedBy);
 
-    loggerFactory.info(`Function deleteUser has been end`);
+    logger.log({
+      level: constants.LOG_LEVELS.INFO,
+      message: 'Function deleteUser Orchestrator has been end'
+    });
 
     return {
       result: {
@@ -302,8 +340,10 @@ const deleteUser = async (toolBox) => {
       msg: 'userS005'
     };
   } catch (err) {
-    loggerFactory.error(`Function deleteUser Orchestrator has error`, {
-      args: utils.formatErrorMsg(err)
+    logger.log({
+      level: constants.LOG_LEVELS.ERROR,
+      message: 'Function deleteUser Orchestrator has been error',
+      args: utils.parseError(err)
     });
     return Promise.reject(err);
   }
@@ -316,7 +356,10 @@ const deleteUser = async (toolBox) => {
 const changePassUser = async (toolBox) => {
   const { req } = toolBox;
   try {
-    loggerFactory.info(`Function changePassUser Orchestrator has been start`);
+    logger.log({
+      level: constants.LOG_LEVELS.INFO,
+      message: 'Function changePassUser Orchestrator has been start'
+    });
 
     const { id } = req.params;
 
@@ -365,7 +408,10 @@ const changePassUser = async (toolBox) => {
 
     const result = await transfers.userTransfer(user);
 
-    loggerFactory.info(`Function changePassUser Orchestrator has been end`);
+    logger.log({
+      level: constants.LOG_LEVELS.INFO,
+      message: 'Function changePassUser Orchestrator has been end'
+    });
 
     return {
       result: {
@@ -374,8 +420,10 @@ const changePassUser = async (toolBox) => {
       msg: 'userS006'
     };
   } catch (err) {
-    loggerFactory.error(`Function changePassUser Orchestrator has error`, {
-      args: utils.formatErrorMsg(err)
+    logger.log({
+      level: constants.LOG_LEVELS.ERROR,
+      message: 'Function changePassUser Orchestrator has been error',
+      args: utils.parseError(err)
     });
     return Promise.reject(err);
   }
@@ -388,7 +436,10 @@ const changePassUser = async (toolBox) => {
 const setPassUser = async (toolBox) => {
   const { req } = toolBox;
   try {
-    loggerFactory.info(`Function setPassUser Orchestrator has been start`);
+    logger.log({
+      level: constants.LOG_LEVELS.INFO,
+      message: 'Function setPassUser Orchestrator has been start'
+    });
 
     const { id } = req.params;
 
@@ -432,7 +483,10 @@ const setPassUser = async (toolBox) => {
 
     const result = await transfers.userTransfer(user);
 
-    loggerFactory.info(`Function setPassUser Orchestrator has been end`);
+    logger.log({
+      level: constants.LOG_LEVELS.INFO,
+      message: 'Function setPassUser Orchestrator has been end'
+    });
 
     return {
       result: {
@@ -441,8 +495,10 @@ const setPassUser = async (toolBox) => {
       msg: 'userS007'
     };
   } catch (err) {
-    loggerFactory.error(`Function setPassUser Orchestrator has error`, {
-      args: utils.formatErrorMsg(err)
+    logger.log({
+      level: constants.LOG_LEVELS.ERROR,
+      message: 'Function setPassUser Orchestrator has been error',
+      args: utils.parseError(err)
     });
     return Promise.reject(err);
   }
@@ -455,7 +511,10 @@ const setPassUser = async (toolBox) => {
 const resetPassUser = async (toolBox) => {
   const { req } = toolBox;
   try {
-    loggerFactory.info(`Function resetPassUser Orchestrator has been start`);
+    logger.log({
+      level: constants.LOG_LEVELS.INFO,
+      message: 'Function resetPassUser Orchestrator has been start'
+    });
 
     const { id } = req.params;
 
@@ -487,7 +546,10 @@ const resetPassUser = async (toolBox) => {
       }
     });
 
-    loggerFactory.info(`Function resetPassUser Orchestrator has been end`);
+    logger.log({
+      level: constants.LOG_LEVELS.INFO,
+      message: 'Function resetPassUser Orchestrator has been end'
+    });
 
     return {
       result: {
@@ -496,8 +558,10 @@ const resetPassUser = async (toolBox) => {
       msg: 'userS008'
     };
   } catch (err) {
-    loggerFactory.error(`Function resetPassUser Orchestrator has error`, {
-      args: utils.formatErrorMsg(err)
+    logger.log({
+      level: constants.LOG_LEVELS.ERROR,
+      message: 'Function resetPassUser Orchestrator has been error',
+      args: utils.parseError(err)
     });
     return Promise.reject(err);
   }
@@ -510,7 +574,10 @@ const resetPassUser = async (toolBox) => {
 const addRolesToUser = async (toolBox) => {
   const { req } = toolBox;
   try {
-    loggerFactory.info(`Function addRolesToUser Orchestrator has been start`);
+    logger.log({
+      level: constants.LOG_LEVELS.INFO,
+      message: 'Function addRolesToUser Orchestrator has been start'
+    });
 
     const { id } = req.params;
 
@@ -584,7 +651,10 @@ const addRolesToUser = async (toolBox) => {
 
     const result = await transfers.userTransfer(user);
 
-    loggerFactory.info(`Function addRolesToUser Orchestrator has been end`);
+    logger.log({
+      level: constants.LOG_LEVELS.INFO,
+      message: 'Function addRolesToUser Orchestrator has been end'
+    });
 
     return {
       result: {
@@ -593,8 +663,10 @@ const addRolesToUser = async (toolBox) => {
       msg: 'userS009'
     };
   } catch (err) {
-    loggerFactory.error(`Function addRolesToUser has error`, {
-      args: utils.formatErrorMsg(err)
+    logger.log({
+      level: constants.LOG_LEVELS.ERROR,
+      message: 'Function addRolesToUser Orchestrator has been error',
+      args: utils.parseError(err)
     });
     return Promise.reject(err);
   }
@@ -607,7 +679,10 @@ const addRolesToUser = async (toolBox) => {
  * @param {*} updatedBy
  */
 const removeUserInRoles = async (id, updatedAt, updatedBy) => {
-  loggerFactory.info(`Function removeUserInRoles has been start`);
+  logger.log({
+    level: constants.LOG_LEVELS.INFO,
+    message: 'Function removeUserInRoles Orchestrator has been start'
+  });
 
   await repository.updateMany({
     type: 'RoleModel',
@@ -627,7 +702,10 @@ const removeUserInRoles = async (id, updatedAt, updatedBy) => {
     }
   });
 
-  loggerFactory.info(`Function removeUserInRoles has been end`);
+  logger.log({
+    level: constants.LOG_LEVELS.INFO,
+    message: 'Function removeUserInRoles Orchestrator has been end'
+  });
 };
 
 const userOrchestrator = {

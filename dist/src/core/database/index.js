@@ -91,7 +91,7 @@ var Init = /*#__PURE__*/function () {
             _context.t0 = _context["catch"](0);
             logger.log({
               level: _constants["default"].LOG_LEVELS.ERROR,
-              message: 'Connect database has error',
+              message: 'The database has been error',
               args: _context.t0
             });
             operation = _retry["default"].operation(_conf.options.retryOptions);
@@ -120,8 +120,17 @@ var Init = /*#__PURE__*/function () {
     return _ref.apply(this, arguments);
   };
 }();
+var Close = function Close() {
+  _mongoose["default"].connection.close(function () {
+    logger.log({
+      level: _constants["default"].LOG_LEVELS.DEBUG,
+      message: 'The database has been close'
+    });
+  });
+};
 var dbManager = {
-  Init: Init
+  Init: Init,
+  Close: Close
 };
 var _default = dbManager;
 exports["default"] = _default;

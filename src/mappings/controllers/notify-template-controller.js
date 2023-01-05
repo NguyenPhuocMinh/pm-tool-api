@@ -7,7 +7,7 @@ import constants from '@constants';
 // core
 import loggerManager from '@core/logger';
 
-const loggerFactory = loggerManager(
+const logger = loggerManager(
   constants.APP_NAME,
   constants.STRUCT_CONTROLLERS.NOTIFY_TEMPLATE_CONTROLLER
 );
@@ -19,14 +19,20 @@ const loggerFactory = loggerManager(
  * @param {*} next
  */
 const getAllNotifyTemplate = (req, res, next) => {
-  loggerFactory.info(`Function getAllNotifyTemplate Controller has been start`);
+  logger.log({
+    level: constants.LOG_LEVELS.INFO,
+    message: 'Function getAllNotifyTemplate Controller has been start'
+  });
   const toolBox = { req, res, next };
   baseController(
     toolBox,
     constants.types.MsgTypeNotifyTemplate,
     constants.actions.MsgActionNotifyTemplateGetAll
   );
-  loggerFactory.info(`Function getAllNotifyTemplate Controller has been end`);
+  logger.log({
+    level: constants.LOG_LEVELS.INFO,
+    message: 'Function getAllNotifyTemplate Controller has been end'
+  });
 };
 
 /**
@@ -36,14 +42,20 @@ const getAllNotifyTemplate = (req, res, next) => {
  * @param {*} next
  */
 const createNotifyTemplate = (req, res, next) => {
-  loggerFactory.info(`Function createNotifyTemplate Controller has been start`);
+  logger.log({
+    level: constants.LOG_LEVELS.INFO,
+    message: 'Function createNotifyTemplate Controller has been start'
+  });
   const toolBox = { req, res, next };
   baseController(
     toolBox,
     constants.types.MsgTypeNotifyTemplate,
     constants.actions.MsgActionNotifyTemplateCreate
   );
-  loggerFactory.info(`Function createNotifyTemplate Controller has been end`);
+  logger.log({
+    level: constants.LOG_LEVELS.INFO,
+    message: 'Function createNotifyTemplate Controller has been end'
+  });
 };
 
 const notifyTemplateController = {

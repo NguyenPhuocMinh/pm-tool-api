@@ -2,6 +2,14 @@
 
 export default [
   /**
+   * TEST
+   */
+  {
+    enable: false,
+    method: 'POST',
+    pathName: '/test-amqp'
+  },
+  /**
    * LOGIN
    */
   {
