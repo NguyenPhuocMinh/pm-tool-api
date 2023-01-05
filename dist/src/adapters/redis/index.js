@@ -76,6 +76,18 @@ var Init = /*#__PURE__*/function () {
 }();
 
 /**
+ * @description Close Redis
+ */
+var Close = function Close() {
+  redisClient.disconnect().then(function () {
+    logger.log({
+      level: _constants["default"].LOG_LEVELS.DEBUG,
+      message: "The redis has been closed"
+    });
+  });
+};
+
+/**
  * @description Set value ttl in redis
  * @param {*} key
  * @param {*} value
@@ -227,6 +239,7 @@ var deleteValue = /*#__PURE__*/function () {
 }();
 var redisAdapter = {
   Init: Init,
+  Close: Close,
   setExValue: setExValue,
   getValue: getValue,
   deleteValue: deleteValue

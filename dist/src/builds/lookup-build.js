@@ -24,18 +24,14 @@ var modelLookup = function modelLookup(schemas, type) {
     logger.log({
       level: _constants["default"].LOG_LEVELS.INFO,
       message: 'FindModel has been end with find model',
-      args: {
-        model: type
-      }
+      args: type
     });
     return model;
   }
   logger.log({
     level: _constants["default"].LOG_LEVELS.ERROR,
     message: 'FindModel has been end with not found model',
-    args: {
-      model: type
-    }
+    args: type
   });
   throw new Error('InvalidNameModel');
 };

@@ -10,7 +10,7 @@ var _logger = _interopRequireDefault(require("../core/logger"));
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 // core
 
-var loggerFactory = (0, _logger["default"])(_constants["default"].APP_NAME, _constants["default"].STRUCT_MIDDLEWARE.LOG_MIDDLEWARE);
+var logger = (0, _logger["default"])(_constants["default"].APP_NAME, _constants["default"].STRUCT_MIDDLEWARE.LOG_MIDDLEWARE);
 var loggerMiddleware = function loggerMiddleware(tokens, req, res) {
   var remoteAddr = tokens['remote-addr'](req);
   var remoteUser = tokens['remote-user'](req) || '-';
@@ -31,24 +31,24 @@ var loggerMiddleware = function loggerMiddleware(tokens, req, res) {
     case _constants["default"].HTTP_STATUS.UN_AUTHORIZATION:
     case _constants["default"].HTTP_STATUS.FORBIDDEN:
     case _constants["default"].HTTP_STATUS.NOT_FOUND:
-      loggerFactory.warn(messageLog);
+      logger.warn(messageLog);
       break;
     case _constants["default"].HTTP_STATUS.INTERNAL_SERVER_ERROR:
-      loggerFactory.error(messageLog);
+      logger.error(messageLog);
       break;
     case _constants["default"].HTTP_STATUS.SUCCESS:
     case _constants["default"].HTTP_STATUS.CREATED:
     case _constants["default"].HTTP_STATUS.ACCEPTED:
-      loggerFactory.info(messageLog);
+      logger.info(messageLog);
       break;
     case _constants["default"].HTTP_STATUS.METHOD_NOT_ALLOW:
-      loggerFactory.verbose(messageLog);
+      logger.verbose(messageLog);
       break;
     case _constants["default"].HTTP_STATUS.DUPLICATE:
-      loggerFactory.debug(messageLog);
+      logger.debug(messageLog);
       break;
     default:
-      loggerFactory.silly(messageLog);
+      logger.silly(messageLog);
       break;
   }
 };

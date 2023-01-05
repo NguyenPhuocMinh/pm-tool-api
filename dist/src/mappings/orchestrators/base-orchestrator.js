@@ -14,7 +14,7 @@ var _logger = _interopRequireDefault(require("../../core/logger"));
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 // core
 
-var loggerFactory = (0, _logger["default"])(_constants["default"].APP_NAME, _constants["default"].STRUCT_ORCHESTRATORS.BASE_ORCHESTRATOR);
+var logger = (0, _logger["default"])(_constants["default"].APP_NAME, _constants["default"].STRUCT_ORCHESTRATORS.BASE_ORCHESTRATOR);
 
 /**
  *
@@ -24,7 +24,14 @@ var loggerFactory = (0, _logger["default"])(_constants["default"].APP_NAME, _con
  */
 var LookupOrchestrator = function LookupOrchestrator(msgType, msgAction) {
   try {
-    loggerFactory.info("Function LookupOrchestrator has been start");
+    logger.log({
+      level: _constants["default"].LOG_LEVELS.INFO,
+      message: 'Function LookupOrchestrator has been start with',
+      args: {
+        msgType: msgType,
+        msgAction: msgAction
+      }
+    });
     var fnCallBack;
     var schema;
     _index["default"].forEach(function (baseOrchestrator) {
@@ -37,14 +44,19 @@ var LookupOrchestrator = function LookupOrchestrator(msgType, msgAction) {
         schema = orchestratorSchema;
       }
     });
-    loggerFactory.info("Function LookupOrchestrator has been end");
+    logger.log({
+      level: _constants["default"].LOG_LEVELS.INFO,
+      message: 'Function LookupOrchestrator has been end'
+    });
     return {
       orchestratorHandler: fnCallBack,
       schema: schema
     };
   } catch (err) {
-    loggerFactory.error("Function LookupOrchestrator has error", {
-      args: _utils["default"].formatErrorMsg(err)
+    logger.log({
+      level: _constants["default"].LOG_LEVELS.INFO,
+      message: 'Function LookupOrchestrator has been error',
+      args: _utils["default"].parseError(err)
     });
     return _bluebird["default"].reject(err);
   }

@@ -12,9 +12,12 @@ var _logger = _interopRequireDefault(require("../core/logger"));
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 // core
 
-var loggerFactory = (0, _logger["default"])(_constants["default"].APP_NAME, _constants["default"].STRUCT_MIDDLEWARE.ERROR_MIDDLEWARE);
+var logger = (0, _logger["default"])(_constants["default"].APP_NAME, _constants["default"].STRUCT_MIDDLEWARE.ERROR_MIDDLEWARE);
 var errorMiddleware = function errorMiddleware(_err, req, res, next) {
-  loggerFactory.error('Function errorMiddleware has been start');
+  logger.log({
+    level: _constants["default"].LOG_LEVELS.ERROR,
+    message: 'Function errorMiddleware has been start'
+  });
   var toolBox = {
     req: req,
     res: res,
@@ -22,11 +25,18 @@ var errorMiddleware = function errorMiddleware(_err, req, res, next) {
   };
   var internalServerError = _commons["default"].newError('e001');
   if (_err.stack) {
-    loggerFactory.error('Function errorMiddleware has been end without error internal server');
-    console.error('error stack', _err.stack);
+    logger.log({
+      level: _constants["default"].LOG_LEVELS.ERROR,
+      message: 'Function errorMiddleware has been end without error internal server',
+      args: {
+        stack: _err.stack
+      }
+    });
     return _builds["default"].errorResponse(toolBox, internalServerError);
   }
-  loggerFactory.error('Function errorMiddleware has been end without error', {
+  logger.log({
+    level: _constants["default"].LOG_LEVELS.ERROR,
+    message: 'Function errorMiddleware has been end without error',
     args: _err.name
   });
   return _builds["default"].errorResponse(toolBox, _err);

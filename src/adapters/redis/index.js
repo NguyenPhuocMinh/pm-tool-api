@@ -55,6 +55,18 @@ const Init = async () => {
 };
 
 /**
+ * @description Close Redis
+ */
+const Close = () => {
+  redisClient.disconnect().then(() => {
+    logger.log({
+      level: constants.LOG_LEVELS.DEBUG,
+      message: `The redis has been closed`
+    });
+  });
+};
+
+/**
  * @description Set value ttl in redis
  * @param {*} key
  * @param {*} value
@@ -149,6 +161,7 @@ const deleteValue = async (key) => {
 
 const redisAdapter = {
   Init,
+  Close,
   setExValue,
   getValue,
   deleteValue

@@ -11,7 +11,7 @@ var _logger = _interopRequireDefault(require("../../core/logger"));
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 // core
 
-var loggerFactory = (0, _logger["default"])(_constants["default"].APP_NAME, _constants["default"].STRUCT_CONTROLLERS.NOTIFY_TEMPLATE_CONTROLLER);
+var logger = (0, _logger["default"])(_constants["default"].APP_NAME, _constants["default"].STRUCT_CONTROLLERS.NOTIFY_TEMPLATE_CONTROLLER);
 
 /**
  * @description Create Notify Template Controller
@@ -20,14 +20,20 @@ var loggerFactory = (0, _logger["default"])(_constants["default"].APP_NAME, _con
  * @param {*} next
  */
 var getAllNotifyTemplate = function getAllNotifyTemplate(req, res, next) {
-  loggerFactory.info("Function getAllNotifyTemplate Controller has been start");
+  logger.log({
+    level: _constants["default"].LOG_LEVELS.INFO,
+    message: 'Function getAllNotifyTemplate Controller has been start'
+  });
   var toolBox = {
     req: req,
     res: res,
     next: next
   };
   (0, _baseController["default"])(toolBox, _constants["default"].types.MsgTypeNotifyTemplate, _constants["default"].actions.MsgActionNotifyTemplateGetAll);
-  loggerFactory.info("Function getAllNotifyTemplate Controller has been end");
+  logger.log({
+    level: _constants["default"].LOG_LEVELS.INFO,
+    message: 'Function getAllNotifyTemplate Controller has been end'
+  });
 };
 
 /**
@@ -37,14 +43,20 @@ var getAllNotifyTemplate = function getAllNotifyTemplate(req, res, next) {
  * @param {*} next
  */
 var createNotifyTemplate = function createNotifyTemplate(req, res, next) {
-  loggerFactory.info("Function createNotifyTemplate Controller has been start");
+  logger.log({
+    level: _constants["default"].LOG_LEVELS.INFO,
+    message: 'Function createNotifyTemplate Controller has been start'
+  });
   var toolBox = {
     req: req,
     res: res,
     next: next
   };
   (0, _baseController["default"])(toolBox, _constants["default"].types.MsgTypeNotifyTemplate, _constants["default"].actions.MsgActionNotifyTemplateCreate);
-  loggerFactory.info("Function createNotifyTemplate Controller has been end");
+  logger.log({
+    level: _constants["default"].LOG_LEVELS.INFO,
+    message: 'Function createNotifyTemplate Controller has been end'
+  });
 };
 var notifyTemplateController = {
   getAllNotifyTemplate: getAllNotifyTemplate,

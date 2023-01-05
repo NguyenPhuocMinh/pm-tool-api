@@ -29,7 +29,7 @@ function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { va
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
-var loggerFactory = (0, _logger["default"])(_constants["default"].APP_NAME, _constants["default"].STRUCT_ORCHESTRATORS.AUTH_ORCHESTRATOR);
+var logger = (0, _logger["default"])(_constants["default"].APP_NAME, _constants["default"].STRUCT_ORCHESTRATORS.AUTH_ORCHESTRATOR);
 var DEFAULT_EXPIRES_TOKEN = _constants["default"].DEFAULT_EXPIRES_TOKEN;
 var DEFAULT_EXPIRES_REFRESH_TOKEN = _constants["default"].DEFAULT_EXPIRES_REFRESH_TOKEN;
 var APP_AUDIENCE = _conf.profiles.APP_AUDIENCE;
@@ -48,7 +48,10 @@ var signIn = /*#__PURE__*/function () {
           case 0:
             req = toolBox.req;
             _context.prev = 1;
-            loggerFactory.info("Function signIn has been start");
+            logger.log({
+              level: _constants["default"].LOG_LEVELS.INFO,
+              message: 'Function signIn has been start'
+            });
 
             // validator
             error = _validators["default"].validatorLogin(req.body);
@@ -105,7 +108,10 @@ var signIn = /*#__PURE__*/function () {
             _context.next = 28;
             return _redis["default"].setExValue(wlKey, token, DEFAULT_EXPIRES_TOKEN);
           case 28:
-            loggerFactory.info("Function signIn has been end");
+            logger.log({
+              level: _constants["default"].LOG_LEVELS.INFO,
+              message: 'Function signIn has been end'
+            });
             return _context.abrupt("return", {
               result: {
                 token: token
@@ -115,8 +121,10 @@ var signIn = /*#__PURE__*/function () {
           case 32:
             _context.prev = 32;
             _context.t0 = _context["catch"](1);
-            loggerFactory.error("Function signIn has error", {
-              args: _utils["default"].formatErrorMsg(_context.t0)
+            logger.log({
+              level: _constants["default"].LOG_LEVELS.ERROR,
+              message: 'Function signIn has been end',
+              args: _utils["default"].parseError(_context.t0)
             });
             return _context.abrupt("return", _bluebird["default"].reject(_context.t0));
           case 36:
@@ -145,7 +153,10 @@ var signOut = /*#__PURE__*/function () {
             req = toolBox.req;
             tokenExp = req.tokenExp;
             _context2.prev = 2;
-            loggerFactory.info("Function signOut has been start");
+            logger.log({
+              level: _constants["default"].LOG_LEVELS.INFO,
+              message: 'Function signOut has been start'
+            });
             _req$body2 = req.body, email = _req$body2.email, token = _req$body2.token, sessionID = _req$body2.sessionID;
             _context2.next = 7;
             return getUser(email);
@@ -169,7 +180,10 @@ var signOut = /*#__PURE__*/function () {
             _context2.next = 18;
             return user.save();
           case 18:
-            loggerFactory.info("Function signOut has been end");
+            logger.log({
+              level: _constants["default"].LOG_LEVELS.INFO,
+              message: 'Function signOut has been end'
+            });
             return _context2.abrupt("return", {
               result: {
                 data: null
@@ -179,8 +193,10 @@ var signOut = /*#__PURE__*/function () {
           case 22:
             _context2.prev = 22;
             _context2.t0 = _context2["catch"](2);
-            loggerFactory.error("Function signOut has error", {
-              args: _utils["default"].formatErrorMsg(_context2.t0)
+            logger.log({
+              level: _constants["default"].LOG_LEVELS.ERROR,
+              message: 'Function signOut has been end',
+              args: _utils["default"].parseError(_context2.t0)
             });
             return _context2.abrupt("return", _bluebird["default"].reject(_context2.t0));
           case 26:
@@ -208,7 +224,10 @@ var whoami = /*#__PURE__*/function () {
           case 0:
             req = toolBox.req;
             _context3.prev = 1;
-            loggerFactory.info("Function whoami has been start");
+            logger.log({
+              level: _constants["default"].LOG_LEVELS.INFO,
+              message: 'Function whoami has been start'
+            });
             email = req.body.email;
             _context3.next = 6;
             return getUser(email);
@@ -218,7 +237,10 @@ var whoami = /*#__PURE__*/function () {
             return _transfers["default"].authTransfer(user);
           case 9:
             result = _context3.sent;
-            loggerFactory.info("Function whoami has been end");
+            logger.log({
+              level: _constants["default"].LOG_LEVELS.INFO,
+              message: 'Function whoami has been end'
+            });
             return _context3.abrupt("return", {
               result: {
                 data: result
@@ -228,8 +250,10 @@ var whoami = /*#__PURE__*/function () {
           case 14:
             _context3.prev = 14;
             _context3.t0 = _context3["catch"](1);
-            loggerFactory.error("Function whoami has error", {
-              args: _utils["default"].formatErrorMsg(_context3.t0)
+            logger.log({
+              level: _constants["default"].LOG_LEVELS.ERROR,
+              message: 'Function whoami has been error',
+              args: _utils["default"].parseError(_context3.t0)
             });
             return _context3.abrupt("return", _bluebird["default"].reject(_context3.t0));
           case 18:
@@ -257,7 +281,10 @@ var refreshToken = /*#__PURE__*/function () {
           case 0:
             req = toolBox.req;
             _context5.prev = 1;
-            loggerFactory.info("Function refreshToken has been start");
+            logger.log({
+              level: _constants["default"].LOG_LEVELS.INFO,
+              message: 'Function refreshToken has been start'
+            });
             _req$body3 = req.body, email = _req$body3.email, sessionID = _req$body3.sessionID;
             if (!(0, _lodash.isEmpty)(email)) {
               _context5.next = 6;
@@ -285,8 +312,10 @@ var refreshToken = /*#__PURE__*/function () {
                           _context4.next = 11;
                           break;
                         }
-                        loggerFactory.error("Function refreshToken verify token has been error", {
-                          args: _utils["default"].formatErrorMsg(err)
+                        logger.log({
+                          level: _constants["default"].LOG_LEVELS.ERROR,
+                          message: 'Function refreshToken verify token has been error',
+                          args: _utils["default"].parseError(err)
                         });
                         _context4.next = 4;
                         return unStoreData(req, user);
@@ -330,7 +359,10 @@ var refreshToken = /*#__PURE__*/function () {
             _context5.next = 18;
             return _redis["default"].setExValue(wlKey, newToken, DEFAULT_EXPIRES_TOKEN);
           case 18:
-            loggerFactory.info("Function refreshToken has been end");
+            logger.log({
+              level: _constants["default"].LOG_LEVELS.INFO,
+              message: 'Function refreshToken has been end'
+            });
             return _context5.abrupt("return", {
               result: {
                 token: newToken
@@ -340,8 +372,10 @@ var refreshToken = /*#__PURE__*/function () {
           case 22:
             _context5.prev = 22;
             _context5.t0 = _context5["catch"](1);
-            loggerFactory.error("Function refreshToken has error", {
-              args: _utils["default"].formatErrorMsg(_context5.t0)
+            logger.log({
+              level: _constants["default"].LOG_LEVELS.ERROR,
+              message: 'Function refreshToken has been error',
+              args: _utils["default"].parseError(_context5.t0)
             });
             return _context5.abrupt("return", _bluebird["default"].reject(_context5.t0));
           case 26:
@@ -370,7 +404,10 @@ var revokeToken = /*#__PURE__*/function () {
             req = toolBox.req;
             tokenExp = req.tokenExp;
             _context6.prev = 2;
-            loggerFactory.info("Function revokeToken has been start");
+            logger.log({
+              level: _constants["default"].LOG_LEVELS.INFO,
+              message: 'Function revokeToken has been start'
+            });
             _req$body4 = req.body, id = _req$body4.id, sessionID = _req$body4.sessionID;
             _context6.next = 7;
             return _repository["default"].getOne({
@@ -402,7 +439,10 @@ var revokeToken = /*#__PURE__*/function () {
             _context6.next = 22;
             return user.save();
           case 22:
-            loggerFactory.info("Function revokeToken has been end");
+            logger.log({
+              level: _constants["default"].LOG_LEVELS.INFO,
+              message: 'Function revokeToken has been end'
+            });
             return _context6.abrupt("return", {
               result: {
                 data: null
@@ -412,8 +452,10 @@ var revokeToken = /*#__PURE__*/function () {
           case 26:
             _context6.prev = 26;
             _context6.t0 = _context6["catch"](2);
-            loggerFactory.error("Function revokeToken has error", {
-              args: _utils["default"].formatErrorMsg(_context6.t0)
+            logger.log({
+              level: _constants["default"].LOG_LEVELS.ERROR,
+              message: 'Function revokeToken has been error',
+              args: _utils["default"].parseError(_context6.t0)
             });
             return _context6.abrupt("return", _bluebird["default"].reject(_context6.t0));
           case 30:
@@ -472,8 +514,10 @@ var getUser = /*#__PURE__*/function () {
           case 9:
             _context7.prev = 9;
             _context7.t0 = _context7["catch"](0);
-            loggerFactory.error("Function getUser has error", {
-              args: _utils["default"].formatErrorMsg(_context7.t0)
+            logger.log({
+              level: _constants["default"].LOG_LEVELS.ERROR,
+              message: 'Function getUser has been error',
+              args: _utils["default"].parseError(_context7.t0)
             });
             throw _context7.t0;
           case 13:
@@ -506,8 +550,10 @@ var unStoreData = /*#__PURE__*/function () {
           case 7:
             _context8.prev = 7;
             _context8.t0 = _context8["catch"](0);
-            loggerFactory.error("Function unStoreData has error", {
-              args: _utils["default"].formatErrorMsg(_context8.t0)
+            logger.log({
+              level: _constants["default"].LOG_LEVELS.ERROR,
+              message: 'Function unStoreData has been error',
+              args: _utils["default"].parseError(_context8.t0)
             });
             throw _context8.t0;
           case 11:

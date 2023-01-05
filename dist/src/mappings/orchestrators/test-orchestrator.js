@@ -8,6 +8,7 @@ exports["default"] = void 0;
 require("source-map-support/register");
 var _bluebird = _interopRequireDefault(require("bluebird"));
 var _constants = _interopRequireDefault(require("../../constants"));
+var _utils = _interopRequireDefault(require("../../utils"));
 var _logger = _interopRequireDefault(require("../../core/logger"));
 var _amqp = _interopRequireDefault(require("../../adapters/amqp"));
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
@@ -56,10 +57,7 @@ var testSendQueue = /*#__PURE__*/function () {
             logger.log({
               level: _constants["default"].LOG_LEVELS.ERROR,
               message: 'Function testSendQueue Orchestrator has been error',
-              args: {
-                errName: _context.t0.name,
-                errMsg: _context.t0.message
-              }
+              args: _utils["default"].parseError(_context.t0)
             });
             return _context.abrupt("return", _bluebird["default"].reject(_context.t0));
           case 15:

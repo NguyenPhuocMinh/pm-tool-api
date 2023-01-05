@@ -13,6 +13,7 @@ var _randomstring = _interopRequireDefault(require("randomstring"));
 var _lodash = require("lodash");
 var _conf = require("../conf");
 var _constants = _interopRequireDefault(require("../constants"));
+var _utils = _interopRequireDefault(require("../utils"));
 var _repository = _interopRequireDefault(require("../layers/repository"));
 var _logger = _interopRequireDefault(require("../core/logger"));
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
@@ -59,26 +60,25 @@ var handlerWorkerCronChangePasswordTemporary = /*#__PURE__*/function () {
             });
           case 5:
             users = _context.sent;
-            console.log('🚀 ~ file: cron-worker.js:59 ~ handlerWorkerCronChangePasswordTemporary ~ users', users);
             if (!(0, _lodash.isEmpty)(users)) {
-              _context.next = 9;
+              _context.next = 8;
               break;
             }
             return _context.abrupt("return");
-          case 9:
+          case 8:
             // map to list id user
             userIds = users.map(function (e) {
               return e._id;
             }); // hash new pass
-            _context.next = 12;
+            _context.next = 11;
             return _bcrypt["default"].hash(_randomstring["default"].generate(), _conf.options.bcryptOptions.salt);
-          case 12:
+          case 11:
             newHashPass = _context.sent;
             dataUpdate = {
               password: newHashPass,
               passwordConfirm: newHashPass
             };
-            _context.next = 16;
+            _context.next = 15;
             return _repository["default"].updateMany({
               type: 'UserModel',
               filter: {
@@ -88,31 +88,28 @@ var handlerWorkerCronChangePasswordTemporary = /*#__PURE__*/function () {
               },
               doc: dataUpdate
             });
-          case 16:
+          case 15:
             logger.log({
               level: _constants["default"].LOG_LEVELS.INFO,
               message: 'Function handlerWorkerCronChangePasswordTemporary has been end'
             });
-            _context.next = 23;
+            _context.next = 22;
             break;
-          case 19:
-            _context.prev = 19;
+          case 18:
+            _context.prev = 18;
             _context.t0 = _context["catch"](0);
             logger.log({
               level: _constants["default"].LOG_LEVELS.ERROR,
               message: 'Function handlerWorkerCronChangePasswordTemporary has been error',
-              args: {
-                errName: _context.t0.name,
-                errMsg: _context.t0.message
-              }
+              args: _utils["default"].parseError(_context.t0)
             });
             throw _context.t0;
-          case 23:
+          case 22:
           case "end":
             return _context.stop();
         }
       }
-    }, _callee, null, [[0, 19]]);
+    }, _callee, null, [[0, 18]]);
   }));
   return function handlerWorkerCronChangePasswordTemporary(_x) {
     return _ref.apply(this, arguments);

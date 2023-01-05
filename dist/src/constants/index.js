@@ -410,8 +410,7 @@ var notifyActions = {
   MsgActionNotifyGetAll: 'NOTIFY_GET_ALL',
   MsgActionNotifyGet: 'NOTIFY_GET',
   MsgActionNotifyOfUserGetAll: 'NOTIFY_OF_USER_GET_ALL',
-  MsgActionNotifyChangePasswordTemporary: 'NOTIFY_CHANGE_PASSWORD_TEMPORARY',
-  MsgActionNotifyUpdateRead: 'NOTIFY_UPDATE_READ'
+  MsgActionNotifyChangePasswordTemporary: 'NOTIFY_CHANGE_PASSWORD_TEMPORARY'
 };
 
 /**

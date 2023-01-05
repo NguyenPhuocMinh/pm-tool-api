@@ -27,9 +27,7 @@ export const modelLookup = (schemas, type) => {
     logger.log({
       level: constants.LOG_LEVELS.INFO,
       message: 'FindModel has been end with find model',
-      args: {
-        model: type
-      }
+      args: type
     });
 
     return model;
@@ -38,9 +36,7 @@ export const modelLookup = (schemas, type) => {
   logger.log({
     level: constants.LOG_LEVELS.ERROR,
     message: 'FindModel has been end with not found model',
-    args: {
-      model: type
-    }
+    args: type
   });
   throw new Error('InvalidNameModel');
 };

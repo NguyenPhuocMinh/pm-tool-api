@@ -75,14 +75,20 @@ var getNotifyById = /*#__PURE__*/function () {
           case 0:
             req = toolBox.req;
             _context2.prev = 1;
-            logger.info("Function getNotifyById has been start");
+            logger.log({
+              level: _constants["default"].LOG_LEVELS.INFO,
+              message: 'Function getNotifyById has been start'
+            });
             id = req.params.id;
             _context2.next = 6;
             return getNotify(id);
           case 6:
             notify = _context2.sent;
             result = _transfers["default"].notifyTransfer(notify);
-            logger.info("Function getNotifyById has been start");
+            logger.log({
+              level: _constants["default"].LOG_LEVELS.INFO,
+              message: 'Function getNotifyById has been end'
+            });
             return _context2.abrupt("return", {
               result: {
                 data: result
@@ -92,8 +98,10 @@ var getNotifyById = /*#__PURE__*/function () {
           case 12:
             _context2.prev = 12;
             _context2.t0 = _context2["catch"](1);
-            logger.error("Function getNotifyById has error", {
-              args: _utils["default"].formatErrorMsg(_context2.t0)
+            logger.log({
+              level: _constants["default"].LOG_LEVELS.ERROR,
+              message: 'Function getNotifyById has been error',
+              args: _utils["default"].parseError(_context2.t0)
             });
             return _context2.abrupt("return", _bluebird["default"].reject(_context2.t0));
           case 16:
@@ -121,7 +129,10 @@ var getAllNotifyOfUser = /*#__PURE__*/function () {
           case 0:
             req = toolBox.req;
             _context3.prev = 1;
-            logger.info("Function getAllNotifyOfUser has been start");
+            logger.log({
+              level: _constants["default"].LOG_LEVELS.INFO,
+              message: 'Function getAllNotifyOfUser has been start'
+            });
             _req$query = req.query, userID = _req$query.userID, isNew = _req$query.isNew;
             _helpers$paginationHe = _helpers["default"].paginationHelper(req.query), skip = _helpers$paginationHe.skip, limit = _helpers$paginationHe.limit;
             query = _helpers["default"].queryHelper(req.query, null, [{
@@ -168,7 +179,10 @@ var getAllNotifyOfUser = /*#__PURE__*/function () {
             return _commons["default"].dataResponsesMapper(notifiesOfUser);
           case 15:
             result = _context3.sent;
-            logger.info("Function getAllNotifyOfUser has been start");
+            logger.log({
+              level: _constants["default"].LOG_LEVELS.INFO,
+              message: 'Function getAllNotifyOfUser has been end'
+            });
             return _context3.abrupt("return", {
               result: {
                 data: result,
@@ -179,8 +193,10 @@ var getAllNotifyOfUser = /*#__PURE__*/function () {
           case 20:
             _context3.prev = 20;
             _context3.t0 = _context3["catch"](1);
-            logger.error("Function getAllNotifyOfUser has error", {
-              args: _utils["default"].formatErrorMsg(_context3.t0)
+            logger.log({
+              level: _constants["default"].LOG_LEVELS.ERROR,
+              message: 'Function getAllNotifyOfUser has been error',
+              args: _utils["default"].parseError(_context3.t0)
             });
             return _context3.abrupt("return", _bluebird["default"].reject(_context3.t0));
           case 24:
@@ -263,7 +279,10 @@ var notifyChangePasswordTemporary = /*#__PURE__*/function () {
           case 20:
             data = _context4.sent;
             result = _transfers["default"].notifyTransfer(data);
-            logger.info("Function notifyChangePasswordTemporary has been start");
+            logger.log({
+              level: _constants["default"].LOG_LEVELS.INFO,
+              message: 'Function notifyChangePasswordTemporary has been end'
+            });
             return _context4.abrupt("return", {
               result: {
                 data: result
@@ -273,8 +292,10 @@ var notifyChangePasswordTemporary = /*#__PURE__*/function () {
           case 26:
             _context4.prev = 26;
             _context4.t0 = _context4["catch"](1);
-            logger.error("Function notifyChangePasswordTemporary has error", {
-              args: _utils["default"].formatErrorMsg(_context4.t0)
+            logger.log({
+              level: _constants["default"].LOG_LEVELS.ERROR,
+              message: 'Function notifyChangePasswordTemporary has been error',
+              args: _utils["default"].parseError(_context4.t0)
             });
             return _context4.abrupt("return", _bluebird["default"].reject(_context4.t0));
           case 30:
@@ -327,8 +348,10 @@ var getNotify = /*#__PURE__*/function () {
           case 7:
             _context5.prev = 7;
             _context5.t0 = _context5["catch"](0);
-            logger.error("Function getNotify has error", {
-              args: _utils["default"].formatErrorMsg(_context5.t0)
+            logger.log({
+              level: _constants["default"].LOG_LEVELS.ERROR,
+              message: 'Function getNotify has been error',
+              args: _utils["default"].parseError(_context5.t0)
             });
             return _context5.abrupt("return", _bluebird["default"].reject(_context5.t0));
           case 11:

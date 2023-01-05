@@ -11,7 +11,7 @@ var _logger = _interopRequireDefault(require("../../core/logger"));
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 // core
 
-var loggerFactory = (0, _logger["default"])(_constants["default"].APP_NAME, _constants["default"].STRUCT_CONTROLLERS.ROLE_CONTROLLER);
+var logger = (0, _logger["default"])(_constants["default"].APP_NAME, _constants["default"].STRUCT_CONTROLLERS.ROLE_CONTROLLER);
 
 /**
  * @description Get All Role Controller
@@ -20,14 +20,20 @@ var loggerFactory = (0, _logger["default"])(_constants["default"].APP_NAME, _con
  * @param {*} next
  */
 var getAllRole = function getAllRole(req, res, next) {
-  loggerFactory.info("Function getAllRole Controller has been start");
+  logger.log({
+    level: _constants["default"].LOG_LEVELS.INFO,
+    message: 'Function getAllRole Controller has been start'
+  });
   var toolBox = {
     req: req,
     res: res,
     next: next
   };
   (0, _baseController["default"])(toolBox, _constants["default"].types.MsgTypeRole, _constants["default"].actions.MsgActionRoleGetAll);
-  loggerFactory.info("Function getAllRole Controller has been end");
+  logger.log({
+    level: _constants["default"].LOG_LEVELS.INFO,
+    message: 'Function getAllRole Controller has been end'
+  });
 };
 
 /**
@@ -37,14 +43,20 @@ var getAllRole = function getAllRole(req, res, next) {
  * @param {*} next
  */
 var createRole = function createRole(req, res, next) {
-  loggerFactory.info("Function createRole Controller has been start");
+  logger.log({
+    level: _constants["default"].LOG_LEVELS.INFO,
+    message: 'Function createRole Controller has been start'
+  });
   var toolBox = {
     req: req,
     res: res,
     next: next
   };
   (0, _baseController["default"])(toolBox, _constants["default"].types.MsgTypeRole, _constants["default"].actions.MsgActionRoleCreate);
-  loggerFactory.info("Function createRole Controller has been end");
+  logger.log({
+    level: _constants["default"].LOG_LEVELS.INFO,
+    message: 'Function createRole Controller has been end'
+  });
 };
 
 /**
@@ -54,14 +66,20 @@ var createRole = function createRole(req, res, next) {
  * @param {*} next
  */
 var getRole = function getRole(req, res, next) {
-  loggerFactory.info("Function getRole Controller has been start");
+  logger.log({
+    level: _constants["default"].LOG_LEVELS.INFO,
+    message: 'Function getRole Controller has been start'
+  });
   var toolBox = {
     req: req,
     res: res,
     next: next
   };
   (0, _baseController["default"])(toolBox, _constants["default"].types.MsgTypeRole, _constants["default"].actions.MsgActionRoleGet);
-  loggerFactory.info("Function getRole Controller has been end");
+  logger.log({
+    level: _constants["default"].LOG_LEVELS.INFO,
+    message: 'Function getRole Controller has been end'
+  });
 };
 
 /**
@@ -71,14 +89,20 @@ var getRole = function getRole(req, res, next) {
  * @param {*} next
  */
 var updateRole = function updateRole(req, res, next) {
-  loggerFactory.info("Function updateRole Controller has been start");
+  logger.log({
+    level: _constants["default"].LOG_LEVELS.INFO,
+    message: 'Function updateRole Controller has been start'
+  });
   var toolBox = {
     req: req,
     res: res,
     next: next
   };
   (0, _baseController["default"])(toolBox, _constants["default"].types.MsgTypeRole, _constants["default"].actions.MsgActionRoleUpdate);
-  loggerFactory.info("Function updateRole Controller has been end");
+  logger.log({
+    level: _constants["default"].LOG_LEVELS.INFO,
+    message: 'Function updateRole Controller has been end'
+  });
 };
 
 /**
@@ -88,14 +112,20 @@ var updateRole = function updateRole(req, res, next) {
  * @param {*} next
  */
 var deleteRole = function deleteRole(req, res, next) {
-  loggerFactory.info("Function deleteRole Controller has been start");
+  logger.log({
+    level: _constants["default"].LOG_LEVELS.INFO,
+    message: 'Function deleteRole Controller has been start'
+  });
   var toolBox = {
     req: req,
     res: res,
     next: next
   };
   (0, _baseController["default"])(toolBox, _constants["default"].types.MsgTypeRole, _constants["default"].actions.MsgActionRoleDelete);
-  loggerFactory.info("Function deleteRole Controller has been end");
+  logger.log({
+    level: _constants["default"].LOG_LEVELS.INFO,
+    message: 'Function deleteRole Controller has been end'
+  });
 };
 
 /**
@@ -105,14 +135,20 @@ var deleteRole = function deleteRole(req, res, next) {
  * @param {*} next
  */
 var getUsersInRole = function getUsersInRole(req, res, next) {
-  loggerFactory.info("Function getUsersInRole Controller has been start");
+  logger.log({
+    level: _constants["default"].LOG_LEVELS.INFO,
+    message: 'Function getUsersInRole Controller has been start'
+  });
   var toolBox = {
     req: req,
     res: res,
     next: next
   };
   (0, _baseController["default"])(toolBox, _constants["default"].types.MsgTypeRole, _constants["default"].actions.MsgActionRoleGetUsers);
-  loggerFactory.info("Function getUsersInRole Controller has been end");
+  logger.log({
+    level: _constants["default"].LOG_LEVELS.INFO,
+    message: 'Function getUsersInRole Controller has been end'
+  });
 };
 
 /**
@@ -122,14 +158,20 @@ var getUsersInRole = function getUsersInRole(req, res, next) {
  * @param {*} next
  */
 var getPermissionsInRole = function getPermissionsInRole(req, res, next) {
-  loggerFactory.info("Function getPermissionsInRole Controller has been start");
+  logger.log({
+    level: _constants["default"].LOG_LEVELS.INFO,
+    message: 'Function getPermissionsInRole Controller has been start'
+  });
   var toolBox = {
     req: req,
     res: res,
     next: next
   };
   (0, _baseController["default"])(toolBox, _constants["default"].types.MsgTypeRole, _constants["default"].actions.MsgActionRoleGetPermissions);
-  loggerFactory.info("Function getPermissionsInRole Controller has been end");
+  logger.log({
+    level: _constants["default"].LOG_LEVELS.INFO,
+    message: 'Function getPermissionsInRole Controller has been end'
+  });
 };
 var roleController = {
   getAllRole: getAllRole,

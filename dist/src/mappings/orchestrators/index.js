@@ -287,10 +287,6 @@ var orchestratorNotify = [{
   type: _constants["default"].types.MsgTypeNotify,
   action: _constants["default"].actions.MsgActionNotifyChangePasswordTemporary,
   orchestrator: _notifyOrchestrator["default"].notifyChangePasswordTemporary
-}, {
-  type: _constants["default"].types.MsgTypeNotify,
-  action: _constants["default"].actions.MsgActionNotifyUpdateRead,
-  orchestrator: _notifyOrchestrator["default"].notifyUpdateRead
 }];
 
 /**

@@ -23,12 +23,6 @@ const notifyRouter = [
     method: 'POST',
     methodName: 'notifyChangePasswordTemporary',
     controller: notifyController.notifyChangePasswordTemporary
-  },
-  {
-    pathName: '/notifies/update-read',
-    method: 'PATCH',
-    methodName: 'notifyUpdateRead',
-    controller: notifyController.notifyUpdateRead
   }
 ];
 

@@ -17,6 +17,7 @@ function _regeneratorRuntime() { "use strict"; /*! regenerator-runtime -- Copyri
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
 var logger = (0, _logger["default"])(_constants["default"].APP_NAME, _constants["default"].STRUCT_ADAPTERS.CRON_ADAPTER);
+var job;
 
 /**
  * @description Init Cron Job
@@ -77,7 +78,7 @@ var scheduleJob = /*#__PURE__*/function () {
                 cronExpression: cronExpression
               }
             });
-            return _context3.abrupt("return", _nodeCron["default"].schedule(cronExpression, /*#__PURE__*/function () {
+            job = _nodeCron["default"].schedule(cronExpression, /*#__PURE__*/function () {
               var _ref3 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee2(now) {
                 return _regeneratorRuntime().wrap(function _callee2$(_context2) {
                   while (1) {
@@ -95,9 +96,12 @@ var scheduleJob = /*#__PURE__*/function () {
               return function (_x3) {
                 return _ref3.apply(this, arguments);
               };
-            }(), _conf.options.cronJobOptions).start());
-          case 5:
-            _context3.prev = 5;
+            }(), _conf.options.cronJobOptions);
+            job.start();
+            _context3.next = 10;
+            break;
+          case 6:
+            _context3.prev = 6;
             _context3.t0 = _context3["catch"](0);
             logger.log({
               level: _constants["default"].LOG_LEVELS.ERROR,
@@ -105,19 +109,27 @@ var scheduleJob = /*#__PURE__*/function () {
               args: _utils["default"].parseError(_context3.t0)
             });
             throw _context3.t0;
-          case 9:
+          case 10:
           case "end":
             return _context3.stop();
         }
       }
-    }, _callee3, null, [[0, 5]]);
+    }, _callee3, null, [[0, 6]]);
   }));
   return function scheduleJob(_x, _x2) {
     return _ref2.apply(this, arguments);
   };
 }();
+var Close = function Close() {
+  job.stop();
+  logger.log({
+    level: _constants["default"].LOG_LEVELS.DEBUG,
+    message: "The cronJob has been closed"
+  });
+};
 var cronAdapters = {
   Init: Init,
+  Close: Close,
   scheduleJob: scheduleJob
 };
 var _default = cronAdapters;

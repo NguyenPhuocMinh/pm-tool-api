@@ -17,6 +17,8 @@ const logger = loggerManager(
   constants.STRUCT_ADAPTERS.CRON_ADAPTER
 );
 
+let job;
+
 /**
  * @description Init Cron Job
  */
@@ -55,15 +57,14 @@ const scheduleJob = async (cronExpression, workersHandler) => {
         cronExpression
       }
     });
-    return cron
-      .schedule(
-        cronExpression,
-        async (now) => {
-          await workersHandler(now);
-        },
-        options.cronJobOptions
-      )
-      .start();
+    job = cron.schedule(
+      cronExpression,
+      async (now) => {
+        await workersHandler(now);
+      },
+      options.cronJobOptions
+    );
+    job.start();
   } catch (err) {
     logger.log({
       level: constants.LOG_LEVELS.ERROR,
@@ -74,8 +75,17 @@ const scheduleJob = async (cronExpression, workersHandler) => {
   }
 };
 
+const Close = () => {
+  job.stop();
+  logger.log({
+    level: constants.LOG_LEVELS.DEBUG,
+    message: `The cronJob has been closed`
+  });
+};
+
 const cronAdapters = {
   Init,
+  Close,
   scheduleJob
 };
 

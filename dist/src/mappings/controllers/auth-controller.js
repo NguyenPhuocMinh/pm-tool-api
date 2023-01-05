@@ -11,7 +11,7 @@ var _logger = _interopRequireDefault(require("../../core/logger"));
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 // core
 
-var loggerFactory = (0, _logger["default"])(_constants["default"].APP_NAME, _constants["default"].STRUCT_CONTROLLERS.AUTH_CONTROLLER);
+var logger = (0, _logger["default"])(_constants["default"].APP_NAME, _constants["default"].STRUCT_CONTROLLERS.AUTH_CONTROLLER);
 
 /**
  * @description Sign In Controller
@@ -20,14 +20,20 @@ var loggerFactory = (0, _logger["default"])(_constants["default"].APP_NAME, _con
  * @param {*} next
  */
 var signIn = function signIn(req, res, next) {
-  loggerFactory.info("Function signIn Controller has been start");
+  logger.log({
+    level: _constants["default"].LOG_LEVELS.INFO,
+    message: 'Function signIn Controller has been start'
+  });
   var toolBox = {
     req: req,
     res: res,
     next: next
   };
   (0, _baseController["default"])(toolBox, _constants["default"].types.MsgTypeAuth, _constants["default"].actions.MsgActionSignIn);
-  loggerFactory.info("Function signIn Controller has been end");
+  logger.log({
+    level: _constants["default"].LOG_LEVELS.INFO,
+    message: 'Function signIn Controller has been end'
+  });
 };
 
 /**
@@ -37,14 +43,20 @@ var signIn = function signIn(req, res, next) {
  * @param {*} next
  */
 var signOut = function signOut(req, res, next) {
-  loggerFactory.info("Function signOut Controller has been start");
+  logger.log({
+    level: _constants["default"].LOG_LEVELS.INFO,
+    message: 'Function signOut Controller has been start'
+  });
   var toolBox = {
     req: req,
     res: res,
     next: next
   };
   (0, _baseController["default"])(toolBox, _constants["default"].types.MsgTypeAuth, _constants["default"].actions.MsgActionSignOut);
-  loggerFactory.info("Function signOut Controller has been end");
+  logger.log({
+    level: _constants["default"].LOG_LEVELS.INFO,
+    message: 'Function signOut Controller has been end'
+  });
 };
 
 /**
@@ -54,14 +66,20 @@ var signOut = function signOut(req, res, next) {
  * @param {*} next
  */
 var whoami = function whoami(req, res, next) {
-  loggerFactory.info("Function whoami Controller has been start");
+  logger.log({
+    level: _constants["default"].LOG_LEVELS.INFO,
+    message: 'Function whoami Controller has been start'
+  });
   var toolBox = {
     req: req,
     res: res,
     next: next
   };
   (0, _baseController["default"])(toolBox, _constants["default"].types.MsgTypeAuth, _constants["default"].actions.MsgActionWhoAmI);
-  loggerFactory.info("Function whoami Controller has been end");
+  logger.log({
+    level: _constants["default"].LOG_LEVELS.INFO,
+    message: 'Function whoami Controller has been end'
+  });
 };
 
 /**
@@ -71,14 +89,20 @@ var whoami = function whoami(req, res, next) {
  * @param {*} next
  */
 var refreshToken = function refreshToken(req, res, next) {
-  loggerFactory.info("Function refreshToken Controller has been start");
+  logger.log({
+    level: _constants["default"].LOG_LEVELS.INFO,
+    message: 'Function refreshToken Controller has been start'
+  });
   var toolBox = {
     req: req,
     res: res,
     next: next
   };
   (0, _baseController["default"])(toolBox, _constants["default"].types.MsgTypeAuth, _constants["default"].actions.MsgActionRefreshToken);
-  loggerFactory.info("Function refreshToken Controller has been end");
+  logger.log({
+    level: _constants["default"].LOG_LEVELS.INFO,
+    message: 'Function refreshToken Controller has been end'
+  });
 };
 
 /**
@@ -88,14 +112,20 @@ var refreshToken = function refreshToken(req, res, next) {
  * @param {*} next
  */
 var revokeToken = function revokeToken(req, res, next) {
-  loggerFactory.info("Function refreshToken Controller has been start");
+  logger.log({
+    level: _constants["default"].LOG_LEVELS.INFO,
+    message: 'Function revokeToken Controller has been start'
+  });
   var toolBox = {
     req: req,
     res: res,
     next: next
   };
   (0, _baseController["default"])(toolBox, _constants["default"].types.MsgTypeAuth, _constants["default"].actions.MsgActionRevokeToken);
-  loggerFactory.info("Function refreshToken Controller has been end");
+  logger.log({
+    level: _constants["default"].LOG_LEVELS.INFO,
+    message: 'Function revokeToken Controller has been end'
+  });
 };
 var authController = {
   signIn: signIn,
