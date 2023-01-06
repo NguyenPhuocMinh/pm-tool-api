@@ -27,7 +27,7 @@ import routers from '@routers';
 // adapters
 import redisAdapter from '@adapters/redis';
 import socketAdapter from '@adapters/socket';
-import amqpAdapter from '@adapters/amqp';
+// import amqpAdapter from '@adapters/amqp';
 // import cronAdapter from '@adapters/cron';
 
 // middleware
@@ -102,7 +102,7 @@ const main = async () => {
   /**
    * Rabbit MQ
    */
-  await amqpAdapter.Init();
+  // await amqpAdapter.Init();
 
   /**
    * Cron Job
