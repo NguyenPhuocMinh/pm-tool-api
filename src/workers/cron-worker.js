@@ -101,3 +101,66 @@ export const handlerWorkerCronChangePasswordTemporary = async (now) => {
     throw err;
   }
 };
+
+export const handlerWorkerCronAutoDeleteNotifyInTrash = async (now) => {
+  try {
+    logger.log({
+      level: constants.LOG_LEVELS.INFO,
+      message:
+        'Function handlerWorkerCronAutoDeleteNotifyInTrash has been start',
+      args: {
+        now
+      }
+    });
+    /**
+     * after 30 minutes find all user with condition bellow
+     * isPasswordSet true
+     * isPasswordTemporary true
+     * createdAt =< now - 30 day
+     */
+    const deleteDay = moment(now)
+      .add(7, 'hours')
+      .tz(constants.TIMEZONE_DEFAULT)
+      .utc()
+      .subtract(1, 'day')
+      .format();
+
+    const notifyUsers = await repository.findAll({
+      type: 'NotifyModel',
+      filter: {
+        deleted: true,
+        createdAt: {
+          $lte: deleteDay
+        }
+      }
+    });
+
+    if (isEmpty(notifyUsers)) {
+      return;
+    }
+
+    const notifyIds = notifyUsers.map((e) => e._id);
+
+    await repository.deleteMany({
+      type: 'NotifyModel',
+      filter: {
+        _id: {
+          $in: notifyIds
+        }
+      }
+    });
+
+    logger.log({
+      level: constants.LOG_LEVELS.INFO,
+      message: 'Function handlerWorkerCronAutoDeleteNotifyInTrash has been end'
+    });
+  } catch (err) {
+    logger.log({
+      level: constants.LOG_LEVELS.ERROR,
+      message:
+        'Function handlerWorkerCronAutoDeleteNotifyInTrash has been error',
+      args: utils.parseError(err)
+    });
+    throw err;
+  }
+};

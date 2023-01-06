@@ -5,11 +5,15 @@ import {
   handlerSocketWorkerUserLogout,
   handlerWorkerSocketUserDisconnect
 } from './socket-worker';
-import { handlerWorkerCronChangePasswordTemporary } from './cron-worker';
+import {
+  handlerWorkerCronChangePasswordTemporary,
+  handlerWorkerCronAutoDeleteNotifyInTrash
+} from './cron-worker';
 
 export default {
   handlerSocketWorkerUserLogin,
   handlerSocketWorkerUserLogout,
   handlerWorkerSocketUserDisconnect,
-  handlerWorkerCronChangePasswordTemporary
+  handlerWorkerCronChangePasswordTemporary,
+  handlerWorkerCronAutoDeleteNotifyInTrash
 };

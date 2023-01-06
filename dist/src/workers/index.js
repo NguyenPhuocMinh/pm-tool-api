@@ -11,6 +11,7 @@ var _default = {
   handlerSocketWorkerUserLogin: _socketWorker.handlerSocketWorkerUserLogin,
   handlerSocketWorkerUserLogout: _socketWorker.handlerSocketWorkerUserLogout,
   handlerWorkerSocketUserDisconnect: _socketWorker.handlerWorkerSocketUserDisconnect,
-  handlerWorkerCronChangePasswordTemporary: _cronWorker.handlerWorkerCronChangePasswordTemporary
+  handlerWorkerCronChangePasswordTemporary: _cronWorker.handlerWorkerCronChangePasswordTemporary,
+  handlerWorkerCronAutoDeleteNotifyInTrash: _cronWorker.handlerWorkerCronAutoDeleteNotifyInTrash
 };
 exports["default"] = _default;

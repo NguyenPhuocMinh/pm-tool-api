@@ -270,7 +270,13 @@ const LOG_LEVELS = {
 };
 
 const CRON_EXPRESSIONS = {
-  CHANGE_PASSWORD_TEMPORARY: '*/10 * * * *' // At every 30th minute
+  MINUTES: {
+    TEN: '*/10 * * * *', // At every 30 minutes
+    THIRTY: '*/30 * * * *' // At every 30 minutes
+  },
+  HOURS: {
+    ONE: '* 00 1 * * *' // At every 1 hour
+  }
 };
 
 /**

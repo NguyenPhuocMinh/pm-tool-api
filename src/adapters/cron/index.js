@@ -26,13 +26,14 @@ const Init = async () => {
   try {
     // schedule job over 1 day to change new user password
     await scheduleJob(
-      constants.CRON_EXPRESSIONS.CHANGE_PASSWORD_TEMPORARY,
+      constants.CRON_EXPRESSIONS.MINUTES.TEN,
       workers.handlerWorkerCronChangePasswordTemporary
     );
-    logger.log({
-      level: constants.LOG_LEVELS.INFO,
-      message: 'The cronJob has been start'
-    });
+    // schedule job auth delete notify in trash if over 1h
+    await scheduleJob(
+      constants.CRON_EXPRESSIONS.MINUTES.TEN,
+      workers.handlerWorkerCronAutoDeleteNotifyInTrash
+    );
   } catch (err) {
     logger.log({
       level: constants.LOG_LEVELS.ERROR,

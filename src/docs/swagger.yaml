@@ -1262,6 +1262,227 @@ paths:
         500:
           $ref: "#/components/responses/ServerError"
 
+  /notify/users-read:
+    patch:
+      tags:
+        - notify-user
+      security: []
+      summary: Read Notify User
+      description: Read Notify User
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/commonNotifyUserReqBody"
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/commonResponse"
+        400:
+          $ref: "#/components/responses/BadRequest"
+        401:
+          $ref: "#/components/responses/UnAuthorization"
+        403:
+          $ref: "#/components/responses/Forbidden"
+        404:
+          $ref: "#/components/responses/NotFound"
+        500:
+          $ref: "#/components/responses/ServerError"
+
+  /notify/users-reads:
+    patch:
+      tags:
+        - notify-user
+      security: []
+      summary: Read All Notify User
+      description: Read All Notify User
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/commonNotifyUserReqBody"
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/commonResponse"
+        400:
+          $ref: "#/components/responses/BadRequest"
+        401:
+          $ref: "#/components/responses/UnAuthorization"
+        403:
+          $ref: "#/components/responses/Forbidden"
+        404:
+          $ref: "#/components/responses/NotFound"
+        500:
+          $ref: "#/components/responses/ServerError"
+
+  /notify/users-trash:
+    patch:
+      tags:
+        - notify-user
+      security: []
+      summary: Remove Notify User To Trash
+      description: Remove Notify User To Trash
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/commonNotifyUserReqBody"
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/commonResponse"
+        400:
+          $ref: "#/components/responses/BadRequest"
+        401:
+          $ref: "#/components/responses/UnAuthorization"
+        403:
+          $ref: "#/components/responses/Forbidden"
+        404:
+          $ref: "#/components/responses/NotFound"
+        500:
+          $ref: "#/components/responses/ServerError"
+
+  /notify/users-trashes:
+    get:
+      tags:
+        - notify-user
+      security: []
+      summary: Get All Notify User To Trash
+      description: Get All Notify User To Trash
+      parameters:
+        - name: id
+          in: query
+          required: true
+          schema:
+            type: string
+          description: Id of user
+        - name: _start
+          in: query
+          schema:
+            type: number
+        - name: _end
+          in: query
+          schema:
+            type: number
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/commonResponse"
+        400:
+          $ref: "#/components/responses/BadRequest"
+        401:
+          $ref: "#/components/responses/UnAuthorization"
+        403:
+          $ref: "#/components/responses/Forbidden"
+        404:
+          $ref: "#/components/responses/NotFound"
+        500:
+          $ref: "#/components/responses/ServerError"
+
+    delete:
+      tags:
+        - notify-user
+      security: []
+      summary: Remove All Notify User To Trash
+      description: Remove All Notify User To Trash
+      parameters:
+        - name: id
+          in: query
+          required: true
+          schema:
+            type: string
+          description: Id of user
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/commonResponse"
+        400:
+          $ref: "#/components/responses/BadRequest"
+        401:
+          $ref: "#/components/responses/UnAuthorization"
+        403:
+          $ref: "#/components/responses/Forbidden"
+        404:
+          $ref: "#/components/responses/NotFound"
+        500:
+          $ref: "#/components/responses/ServerError"
+
+  /notify/users-rollback:
+    delete:
+      tags:
+        - notify-user
+      security: []
+      summary: Roll Back Notify User From Trash
+      description: Roll Back Notify User From Trash
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/commonNotifyUserReqBody"
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/commonResponse"
+        400:
+          $ref: "#/components/responses/BadRequest"
+        401:
+          $ref: "#/components/responses/UnAuthorization"
+        403:
+          $ref: "#/components/responses/Forbidden"
+        404:
+          $ref: "#/components/responses/NotFound"
+        500:
+          $ref: "#/components/responses/ServerError"
+
+  /notify/users-rollbacks:
+    delete:
+      tags:
+        - notify-user
+      security: []
+      summary: Roll Back All Notify User From Trash
+      description: Roll Back All Notify User From Trash
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/commonNotifyUserReqBody"
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/commonResponse"
+        400:
+          $ref: "#/components/responses/BadRequest"
+        401:
+          $ref: "#/components/responses/UnAuthorization"
+        403:
+          $ref: "#/components/responses/Forbidden"
+        404:
+          $ref: "#/components/responses/NotFound"
+        500:
+          $ref: "#/components/responses/ServerError"
+
 ## components
 components:
   # security
@@ -1539,4 +1760,12 @@ components:
         - userID
       properties:
         userID:
+          type: string
+
+    commonNotifyUserReqBody:
+      type: object
+      required:
+        - id
+      properties:
+        id:
           type: string

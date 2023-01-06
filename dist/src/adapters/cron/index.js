@@ -30,16 +30,15 @@ var Init = /*#__PURE__*/function () {
           case 0:
             _context.prev = 0;
             _context.next = 3;
-            return scheduleJob(_constants["default"].CRON_EXPRESSIONS.CHANGE_PASSWORD_TEMPORARY, _workers["default"].handlerWorkerCronChangePasswordTemporary);
+            return scheduleJob(_constants["default"].CRON_EXPRESSIONS.MINUTES.TEN, _workers["default"].handlerWorkerCronChangePasswordTemporary);
           case 3:
-            logger.log({
-              level: _constants["default"].LOG_LEVELS.INFO,
-              message: 'The cronJob has been start'
-            });
-            _context.next = 10;
+            _context.next = 5;
+            return scheduleJob(_constants["default"].CRON_EXPRESSIONS.MINUTES.TEN, _workers["default"].handlerWorkerCronAutoDeleteNotifyInTrash);
+          case 5:
+            _context.next = 11;
             break;
-          case 6:
-            _context.prev = 6;
+          case 7:
+            _context.prev = 7;
             _context.t0 = _context["catch"](0);
             logger.log({
               level: _constants["default"].LOG_LEVELS.ERROR,
@@ -47,12 +46,12 @@ var Init = /*#__PURE__*/function () {
               args: _utils["default"].parseError(_context.t0)
             });
             throw _context.t0;
-          case 10:
+          case 11:
           case "end":
             return _context.stop();
         }
       }
-    }, _callee, null, [[0, 6]]);
+    }, _callee, null, [[0, 7]]);
   }));
   return function Init() {
     return _ref.apply(this, arguments);

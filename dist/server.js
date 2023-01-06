@@ -36,6 +36,10 @@ var APP_HOST = _conf.profiles.APP_HOST;
 var APP_DOCS_PATH = _conf.profiles.APP_DOCS_PATH;
 var app = (0, _express["default"])();
 var server = _http["default"].createServer(app);
+
+/**
+ * @description Main Server
+ */
 var main = /*#__PURE__*/function () {
   var _ref = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee() {
     var swaggerYaml;
@@ -110,9 +114,10 @@ var main = /*#__PURE__*/function () {
                 message: 'The server is running on',
                 args: "[".concat(host, ":").concat(port, "]")
               });
-              process.on('SIGINT', stopped);
-              process.on('SIGTERM', stopped);
-              process.on('SIGQUIT', stopped);
+
+              // process.on('SIGINT', stopped);
+              // process.on('SIGTERM', stopped);
+              // process.on('SIGQUIT', stopped);
             });
           case 26:
           case "end":
@@ -127,28 +132,29 @@ var main = /*#__PURE__*/function () {
 }();
 
 /**
- * @description Do stuff and exit the process
+ * @description Do stuff and exit the process Server
  */
-var stopped = function stopped() {
-  logger.log({
-    level: _constants["default"].LOG_LEVELS.WARN,
-    message: 'Waiting closing http server...'
-  });
-  server.close(function () {
-    _database["default"].Close();
-    _redis["default"].Close();
-    _amqp["default"].Close();
-    _cron["default"].Close();
-    setTimeout(function () {
-      logger.log({
-        level: _constants["default"].LOG_LEVELS.DEBUG,
-        message: 'The server has been closed'
-      });
-      // exit code 0 means exit with a “success” code.
-      process.exit(0);
-    }, 3000);
-  });
-};
+// const stopped = () => {
+//   logger.log({
+//     level: constants.LOG_LEVELS.WARN,
+//     message: 'Waiting closing http server...'
+//   });
+//   server.close(() => {
+//     dbManager.Close();
+//     redisAdapter.Close();
+//     amqpAdapter.Close();
+//     cronAdapter.Close();
+//     setTimeout(() => {
+//       logger.log({
+//         level: constants.LOG_LEVELS.DEBUG,
+//         message: 'The server has been closed'
+//       });
+//       // exit code 0 means exit with a “success” code.
+//       process.exit(0);
+//     }, 3000);
+//   });
+// };
+
 main()["catch"](function (err) {
   logger.log({
     level: _constants["default"].LOG_LEVELS.ERROR,
@@ -156,5 +162,5 @@ main()["catch"](function (err) {
     args: _utils["default"].parseError(err)
   });
   // exit code 1 means exit with a "failure" code.
-  process.exit(1);
+  // process.exit(1);
 });
