@@ -28,7 +28,7 @@ import routers from '@routers';
 import redisAdapter from '@adapters/redis';
 import socketAdapter from '@adapters/socket';
 import amqpAdapter from '@adapters/amqp';
-import cronAdapter from '@adapters/cron';
+// import cronAdapter from '@adapters/cron';
 
 // middleware
 import {
@@ -107,7 +107,7 @@ const main = async () => {
   /**
    * Cron Job
    */
-  await cronAdapter.Init();
+  // await cronAdapter.Init();
 
   /**
    * Socket.IO
