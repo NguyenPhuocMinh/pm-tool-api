@@ -4,7 +4,7 @@ function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" =
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.handlerWorkerCronChangePasswordTemporary = void 0;
+exports.handlerWorkerCronChangePasswordTemporary = exports.handlerWorkerCronAutoDeleteNotifyInTrash = void 0;
 require("source-map-support/register");
 var _bcrypt = _interopRequireDefault(require("bcrypt"));
 var _moment = _interopRequireDefault(require("moment"));
@@ -116,3 +116,83 @@ var handlerWorkerCronChangePasswordTemporary = /*#__PURE__*/function () {
   };
 }();
 exports.handlerWorkerCronChangePasswordTemporary = handlerWorkerCronChangePasswordTemporary;
+var handlerWorkerCronAutoDeleteNotifyInTrash = /*#__PURE__*/function () {
+  var _ref2 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee2(now) {
+    var deleteDay, notifyUsers, notifyIds;
+    return _regeneratorRuntime().wrap(function _callee2$(_context2) {
+      while (1) {
+        switch (_context2.prev = _context2.next) {
+          case 0:
+            _context2.prev = 0;
+            logger.log({
+              level: _constants["default"].LOG_LEVELS.INFO,
+              message: 'Function handlerWorkerCronAutoDeleteNotifyInTrash has been start',
+              args: {
+                now: now
+              }
+            });
+            /**
+             * after 30 minutes find all user with condition bellow
+             * isPasswordSet true
+             * isPasswordTemporary true
+             * createdAt =< now - 30 day
+             */
+            deleteDay = (0, _moment["default"])(now).add(7, 'hours').tz(_constants["default"].TIMEZONE_DEFAULT).utc().subtract(1, 'day').format();
+            _context2.next = 5;
+            return _repository["default"].findAll({
+              type: 'NotifyModel',
+              filter: {
+                deleted: true,
+                createdAt: {
+                  $lte: deleteDay
+                }
+              }
+            });
+          case 5:
+            notifyUsers = _context2.sent;
+            if (!(0, _lodash.isEmpty)(notifyUsers)) {
+              _context2.next = 8;
+              break;
+            }
+            return _context2.abrupt("return");
+          case 8:
+            notifyIds = notifyUsers.map(function (e) {
+              return e._id;
+            });
+            _context2.next = 11;
+            return _repository["default"].deleteMany({
+              type: 'NotifyModel',
+              filter: {
+                _id: {
+                  $in: notifyIds
+                }
+              }
+            });
+          case 11:
+            logger.log({
+              level: _constants["default"].LOG_LEVELS.INFO,
+              message: 'Function handlerWorkerCronAutoDeleteNotifyInTrash has been end'
+            });
+            _context2.next = 18;
+            break;
+          case 14:
+            _context2.prev = 14;
+            _context2.t0 = _context2["catch"](0);
+            logger.log({
+              level: _constants["default"].LOG_LEVELS.ERROR,
+              message: 'Function handlerWorkerCronAutoDeleteNotifyInTrash has been error',
+              args: _utils["default"].parseError(_context2.t0)
+            });
+            throw _context2.t0;
+          case 18:
+          case "end":
+            return _context2.stop();
+        }
+      }
+    }, _callee2, null, [[0, 14]]);
+  }));
+  return function handlerWorkerCronAutoDeleteNotifyInTrash(_x2) {
+    return _ref2.apply(this, arguments);
+  };
+}();
+exports.handlerWorkerCronAutoDeleteNotifyInTrash = handlerWorkerCronAutoDeleteNotifyInTrash;

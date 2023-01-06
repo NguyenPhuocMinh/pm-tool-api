@@ -123,35 +123,35 @@ const main = async () => {
       args: `[${host}:${port}]`
     });
 
-    process.on('SIGINT', stopped);
-    process.on('SIGTERM', stopped);
-    process.on('SIGQUIT', stopped);
+    // process.on('SIGINT', stopped);
+    // process.on('SIGTERM', stopped);
+    // process.on('SIGQUIT', stopped);
   });
 };
 
 /**
  * @description Do stuff and exit the process Server
  */
-const stopped = () => {
-  logger.log({
-    level: constants.LOG_LEVELS.WARN,
-    message: 'Waiting closing http server...'
-  });
-  server.close(() => {
-    dbManager.Close();
-    redisAdapter.Close();
-    amqpAdapter.Close();
-    cronAdapter.Close();
-    setTimeout(() => {
-      logger.log({
-        level: constants.LOG_LEVELS.DEBUG,
-        message: 'The server has been closed'
-      });
-      // exit code 0 means exit with a “success” code.
-      process.exit(0);
-    }, 3000);
-  });
-};
+// const stopped = () => {
+//   logger.log({
+//     level: constants.LOG_LEVELS.WARN,
+//     message: 'Waiting closing http server...'
+//   });
+//   server.close(() => {
+//     dbManager.Close();
+//     redisAdapter.Close();
+//     amqpAdapter.Close();
+//     cronAdapter.Close();
+//     setTimeout(() => {
+//       logger.log({
+//         level: constants.LOG_LEVELS.DEBUG,
+//         message: 'The server has been closed'
+//       });
+//       // exit code 0 means exit with a “success” code.
+//       process.exit(0);
+//     }, 3000);
+//   });
+// };
 
 main().catch((err) => {
   logger.log({
@@ -160,5 +160,5 @@ main().catch((err) => {
     args: utils.parseError(err)
   });
   // exit code 1 means exit with a "failure" code.
-  process.exit(1);
+  // process.exit(1);
 });
