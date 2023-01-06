@@ -19,10 +19,10 @@ const corsOptions = (req, callback) => {
 
   if (isDomainAllowed) {
     // Enable CORS for this request
-    corsOptions = { origin: true, credentials: true };
+    corsOptions = { origin: true };
   } else {
     // Disable CORS for this request
-    corsOptions = { origin: false, credentials: false };
+    corsOptions = { origin: false };
   }
   callback(null, corsOptions);
 };
