@@ -26,7 +26,9 @@ var newSuccessTemplate = function newSuccessTemplate(toolBox) {
     logger.log({
       level: _constants["default"].LOG_LEVELS.INFO,
       message: 'Function newSuccessTemplate has been start',
-      args: args
+      args: {
+        msg: msg
+      }
     });
     if (Object.prototype.hasOwnProperty.call(_resources.successCodes, msg)) {
       template.result = !(0, _lodash.isEmpty)(result) ? result : null;

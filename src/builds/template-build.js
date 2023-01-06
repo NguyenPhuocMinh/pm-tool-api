@@ -26,7 +26,9 @@ export const newSuccessTemplate = (toolBox, args = {}) => {
     logger.log({
       level: constants.LOG_LEVELS.INFO,
       message: 'Function newSuccessTemplate has been start',
-      args
+      args: {
+        msg
+      }
     });
 
     if (Object.prototype.hasOwnProperty.call(successCodes, msg)) {

@@ -27,7 +27,7 @@ import routers from '@routers';
 // adapters
 import redisAdapter from '@adapters/redis';
 import socketAdapter from '@adapters/socket';
-// import amqpAdapter from '@adapters/amqp';
+import amqpAdapter from '@adapters/amqp';
 import cronAdapter from '@adapters/cron';
 
 // middleware
@@ -46,9 +46,6 @@ const APP_DOCS_PATH = profiles.APP_DOCS_PATH;
 const app = express();
 const server = http.createServer(app);
 
-/**
- * @description Main Server
- */
 const main = async () => {
   app.use(cors(options.corsOptions));
   app.use(sessionParser(options.sessionOptions));
@@ -102,7 +99,7 @@ const main = async () => {
   /**
    * Rabbit MQ
    */
-  // await amqpAdapter.Init();
+  await amqpAdapter.Init();
 
   /**
    * Cron Job
@@ -123,35 +120,32 @@ const main = async () => {
       args: `[${host}:${port}]`
     });
 
-    process.on('SIGINT', stopped);
-    process.on('SIGTERM', stopped);
-    process.on('SIGQUIT', stopped);
+    // process.on('SIGINT', stopped);
+    // process.on('SIGTERM', stopped);
+    // process.on('SIGQUIT', stopped);
   });
 };
 
-/**
- * @description Do stuff and exit the process Server
- */
-const stopped = () => {
-  logger.log({
-    level: constants.LOG_LEVELS.WARN,
-    message: 'Waiting closing http server...'
-  });
-  server.close(() => {
-    dbManager.Close();
-    redisAdapter.Close();
-    // amqpAdapter.Close();
-    cronAdapter.Close();
-    setTimeout(() => {
-      logger.log({
-        level: constants.LOG_LEVELS.DEBUG,
-        message: 'The server has been closed'
-      });
-      // exit code 0 means exit with a “success” code.
-      process.exit(0);
-    }, 3000);
-  });
-};
+// const stopped = () => {
+//   logger.log({
+//     level: constants.LOG_LEVELS.WARN,
+//     message: 'Waiting closing http server...'
+//   });
+//   server.close(() => {
+//     dbManager.Close();
+//     redisAdapter.Close();
+//     amqpAdapter.Close();
+//     cronAdapter.Close();
+//     setTimeout(() => {
+//       logger.log({
+//         level: constants.LOG_LEVELS.DEBUG,
+//         message: 'The server has been closed'
+//       });
+//       // exit code 0 means exit with a “success” code.
+//       process.exit(0);
+//     }, 3000);
+//   });
+// };
 
 main().catch((err) => {
   logger.log({
@@ -162,3 +156,5 @@ main().catch((err) => {
   // exit code 1 means exit with a "failure" code.
   process.exit(1);
 });
+
+export default server;

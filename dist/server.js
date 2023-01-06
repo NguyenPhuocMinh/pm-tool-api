@@ -1,6 +1,10 @@
 'use strict';
 
 function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (obj) { return typeof obj; } : function (obj) { return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }, _typeof(obj); }
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports["default"] = void 0;
 require("source-map-support/register");
 var _http = _interopRequireDefault(require("http"));
 var _express = _interopRequireDefault(require("express"));
@@ -23,6 +27,7 @@ var _database = _interopRequireDefault(require("./src/core/database"));
 var _routers = _interopRequireDefault(require("./src/routers"));
 var _redis = _interopRequireDefault(require("./src/adapters/redis"));
 var _socket = _interopRequireDefault(require("./src/adapters/socket"));
+var _amqp = _interopRequireDefault(require("./src/adapters/amqp"));
 var _cron = _interopRequireDefault(require("./src/adapters/cron"));
 var _middleware = require("./src/middleware");
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
@@ -35,10 +40,6 @@ var APP_HOST = _conf.profiles.APP_HOST;
 var APP_DOCS_PATH = _conf.profiles.APP_DOCS_PATH;
 var app = (0, _express["default"])();
 var server = _http["default"].createServer(app);
-
-/**
- * @description Main Server
- */
 var main = /*#__PURE__*/function () {
   var _ref = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee() {
     var swaggerYaml;
@@ -97,11 +98,14 @@ var main = /*#__PURE__*/function () {
             return _redis["default"].Init();
           case 19:
             _context.next = 21;
-            return _cron["default"].Init();
+            return _amqp["default"].Init();
           case 21:
             _context.next = 23;
-            return _socket["default"].Init(server);
+            return _cron["default"].Init();
           case 23:
+            _context.next = 25;
+            return _socket["default"].Init(server);
+          case 25:
             server.listen(APP_PORT, APP_HOST, function () {
               var port = server.address().port;
               var host = server.address().address;
@@ -110,11 +114,12 @@ var main = /*#__PURE__*/function () {
                 message: 'The server is running on',
                 args: "[".concat(host, ":").concat(port, "]")
               });
-              process.on('SIGINT', stopped);
-              process.on('SIGTERM', stopped);
-              process.on('SIGQUIT', stopped);
+
+              // process.on('SIGINT', stopped);
+              // process.on('SIGTERM', stopped);
+              // process.on('SIGQUIT', stopped);
             });
-          case 24:
+          case 26:
           case "end":
             return _context.stop();
         }
@@ -126,29 +131,27 @@ var main = /*#__PURE__*/function () {
   };
 }();
 
-/**
- * @description Do stuff and exit the process Server
- */
-var stopped = function stopped() {
-  logger.log({
-    level: _constants["default"].LOG_LEVELS.WARN,
-    message: 'Waiting closing http server...'
-  });
-  server.close(function () {
-    _database["default"].Close();
-    _redis["default"].Close();
-    // amqpAdapter.Close();
-    _cron["default"].Close();
-    setTimeout(function () {
-      logger.log({
-        level: _constants["default"].LOG_LEVELS.DEBUG,
-        message: 'The server has been closed'
-      });
-      // exit code 0 means exit with a “success” code.
-      process.exit(0);
-    }, 3000);
-  });
-};
+// const stopped = () => {
+//   logger.log({
+//     level: constants.LOG_LEVELS.WARN,
+//     message: 'Waiting closing http server...'
+//   });
+//   server.close(() => {
+//     dbManager.Close();
+//     redisAdapter.Close();
+//     amqpAdapter.Close();
+//     cronAdapter.Close();
+//     setTimeout(() => {
+//       logger.log({
+//         level: constants.LOG_LEVELS.DEBUG,
+//         message: 'The server has been closed'
+//       });
+//       // exit code 0 means exit with a “success” code.
+//       process.exit(0);
+//     }, 3000);
+//   });
+// };
+
 main()["catch"](function (err) {
   logger.log({
     level: _constants["default"].LOG_LEVELS.ERROR,
@@ -158,3 +161,5 @@ main()["catch"](function (err) {
   // exit code 1 means exit with a "failure" code.
   process.exit(1);
 });
+var _default = server;
+exports["default"] = _default;
