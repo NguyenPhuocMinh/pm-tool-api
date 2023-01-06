@@ -26,12 +26,12 @@ const Init = async () => {
   try {
     // schedule job over 1 day to change new user password
     await scheduleJob(
-      constants.CRON_EXPRESSIONS.MINUTES.TEN,
+      constants.CRON_EXPRESSIONS.MINUTES.THIRTY,
       workers.handlerWorkerCronChangePasswordTemporary
     );
     // schedule job auth delete notify in trash if over 1h
     await scheduleJob(
-      constants.CRON_EXPRESSIONS.MINUTES.TEN,
+      constants.CRON_EXPRESSIONS.HOURS.ONE,
       workers.handlerWorkerCronAutoDeleteNotifyInTrash
     );
   } catch (err) {

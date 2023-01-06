@@ -30,10 +30,10 @@ var Init = /*#__PURE__*/function () {
           case 0:
             _context.prev = 0;
             _context.next = 3;
-            return scheduleJob(_constants["default"].CRON_EXPRESSIONS.MINUTES.TEN, _workers["default"].handlerWorkerCronChangePasswordTemporary);
+            return scheduleJob(_constants["default"].CRON_EXPRESSIONS.MINUTES.THIRTY, _workers["default"].handlerWorkerCronChangePasswordTemporary);
           case 3:
             _context.next = 5;
-            return scheduleJob(_constants["default"].CRON_EXPRESSIONS.MINUTES.TEN, _workers["default"].handlerWorkerCronAutoDeleteNotifyInTrash);
+            return scheduleJob(_constants["default"].CRON_EXPRESSIONS.HOURS.ONE, _workers["default"].handlerWorkerCronAutoDeleteNotifyInTrash);
           case 5:
             _context.next = 11;
             break;
