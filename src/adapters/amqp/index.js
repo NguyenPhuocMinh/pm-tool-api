@@ -60,15 +60,6 @@ const Init = async () => {
   }
 };
 
-const Close = async () => {
-  logger.log({
-    level: constants.LOG_LEVELS.DEBUG,
-    message: 'The rabbitMQ has been closed'
-  });
-  await channel.close();
-  await conn.close();
-};
-
 /**
  * @description Publisher
  * @param {*} queueName
@@ -117,7 +108,6 @@ const publisher = async (queueName, messageType, correlationId, payload) => {
 
 const amqpAdapter = {
   Init,
-  Close,
   publisher
 };
 

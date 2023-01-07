@@ -119,31 +119,6 @@ const main = async () => {
       message: 'The server is running on',
       args: `[${host}:${port}]`
     });
-
-    const stopped = () => {
-      logger.log({
-        level: constants.LOG_LEVELS.WARN,
-        message: 'Waiting closing http server...'
-      });
-      server.close(() => {
-        dbManager.Close();
-        redisAdapter.Close();
-        amqpAdapter.Close();
-        cronAdapter.Close();
-        setTimeout(() => {
-          logger.log({
-            level: constants.LOG_LEVELS.DEBUG,
-            message: 'The server has been closed'
-          });
-          // exit code 0 means exit with a “success” code.
-          process.exit(0);
-        }, 3000);
-      });
-    };
-
-    process.on('SIGINT', stopped);
-    process.on('SIGTERM', stopped);
-    process.on('SIGQUIT', stopped);
   });
 };
 
@@ -153,8 +128,6 @@ main().catch((err) => {
     message: 'The server has been error',
     args: utils.parseError(err)
   });
-  // exit code 1 means exit with a "failure" code.
-  process.exit(1);
 });
 
 export default server;

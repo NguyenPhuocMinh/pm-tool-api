@@ -276,4 +276,4 @@ $ aws ecr describe-images \
 ## Server testing vercel app
 
 - [Vercel App](https://pm-tool-api.vercel.app)
-- CURL => curl "https://pm-tool-api.vercel.app/socket.io/?EIO=4&transport=polling"
+- Check connect socketIO => curl "https://pm-tool-api.vercel.app/socket.io/?EIO=4&transport=polling"

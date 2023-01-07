@@ -81,32 +81,6 @@ var Init = /*#__PURE__*/function () {
     return _ref.apply(this, arguments);
   };
 }();
-var Close = /*#__PURE__*/function () {
-  var _ref2 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee2() {
-    return _regeneratorRuntime().wrap(function _callee2$(_context2) {
-      while (1) {
-        switch (_context2.prev = _context2.next) {
-          case 0:
-            logger.log({
-              level: _constants["default"].LOG_LEVELS.DEBUG,
-              message: 'The rabbitMQ has been closed'
-            });
-            _context2.next = 3;
-            return channel.close();
-          case 3:
-            _context2.next = 5;
-            return conn.close();
-          case 5:
-          case "end":
-            return _context2.stop();
-        }
-      }
-    }, _callee2);
-  }));
-  return function Close() {
-    return _ref2.apply(this, arguments);
-  };
-}();
 
 /**
  * @description Publisher
@@ -116,12 +90,12 @@ var Close = /*#__PURE__*/function () {
  * @param {*} payload
  */
 var publisher = /*#__PURE__*/function () {
-  var _ref3 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee3(queueName, messageType, correlationId, payload) {
-    return _regeneratorRuntime().wrap(function _callee3$(_context3) {
+  var _ref2 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee2(queueName, messageType, correlationId, payload) {
+    return _regeneratorRuntime().wrap(function _callee2$(_context2) {
       while (1) {
-        switch (_context3.prev = _context3.next) {
+        switch (_context2.prev = _context2.next) {
           case 0:
-            _context3.prev = 0;
+            _context2.prev = 0;
             logger.log({
               level: _constants["default"].LOG_LEVELS.INFO,
               message: 'Func publisher has been start',
@@ -131,12 +105,12 @@ var publisher = /*#__PURE__*/function () {
                 correlationId: correlationId
               }
             });
-            _context3.next = 4;
+            _context2.next = 4;
             return channel.assertQueue(queueName, {
               durable: false
             });
           case 4:
-            _context3.next = 6;
+            _context2.next = 6;
             return channel.publish('', queueName, Buffer.from(JSON.stringify(payload)), {
               persistent: true,
               mandatory: false,
@@ -149,34 +123,33 @@ var publisher = /*#__PURE__*/function () {
               message: "[*] publisher has been send message to queueName: ".concat(queueName, " with payload"),
               args: payload
             });
-            _context3.next = 15;
+            _context2.next = 15;
             break;
           case 9:
-            _context3.prev = 9;
-            _context3.t0 = _context3["catch"](0);
+            _context2.prev = 9;
+            _context2.t0 = _context2["catch"](0);
             logger.log({
               level: _constants["default"].LOG_LEVELS.ERROR,
               message: 'Func publisher has been error',
-              args: _utils["default"].parseError(_context3.t0)
+              args: _utils["default"].parseError(_context2.t0)
             });
-            _context3.next = 14;
+            _context2.next = 14;
             return channel.close();
           case 14:
-            throw _context3.t0;
+            throw _context2.t0;
           case 15:
           case "end":
-            return _context3.stop();
+            return _context2.stop();
         }
       }
-    }, _callee3, null, [[0, 9]]);
+    }, _callee2, null, [[0, 9]]);
   }));
   return function publisher(_x, _x2, _x3, _x4) {
-    return _ref3.apply(this, arguments);
+    return _ref2.apply(this, arguments);
   };
 }();
 var amqpAdapter = {
   Init: Init,
-  Close: Close,
   publisher: publisher
 };
 var _default = amqpAdapter;
