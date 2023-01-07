@@ -102,9 +102,6 @@ var Init = /*#__PURE__*/function () {
                   message: "Unable to connect to the database. Retrying(".concat(current, ")"),
                   args: _context.t0
                 });
-                if (current >= _conf.options.retryOptions.retries) {
-                  process.exit(1);
-                }
                 return _context.t0;
               }
             });
@@ -120,17 +117,8 @@ var Init = /*#__PURE__*/function () {
     return _ref.apply(this, arguments);
   };
 }();
-var Close = function Close() {
-  _mongoose["default"].connection.close(function () {
-    logger.log({
-      level: _constants["default"].LOG_LEVELS.DEBUG,
-      message: 'The database has been close'
-    });
-  });
-};
 var dbManager = {
-  Init: Init,
-  Close: Close
+  Init: Init
 };
 var _default = dbManager;
 exports["default"] = _default;

@@ -95,9 +95,6 @@ const Init = async () => {
           message: `Unable to connect to the database. Retrying(${current})`,
           args: err
         });
-        if (current >= options.retryOptions.retries) {
-          process.exit(1);
-        }
         return err;
       }
     });
@@ -105,18 +102,8 @@ const Init = async () => {
   }
 };
 
-const Close = () => {
-  mongoose.connection.close(function () {
-    logger.log({
-      level: constants.LOG_LEVELS.DEBUG,
-      message: 'The database has been close'
-    });
-  });
-};
-
 const dbManager = {
-  Init,
-  Close
+  Init
 };
 
 export default dbManager;

@@ -63,9 +63,6 @@ var Init = /*#__PURE__*/function () {
                   message: "Unable to connect to the rabbitMQ. Retrying(".concat(current, ")"),
                   args: _context.t0
                 });
-                if (current >= _conf.options.retryOptions.retries) {
-                  process.exit(1);
-                }
                 return _context.t0;
               }
             });

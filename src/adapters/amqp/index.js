@@ -49,9 +49,6 @@ const Init = async () => {
           message: `Unable to connect to the rabbitMQ. Retrying(${current})`,
           args: err
         });
-        if (current >= options.retryOptions.retries) {
-          process.exit(1);
-        }
         return err;
       }
     });
