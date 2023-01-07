@@ -3,6 +3,7 @@
 import constants from '@constants';
 import commons from '@commons';
 import builds from '@builds';
+import utils from '@utils';
 
 // core
 import loggerManager from '@core/logger';
@@ -26,17 +27,16 @@ const errorMiddleware = (_err, req, res, next) => {
       level: constants.LOG_LEVELS.ERROR,
       message:
         'Function errorMiddleware has been end without error internal server',
-      args: {
-        stack: _err.stack
-      }
+      args: utils.parseError(_err)
     });
+    console.error(_err.stack);
     return builds.errorResponse(toolBox, internalServerError);
   }
 
   logger.log({
     level: constants.LOG_LEVELS.ERROR,
     message: 'Function errorMiddleware has been end without error',
-    args: _err.name
+    args: utils.parseError(_err)
   });
 
   return builds.errorResponse(toolBox, _err);

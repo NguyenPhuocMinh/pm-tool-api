@@ -34,7 +34,9 @@ const getUserTimelineSession = async (toolBox) => {
 
     const { userID } = req.params;
     const { skip, limit } = helpers.paginationHelper(req.query);
-    const query = helpers.queryHelper(req.query, null, [{ user: userID }]);
+    const query = helpers.queryHelper(req.query, null, [
+      { deleted: false, user: userID }
+    ]);
     const sort = helpers.sortHelper(req.query);
 
     const timelines = await repository.findAll({

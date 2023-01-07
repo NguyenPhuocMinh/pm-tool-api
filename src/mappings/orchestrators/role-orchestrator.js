@@ -35,7 +35,7 @@ const getAllRole = async (toolBox) => {
     });
 
     const { skip, limit } = helpers.paginationHelper(req.query);
-    const query = helpers.queryHelper(req.query);
+    const query = helpers.queryHelper(req.query, null, [{ deleted: false }]);
     const sort = helpers.sortHelper(req.query);
 
     const roles = await repository.findAll({
@@ -74,7 +74,7 @@ const getAllRole = async (toolBox) => {
     };
   } catch (err) {
     logger.log({
-      level: constants.LOG_LEVELS.INFO,
+      level: constants.LOG_LEVELS.ERROR,
       message: 'Function getAllRole Orchestrator has been error',
       args: utils.parseError(err)
     });

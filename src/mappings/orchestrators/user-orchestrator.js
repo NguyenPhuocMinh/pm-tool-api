@@ -42,7 +42,7 @@ const getAllUser = async (toolBox) => {
     const query = helpers.queryHelper(
       req.query,
       ['email'],
-      [{ isAdmin: false }]
+      [{ deleted: false, isAdmin: false }]
     );
     const sort = helpers.sortHelper(req.query);
 

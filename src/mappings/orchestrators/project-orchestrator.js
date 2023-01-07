@@ -34,7 +34,7 @@ const getAllProject = async (toolBox) => {
     });
 
     const { skip, limit } = helpers.paginationHelper(req.query);
-    const query = helpers.queryHelper(req.query);
+    const query = helpers.queryHelper(req.query, null, [{ deleted: false }]);
     const sort = helpers.sortHelper(req.query);
 
     const projects = await repository.findAll({

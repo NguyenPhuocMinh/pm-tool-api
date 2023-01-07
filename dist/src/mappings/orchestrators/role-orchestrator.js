@@ -40,7 +40,9 @@ var getAllRole = /*#__PURE__*/function () {
               message: 'Function getAllRole Orchestrator has been start'
             });
             _helpers$paginationHe = _helpers["default"].paginationHelper(req.query), skip = _helpers$paginationHe.skip, limit = _helpers$paginationHe.limit;
-            query = _helpers["default"].queryHelper(req.query);
+            query = _helpers["default"].queryHelper(req.query, null, [{
+              deleted: false
+            }]);
             sort = _helpers["default"].sortHelper(req.query);
             _context.next = 8;
             return _repository["default"].findAll({
@@ -85,7 +87,7 @@ var getAllRole = /*#__PURE__*/function () {
             _context.prev = 19;
             _context.t0 = _context["catch"](1);
             logger.log({
-              level: _constants["default"].LOG_LEVELS.INFO,
+              level: _constants["default"].LOG_LEVELS.ERROR,
               message: 'Function getAllRole Orchestrator has been error',
               args: _utils["default"].parseError(_context.t0)
             });

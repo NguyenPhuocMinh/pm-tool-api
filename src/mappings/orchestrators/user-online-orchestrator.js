@@ -31,7 +31,9 @@ const getAllUserOnline = async (toolBox) => {
     });
 
     const { skip, limit } = helpers.paginationHelper(req.query);
-    const query = helpers.queryHelper(req.query, null, [{ isOnline: true }]);
+    const query = helpers.queryHelper(req.query, null, [
+      { deleted: false, isOnline: true }
+    ]);
     const sort = helpers.sortHelper(req.query);
 
     const usersOnline = await repository.findAll({

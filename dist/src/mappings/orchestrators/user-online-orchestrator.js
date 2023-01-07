@@ -38,6 +38,7 @@ var getAllUserOnline = /*#__PURE__*/function () {
             });
             _helpers$paginationHe = _helpers["default"].paginationHelper(req.query), skip = _helpers$paginationHe.skip, limit = _helpers$paginationHe.limit;
             query = _helpers["default"].queryHelper(req.query, null, [{
+              deleted: false,
               isOnline: true
             }]);
             sort = _helpers["default"].sortHelper(req.query);

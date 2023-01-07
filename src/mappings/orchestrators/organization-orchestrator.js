@@ -35,7 +35,7 @@ const getAllOrganization = async (toolBox) => {
     });
 
     const { skip, limit } = helpers.paginationHelper(req.query);
-    const query = helpers.queryHelper(req.query);
+    const query = helpers.queryHelper(req.query, null, [{ deleted: false }]);
     const sort = helpers.sortHelper(req.query);
 
     const organizations = await repository.findAll({

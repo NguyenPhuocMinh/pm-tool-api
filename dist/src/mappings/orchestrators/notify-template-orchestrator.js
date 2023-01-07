@@ -37,9 +37,14 @@ var getAllNotifyTemplate = /*#__PURE__*/function () {
           case 0:
             req = toolBox.req;
             _context.prev = 1;
-            logger.info("Function getAllNotifyTemplate has been start");
+            logger.log({
+              level: _constants["default"].LOG_LEVELS.INFO,
+              message: 'Function getAllNotifyTemplate has been start'
+            });
             _helpers$paginationHe = _helpers["default"].paginationHelper(req.query), skip = _helpers$paginationHe.skip, limit = _helpers$paginationHe.limit;
-            query = _helpers["default"].queryHelper(req.query);
+            query = _helpers["default"].queryHelper(req.query, null, [{
+              deleted: false
+            }]);
             sort = _helpers["default"].sortHelper(req.query);
             _context.next = 8;
             return _repository["default"].findAll({
@@ -69,7 +74,10 @@ var getAllNotifyTemplate = /*#__PURE__*/function () {
             return _commons["default"].dataResponsesMapper(notifyTemplates);
           case 14:
             data = _context.sent;
-            logger.info("Function getAllNotifyTemplate has been end");
+            logger.log({
+              level: _constants["default"].LOG_LEVELS.INFO,
+              message: 'Function getAllNotifyTemplate has been end'
+            });
             return _context.abrupt("return", {
               result: {
                 data: data,
@@ -80,8 +88,10 @@ var getAllNotifyTemplate = /*#__PURE__*/function () {
           case 19:
             _context.prev = 19;
             _context.t0 = _context["catch"](1);
-            logger.error("Function getAllNotifyTemplate has error", {
-              args: _utils["default"].formatErrorMsg(_context.t0)
+            logger.log({
+              level: _constants["default"].LOG_LEVELS.ERROR,
+              message: 'Function getAllNotifyTemplate has been error',
+              args: _utils["default"].parseError(_context.t0)
             });
             return _context.abrupt("return", _bluebird["default"].reject(_context.t0));
           case 23:
@@ -109,7 +119,10 @@ var createNotifyTemplate = /*#__PURE__*/function () {
           case 0:
             req = toolBox.req;
             _context2.prev = 1;
-            logger.info("Function createNotifyTemplate has been start");
+            logger.log({
+              level: _constants["default"].LOG_LEVELS.INFO,
+              message: 'Function createNotifyTemplate has been start'
+            });
 
             // validate input
             error = _validators["default"].validatorNotifyTemplateCreate(req.body);
@@ -132,7 +145,10 @@ var createNotifyTemplate = /*#__PURE__*/function () {
           case 11:
             notifyTemplate = _context2.sent;
             data = _transfers["default"].notifyTemplateTransfer(notifyTemplate);
-            logger.info("Function createNotifyTemplate has been end");
+            logger.log({
+              level: _constants["default"].LOG_LEVELS.INFO,
+              message: 'Function createNotifyTemplate has been start'
+            });
             return _context2.abrupt("return", {
               result: {
                 data: data
@@ -142,8 +158,10 @@ var createNotifyTemplate = /*#__PURE__*/function () {
           case 17:
             _context2.prev = 17;
             _context2.t0 = _context2["catch"](1);
-            logger.error("Function createNotifyTemplate has error", {
-              args: _utils["default"].formatErrorMsg(_context2.t0)
+            logger.log({
+              level: _constants["default"].LOG_LEVELS.ERROR,
+              message: 'Function createNotifyTemplate has been error',
+              args: _utils["default"].parseError(_context2.t0)
             });
             return _context2.abrupt("return", _bluebird["default"].reject(_context2.t0));
           case 21:

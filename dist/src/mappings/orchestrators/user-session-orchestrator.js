@@ -41,6 +41,7 @@ var getUserTimelineSession = /*#__PURE__*/function () {
             userID = req.params.userID;
             _helpers$paginationHe = _helpers["default"].paginationHelper(req.query), skip = _helpers$paginationHe.skip, limit = _helpers$paginationHe.limit;
             query = _helpers["default"].queryHelper(req.query, null, [{
+              deleted: false,
               user: userID
             }]);
             sort = _helpers["default"].sortHelper(req.query);

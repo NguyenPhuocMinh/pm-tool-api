@@ -28,10 +28,17 @@ const logger = loggerManager(
 const getAllNotifyTemplate = async (toolBox) => {
   const { req } = toolBox;
   try {
-    logger.info(`Function getAllNotifyTemplate has been start`);
+    logger.log({
+      level: constants.LOG_LEVELS.INFO,
+      message: 'Function getAllNotifyTemplate has been start'
+    });
 
     const { skip, limit } = helpers.paginationHelper(req.query);
-    const query = helpers.queryHelper(req.query);
+    const query = helpers.queryHelper(req.query, null, [
+      {
+        deleted: false
+      }
+    ]);
     const sort = helpers.sortHelper(req.query);
 
     const notifyTemplates = await repository.findAll({
@@ -56,7 +63,10 @@ const getAllNotifyTemplate = async (toolBox) => {
 
     const data = await commons.dataResponsesMapper(notifyTemplates);
 
-    logger.info(`Function getAllNotifyTemplate has been end`);
+    logger.log({
+      level: constants.LOG_LEVELS.INFO,
+      message: 'Function getAllNotifyTemplate has been end'
+    });
 
     return {
       result: {
@@ -66,8 +76,10 @@ const getAllNotifyTemplate = async (toolBox) => {
       msg: 'notifyTemplateS001'
     };
   } catch (err) {
-    logger.error(`Function getAllNotifyTemplate has error`, {
-      args: utils.formatErrorMsg(err)
+    logger.log({
+      level: constants.LOG_LEVELS.ERROR,
+      message: 'Function getAllNotifyTemplate has been error',
+      args: utils.parseError(err)
     });
     return Promise.reject(err);
   }
@@ -80,7 +92,10 @@ const getAllNotifyTemplate = async (toolBox) => {
 const createNotifyTemplate = async (toolBox) => {
   const { req } = toolBox;
   try {
-    logger.info(`Function createNotifyTemplate has been start`);
+    logger.log({
+      level: constants.LOG_LEVELS.INFO,
+      message: 'Function createNotifyTemplate has been start'
+    });
 
     // validate input
     const error = validators.validatorNotifyTemplateCreate(req.body);
@@ -105,7 +120,11 @@ const createNotifyTemplate = async (toolBox) => {
 
     const data = transfers.notifyTemplateTransfer(notifyTemplate);
 
-    logger.info(`Function createNotifyTemplate has been end`);
+    logger.log({
+      level: constants.LOG_LEVELS.INFO,
+      message: 'Function createNotifyTemplate has been start'
+    });
+
     return {
       result: {
         data
@@ -113,8 +132,10 @@ const createNotifyTemplate = async (toolBox) => {
       msg: 'notifyTemplateS002'
     };
   } catch (err) {
-    logger.error(`Function createNotifyTemplate has error`, {
-      args: utils.formatErrorMsg(err)
+    logger.log({
+      level: constants.LOG_LEVELS.ERROR,
+      message: 'Function createNotifyTemplate has been error',
+      args: utils.parseError(err)
     });
     return Promise.reject(err);
   }
