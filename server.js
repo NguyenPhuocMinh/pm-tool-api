@@ -26,7 +26,7 @@ import dbManager from '@core/database';
 import routers from '@routers';
 // adapters
 import redisAdapter from '@adapters/redis';
-import socketAdapter from '@adapters/socket';
+// import socketAdapter from '@adapters/socket';
 import amqpAdapter from '@adapters/amqp';
 import cronAdapter from '@adapters/cron';
 
@@ -109,7 +109,7 @@ const main = async () => {
   /**
    * Socket.IO
    */
-  await socketAdapter.Init(server);
+  // await socketAdapter.Init(server);
 
   server.listen(APP_PORT, APP_HOST, () => {
     const port = server.address().port;

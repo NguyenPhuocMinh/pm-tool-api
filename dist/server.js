@@ -26,7 +26,6 @@ var _logger = _interopRequireDefault(require("./src/core/logger"));
 var _database = _interopRequireDefault(require("./src/core/database"));
 var _routers = _interopRequireDefault(require("./src/routers"));
 var _redis = _interopRequireDefault(require("./src/adapters/redis"));
-var _socket = _interopRequireDefault(require("./src/adapters/socket"));
 var _amqp = _interopRequireDefault(require("./src/adapters/amqp"));
 var _cron = _interopRequireDefault(require("./src/adapters/cron"));
 var _middleware = require("./src/middleware");
@@ -103,9 +102,11 @@ var main = /*#__PURE__*/function () {
             _context.next = 23;
             return _cron["default"].Init();
           case 23:
-            _context.next = 25;
-            return _socket["default"].Init(server);
-          case 25:
+            /**
+             * Socket.IO
+             */
+            // await socketAdapter.Init(server);
+
             server.listen(APP_PORT, APP_HOST, function () {
               var port = server.address().port;
               var host = server.address().address;
@@ -115,7 +116,7 @@ var main = /*#__PURE__*/function () {
                 args: "[".concat(host, ":").concat(port, "]")
               });
             });
-          case 26:
+          case 24:
           case "end":
             return _context.stop();
         }
