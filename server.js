@@ -50,7 +50,7 @@ const main = async () => {
   app.use(
     cors({
       origin: [
-        'https://pm-tool-ui.netlify.app',
+        'https://pm-tool-ui.netlify.app/',
         'https://pm-tool-ui.netlify.app/*'
       ]
     })
