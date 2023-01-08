@@ -43,7 +43,9 @@ var main = /*#__PURE__*/function () {
       while (1) {
         switch (_context.prev = _context.next) {
           case 0:
-            app.use((0, _cors["default"])(_conf.options.corsOptions));
+            app.use((0, _cors["default"])({
+              origin: ['https://pm-tool-ui.netlify.app', 'https://pm-tool-ui.netlify.app/*']
+            }));
             app.use((0, _expressSession["default"])(_conf.options.sessionOptions));
             app.use((0, _cookieParser["default"])());
             app.use((0, _helmet["default"])());
