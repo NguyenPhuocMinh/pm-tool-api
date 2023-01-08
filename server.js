@@ -5,7 +5,7 @@ import express from 'express';
 import cors from 'cors';
 import helmet from 'helmet';
 import morgan from 'morgan';
-// import rateLimit from 'express-rate-limit';
+import rateLimit from 'express-rate-limit';
 import sessionParser from 'express-session';
 import cookieParser from 'cookie-parser';
 import bodyParser from 'body-parser';
@@ -47,18 +47,11 @@ const app = express();
 const server = http.createServer(app);
 
 const main = async () => {
-  app.use(
-    cors({
-      origin: [
-        'https://pm-tool-ui.netlify.app',
-        'https://pm-tool-ui.netlify.app/*'
-      ]
-    })
-  );
+  app.use(cors(options.corsOptions));
   app.use(sessionParser(options.sessionOptions));
   app.use(cookieParser());
   app.use(helmet());
-  // app.use(rateLimit(options.rateLimitOptions));
+  app.use(rateLimit(options.rateLimitOptions));
   app.use(bodyParser.json({ limit: '100mb' }));
   app.use(bodyParser.urlencoded({ limit: '100mb', extended: true }));
   app.use(morgan(loggerMiddleware));
