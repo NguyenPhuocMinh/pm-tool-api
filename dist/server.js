@@ -11,7 +11,6 @@ var _express = _interopRequireDefault(require("express"));
 var _cors = _interopRequireDefault(require("cors"));
 var _helmet = _interopRequireDefault(require("helmet"));
 var _morgan = _interopRequireDefault(require("morgan"));
-var _expressRateLimit = _interopRequireDefault(require("express-rate-limit"));
 var _expressSession = _interopRequireDefault(require("express-session"));
 var _cookieParser = _interopRequireDefault(require("cookie-parser"));
 var _bodyParser = _interopRequireDefault(require("body-parser"));
@@ -50,7 +49,7 @@ var main = /*#__PURE__*/function () {
             app.use((0, _expressSession["default"])(_conf.options.sessionOptions));
             app.use((0, _cookieParser["default"])());
             app.use((0, _helmet["default"])());
-            app.use((0, _expressRateLimit["default"])(_conf.options.rateLimitOptions));
+            // app.use(rateLimit(options.rateLimitOptions));
             app.use(_bodyParser["default"].json({
               limit: '100mb'
             }));
@@ -90,18 +89,18 @@ var main = /*#__PURE__*/function () {
             /**
              * Database
              */
-            _context.next = 17;
+            _context.next = 16;
             return _database["default"].Init();
-          case 17:
-            _context.next = 19;
+          case 16:
+            _context.next = 18;
             return _redis["default"].Init();
-          case 19:
-            _context.next = 21;
+          case 18:
+            _context.next = 20;
             return _amqp["default"].Init();
-          case 21:
-            _context.next = 23;
+          case 20:
+            _context.next = 22;
             return _cron["default"].Init();
-          case 23:
+          case 22:
             /**
              * Socket.IO
              */
@@ -116,7 +115,7 @@ var main = /*#__PURE__*/function () {
                 args: "[".concat(host, ":").concat(port, "]")
               });
             });
-          case 24:
+          case 23:
           case "end":
             return _context.stop();
         }
