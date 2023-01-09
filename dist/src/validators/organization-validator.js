@@ -21,7 +21,9 @@ var validatorOrganization = function validatorOrganization(data) {
     message: 'Function validatorOrganization has been start with data',
     args: data
   });
-  var _schemaOrganization$v = schemaOrganization.validate(data),
+  var _schemaOrganization$v = schemaOrganization.validate(data, {
+      allowUnknown: true
+    }),
     error = _schemaOrganization$v.error;
   if (error) {
     logger.log({

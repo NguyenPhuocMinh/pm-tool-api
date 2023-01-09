@@ -21,7 +21,9 @@ var validatorProject = function validatorProject(data) {
     message: 'Function validatorProject has been start with data',
     args: data
   });
-  var _schemaProject$valida = schemaProject.validate(data),
+  var _schemaProject$valida = schemaProject.validate(data, {
+      allowUnknown: true
+    }),
     error = _schemaProject$valida.error;
   if (error) {
     logger.log({

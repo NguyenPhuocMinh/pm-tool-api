@@ -23,7 +23,9 @@ export const validatorOrganization = (data) => {
     args: data
   });
 
-  const { error } = schemaOrganization.validate(data);
+  const { error } = schemaOrganization.validate(data, {
+    allowUnknown: true
+  });
 
   if (error) {
     logger.log({

@@ -23,7 +23,9 @@ export const validatorProject = (data) => {
     args: data
   });
 
-  const { error } = schemaProject.validate(data);
+  const { error } = schemaProject.validate(data, {
+    allowUnknown: true
+  });
 
   if (error) {
     logger.log({
