@@ -48,7 +48,7 @@ const server = http.createServer(app);
 const main = async () => {
   app.use(
     cors({
-      origin: 'http://192.168.0.100:63760'
+      origin: 'https://pm-tool-ui.netlify.app'
     })
   );
   app.use(sessionParser(options.sessionOptions));
