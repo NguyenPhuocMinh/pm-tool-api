@@ -10,9 +10,10 @@ var _nanoid = require("nanoid");
 var _expressSession = _interopRequireDefault(require("express-session"));
 var _profiles = _interopRequireDefault(require("./profiles"));
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
-var allowList = ['https://pm-tool-ui.netlify.app', 'https://pm-tool-ui.netlify.app/*', 'http://localhost:3500', 'http://localhost:3500/*'];
+var allowList = ['https://pm-tool-ui.netlify.app', 'https://pm-tool-ui.netlify.app/', 'https://pm-tool-ui.netlify.app/*', 'http://localhost:3500', 'http://localhost:3500/*'];
 var corsOptions = {
-  origin: allowList
+  origin: allowList,
+  credentials: true
 };
 var cookieOptions = {
   maxAge: 1000 * 60 * 15,

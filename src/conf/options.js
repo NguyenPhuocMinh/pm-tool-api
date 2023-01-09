@@ -7,13 +7,15 @@ import profiles from './profiles';
 
 const allowList = [
   'https://pm-tool-ui.netlify.app',
+  'https://pm-tool-ui.netlify.app/',
   'https://pm-tool-ui.netlify.app/*',
   'http://localhost:3500',
   'http://localhost:3500/*'
 ];
 
 const corsOptions = {
-  origin: allowList
+  origin: allowList,
+  credentials: true
 };
 
 const cookieOptions = {
