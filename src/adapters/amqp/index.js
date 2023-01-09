@@ -98,7 +98,6 @@ const publisher = async (queueName, messageType, correlationId, payload) => {
       message: 'Func publisher has been error',
       args: utils.parseError(err)
     });
-    await channel.close();
     throw err;
   }
 };

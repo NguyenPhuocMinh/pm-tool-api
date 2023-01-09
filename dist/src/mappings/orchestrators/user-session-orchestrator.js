@@ -184,7 +184,10 @@ var updateUserSession = /*#__PURE__*/function () {
             _context3.prev = 1;
             logger.log({
               level: _constants["default"].LOG_LEVELS.INFO,
-              message: 'Function updateUserSession Orchestrator has been start'
+              message: 'Function updateUserSession Orchestrator has been start',
+              args: {
+                records: records
+              }
             });
             id = records.id, reason = records.reason;
             _context3.next = 6;
@@ -299,13 +302,20 @@ var getUserSession = /*#__PURE__*/function () {
         switch (_context5.prev = _context5.next) {
           case 0:
             _context5.prev = 0;
+            logger.log({
+              level: _constants["default"].LOG_LEVELS.DEBUG,
+              message: 'Function getUserSession Orchestrator has been start',
+              args: {
+                id: id
+              }
+            });
             if (!(0, _lodash.isEmpty)(id)) {
-              _context5.next = 3;
+              _context5.next = 4;
               break;
             }
             throw _commons["default"].newError('userSessionE001');
-          case 3:
-            _context5.next = 5;
+          case 4:
+            _context5.next = 6;
             return _repository["default"].getOne({
               type: 'UserSessionModel',
               id: id,
@@ -319,11 +329,11 @@ var getUserSession = /*#__PURE__*/function () {
                 }]
               }
             });
-          case 5:
+          case 6:
             session = _context5.sent;
             return _context5.abrupt("return", session);
-          case 9:
-            _context5.prev = 9;
+          case 10:
+            _context5.prev = 10;
             _context5.t0 = _context5["catch"](0);
             logger.log({
               level: _constants["default"].LOG_LEVELS.ERROR,
@@ -331,12 +341,12 @@ var getUserSession = /*#__PURE__*/function () {
               args: _utils["default"].parseError(_context5.t0)
             });
             throw _context5.t0;
-          case 13:
+          case 14:
           case "end":
             return _context5.stop();
         }
       }
-    }, _callee5, null, [[0, 9]]);
+    }, _callee5, null, [[0, 10]]);
   }));
   return function getUserSession(_x6) {
     return _ref5.apply(this, arguments);

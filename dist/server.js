@@ -44,12 +44,11 @@ var main = /*#__PURE__*/function () {
         switch (_context.prev = _context.next) {
           case 0:
             app.use((0, _cors["default"])({
-              origin: 'https://pm-tool-ui.netlify.app'
+              origin: 'http://192.168.0.100:63760'
             }));
             app.use((0, _expressSession["default"])(_conf.options.sessionOptions));
             app.use((0, _cookieParser["default"])());
             app.use((0, _helmet["default"])());
-            // app.use(rateLimit(options.rateLimitOptions));
             app.use(_bodyParser["default"].json({
               limit: '100mb'
             }));

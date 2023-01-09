@@ -120,7 +120,7 @@ var publisher = /*#__PURE__*/function () {
               message: "[*] publisher has been send message to queueName: ".concat(queueName, " with payload"),
               args: payload
             });
-            _context2.next = 15;
+            _context2.next = 13;
             break;
           case 9:
             _context2.prev = 9;
@@ -130,11 +130,8 @@ var publisher = /*#__PURE__*/function () {
               message: 'Func publisher has been error',
               args: _utils["default"].parseError(_context2.t0)
             });
-            _context2.next = 14;
-            return channel.close();
-          case 14:
             throw _context2.t0;
-          case 15:
+          case 13:
           case "end":
             return _context2.stop();
         }

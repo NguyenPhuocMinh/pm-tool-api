@@ -110,7 +110,7 @@ const getValue = async (key) => {
   } catch (err) {
     logger.log({
       level: constants.LOG_LEVELS.ERROR,
-      message: 'Function getValue has been start error',
+      message: 'Function getValue has been has been error',
       args: utils.parseError(err)
     });
     throw err;

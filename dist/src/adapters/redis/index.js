@@ -161,7 +161,7 @@ var getValue = /*#__PURE__*/function () {
             _context3.t0 = _context3["catch"](0);
             logger.log({
               level: _constants["default"].LOG_LEVELS.ERROR,
-              message: 'Function getValue has been start error',
+              message: 'Function getValue has been has been error',
               args: _utils["default"].parseError(_context3.t0)
             });
             throw _context3.t0;

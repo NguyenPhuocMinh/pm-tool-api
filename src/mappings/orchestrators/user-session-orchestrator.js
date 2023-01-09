@@ -147,7 +147,10 @@ const updateUserSession = async (toolBox, records) => {
   try {
     logger.log({
       level: constants.LOG_LEVELS.INFO,
-      message: 'Function updateUserSession Orchestrator has been start'
+      message: 'Function updateUserSession Orchestrator has been start',
+      args: {
+        records
+      }
     });
 
     const { id, reason } = records;
@@ -234,6 +237,13 @@ const deleteUserSession = async (toolBox) => {
  */
 const getUserSession = async (id) => {
   try {
+    logger.log({
+      level: constants.LOG_LEVELS.DEBUG,
+      message: 'Function getUserSession Orchestrator has been start',
+      args: {
+        id
+      }
+    });
     if (isEmpty(id)) {
       throw commons.newError('userSessionE001');
     }
