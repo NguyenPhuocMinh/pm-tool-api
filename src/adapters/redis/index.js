@@ -25,7 +25,16 @@ let redisClient = null;
  */
 const Init = async () => {
   try {
-    redisClient = createClient({ url: profiles.APP_REDIS_URI });
+    redisClient = createClient({ url: profiles.APP_REDIS_URI, legacyMode: true });
+
+    redisClient.on('error', (err) => {
+      logger.log({
+        level: constants.LOG_LEVELS.ERROR,
+        message: 'The redis has error connection',
+        args: utils.parseError(err)
+      });
+      console.error('The redis has error connection', err);
+    });
 
     await redisClient.connect();
     logger.log({

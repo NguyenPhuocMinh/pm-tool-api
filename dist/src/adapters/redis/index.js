@@ -32,20 +32,29 @@ var Init = /*#__PURE__*/function () {
           case 0:
             _context.prev = 0;
             redisClient = (0, _redis.createClient)({
-              url: _conf.profiles.APP_REDIS_URI
+              url: _conf.profiles.APP_REDIS_URI,
+              legacyMode: true
             });
-            _context.next = 4;
+            redisClient.on('error', function (err) {
+              logger.log({
+                level: _constants["default"].LOG_LEVELS.ERROR,
+                message: 'The redis has error connection',
+                args: _utils["default"].parseError(err)
+              });
+              console.error('The redis has error connection', err);
+            });
+            _context.next = 5;
             return redisClient.connect();
-          case 4:
+          case 5:
             logger.log({
               level: _constants["default"].LOG_LEVELS.INFO,
               message: 'The redis is running on',
               args: "[".concat(APP_REDIS_URI, "]")
             });
-            _context.next = 13;
+            _context.next = 14;
             break;
-          case 7:
-            _context.prev = 7;
+          case 8:
+            _context.prev = 8;
             _context.t0 = _context["catch"](0);
             logger.log({
               level: _constants["default"].LOG_LEVELS.ERROR,
@@ -63,12 +72,12 @@ var Init = /*#__PURE__*/function () {
               }
             });
             throw _context.t0;
-          case 13:
+          case 14:
           case "end":
             return _context.stop();
         }
       }
-    }, _callee, null, [[0, 7]]);
+    }, _callee, null, [[0, 8]]);
   }));
   return function Init() {
     return _ref.apply(this, arguments);
