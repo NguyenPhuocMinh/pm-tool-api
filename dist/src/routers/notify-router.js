@@ -10,16 +10,6 @@ var _controllers = require("../mappings/controllers");
  * @description Notify router
  */
 var notifyRouter = [{
-  pathName: '/notifies/user',
-  method: 'GET',
-  methodName: 'getAllNotifyOfUser',
-  controller: _controllers.notifyController.getAllNotifyOfUser
-}, {
-  pathName: '/notifies/:id',
-  method: 'GET',
-  methodName: 'getNotifyById',
-  controller: _controllers.notifyController.getNotifyById
-}, {
   pathName: '/notifies/change-password-temporary',
   method: 'POST',
   methodName: 'notifyChangePasswordTemporary',

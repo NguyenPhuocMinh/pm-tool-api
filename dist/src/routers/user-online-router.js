@@ -10,7 +10,7 @@ var _controllers = require("../mappings/controllers");
  * @description User Online Router
  */
 var userOnlineRouter = [{
-  pathName: '/users-online',
+  pathName: '/userOnline',
   method: 'GET',
   methodName: 'getAllUserOnline',
   controller: _controllers.userOnlineController.getAllUserOnline

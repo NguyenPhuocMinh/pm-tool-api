@@ -7,7 +7,7 @@ import { userOnlineController } from '@mappings/controllers';
  */
 const userOnlineRouter = [
   {
-    pathName: '/users-online',
+    pathName: '/userOnline',
     method: 'GET',
     methodName: 'getAllUserOnline',
     controller: userOnlineController.getAllUserOnline
