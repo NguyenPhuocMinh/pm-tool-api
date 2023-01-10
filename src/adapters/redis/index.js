@@ -109,7 +109,7 @@ const getValue = async (key) => {
       message: 'Function getValue has been start with',
       args: key
     });
-    const data = await redisClient.get(key);
+    const data = await redisClient?.get(key);
 
     logger.log({
       level: constants.LOG_LEVELS.DEBUG,

@@ -145,7 +145,7 @@ var setExValue = /*#__PURE__*/function () {
  */
 var getValue = /*#__PURE__*/function () {
   var _ref3 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee3(key) {
-    var data;
+    var _redisClient, data;
     return _regeneratorRuntime().wrap(function _callee3$(_context3) {
       while (1) {
         switch (_context3.prev = _context3.next) {
@@ -157,7 +157,7 @@ var getValue = /*#__PURE__*/function () {
               args: key
             });
             _context3.next = 4;
-            return redisClient.get(key);
+            return (_redisClient = redisClient) === null || _redisClient === void 0 ? void 0 : _redisClient.get(key);
           case 4:
             data = _context3.sent;
             logger.log({

@@ -45,7 +45,7 @@
     "node-cron": "^3.0.2",
     "node-fetch": "^2.6.7",
     "randomstring": "^1.2.3",
-    "redis": "^4.5.0",
+    "redis": "^4.5.1",
     "retry": "^0.13.1",
     "serve-favicon": "^2.5.0",
     "slugify": "^1.6.5",
