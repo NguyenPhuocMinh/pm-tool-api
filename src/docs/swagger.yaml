@@ -1483,6 +1483,57 @@ paths:
         500:
           $ref: "#/components/responses/ServerError"
 
+  /notifyTemplates:
+    get:
+      tags:
+        - notify-user
+      security:
+        - X-Access-Token: []
+      summary: Get All Template Notify
+      description: Get All Template Notify
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/commonResponse"
+        400:
+          $ref: "#/components/responses/BadRequest"
+        404:
+          $ref: "#/components/responses/NotFound"
+        500:
+          $ref: "#/components/responses/ServerError"
+
+    post:
+      tags:
+        - notify-user
+      security: []
+      summary: Create Template Notify
+      description: Create Template Notify
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/notifyTemplateReqBody"
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/commonResponse"
+        400:
+          $ref: "#/components/responses/BadRequest"
+        401:
+          $ref: "#/components/responses/UnAuthorization"
+        403:
+          $ref: "#/components/responses/Forbidden"
+        404:
+          $ref: "#/components/responses/NotFound"
+        500:
+          $ref: "#/components/responses/ServerError"
+
 ## components
 components:
   # security
@@ -1769,3 +1820,22 @@ components:
       properties:
         id:
           type: string
+
+    notifyTemplateReqBody:
+      type: object
+      required:
+        - topic
+        - description
+        - content
+        - type
+      properties:
+        topic:
+          type: string
+        description:
+          type: string
+        content:
+          type: string
+        type:
+          type: string
+        activated:
+          type: boolean

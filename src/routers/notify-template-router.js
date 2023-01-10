@@ -7,13 +7,13 @@ import { notifyTemplateController } from '@mappings/controllers';
  */
 const notifyTemplateRouter = [
   {
-    pathName: '/notify-templates',
+    pathName: '/notifyTemplates',
     method: 'GET',
     methodName: 'getAllNotifyTemplate',
     controller: notifyTemplateController.getAllNotifyTemplate
   },
   {
-    pathName: '/notify-templates',
+    pathName: '/notifyTemplates',
     method: 'POST',
     methodName: 'createNotifyTemplate',
     controller: notifyTemplateController.createNotifyTemplate
