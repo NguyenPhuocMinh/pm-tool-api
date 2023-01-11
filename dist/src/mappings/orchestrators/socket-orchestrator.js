@@ -32,7 +32,7 @@ var getSocket = /*#__PURE__*/function () {
             logger.log({
               level: _constants["default"].LOG_LEVELS.INFO,
               message: 'Function getSocket Orchestrator has been start',
-              args: req.path
+              args: req
             });
             logger.log({
               level: _constants["default"].LOG_LEVELS.INFO,
@@ -42,7 +42,7 @@ var getSocket = /*#__PURE__*/function () {
               result: {
                 data: null
               },
-              msg: 'testS001'
+              msg: 'socketS001'
             });
           case 7:
             _context.prev = 7;
@@ -88,7 +88,7 @@ var postSocket = /*#__PURE__*/function () {
               result: {
                 data: null
               },
-              msg: 'testS001'
+              msg: 'socketS002'
             });
           case 6:
             _context2.prev = 6;

@@ -19,12 +19,11 @@ const logger = loggerManager(
  */
 const getSocket = async (toolBox) => {
   const { req } = toolBox;
-
   try {
     logger.log({
       level: constants.LOG_LEVELS.INFO,
       message: 'Function getSocket Orchestrator has been start',
-      args: req.path
+      args: req
     });
 
     logger.log({
@@ -36,7 +35,7 @@ const getSocket = async (toolBox) => {
       result: {
         data: null
       },
-      msg: 'testS001'
+      msg: 'socketS001'
     };
   } catch (err) {
     logger.log({
@@ -68,7 +67,7 @@ const postSocket = async (toolBox) => {
       result: {
         data: null
       },
-      msg: 'testS001'
+      msg: 'socketS002'
     };
   } catch (err) {
     logger.log({
