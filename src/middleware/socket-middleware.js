@@ -43,7 +43,8 @@ const socketMiddleware = async (socket, next) => {
           msg: 'Not found token socket'
         }
       });
-      throw commons.newError('authE0010');
+      const tokenSocketNotFound = commons.newError('authE0010');
+      return next(tokenSocketNotFound);
     }
 
     /**
@@ -69,7 +70,7 @@ const socketMiddleware = async (socket, next) => {
           default:
             break;
         }
-        throw tokenError;
+        return next(tokenError);
       } else {
         /**
          * Check blacklist token
@@ -86,7 +87,8 @@ const socketMiddleware = async (socket, next) => {
             }
           });
 
-          throw commons.newError('authE009');
+          const tokenSocketInBlackList = commons.newError('authE009');
+          return next(tokenSocketInBlackList);
         } else {
           return next();
         }
@@ -98,7 +100,7 @@ const socketMiddleware = async (socket, next) => {
       message: 'Function socketMiddleware has been error',
       args: utils.parseError(err)
     });
-    throw err;
+    return next(err);
   }
 };
 

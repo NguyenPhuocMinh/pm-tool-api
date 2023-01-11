@@ -11,8 +11,6 @@ import utils from '@utils';
 import loggerManager from '@core/logger';
 // workers
 import workers from '@workers';
-// middleware
-import { socketMiddleware } from '@middleware';
 
 const logger = loggerManager(
   constants.APP_NAME,
@@ -34,8 +32,6 @@ const Init = async (httpServer) => {
         credentials: true
       }
     });
-
-    io.use(socketMiddleware);
 
     io.on('connection', (socket) => {
       logger.log({

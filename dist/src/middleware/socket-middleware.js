@@ -21,7 +21,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 var logger = (0, _logger["default"])(_constants["default"].APP_NAME, _constants["default"].STRUCT_MIDDLEWARE.SOCKET_MIDDLEWARE);
 var socketMiddleware = /*#__PURE__*/function () {
   var _ref = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee2(socket, next) {
-    var token, _helpers$getSecretJso, publicSecret;
+    var token, tokenSocketNotFound, _helpers$getSecretJso, publicSecret;
     return _regeneratorRuntime().wrap(function _callee2$(_context2) {
       while (1) {
         switch (_context2.prev = _context2.next) {
@@ -41,7 +41,7 @@ var socketMiddleware = /*#__PURE__*/function () {
               args: [token]
             });
             if (!(0, _lodash.isEmpty)(token)) {
-              _context2.next = 7;
+              _context2.next = 8;
               break;
             }
             logger.log({
@@ -51,15 +51,16 @@ var socketMiddleware = /*#__PURE__*/function () {
                 msg: 'Not found token socket'
               }
             });
-            throw _commons["default"].newError('authE0010');
-          case 7:
+            tokenSocketNotFound = _commons["default"].newError('authE0010');
+            return _context2.abrupt("return", next(tokenSocketNotFound));
+          case 8:
             /**
              * Check valid token
              */
             _helpers$getSecretJso = _helpers["default"].getSecretJsonHelper(), publicSecret = _helpers$getSecretJso.publicSecret;
             _jsonwebtoken["default"].verify(token, publicSecret, /*#__PURE__*/function () {
               var _ref2 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee(err, decoded) {
-                var tokenError, blacklistToken;
+                var tokenError, blacklistToken, tokenSocketInBlackList;
                 return _regeneratorRuntime().wrap(function _callee$(_context) {
                   while (1) {
                     switch (_context.prev = _context.next) {
@@ -85,14 +86,14 @@ var socketMiddleware = /*#__PURE__*/function () {
                       case 9:
                         return _context.abrupt("break", 10);
                       case 10:
-                        throw tokenError;
+                        return _context.abrupt("return", next(tokenError));
                       case 13:
                         _context.next = 15;
                         return _redis["default"].getValue("blacklist_".concat(decoded.id));
                       case 15:
                         blacklistToken = _context.sent;
                         if (!(!(0, _lodash.isEmpty)(blacklistToken) && (0, _lodash.isEqual)(token, blacklistToken))) {
-                          _context.next = 21;
+                          _context.next = 22;
                           break;
                         }
                         logger.log({
@@ -102,10 +103,11 @@ var socketMiddleware = /*#__PURE__*/function () {
                             msg: 'Token socket in black list'
                           }
                         });
-                        throw _commons["default"].newError('authE009');
-                      case 21:
-                        return _context.abrupt("return", next());
+                        tokenSocketInBlackList = _commons["default"].newError('authE009');
+                        return _context.abrupt("return", next(tokenSocketInBlackList));
                       case 22:
+                        return _context.abrupt("return", next());
+                      case 23:
                       case "end":
                         return _context.stop();
                     }
@@ -116,23 +118,23 @@ var socketMiddleware = /*#__PURE__*/function () {
                 return _ref2.apply(this, arguments);
               };
             }());
-            _context2.next = 15;
+            _context2.next = 16;
             break;
-          case 11:
-            _context2.prev = 11;
+          case 12:
+            _context2.prev = 12;
             _context2.t0 = _context2["catch"](0);
             logger.log({
               level: _constants["default"].LOG_LEVELS.ERROR,
               message: 'Function socketMiddleware has been error',
               args: _utils["default"].parseError(_context2.t0)
             });
-            throw _context2.t0;
-          case 15:
+            return _context2.abrupt("return", next(_context2.t0));
+          case 16:
           case "end":
             return _context2.stop();
         }
       }
-    }, _callee2, null, [[0, 11]]);
+    }, _callee2, null, [[0, 12]]);
   }));
   return function socketMiddleware(_x, _x2) {
     return _ref.apply(this, arguments);
