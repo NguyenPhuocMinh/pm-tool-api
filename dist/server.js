@@ -18,6 +18,7 @@ var _swaggerUiExpress = _interopRequireDefault(require("swagger-ui-express"));
 var _yamljs = _interopRequireDefault(require("yamljs"));
 var _path = _interopRequireDefault(require("path"));
 var _serveFavicon = _interopRequireDefault(require("serve-favicon"));
+var _socket = require("socket.io");
 var _conf = require("./src/conf");
 var _constants = _interopRequireDefault(require("./src/constants"));
 var _utils = _interopRequireDefault(require("./src/utils"));
@@ -25,7 +26,6 @@ var _logger = _interopRequireDefault(require("./src/core/logger"));
 var _database = _interopRequireDefault(require("./src/core/database"));
 var _routers = _interopRequireDefault(require("./src/routers"));
 var _redis = _interopRequireDefault(require("./src/adapters/redis"));
-var _socket = _interopRequireDefault(require("./src/adapters/socket"));
 var _amqp = _interopRequireDefault(require("./src/adapters/amqp"));
 var _cron = _interopRequireDefault(require("./src/adapters/cron"));
 var _middleware = require("./src/middleware");
@@ -41,7 +41,7 @@ var app = (0, _express["default"])();
 var server = _http["default"].createServer(app);
 var main = /*#__PURE__*/function () {
   var _ref = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee() {
-    var swaggerYaml;
+    var swaggerYaml, io;
     return _regeneratorRuntime().wrap(function _callee$(_context) {
       while (1) {
         switch (_context.prev = _context.next) {
@@ -70,6 +70,20 @@ var main = /*#__PURE__*/function () {
               message: 'The documents is running on path',
               args: APP_DOCS_PATH
             });
+            io = new _socket.Server(server, {
+              cors: {
+                origin: _conf.options.allowList,
+                methods: ['GET', 'POST'],
+                credentials: true
+              }
+            });
+            io.on('connection', function (socket) {
+              logger.log({
+                level: _constants["default"].LOG_LEVELS.INFO,
+                message: 'We are live and connected',
+                args: socket.id
+              });
+            });
 
             /**
              * Routers
@@ -89,21 +103,23 @@ var main = /*#__PURE__*/function () {
             /**
              * Database
              */
-            _context.next = 16;
-            return _database["default"].Init();
-          case 16:
             _context.next = 18;
-            return _redis["default"].Init();
+            return _database["default"].Init();
           case 18:
             _context.next = 20;
-            return _amqp["default"].Init();
+            return _redis["default"].Init();
           case 20:
             _context.next = 22;
-            return _cron["default"].Init();
+            return _amqp["default"].Init();
           case 22:
             _context.next = 24;
-            return _socket["default"].Init(server);
+            return _cron["default"].Init();
           case 24:
+            /**
+             * Socket.IO
+             */
+            // await socketAdapter.Init(server);
+
             server.listen(APP_PORT, APP_HOST, function () {
               var port = server.address().port;
               var host = server.address().address;
