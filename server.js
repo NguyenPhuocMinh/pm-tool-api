@@ -12,7 +12,6 @@ import swaggerUI from 'swagger-ui-express';
 import YAML from 'yamljs';
 import path from 'path';
 import favicon from 'serve-favicon';
-import { Server } from 'socket.io';
 
 // conf
 import { options, profiles } from '@conf';
@@ -26,7 +25,7 @@ import dbManager from '@core/database';
 import routers from '@routers';
 // adapters
 import redisAdapter from '@adapters/redis';
-// import socketAdapter from '@adapters/socket';
+import socketAdapter from '@adapters/socket';
 import amqpAdapter from '@adapters/amqp';
 import cronAdapter from '@adapters/cron';
 
@@ -70,37 +69,6 @@ const main = async () => {
     args: APP_DOCS_PATH
   });
 
-  const io = new Server(server, {
-    cors: {
-      origin: options.allowList,
-      methods: ['GET', 'POST'],
-      credentials: true
-    }
-  });
-
-  io.on('connection', (socket) => {
-    logger.log({
-      level: constants.LOG_LEVELS.INFO,
-      message: 'We are live and connected',
-      args: socket.id
-    });
-  });
-
-  /**
-   * Routers
-   */
-  app.use(routers);
-
-  /**
-   * Router Not Found
-   */
-  app.use('*', routerMiddleware);
-
-  /**
-   * Error handler
-   */
-  app.use(errorMiddleware);
-
   /**
    * Database
    */
@@ -124,7 +92,22 @@ const main = async () => {
   /**
    * Socket.IO
    */
-  // await socketAdapter.Init(server);
+  await socketAdapter.Init(server);
+
+  /**
+   * Routers
+   */
+  app.use(routers);
+
+  /**
+   * Router Not Found
+   */
+  app.use('*', routerMiddleware);
+
+  /**
+   * Error handler
+   */
+  app.use(errorMiddleware);
 
   server.listen(APP_PORT, APP_HOST, () => {
     const port = server.address().port;
