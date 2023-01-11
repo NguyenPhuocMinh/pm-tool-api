@@ -14,6 +14,7 @@ import { authMiddleware } from '@middleware';
 
 // test
 import testRouter from './test-router';
+import socketRouter from './socket-router';
 
 import authRouter from './auth-router';
 import configRouter from './config-router';
@@ -36,6 +37,7 @@ const logger = loggerManager(constants.APP_NAME, constants.STRUCT_NAME_ROUTER);
 
 const routes = [
   ...testRouter,
+  ...socketRouter,
   ...authRouter,
   ...configRouter,
   ...homeRouter,

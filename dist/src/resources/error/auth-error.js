@@ -59,6 +59,12 @@ var _default = {
     description: 'Token In Black List',
     returnCode: 0,
     statusCode: 401
+  },
+  authE0010: {
+    message: 'auth.notifications.errors.e009',
+    description: 'Token Socket Not Found',
+    returnCode: 0,
+    statusCode: 401
   }
 };
 exports["default"] = _default;

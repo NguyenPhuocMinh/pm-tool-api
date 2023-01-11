@@ -12,6 +12,7 @@ var _utils = _interopRequireDefault(require("../utils"));
 var _logger = _interopRequireDefault(require("../core/logger"));
 var _middleware = require("../middleware");
 var _testRouter = _interopRequireDefault(require("./test-router"));
+var _socketRouter = _interopRequireDefault(require("./socket-router"));
 var _authRouter = _interopRequireDefault(require("./auth-router"));
 var _configRouter = _interopRequireDefault(require("./config-router"));
 var _homeRouter = _interopRequireDefault(require("./home-router"));
@@ -35,7 +36,7 @@ function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) return _arrayLikeToAr
 function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
 var router = _express["default"].Router();
 var logger = (0, _logger["default"])(_constants["default"].APP_NAME, _constants["default"].STRUCT_NAME_ROUTER);
-var routes = [].concat(_toConsumableArray(_testRouter["default"]), _toConsumableArray(_authRouter["default"]), _toConsumableArray(_configRouter["default"]), _toConsumableArray(_homeRouter["default"]), _toConsumableArray(_healthRouter["default"]), _toConsumableArray(_organizationRouter["default"]), _toConsumableArray(_projectRouter["default"]), _toConsumableArray(_roleRouter["default"]), _toConsumableArray(_permissionRouter["default"]), _toConsumableArray(_userRouter["default"]), _toConsumableArray(_userSessionRouter["default"]), _toConsumableArray(_userOnlineRouter["default"]), _toConsumableArray(_notifyRouter["default"]), _toConsumableArray(_notifyUserRouter["default"]), _toConsumableArray(_notifyTemplateRouter["default"]));
+var routes = [].concat(_toConsumableArray(_testRouter["default"]), _toConsumableArray(_socketRouter["default"]), _toConsumableArray(_authRouter["default"]), _toConsumableArray(_configRouter["default"]), _toConsumableArray(_homeRouter["default"]), _toConsumableArray(_healthRouter["default"]), _toConsumableArray(_organizationRouter["default"]), _toConsumableArray(_projectRouter["default"]), _toConsumableArray(_roleRouter["default"]), _toConsumableArray(_permissionRouter["default"]), _toConsumableArray(_userRouter["default"]), _toConsumableArray(_userSessionRouter["default"]), _toConsumableArray(_userOnlineRouter["default"]), _toConsumableArray(_notifyRouter["default"]), _toConsumableArray(_notifyUserRouter["default"]), _toConsumableArray(_notifyTemplateRouter["default"]));
 
 /**
  * @description Init layer router

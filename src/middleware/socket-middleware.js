@@ -27,8 +27,7 @@ const socketMiddleware = async (socket, next) => {
     /**
      * Verify token
      */
-    const { auth } = socket.handshake.headers;
-    const token = auth.split(' ')[1];
+    const token = socket.handshake.auth.token;
 
     logger.log({
       level: constants.LOG_LEVELS.VERBOSE,
@@ -41,10 +40,10 @@ const socketMiddleware = async (socket, next) => {
         level: constants.LOG_LEVELS.ERROR,
         message: 'Function socketMiddleware has been end with message',
         args: {
-          msg: 'Not found token in header or cookie'
+          msg: 'Not found token socket'
         }
       });
-      throw commons.newError('authE005');
+      throw commons.newError('authE0010');
     }
 
     /**
@@ -83,11 +82,13 @@ const socketMiddleware = async (socket, next) => {
             level: constants.LOG_LEVELS.ERROR,
             message: 'Function socketMiddleware has been end with message',
             args: {
-              msg: 'Token in black list in redis'
+              msg: 'Token socket in black list'
             }
           });
 
           throw commons.newError('authE009');
+        } else {
+          return next();
         }
       }
     });

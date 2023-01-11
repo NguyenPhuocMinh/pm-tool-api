@@ -43,6 +43,7 @@ const STRUCT_BUILDS = {
  */
 const BASE_CONTROLLER = 'base-controller';
 const TEST_CONTROLLER = 'test-controller';
+const SOCKET_CONTROLLER = 'socket-controller';
 const AUTH_CONTROLLER = 'auth-controller';
 const CONFIG_CONTROLLER = 'config-controller';
 const HOME_CONTROLLER = 'home-controller';
@@ -61,6 +62,7 @@ const NOTIFY_TEMPLATE_CONTROLLER = 'notify-template-controller';
 const STRUCT_CONTROLLERS = {
   BASE_CONTROLLER,
   TEST_CONTROLLER,
+  SOCKET_CONTROLLER,
   AUTH_CONTROLLER,
   CONFIG_CONTROLLER,
   HOME_CONTROLLER,
@@ -82,6 +84,7 @@ const STRUCT_CONTROLLERS = {
  */
 const BASE_ORCHESTRATOR = 'base-orchestrator';
 const TEST_ORCHESTRATOR = 'test-orchestrator';
+const SOCKET_ORCHESTRATOR = 'socket-orchestrator';
 const AUTH_ORCHESTRATOR = 'auth-orchestrator';
 const CONFIG_ORCHESTRATOR = 'config-orchestrator';
 const HOME_ORCHESTRATOR = 'home-orchestrator';
@@ -100,6 +103,7 @@ const NOTIFY_TEMPLATE_ORCHESTRATOR = 'notify-template-orchestrator';
 const STRUCT_ORCHESTRATORS = {
   BASE_ORCHESTRATOR,
   TEST_ORCHESTRATOR,
+  SOCKET_ORCHESTRATOR,
   AUTH_ORCHESTRATOR,
   CONFIG_ORCHESTRATOR,
   HOME_ORCHESTRATOR,
@@ -286,6 +290,7 @@ const CRON_EXPRESSIONS = {
  */
 const types = {
   MsgTypeTest: 'TEST',
+  MsgTypeSocket: 'SOCKET',
   MsgTypeAuth: 'AUTH',
   MsgTypeConfig: 'CONFIG',
   MsgTypeHome: 'HOME',
@@ -307,6 +312,14 @@ const types = {
  */
 const testActions = {
   MsgActionTestSendQueue: 'TEST_SEND_QUEUE'
+};
+
+/**
+ * @description SOCKET ACTIONS
+ */
+const socketActions = {
+  MsgActionGetSocket: 'GET_SOCKET',
+  MsgActionPostSocket: 'POST_SOCKET'
 };
 
 /**
@@ -477,6 +490,7 @@ const senders = {
 
 const actions = {
   ...testActions,
+  ...socketActions,
   ...authActions,
   ...configActions,
   ...homeActions,

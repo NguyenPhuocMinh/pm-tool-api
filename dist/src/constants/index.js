@@ -48,6 +48,7 @@ var STRUCT_BUILDS = {
  */
 var BASE_CONTROLLER = 'base-controller';
 var TEST_CONTROLLER = 'test-controller';
+var SOCKET_CONTROLLER = 'socket-controller';
 var AUTH_CONTROLLER = 'auth-controller';
 var CONFIG_CONTROLLER = 'config-controller';
 var HOME_CONTROLLER = 'home-controller';
@@ -65,6 +66,7 @@ var NOTIFY_TEMPLATE_CONTROLLER = 'notify-template-controller';
 var STRUCT_CONTROLLERS = {
   BASE_CONTROLLER: BASE_CONTROLLER,
   TEST_CONTROLLER: TEST_CONTROLLER,
+  SOCKET_CONTROLLER: SOCKET_CONTROLLER,
   AUTH_CONTROLLER: AUTH_CONTROLLER,
   CONFIG_CONTROLLER: CONFIG_CONTROLLER,
   HOME_CONTROLLER: HOME_CONTROLLER,
@@ -86,6 +88,7 @@ var STRUCT_CONTROLLERS = {
  */
 var BASE_ORCHESTRATOR = 'base-orchestrator';
 var TEST_ORCHESTRATOR = 'test-orchestrator';
+var SOCKET_ORCHESTRATOR = 'socket-orchestrator';
 var AUTH_ORCHESTRATOR = 'auth-orchestrator';
 var CONFIG_ORCHESTRATOR = 'config-orchestrator';
 var HOME_ORCHESTRATOR = 'home-orchestrator';
@@ -103,6 +106,7 @@ var NOTIFY_TEMPLATE_ORCHESTRATOR = 'notify-template-orchestrator';
 var STRUCT_ORCHESTRATORS = {
   BASE_ORCHESTRATOR: BASE_ORCHESTRATOR,
   TEST_ORCHESTRATOR: TEST_ORCHESTRATOR,
+  SOCKET_ORCHESTRATOR: SOCKET_ORCHESTRATOR,
   AUTH_ORCHESTRATOR: AUTH_ORCHESTRATOR,
   CONFIG_ORCHESTRATOR: CONFIG_ORCHESTRATOR,
   HOME_ORCHESTRATOR: HOME_ORCHESTRATOR,
@@ -280,6 +284,7 @@ var CRON_EXPRESSIONS = {
  */
 var types = {
   MsgTypeTest: 'TEST',
+  MsgTypeSocket: 'SOCKET',
   MsgTypeAuth: 'AUTH',
   MsgTypeConfig: 'CONFIG',
   MsgTypeHome: 'HOME',
@@ -301,6 +306,14 @@ var types = {
  */
 var testActions = {
   MsgActionTestSendQueue: 'TEST_SEND_QUEUE'
+};
+
+/**
+ * @description SOCKET ACTIONS
+ */
+var socketActions = {
+  MsgActionGetSocket: 'GET_SOCKET',
+  MsgActionPostSocket: 'POST_SOCKET'
 };
 
 /**
@@ -466,7 +479,7 @@ var notifyTypes = {
 var senders = {
   SENDER_SYSTEM: 'SYSTEM'
 };
-var actions = _objectSpread(_objectSpread(_objectSpread(_objectSpread(_objectSpread(_objectSpread(_objectSpread(_objectSpread(_objectSpread(_objectSpread(_objectSpread(_objectSpread(_objectSpread(_objectSpread(_objectSpread({}, testActions), authActions), configActions), homeActions), HealthActions), organizationActions), projectActions), roleActions), permissionActions), userActions), userSessionActions), userOnlineActions), notifyActions), notifyUserActions), notifyTemplateActions);
+var actions = _objectSpread(_objectSpread(_objectSpread(_objectSpread(_objectSpread(_objectSpread(_objectSpread(_objectSpread(_objectSpread(_objectSpread(_objectSpread(_objectSpread(_objectSpread(_objectSpread(_objectSpread(_objectSpread({}, testActions), socketActions), authActions), configActions), homeActions), HealthActions), organizationActions), projectActions), roleActions), permissionActions), userActions), userSessionActions), userOnlineActions), notifyActions), notifyUserActions), notifyTemplateActions);
 var constants = {
   types: types,
   actions: actions,

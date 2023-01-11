@@ -3,6 +3,7 @@
 import constants from '@constants';
 
 import testOrchestrator from './test-orchestrator';
+import socketOrchestrator from './socket-orchestrator';
 import authOrchestrator from './auth-orchestrator';
 import configOrchestrator from './config-orchestrator';
 import homeOrchestrator from './home-orchestrator';
@@ -19,13 +20,29 @@ import notifyUserOrchestrator from './notify-user-orchestrator';
 import notifyTemplateOrchestrator from './notify-template-orchestrator';
 
 /**
- * AUTH
+ * TEST
  */
 const orchestratorTest = [
   {
     type: constants.types.MsgTypeTest,
     action: constants.actions.MsgActionTestSendQueue,
     orchestrator: testOrchestrator.testSendQueue
+  }
+];
+
+/**
+ * SOCKET
+ */
+const orchestratorSocket = [
+  {
+    type: constants.types.MsgTypeSocket,
+    action: constants.actions.MsgActionGetSocket,
+    orchestrator: socketOrchestrator.getSocket
+  },
+  {
+    type: constants.types.MsgTypeSocket,
+    action: constants.actions.MsgActionPostSocket,
+    orchestrator: socketOrchestrator.postSocket
   }
 ];
 
@@ -428,6 +445,7 @@ const orchestratorNotifyTemplate = [
  */
 const orchestrators = [
   ...orchestratorTest,
+  ...orchestratorSocket,
   ...orchestratorAuth,
   ...orchestratorConfig,
   ...orchestratorHome,
