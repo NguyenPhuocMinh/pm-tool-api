@@ -10,57 +10,57 @@ var _controllers = require("../mappings/controllers");
  * @description Notify user router
  */
 var notifyUserRouter = [{
-  pathName: '/notify/users',
+  pathName: '/notifyUsers',
   method: 'GET',
   methodName: 'getAllNotifyUser',
   controller: _controllers.notifyUserController.getAllNotifyUser
 }, {
-  pathName: '/notify/users/:id',
+  pathName: '/notifyUsers/:id',
   method: 'GET',
   methodName: 'getDetailNotifyUser',
   controller: _controllers.notifyUserController.getDetailNotifyUser
 }, {
-  pathName: '/notify/users-data',
+  pathName: '/notifyUsersData',
   method: 'GET',
   methodName: 'getAllDataNotifyUser',
   controller: _controllers.notifyUserController.getAllDataNotifyUser
 }, {
-  pathName: '/notify/users-unread',
+  pathName: '/notifyUsersUnread',
   method: 'GET',
   methodName: 'getAllUnReadNotifyUser',
   controller: _controllers.notifyUserController.getAllUnReadNotifyUser
 }, {
-  pathName: '/notify/users-read',
+  pathName: '/notifyUsersRead',
   method: 'PATCH',
   methodName: 'readNotifyUser',
   controller: _controllers.notifyUserController.readNotifyUser
 }, {
-  pathName: '/notify/users-reads',
+  pathName: '/notifyUsersReads',
   method: 'PATCH',
   methodName: 'readAllNotifyUser',
   controller: _controllers.notifyUserController.readAllNotifyUser
 }, {
-  pathName: '/notify/users-trash',
+  pathName: '/notifyUsersTrash',
   method: 'PATCH',
   methodName: 'trashNotifyUser',
   controller: _controllers.notifyUserController.trashNotifyUser
 }, {
-  pathName: '/notify/users-trashes',
+  pathName: '/notifyUsersTrashes',
   method: 'DELETE',
   methodName: 'trashAllNotifyUser',
   controller: _controllers.notifyUserController.trashAllNotifyUser
 }, {
-  pathName: '/notify/users-trashes',
+  pathName: '/notifyUsersTrashes',
   method: 'GET',
   methodName: 'getAllDataTrashNotifyUser',
   controller: _controllers.notifyUserController.getAllDataTrashNotifyUser
 }, {
-  pathName: '/notify/users-rollback',
+  pathName: '/notifyUsersRollback',
   method: 'PATCH',
   methodName: 'getAllDataTrashNotifyUser',
   controller: _controllers.notifyUserController.rollBackDataTrashNotifyUser
 }, {
-  pathName: '/notify/users-rollbacks',
+  pathName: '/notify/usersRollbacks',
   method: 'PATCH',
   methodName: 'getAllDataTrashNotifyUser',
   controller: _controllers.notifyUserController.rollBackAllDataTrashNotifyUser

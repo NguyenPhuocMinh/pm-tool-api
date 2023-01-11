@@ -10,22 +10,22 @@ var _controllers = require("../mappings/controllers");
  * @description User Session router
  */
 var userSessionRouter = [{
-  pathName: '/users-session/:userID',
+  pathName: '/userSessions/:userID',
   method: 'GET',
   methodName: 'getUserTimelineSession',
   controller: _controllers.userSessionController.getUserTimelineSession
 }, {
-  pathName: '/users-session',
+  pathName: '/userSessions',
   method: 'POST',
   methodName: 'createUserSession',
   controller: _controllers.userSessionController.createUserSession
 }, {
-  pathName: '/users-session/:id',
+  pathName: '/userSessions/:id',
   method: 'PATCH',
   methodName: 'updateUserSession',
   controller: _controllers.userSessionController.updateUserSession
 }, {
-  pathName: '/users-session/:id',
+  pathName: '/userSessions/:id',
   method: 'DELETE',
   methodName: 'deleteUserSession',
   controller: _controllers.userSessionController.deleteUserSession

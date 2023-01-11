@@ -7,7 +7,7 @@ import { notifyController } from '@mappings/controllers';
  */
 const notifyRouter = [
   {
-    pathName: '/notifies/change-password-temporary',
+    pathName: '/notifies/changePasswordTemporary',
     method: 'POST',
     methodName: 'notifyChangePasswordTemporary',
     controller: notifyController.notifyChangePasswordTemporary

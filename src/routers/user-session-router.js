@@ -7,25 +7,25 @@ import { userSessionController } from '@mappings/controllers';
  */
 const userSessionRouter = [
   {
-    pathName: '/users-session/:userID',
+    pathName: '/userSessions/:userID',
     method: 'GET',
     methodName: 'getUserTimelineSession',
     controller: userSessionController.getUserTimelineSession
   },
   {
-    pathName: '/users-session',
+    pathName: '/userSessions',
     method: 'POST',
     methodName: 'createUserSession',
     controller: userSessionController.createUserSession
   },
   {
-    pathName: '/users-session/:id',
+    pathName: '/userSessions/:id',
     method: 'PATCH',
     methodName: 'updateUserSession',
     controller: userSessionController.updateUserSession
   },
   {
-    pathName: '/users-session/:id',
+    pathName: '/userSessions/:id',
     method: 'DELETE',
     methodName: 'deleteUserSession',
     controller: userSessionController.deleteUserSession

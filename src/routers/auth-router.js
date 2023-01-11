@@ -25,13 +25,13 @@ const authRouter = [
     controller: authController.whoami
   },
   {
-    pathName: '/auth/refresh-tokens',
+    pathName: '/auth/refreshTokens',
     method: 'POST',
     methodName: 'refreshToken',
     controller: authController.refreshToken
   },
   {
-    pathName: '/auth/revoke-tokens',
+    pathName: '/auth/revokeTokens',
     method: 'POST',
     methodName: 'revokeToken',
     controller: authController.revokeToken
