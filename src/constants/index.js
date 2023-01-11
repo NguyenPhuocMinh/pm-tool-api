@@ -15,12 +15,14 @@ const LOG_MIDDLEWARE = 'log-middleware';
 const AUTH_MIDDLEWARE = 'auth-middleware';
 const ROUTER_MIDDLEWARE = 'router-middleware';
 const ERROR_MIDDLEWARE = 'error-middleware';
+const SOCKET_MIDDLEWARE = 'socket-middleware';
 
 const STRUCT_MIDDLEWARE = {
   LOG_MIDDLEWARE,
   AUTH_MIDDLEWARE,
   ROUTER_MIDDLEWARE,
-  ERROR_MIDDLEWARE
+  ERROR_MIDDLEWARE,
+  SOCKET_MIDDLEWARE
 };
 
 /**

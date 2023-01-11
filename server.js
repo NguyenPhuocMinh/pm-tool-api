@@ -70,6 +70,21 @@ const main = async () => {
   });
 
   /**
+   * Routers
+   */
+  app.use(routers);
+
+  /**
+   * Router Not Found
+   */
+  app.use('*', routerMiddleware);
+
+  /**
+   * Error handler
+   */
+  app.use(errorMiddleware);
+
+  /**
    * Database
    */
   await dbManager.Init();
@@ -93,21 +108,6 @@ const main = async () => {
    * Socket.IO
    */
   await socketAdapter.Init(server);
-
-  /**
-   * Routers
-   */
-  app.use(routers);
-
-  /**
-   * Router Not Found
-   */
-  app.use('*', routerMiddleware);
-
-  /**
-   * Error handler
-   */
-  app.use(errorMiddleware);
 
   server.listen(APP_PORT, APP_HOST, () => {
     const port = server.address().port;

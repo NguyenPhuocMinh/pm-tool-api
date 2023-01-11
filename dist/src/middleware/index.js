@@ -27,9 +27,16 @@ Object.defineProperty(exports, "routerMiddleware", {
     return _routerMiddleware["default"];
   }
 });
+Object.defineProperty(exports, "socketMiddleware", {
+  enumerable: true,
+  get: function get() {
+    return _socketMiddleware["default"];
+  }
+});
 require("source-map-support/register");
 var _authMiddleware = _interopRequireDefault(require("./auth-middleware"));
 var _loggerMiddleware = _interopRequireDefault(require("./logger-middleware"));
 var _routerMiddleware = _interopRequireDefault(require("./router-middleware"));
 var _errorMiddleware = _interopRequireDefault(require("./error-middleware"));
+var _socketMiddleware = _interopRequireDefault(require("./socket-middleware"));
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
