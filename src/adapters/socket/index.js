@@ -33,6 +33,8 @@ const Init = async (httpServer) => {
       }
     });
 
+    io.listen(httpServer);
+
     io.sockets.on('connection', (socket) => {
       logger.log({
         level: constants.LOG_LEVELS.DEBUG,
