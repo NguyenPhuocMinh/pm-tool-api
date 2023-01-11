@@ -15,6 +15,22 @@ var _default = [
   pathName: '/test-amqp'
 },
 /**
+ * GET SOCKET
+ */
+{
+  enable: false,
+  method: 'GET',
+  pathName: '/socket.io'
+},
+/**
+ * POST SOCKET
+ */
+{
+  enable: false,
+  method: 'POST',
+  pathName: '/socket.io'
+},
+/**
  * LOGIN
  */
 {
