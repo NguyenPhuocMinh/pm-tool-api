@@ -2,7 +2,7 @@
 
 import { v4 as uuidV4 } from 'uuid';
 import { nanoid } from 'nanoid';
-import session from 'express-session';
+// import session from 'express-session';
 import profiles from './profiles';
 
 const allowList = [
@@ -25,14 +25,14 @@ const cookieOptions = {
   secure: profiles.APP_ENV === 'production'
 };
 
-const memoryStore = new session.MemoryStore();
+// const memoryStore = new session.MemoryStore();
 
 const sessionOptions = {
   secret: profiles.APP_SECRET_KEY,
   maxAge: 1000 * 60 * 15,
   resave: false,
-  saveUninitialized: true,
-  store: memoryStore
+  saveUninitialized: true
+  // store: memoryStore
 };
 
 const loggerOptions = {

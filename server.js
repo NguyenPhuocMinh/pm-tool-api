@@ -48,7 +48,7 @@ const server = http.createServer(app);
 const main = async () => {
   app.use(cors(options.corsOptions));
   app.use(sessionParser(options.sessionOptions));
-  app.use(cookieParser());
+  app.use(cookieParser(profiles.APP_SECRET_KEY));
   app.use(helmet());
   app.use(bodyParser.json({ limit: '100mb' }));
   app.use(bodyParser.urlencoded({ limit: '100mb', extended: true }));

@@ -48,7 +48,7 @@ var main = /*#__PURE__*/function () {
           case 0:
             app.use((0, _cors["default"])(_conf.options.corsOptions));
             app.use((0, _expressSession["default"])(_conf.options.sessionOptions));
-            app.use((0, _cookieParser["default"])());
+            app.use((0, _cookieParser["default"])(_conf.profiles.APP_SECRET_KEY));
             app.use((0, _helmet["default"])());
             app.use(_bodyParser["default"].json({
               limit: '100mb'

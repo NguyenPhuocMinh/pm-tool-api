@@ -38,6 +38,13 @@ var Init = /*#__PURE__*/function () {
                 credentials: true
               }
             });
+            io.sockets.on('connection', function (socket) {
+              logger.log({
+                level: _constants["default"].LOG_LEVELS.DEBUG,
+                message: 'Hello world im a hot socket',
+                args: socket.id
+              });
+            });
             io.on('connection', function (socket) {
               logger.log({
                 level: _constants["default"].LOG_LEVELS.DEBUG,
@@ -111,10 +118,10 @@ var Init = /*#__PURE__*/function () {
                 _workers["default"].handlerWorkerSocketUserDisconnect();
               });
             });
-            _context3.next = 9;
+            _context3.next = 10;
             break;
-          case 5:
-            _context3.prev = 5;
+          case 6:
+            _context3.prev = 6;
             _context3.t0 = _context3["catch"](0);
             logger.log({
               level: _constants["default"].LOG_LEVELS.ERROR,
@@ -122,12 +129,12 @@ var Init = /*#__PURE__*/function () {
               args: _utils["default"].parseError(_context3.t0)
             });
             throw _context3.t0;
-          case 9:
+          case 10:
           case "end":
             return _context3.stop();
         }
       }
-    }, _callee3, null, [[0, 5]]);
+    }, _callee3, null, [[0, 6]]);
   }));
   return function Init(_x) {
     return _ref.apply(this, arguments);
