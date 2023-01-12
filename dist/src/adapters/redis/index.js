@@ -102,54 +102,53 @@ var setExValue = /*#__PURE__*/function () {
       while (1) {
         switch (_context2.prev = _context2.next) {
           case 0:
-            console.log('🚀 ~ file: index.js:81 ~ setExValue ~ ttl', ttl);
-            console.log('🚀 ~ file: index.js:81 ~ setExValue ~ value', value);
-            console.log('🚀 ~ file: index.js:81 ~ setExValue ~ key', key);
-            _context2.prev = 3;
+            _context2.prev = 0;
             logger.log({
               level: _constants["default"].LOG_LEVELS.DEBUG,
               message: 'Function setExValue has been start with',
               args: key
             });
-            _context2.next = 7;
+            _context2.next = 4;
             return getValue(key);
-          case 7:
+          case 4:
             existsKey = _context2.sent;
             if ((0, _lodash.isEmpty)(existsKey)) {
-              _context2.next = 14;
+              _context2.next = 12;
               break;
             }
-            console.log('🚀 ~ file: index.js:92 ~ setExValue ~ existsKey', existsKey);
-            _context2.next = 12;
+            _context2.next = 8;
             return deleteValue(key);
+          case 8:
+            _context2.next = 10;
+            return redisClient.setEx(key, ttl, value);
+          case 10:
+            _context2.next = 14;
+            break;
           case 12:
             _context2.next = 14;
             return redisClient.setEx(key, ttl, value);
           case 14:
-            _context2.next = 16;
-            return redisClient.setEx(key, ttl, value);
-          case 16:
             logger.log({
               level: _constants["default"].LOG_LEVELS.DEBUG,
               message: 'Function setExValue has been end'
             });
-            _context2.next = 23;
+            _context2.next = 21;
             break;
-          case 19:
-            _context2.prev = 19;
-            _context2.t0 = _context2["catch"](3);
+          case 17:
+            _context2.prev = 17;
+            _context2.t0 = _context2["catch"](0);
             logger.log({
               level: _constants["default"].LOG_LEVELS.ERROR,
               message: 'Function setExValue has been error',
               args: _utils["default"].parseError(_context2.t0)
             });
             throw _context2.t0;
-          case 23:
+          case 21:
           case "end":
             return _context2.stop();
         }
       }
-    }, _callee2, null, [[3, 19]]);
+    }, _callee2, null, [[0, 17]]);
   }));
   return function setExValue(_x, _x2, _x3) {
     return _ref2.apply(this, arguments);
@@ -170,7 +169,8 @@ var getValue = function getValue(key) {
     args: key
   });
   return new Promise(function (resolve, reject) {
-    redisClient.get(key, function (err, reply) {
+    var _redisClient;
+    (_redisClient = redisClient) === null || _redisClient === void 0 ? void 0 : _redisClient.get(key, function (err, reply) {
       if (err) {
         logger.log({
           level: _constants["default"].LOG_LEVELS.ERROR,

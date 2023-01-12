@@ -78,9 +78,6 @@ const Init = async () => {
  * @returns
  */
 const setExValue = async (key, value, ttl) => {
-  console.log('🚀 ~ file: index.js:81 ~ setExValue ~ ttl', ttl);
-  console.log('🚀 ~ file: index.js:81 ~ setExValue ~ value', value);
-  console.log('🚀 ~ file: index.js:81 ~ setExValue ~ key', key);
   try {
     logger.log({
       level: constants.LOG_LEVELS.DEBUG,
@@ -89,11 +86,11 @@ const setExValue = async (key, value, ttl) => {
     });
     const existsKey = await getValue(key);
     if (!isEmpty(existsKey)) {
-      console.log('🚀 ~ file: index.js:92 ~ setExValue ~ existsKey', existsKey);
       await deleteValue(key);
       await redisClient.setEx(key, ttl, value);
+    } else {
+      await redisClient.setEx(key, ttl, value);
     }
-    await redisClient.setEx(key, ttl, value);
     logger.log({
       level: constants.LOG_LEVELS.DEBUG,
       message: 'Function setExValue has been end'
@@ -122,7 +119,7 @@ const getValue = (key) => {
     args: key
   });
   return new Promise((resolve, reject) => {
-    redisClient.get(key, (err, reply) => {
+    redisClient?.get(key, (err, reply) => {
       if (err) {
         logger.log({
           level: constants.LOG_LEVELS.ERROR,
