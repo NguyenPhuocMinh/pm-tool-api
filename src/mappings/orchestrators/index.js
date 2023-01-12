@@ -378,6 +378,11 @@ const orchestratorNotifyUser = [
   },
   {
     type: constants.types.MsgTypeNotifyUser,
+    action: constants.actions.MsgActionNotifyUserChangePasswordTemporary,
+    orchestrator: notifyUserOrchestrator.changePasswordTemporary
+  },
+  {
+    type: constants.types.MsgTypeNotifyUser,
     action: constants.actions.MsgActionNotifyUserGetAllData,
     orchestrator: notifyUserOrchestrator.getAllDataNotifyUser
   },

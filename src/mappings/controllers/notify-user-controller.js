@@ -59,6 +59,29 @@ const getDetailNotifyUser = (req, res, next) => {
 };
 
 /**
+ * @description Change Password Temporary Notify Of User Controller
+ * @param {*} req
+ * @param {*} res
+ * @param {*} next
+ */
+const changePasswordTemporary = (req, res, next) => {
+  logger.log({
+    level: constants.LOG_LEVELS.INFO,
+    message: 'Function changePasswordTemporary Controller has been start'
+  });
+  const toolBox = { req, res, next };
+  baseController(
+    toolBox,
+    constants.types.MsgTypeNotifyUser,
+    constants.actions.MsgActionNotifyUserChangePasswordTemporary
+  );
+  logger.log({
+    level: constants.LOG_LEVELS.INFO,
+    message: 'Function changePasswordTemporary Controller has been end'
+  });
+};
+
+/**
  * @description Get All Data Notify Of User Controller
  * @param {*} req
  * @param {*} res
@@ -268,6 +291,7 @@ const rollBackAllDataTrashNotifyUser = (req, res, next) => {
 const notifyUserController = {
   getAllNotifyUser,
   getDetailNotifyUser,
+  changePasswordTemporary,
   getAllDataNotifyUser,
   getAllUnReadNotifyUser,
   readNotifyUser,

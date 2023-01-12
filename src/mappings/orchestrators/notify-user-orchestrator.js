@@ -12,11 +12,18 @@ import utils from '@utils';
 import loggerManager from '@core/logger';
 // layers
 import repository from '@layers/repository';
+// transfers
+import transfers from '@transfers';
+// adapters
+import amqpAdapter from '@adapters/amqp';
 
 const logger = loggerManager(
   constants.APP_NAME,
   constants.STRUCT_ORCHESTRATORS.NOTIFY_USER_ORCHESTRATOR
 );
+
+const NOTIFY_REMIND_CHANGE_PASSWORD_TEMPORARY =
+  constants.notifyTypes.NOTIFY_REMIND_CHANGE_PASSWORD_TEMPORARY;
 
 /**
  * @description Get All Notify Of User Orchestrator
@@ -130,6 +137,95 @@ const getDetailNotifyUser = async (toolBox) => {
     logger.log({
       level: constants.LOG_LEVELS.ERROR,
       message: 'Function getDetailNotifyUser has been error',
+      args: utils.parseError(err)
+    });
+    return Promise.reject(err);
+  }
+};
+
+/**
+ * @description Notify Change Password Temporary Orchestrator
+ * @param {*} toolBox { req, res, next }
+ */
+const changePasswordTemporary = async (toolBox) => {
+  const { req } = toolBox;
+  try {
+    logger.log({
+      level: constants.LOG_LEVELS.INFO,
+      message: 'Function changePasswordTemporary has been start'
+    });
+
+    const requestId = req.requestId;
+
+    // find template change password temporary
+    const notifyTemplate = await repository.findOne({
+      type: 'NotifyTemplateModel',
+      filter: {
+        deleted: false,
+        activated: true,
+        type: NOTIFY_REMIND_CHANGE_PASSWORD_TEMPORARY
+      },
+      projection: {
+        __v: 0
+      }
+    });
+
+    if (isEmpty(notifyTemplate)) {
+      throw commons.newError('NotifyTemplateNotFound');
+    }
+
+    req.body = helpers.attributeHelper(req, req.body, 'create');
+
+    const { id: userID } = req.body;
+
+    const slug = helpers.slugHelper(notifyTemplate.description);
+
+    // create notify into db
+    const notify = await repository.createOne({
+      type: 'NotifyModel',
+      doc: {
+        ...req.body,
+        user: userID,
+        sender: notifyTemplate.createdBy,
+        template: notifyTemplate._id,
+        details: {
+          isNew: true
+        },
+        slug
+      }
+    });
+
+    // send message queue for notify
+    const dataPublisher = {
+      message: 'Test'
+    };
+    await amqpAdapter.publisher(
+      constants.AMQP_QUEUES.SEND_NOTIFY_CHANGE_PASSWORD_QUEUE,
+      constants.types.MsgTypeNotify,
+      requestId,
+      dataPublisher
+    );
+
+    // get notify by id when just created
+    const data = await getNotifyUserFunc(notify._id.toString());
+
+    const result = transfers.notifyUserTransfer(data);
+
+    logger.log({
+      level: constants.LOG_LEVELS.INFO,
+      message: 'Function changePasswordTemporary has been end'
+    });
+
+    return {
+      result: {
+        data: result
+      },
+      msg: 'notifyUserS001'
+    };
+  } catch (err) {
+    logger.log({
+      level: constants.LOG_LEVELS.ERROR,
+      message: 'Function changePasswordTemporary has been error',
       args: utils.parseError(err)
     });
     return Promise.reject(err);
@@ -736,6 +832,10 @@ const rollBackAllNotifyUser = async (toolBox) => {
  * @param {*} id
  */
 const getNotifyUserFunc = async (id) => {
+  console.log(
+    '🚀 ~ file: notify-user-orchestrator.js:836 ~ getNotifyUserFunc ~ id',
+    id
+  );
   try {
     if (isEmpty(id)) {
       throw commons.newError('notifyUserE001');
@@ -779,6 +879,7 @@ const getNotifyUserFunc = async (id) => {
 const notifyUserOrchestrator = {
   getAllNotifyUser,
   getDetailNotifyUser,
+  changePasswordTemporary,
   getAllDataNotifyUser,
   getAllUnReadNotifyUser,
   readNotifyUser,

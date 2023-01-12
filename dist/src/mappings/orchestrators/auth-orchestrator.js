@@ -396,7 +396,7 @@ var refreshToken = /*#__PURE__*/function () {
  */
 var revokeToken = /*#__PURE__*/function () {
   var _ref6 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee6(toolBox) {
-    var req, tokenExp, _req$body4, id, sessionID, user, wlKey, blKey, whitelistToken;
+    var req, tokenExp, id, user, wlKey, blKey, whitelistToken;
     return _regeneratorRuntime().wrap(function _callee6$(_context6) {
       while (1) {
         switch (_context6.prev = _context6.next) {
@@ -408,7 +408,7 @@ var revokeToken = /*#__PURE__*/function () {
               level: _constants["default"].LOG_LEVELS.INFO,
               message: 'Function revokeToken has been start'
             });
-            _req$body4 = req.body, id = _req$body4.id, sessionID = _req$body4.sessionID;
+            id = req.body.id;
             _context6.next = 7;
             return _repository["default"].getOne({
               type: 'UserModel',
@@ -416,29 +416,23 @@ var revokeToken = /*#__PURE__*/function () {
             });
           case 7:
             user = _context6.sent;
-            _context6.next = 10;
-            return _userSessionOrchestrator["default"].updateUserSession(toolBox, {
-              id: sessionID,
-              reason: 'USER_TOKEN_REVOKED'
-            });
-          case 10:
             wlKey = "whitelist_".concat(user._id);
             blKey = "blacklist_".concat(user._id); // find token from whitelist in redis
-            _context6.next = 14;
+            _context6.next = 12;
             return _redis["default"].getValue(wlKey);
-          case 14:
+          case 12:
             whitelistToken = _context6.sent;
-            _context6.next = 17;
+            _context6.next = 15;
             return _redis["default"].setExValue(blKey, whitelistToken, tokenExp);
-          case 17:
-            _context6.next = 19;
+          case 15:
+            _context6.next = 17;
             return _redis["default"].deleteValue(wlKey);
-          case 19:
+          case 17:
             // set isOnline is false
             user.isOnline = false;
-            _context6.next = 22;
+            _context6.next = 20;
             return user.save();
-          case 22:
+          case 20:
             logger.log({
               level: _constants["default"].LOG_LEVELS.INFO,
               message: 'Function revokeToken has been end'
@@ -449,8 +443,8 @@ var revokeToken = /*#__PURE__*/function () {
               },
               msg: 'authS005'
             });
-          case 26:
-            _context6.prev = 26;
+          case 24:
+            _context6.prev = 24;
             _context6.t0 = _context6["catch"](2);
             logger.log({
               level: _constants["default"].LOG_LEVELS.ERROR,
@@ -458,12 +452,12 @@ var revokeToken = /*#__PURE__*/function () {
               args: _utils["default"].parseError(_context6.t0)
             });
             return _context6.abrupt("return", _bluebird["default"].reject(_context6.t0));
-          case 30:
+          case 28:
           case "end":
             return _context6.stop();
         }
       }
-    }, _callee6, null, [[2, 26]]);
+    }, _callee6, null, [[2, 24]]);
   }));
   return function revokeToken(_x7) {
     return _ref6.apply(this, arguments);

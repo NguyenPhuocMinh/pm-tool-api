@@ -37,13 +37,13 @@ export default [
     enable: true,
     pathName: '/organizations/:id',
     method: 'PATCH',
-    controller: permissions.admin.organizations.EDIT
+    permission: permissions.admin.organizations.EDIT
   },
   {
     enable: true,
     pathName: '/organizations/:id',
     method: 'DELETE',
-    controller: permissions.admin.organizations.DELETE
+    permission: permissions.admin.organizations.DELETE
   },
   /**
    * PROJECT
@@ -91,25 +91,25 @@ export default [
     enable: true,
     pathName: '/roles/:id',
     method: 'PATCH',
-    controller: permissions.admin.roles.EDIT
+    permission: permissions.admin.roles.EDIT
   },
   {
     enable: true,
     pathName: '/roles/:id',
     method: 'DELETE',
-    controller: permissions.admin.roles.DELETE
+    permission: permissions.admin.roles.DELETE
   },
   {
     enable: true,
     pathName: '/roles/:id/permissions',
     method: 'GET',
-    controller: permissions.admin.roles.GET_PERMISSIONS
+    permission: permissions.admin.roles.GET_PERMISSIONS
   },
   {
     enable: true,
     pathName: '/roles/:id/add-permissions',
     method: 'PATCH',
-    controller: permissions.admin.roles.ADD_PERMISSIONS
+    permission: permissions.admin.roles.ADD_PERMISSIONS
   },
   /**
    * PERMISSION
@@ -136,19 +136,19 @@ export default [
     enable: true,
     pathName: '/permissions/:id',
     method: 'PATCH',
-    controller: permissions.admin.permissions.EDIT
+    permission: permissions.admin.permissions.EDIT
   },
   {
     enable: true,
     pathName: '/permissions/:id',
     method: 'DELETE',
-    controller: permissions.admin.permissions.DELETE
+    permission: permissions.admin.permissions.DELETE
   },
   {
     enable: true,
     pathName: '/permissions/:id/add-roles',
     method: 'PATCH',
-    controller: permissions.admin.permissions.ADD_ROLES
+    permission: permissions.admin.permissions.ADD_ROLES
   },
   /**
    * USER
@@ -187,37 +187,37 @@ export default [
     enable: true,
     pathName: '/users/:id/change-password',
     method: 'PATCH',
-    controller: permissions.admin.users.CHANGE_PASSWORD
+    permission: permissions.admin.users.CHANGE_PASSWORD
   },
   {
     enable: true,
     pathName: '/users/:id/add-roles',
     method: 'PATCH',
-    controller: permissions.admin.users.ADD_ROLES
+    permission: permissions.admin.users.ADD_ROLES
   },
   /**
    * USER SESSION
    */
   {
     enable: true,
-    pathName: '/users-session/:userID',
+    pathName: '/userSessions/:userID',
     method: 'GET',
-    controller: permissions.admin.userSessions.TIME_LINE
+    permission: permissions.admin.userSessions.TIME_LINE
   },
   {
     enable: true,
-    pathName: '/users-sessions',
+    pathName: '/userSessions',
     method: 'DELETE',
-    controller: permissions.admin.userSessions.DELETE
+    permission: permissions.admin.userSessions.DELETE
   },
   /**
    * USER ONLINE
    */
   {
     enable: true,
-    pathName: '/users/onlines',
+    pathName: '/userOnline',
     method: 'GET',
-    controller: permissions.admin.userOnlines.GET_ALL
+    permission: permissions.admin.userOnlines.GET_ALL
   },
   /**
    * NOTIFY TEMPLATE
@@ -225,31 +225,31 @@ export default [
   {
     enable: true,
     method: 'GET',
-    pathName: '/notify-templates',
+    pathName: '/notifyTemplates',
     permission: permissions.admin.notifyTemplates.GET_ALL
   },
   {
     enable: true,
     method: 'POST',
-    pathName: '/notify-templates',
+    pathName: '/notifyTemplates',
     permission: permissions.admin.notifyTemplates.CREATE
   },
   {
     enable: true,
     method: 'GET',
-    pathName: '/notify-templates/:id',
+    pathName: '/notifyTemplates/:id',
     permission: permissions.admin.notifyTemplates.GET_ID
   },
   {
     enable: true,
-    pathName: '/notify-templates/:id',
+    pathName: '/notifyTemplates/:id',
     method: 'PATCH',
-    controller: permissions.admin.notifyTemplates.EDIT
+    permission: permissions.admin.notifyTemplates.EDIT
   },
   {
     enable: true,
-    pathName: '/notify-templates/:id',
+    pathName: '/notifyTemplates/:id',
     method: 'DELETE',
-    controller: permissions.admin.notifyTemplates.DELETE
+    permission: permissions.admin.notifyTemplates.DELETE
   }
 ];

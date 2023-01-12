@@ -30,6 +30,7 @@ const errorMiddleware = (_err, req, res, next) => {
       args: utils.parseError(_err)
     });
     console.error(_err.stack);
+    internalServerError.error = _err.stack;
     return builds.errorResponse(toolBox, internalServerError);
   }
 

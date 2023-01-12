@@ -316,6 +316,10 @@ var orchestratorNotifyUser = [{
   orchestrator: _notifyUserOrchestrator["default"].getDetailNotifyUser
 }, {
   type: _constants["default"].types.MsgTypeNotifyUser,
+  action: _constants["default"].actions.MsgActionNotifyUserChangePasswordTemporary,
+  orchestrator: _notifyUserOrchestrator["default"].changePasswordTemporary
+}, {
+  type: _constants["default"].types.MsgTypeNotifyUser,
   action: _constants["default"].actions.MsgActionNotifyUserGetAllData,
   orchestrator: _notifyUserOrchestrator["default"].getAllDataNotifyUser
 }, {

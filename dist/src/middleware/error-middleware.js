@@ -32,6 +32,7 @@ var errorMiddleware = function errorMiddleware(_err, req, res, next) {
       args: _utils["default"].parseError(_err)
     });
     console.error(_err.stack);
+    internalServerError.error = _err.stack;
     return _builds["default"].errorResponse(toolBox, internalServerError);
   }
   logger.log({

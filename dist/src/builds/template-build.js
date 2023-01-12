@@ -37,6 +37,7 @@ var newSuccessTemplate = function newSuccessTemplate(toolBox) {
       template.name = msg;
       template.message = _resources.successCodes[msg].message;
       template.description = _resources.successCodes[msg].description;
+      template.error = null;
       template.returnCode = _resources.successCodes[msg].returnCode;
       template.statusCode = _resources.successCodes[msg].statusCode;
     } else {
@@ -46,6 +47,7 @@ var newSuccessTemplate = function newSuccessTemplate(toolBox) {
       template.name = msg;
       template.message = "Message name [".concat(msg, "] not supported");
       template.description = _resources.successCodes[msg].description;
+      template.error = null;
       template.returnCode = 1000;
       template.statusCode = 400;
     }
@@ -81,6 +83,7 @@ var newErrorTemplate = function newErrorTemplate(toolBox) {
     template.name = args.name;
     template.message = args.message || 'Internal Error Server';
     template.description = args.description;
+    template.error = args.error;
     template.returnCode = args.returnCode || 0;
     template.statusCode = args.statusCode || 500;
     logger.log({

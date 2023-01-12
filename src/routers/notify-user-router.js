@@ -19,6 +19,12 @@ const notifyUserRouter = [
     controller: notifyUserController.getDetailNotifyUser
   },
   {
+    pathName: '/notifyUsersChangePasswordTemporary',
+    method: 'POST',
+    methodName: 'changePasswordTemporary',
+    controller: notifyUserController.changePasswordTemporary
+  },
+  {
     pathName: '/notifyUsersData',
     method: 'GET',
     methodName: 'getAllDataNotifyUser',
@@ -67,7 +73,7 @@ const notifyUserRouter = [
     controller: notifyUserController.rollBackDataTrashNotifyUser
   },
   {
-    pathName: '/notify/usersRollbacks',
+    pathName: '/notifyUsersRollbacks',
     method: 'PATCH',
     methodName: 'getAllDataTrashNotifyUser',
     controller: notifyUserController.rollBackAllDataTrashNotifyUser

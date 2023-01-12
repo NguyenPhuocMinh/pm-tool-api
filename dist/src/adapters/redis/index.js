@@ -8,6 +8,7 @@ exports["default"] = void 0;
 require("source-map-support/register");
 var _retry = _interopRequireDefault(require("retry"));
 var _redis = require("redis");
+var _lodash = require("lodash");
 var _conf = require("../../conf");
 var _constants = _interopRequireDefault(require("../../constants"));
 var _utils = _interopRequireDefault(require("../../utils"));
@@ -96,40 +97,59 @@ var Init = /*#__PURE__*/function () {
  */
 var setExValue = /*#__PURE__*/function () {
   var _ref2 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee2(key, value, ttl) {
+    var existsKey;
     return _regeneratorRuntime().wrap(function _callee2$(_context2) {
       while (1) {
         switch (_context2.prev = _context2.next) {
           case 0:
-            _context2.prev = 0;
+            console.log('🚀 ~ file: index.js:81 ~ setExValue ~ ttl', ttl);
+            console.log('🚀 ~ file: index.js:81 ~ setExValue ~ value', value);
+            console.log('🚀 ~ file: index.js:81 ~ setExValue ~ key', key);
+            _context2.prev = 3;
             logger.log({
               level: _constants["default"].LOG_LEVELS.DEBUG,
               message: 'Function setExValue has been start with',
               args: key
             });
-            _context2.next = 4;
+            _context2.next = 7;
+            return getValue(key);
+          case 7:
+            existsKey = _context2.sent;
+            if ((0, _lodash.isEmpty)(existsKey)) {
+              _context2.next = 14;
+              break;
+            }
+            console.log('🚀 ~ file: index.js:92 ~ setExValue ~ existsKey', existsKey);
+            _context2.next = 12;
+            return deleteValue(key);
+          case 12:
+            _context2.next = 14;
             return redisClient.setEx(key, ttl, value);
-          case 4:
+          case 14:
+            _context2.next = 16;
+            return redisClient.setEx(key, ttl, value);
+          case 16:
             logger.log({
               level: _constants["default"].LOG_LEVELS.DEBUG,
               message: 'Function setExValue has been end'
             });
-            _context2.next = 11;
+            _context2.next = 23;
             break;
-          case 7:
-            _context2.prev = 7;
-            _context2.t0 = _context2["catch"](0);
+          case 19:
+            _context2.prev = 19;
+            _context2.t0 = _context2["catch"](3);
             logger.log({
               level: _constants["default"].LOG_LEVELS.ERROR,
               message: 'Function setExValue has been error',
               args: _utils["default"].parseError(_context2.t0)
             });
             throw _context2.t0;
-          case 11:
+          case 23:
           case "end":
             return _context2.stop();
         }
       }
-    }, _callee2, null, [[0, 7]]);
+    }, _callee2, null, [[3, 19]]);
   }));
   return function setExValue(_x, _x2, _x3) {
     return _ref2.apply(this, arguments);
@@ -143,48 +163,33 @@ var setExValue = /*#__PURE__*/function () {
  * @see https://redis.io/commands/get/
  * @returns
  */
-var getValue = /*#__PURE__*/function () {
-  var _ref3 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee3(key) {
-    var _redisClient, data;
-    return _regeneratorRuntime().wrap(function _callee3$(_context3) {
-      while (1) {
-        switch (_context3.prev = _context3.next) {
-          case 0:
-            _context3.prev = 0;
-            logger.log({
-              level: _constants["default"].LOG_LEVELS.DEBUG,
-              message: 'Function getValue has been start with',
-              args: key
-            });
-            _context3.next = 4;
-            return (_redisClient = redisClient) === null || _redisClient === void 0 ? void 0 : _redisClient.get(key);
-          case 4:
-            data = _context3.sent;
-            logger.log({
-              level: _constants["default"].LOG_LEVELS.DEBUG,
-              message: 'Function getValue has been start end'
-            });
-            return _context3.abrupt("return", data);
-          case 9:
-            _context3.prev = 9;
-            _context3.t0 = _context3["catch"](0);
-            logger.log({
-              level: _constants["default"].LOG_LEVELS.ERROR,
-              message: 'Function getValue has been has been error',
-              args: _utils["default"].parseError(_context3.t0)
-            });
-            throw _context3.t0;
-          case 13:
-          case "end":
-            return _context3.stop();
-        }
+var getValue = function getValue(key) {
+  logger.log({
+    level: _constants["default"].LOG_LEVELS.DEBUG,
+    message: 'Function getValue has been start with',
+    args: key
+  });
+  return new Promise(function (resolve, reject) {
+    redisClient.get(key, function (err, reply) {
+      if (err) {
+        logger.log({
+          level: _constants["default"].LOG_LEVELS.ERROR,
+          message: 'Function getValue has been has been error',
+          args: _utils["default"].parseError(err)
+        });
+        reject(err);
       }
-    }, _callee3, null, [[0, 9]]);
-  }));
-  return function getValue(_x4) {
-    return _ref3.apply(this, arguments);
-  };
-}();
+      logger.log({
+        level: _constants["default"].LOG_LEVELS.DEBUG,
+        message: 'Function getValue has been start end with reply',
+        args: {
+          reply: reply
+        }
+      });
+      resolve(reply);
+    });
+  });
+};
 
 /**
  * @description Delete value redis
@@ -194,44 +199,44 @@ var getValue = /*#__PURE__*/function () {
  * @returns
  */
 var deleteValue = /*#__PURE__*/function () {
-  var _ref4 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee4(key) {
-    return _regeneratorRuntime().wrap(function _callee4$(_context4) {
+  var _ref3 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee3(key) {
+    return _regeneratorRuntime().wrap(function _callee3$(_context3) {
       while (1) {
-        switch (_context4.prev = _context4.next) {
+        switch (_context3.prev = _context3.next) {
           case 0:
-            _context4.prev = 0;
+            _context3.prev = 0;
             logger.log({
               level: _constants["default"].LOG_LEVELS.DEBUG,
               message: 'Function deleteValue has been start with',
               args: key
             });
-            _context4.next = 4;
+            _context3.next = 4;
             return redisClient.del(key);
           case 4:
             logger.log({
               level: _constants["default"].LOG_LEVELS.DEBUG,
               message: 'Function deleteValue has been start end'
             });
-            _context4.next = 11;
+            _context3.next = 11;
             break;
           case 7:
-            _context4.prev = 7;
-            _context4.t0 = _context4["catch"](0);
+            _context3.prev = 7;
+            _context3.t0 = _context3["catch"](0);
             logger.log({
               level: _constants["default"].LOG_LEVELS.DEBUG,
               message: 'Function deleteValue has been start error',
-              args: _utils["default"].parseError(_context4.t0)
+              args: _utils["default"].parseError(_context3.t0)
             });
-            throw _context4.t0;
+            throw _context3.t0;
           case 11:
           case "end":
-            return _context4.stop();
+            return _context3.stop();
         }
       }
-    }, _callee4, null, [[0, 7]]);
+    }, _callee3, null, [[0, 7]]);
   }));
-  return function deleteValue(_x5) {
-    return _ref4.apply(this, arguments);
+  return function deleteValue(_x4) {
+    return _ref3.apply(this, arguments);
   };
 }();
 var redisAdapter = {

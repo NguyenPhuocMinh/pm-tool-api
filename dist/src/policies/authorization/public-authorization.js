@@ -60,7 +60,7 @@ var _default = [
 {
   enable: false,
   method: 'POST',
-  pathName: '/auth/refresh-tokens'
+  pathName: '/auth/refreshTokens'
 },
 /**
  * CONFIG
@@ -92,27 +92,19 @@ var _default = [
 {
   enable: true,
   method: 'POST',
-  pathName: '/users-session'
+  pathName: '/userSessions'
 }, {
   enable: true,
   method: 'PATCH',
-  pathName: '/users-session/:id'
+  pathName: '/userSessions/:id'
 },
 /**
  * NOTIFY
  */
 {
   enable: true,
-  method: 'GET',
-  pathName: '/notifies/user'
-}, {
-  enable: true,
   method: 'POST',
-  pathName: '/notifies/change-password-temporary'
-}, {
-  enable: true,
-  method: 'PATCH',
-  pathName: '/notifies/update-read'
+  pathName: '/notifyUsersChangePasswordTemporary'
 },
 /**
  * NOTIFY USER
@@ -120,46 +112,46 @@ var _default = [
 {
   enable: true,
   method: 'GET',
-  pathName: '/notify/users'
+  pathName: '/notifyUsers'
 }, {
   enable: true,
   method: 'GET',
-  pathName: '/notify/users/:id'
+  pathName: '/notifyUsers/:id'
 }, {
   enable: true,
   method: 'GET',
-  pathName: '/notify/users-data'
+  pathName: '/notifyUsersData'
 }, {
   enable: true,
   method: 'GET',
-  pathName: '/notify/users-unread'
+  pathName: '/notifyUsersUnread'
 }, {
   enable: true,
   method: 'PATCH',
-  pathName: '/notify/users-read'
+  pathName: '/notifyUsersRead'
 }, {
   enable: true,
   method: 'PATCH',
-  pathName: '/notify/users-reads'
+  pathName: '/notifyUsersReads'
 }, {
   enable: true,
   method: 'PATCH',
-  pathName: '/notify/users-trash'
+  pathName: '/notifyUsersTrash'
 }, {
   enable: true,
   method: 'DELETE',
-  pathName: '/notify/users-trashes'
+  pathName: '/notifyUsersTrashes'
 }, {
   enable: true,
   method: 'GET',
-  pathName: '/notify/users-trashes'
+  pathName: '/notifyUsersTrashes'
 }, {
   enable: true,
   method: 'PATCH',
-  pathName: '/notify/users-rollback'
+  pathName: '/notifyUsersRollback'
 }, {
   enable: true,
   method: 'PATCH',
-  pathName: '/notify/users-rollbacks'
+  pathName: '/notifyUsersRollbacks'
 }];
 exports["default"] = _default;

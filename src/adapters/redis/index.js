@@ -2,6 +2,7 @@
 
 import retry from 'retry';
 import { createClient } from 'redis';
+import { isEmpty } from 'lodash';
 
 // conf
 import { options, profiles } from '@conf';
@@ -25,7 +26,10 @@ let redisClient = null;
  */
 const Init = async () => {
   try {
-    redisClient = createClient({ url: profiles.APP_REDIS_URI, legacyMode: true });
+    redisClient = createClient({
+      url: profiles.APP_REDIS_URI,
+      legacyMode: true
+    });
 
     redisClient.on('error', (err) => {
       logger.log({
@@ -74,12 +78,21 @@ const Init = async () => {
  * @returns
  */
 const setExValue = async (key, value, ttl) => {
+  console.log('🚀 ~ file: index.js:81 ~ setExValue ~ ttl', ttl);
+  console.log('🚀 ~ file: index.js:81 ~ setExValue ~ value', value);
+  console.log('🚀 ~ file: index.js:81 ~ setExValue ~ key', key);
   try {
     logger.log({
       level: constants.LOG_LEVELS.DEBUG,
       message: 'Function setExValue has been start with',
       args: key
     });
+    const existsKey = await getValue(key);
+    if (!isEmpty(existsKey)) {
+      console.log('🚀 ~ file: index.js:92 ~ setExValue ~ existsKey', existsKey);
+      await deleteValue(key);
+      await redisClient.setEx(key, ttl, value);
+    }
     await redisClient.setEx(key, ttl, value);
     logger.log({
       level: constants.LOG_LEVELS.DEBUG,
@@ -102,28 +115,30 @@ const setExValue = async (key, value, ttl) => {
  * @see https://redis.io/commands/get/
  * @returns
  */
-const getValue = async (key) => {
-  try {
-    logger.log({
-      level: constants.LOG_LEVELS.DEBUG,
-      message: 'Function getValue has been start with',
-      args: key
+const getValue = (key) => {
+  logger.log({
+    level: constants.LOG_LEVELS.DEBUG,
+    message: 'Function getValue has been start with',
+    args: key
+  });
+  return new Promise((resolve, reject) => {
+    redisClient.get(key, (err, reply) => {
+      if (err) {
+        logger.log({
+          level: constants.LOG_LEVELS.ERROR,
+          message: 'Function getValue has been has been error',
+          args: utils.parseError(err)
+        });
+        reject(err);
+      }
+      logger.log({
+        level: constants.LOG_LEVELS.DEBUG,
+        message: 'Function getValue has been start end with reply',
+        args: { reply }
+      });
+      resolve(reply);
     });
-    const data = await redisClient?.get(key);
-
-    logger.log({
-      level: constants.LOG_LEVELS.DEBUG,
-      message: 'Function getValue has been start end'
-    });
-    return data;
-  } catch (err) {
-    logger.log({
-      level: constants.LOG_LEVELS.ERROR,
-      message: 'Function getValue has been has been error',
-      args: utils.parseError(err)
-    });
-    throw err;
-  }
+  });
 };
 
 /**

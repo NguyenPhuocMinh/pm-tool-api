@@ -39,12 +39,12 @@ var _default = [
   enable: true,
   pathName: '/organizations/:id',
   method: 'PATCH',
-  controller: _permissions["default"].admin.organizations.EDIT
+  permission: _permissions["default"].admin.organizations.EDIT
 }, {
   enable: true,
   pathName: '/organizations/:id',
   method: 'DELETE',
-  controller: _permissions["default"].admin.organizations.DELETE
+  permission: _permissions["default"].admin.organizations.DELETE
 },
 /**
  * PROJECT
@@ -87,22 +87,22 @@ var _default = [
   enable: true,
   pathName: '/roles/:id',
   method: 'PATCH',
-  controller: _permissions["default"].admin.roles.EDIT
+  permission: _permissions["default"].admin.roles.EDIT
 }, {
   enable: true,
   pathName: '/roles/:id',
   method: 'DELETE',
-  controller: _permissions["default"].admin.roles.DELETE
+  permission: _permissions["default"].admin.roles.DELETE
 }, {
   enable: true,
   pathName: '/roles/:id/permissions',
   method: 'GET',
-  controller: _permissions["default"].admin.roles.GET_PERMISSIONS
+  permission: _permissions["default"].admin.roles.GET_PERMISSIONS
 }, {
   enable: true,
   pathName: '/roles/:id/add-permissions',
   method: 'PATCH',
-  controller: _permissions["default"].admin.roles.ADD_PERMISSIONS
+  permission: _permissions["default"].admin.roles.ADD_PERMISSIONS
 },
 /**
  * PERMISSION
@@ -126,17 +126,17 @@ var _default = [
   enable: true,
   pathName: '/permissions/:id',
   method: 'PATCH',
-  controller: _permissions["default"].admin.permissions.EDIT
+  permission: _permissions["default"].admin.permissions.EDIT
 }, {
   enable: true,
   pathName: '/permissions/:id',
   method: 'DELETE',
-  controller: _permissions["default"].admin.permissions.DELETE
+  permission: _permissions["default"].admin.permissions.DELETE
 }, {
   enable: true,
   pathName: '/permissions/:id/add-roles',
   method: 'PATCH',
-  controller: _permissions["default"].admin.permissions.ADD_ROLES
+  permission: _permissions["default"].admin.permissions.ADD_ROLES
 },
 /**
  * USER
@@ -170,35 +170,35 @@ var _default = [
   enable: true,
   pathName: '/users/:id/change-password',
   method: 'PATCH',
-  controller: _permissions["default"].admin.users.CHANGE_PASSWORD
+  permission: _permissions["default"].admin.users.CHANGE_PASSWORD
 }, {
   enable: true,
   pathName: '/users/:id/add-roles',
   method: 'PATCH',
-  controller: _permissions["default"].admin.users.ADD_ROLES
+  permission: _permissions["default"].admin.users.ADD_ROLES
 },
 /**
  * USER SESSION
  */
 {
   enable: true,
-  pathName: '/users-session/:userID',
+  pathName: '/userSessions/:userID',
   method: 'GET',
-  controller: _permissions["default"].admin.userSessions.TIME_LINE
+  permission: _permissions["default"].admin.userSessions.TIME_LINE
 }, {
   enable: true,
-  pathName: '/users-sessions',
+  pathName: '/userSessions',
   method: 'DELETE',
-  controller: _permissions["default"].admin.userSessions.DELETE
+  permission: _permissions["default"].admin.userSessions.DELETE
 },
 /**
  * USER ONLINE
  */
 {
   enable: true,
-  pathName: '/users/onlines',
+  pathName: '/userOnline',
   method: 'GET',
-  controller: _permissions["default"].admin.userOnlines.GET_ALL
+  permission: _permissions["default"].admin.userOnlines.GET_ALL
 },
 /**
  * NOTIFY TEMPLATE
@@ -206,27 +206,27 @@ var _default = [
 {
   enable: true,
   method: 'GET',
-  pathName: '/notify-templates',
+  pathName: '/notifyTemplates',
   permission: _permissions["default"].admin.notifyTemplates.GET_ALL
 }, {
   enable: true,
   method: 'POST',
-  pathName: '/notify-templates',
+  pathName: '/notifyTemplates',
   permission: _permissions["default"].admin.notifyTemplates.CREATE
 }, {
   enable: true,
   method: 'GET',
-  pathName: '/notify-templates/:id',
+  pathName: '/notifyTemplates/:id',
   permission: _permissions["default"].admin.notifyTemplates.GET_ID
 }, {
   enable: true,
-  pathName: '/notify-templates/:id',
+  pathName: '/notifyTemplates/:id',
   method: 'PATCH',
-  controller: _permissions["default"].admin.notifyTemplates.EDIT
+  permission: _permissions["default"].admin.notifyTemplates.EDIT
 }, {
   enable: true,
-  pathName: '/notify-templates/:id',
+  pathName: '/notifyTemplates/:id',
   method: 'DELETE',
-  controller: _permissions["default"].admin.notifyTemplates.DELETE
+  permission: _permissions["default"].admin.notifyTemplates.DELETE
 }];
 exports["default"] = _default;

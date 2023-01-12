@@ -20,6 +20,11 @@ var notifyUserRouter = [{
   methodName: 'getDetailNotifyUser',
   controller: _controllers.notifyUserController.getDetailNotifyUser
 }, {
+  pathName: '/notifyUsersChangePasswordTemporary',
+  method: 'POST',
+  methodName: 'changePasswordTemporary',
+  controller: _controllers.notifyUserController.changePasswordTemporary
+}, {
   pathName: '/notifyUsersData',
   method: 'GET',
   methodName: 'getAllDataNotifyUser',
@@ -60,7 +65,7 @@ var notifyUserRouter = [{
   methodName: 'getAllDataTrashNotifyUser',
   controller: _controllers.notifyUserController.rollBackDataTrashNotifyUser
 }, {
-  pathName: '/notify/usersRollbacks',
+  pathName: '/notifyUsersRollbacks',
   method: 'PATCH',
   methodName: 'getAllDataTrashNotifyUser',
   controller: _controllers.notifyUserController.rollBackAllDataTrashNotifyUser

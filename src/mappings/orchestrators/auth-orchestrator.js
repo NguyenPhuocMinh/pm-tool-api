@@ -329,17 +329,11 @@ const revokeToken = async (toolBox) => {
       message: 'Function revokeToken has been start'
     });
 
-    const { id, sessionID } = req.body;
+    const { id } = req.body;
 
     const user = await repository.getOne({
       type: 'UserModel',
       id
-    });
-
-    // update lastAccess into db
-    await userSessionOrchestrator.updateUserSession(toolBox, {
-      id: sessionID,
-      reason: 'USER_TOKEN_REVOKED'
     });
 
     const wlKey = `whitelist_${user._id}`;

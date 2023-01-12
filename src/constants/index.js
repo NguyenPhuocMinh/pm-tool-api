@@ -448,6 +448,8 @@ const notifyActions = {
 const notifyUserActions = {
   MsgActionNotifyUserGetAll: 'NOTIFY_USER_GET_ALL',
   MsgActionNotifyUserGetId: 'NOTIFY_USER_GET_ID',
+  MsgActionNotifyUserChangePasswordTemporary:
+    'NOTIFY_USER_CHANGE_PASSWORD_TEMPORARY',
   MsgActionNotifyUserGetAllData: 'NOTIFY_USER_GET_ALL_DATA',
   MsgActionNotifyUserGetAllUnRead: 'NOTIFY_USER_GET_ALL_UNREAD',
   MsgActionNotifyUserRead: 'NOTIFY_USER_READ',
