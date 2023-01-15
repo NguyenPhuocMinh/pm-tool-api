@@ -20,7 +20,7 @@ const queryHelper = (query = {}, attributes = [], fields = []) => {
 
     searchAttributes.forEach((property) => {
       const searchRegex = {};
-      searchRegex[property] = { $regexp: _search, $options: 'i' };
+      searchRegex[property] = { $regex: _search, $options: 'i' };
       // eslint-disable-next-line dot-notation
       querySearch['$or'].push(searchRegex);
     });

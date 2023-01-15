@@ -50,6 +50,7 @@ const HOME_CONTROLLER = 'home-controller';
 const HEALTH_CONTROLLER = 'health-controller';
 const ORGANIZATION_CONTROLLER = 'organization-controller';
 const PROJECT_CONTROLLER = 'project-controller';
+const TEAM_CONTROLLER = 'team-controller';
 const ROLE_CONTROLLER = 'role-controller';
 const PERMISSION_CONTROLLER = 'permission-controller';
 const USER_CONTROLLER = 'user-controller';
@@ -69,6 +70,7 @@ const STRUCT_CONTROLLERS = {
   HEALTH_CONTROLLER,
   ORGANIZATION_CONTROLLER,
   PROJECT_CONTROLLER,
+  TEAM_CONTROLLER,
   ROLE_CONTROLLER,
   PERMISSION_CONTROLLER,
   USER_CONTROLLER,
@@ -91,6 +93,7 @@ const HOME_ORCHESTRATOR = 'home-orchestrator';
 const HEALTH_ORCHESTRATOR = 'health-orchestrator';
 const ORGANIZATION_ORCHESTRATOR = 'organization-orchestrator';
 const PROJECT_ORCHESTRATOR = 'project-orchestrator';
+const TEAM_ORCHESTRATOR = 'team-orchestrator';
 const ROLE_ORCHESTRATOR = 'role-orchestrator';
 const PERMISSION_ORCHESTRATOR = 'permission-orchestrator';
 const USER_ORCHESTRATOR = 'user-orchestrator';
@@ -110,6 +113,7 @@ const STRUCT_ORCHESTRATORS = {
   HEALTH_ORCHESTRATOR,
   ORGANIZATION_ORCHESTRATOR,
   PROJECT_ORCHESTRATOR,
+  TEAM_ORCHESTRATOR,
   ROLE_ORCHESTRATOR,
   PERMISSION_ORCHESTRATOR,
   USER_ORCHESTRATOR,
@@ -126,6 +130,7 @@ const STRUCT_ORCHESTRATORS = {
 const AUTH_VALIDATOR = 'auth-validator';
 const ORGANIZATION_VALIDATOR = 'organization-validator';
 const PROJECT_VALIDATOR = 'project-validator';
+const TEAM_VALIDATOR = 'team-validator';
 const ROLE_VALIDATOR = 'role-validator';
 const PERMISSION_VALIDATOR = 'permission-validator';
 const USER_VALIDATOR = 'user-validator';
@@ -134,6 +139,7 @@ const STRUCT_VALIDATORS = {
   AUTH_VALIDATOR,
   ORGANIZATION_VALIDATOR,
   PROJECT_VALIDATOR,
+  TEAM_VALIDATOR,
   ROLE_VALIDATOR,
   PERMISSION_VALIDATOR,
   USER_VALIDATOR
@@ -145,6 +151,7 @@ const STRUCT_VALIDATORS = {
 const AUTH_TRANSFER = 'auth-transfer';
 const ORGANIZATION_TRANSFER = 'organization-transfer';
 const PROJECT_TRANSFER = 'project-transfer';
+const TEAM_TRANSFER = 'team-transfer';
 const ROLE_TRANSFER = 'role-transfer';
 const PERMISSION_TRANSFER = 'permission-transfer';
 const USER_TRANSFER = 'user-transfer';
@@ -158,6 +165,7 @@ const STRUCT_TRANSFERS = {
   AUTH_TRANSFER,
   ORGANIZATION_TRANSFER,
   PROJECT_TRANSFER,
+  TEAM_TRANSFER,
   ROLE_TRANSFER,
   PERMISSION_TRANSFER,
   USER_TRANSFER,
@@ -297,6 +305,7 @@ const types = {
   MsgTypeHealth: 'HEALTH',
   MsgTypeOrganization: 'ORGANIZATION',
   MsgTypeProject: 'PROJECT',
+  MsgTypeTeam: 'TEAM',
   MsgTypeRole: 'ROLE',
   MsgTypePermission: 'PERMISSION',
   MsgTypeUser: 'USER',
@@ -363,7 +372,8 @@ const organizationActions = {
   MsgActionOrganizationCreate: 'ORGANIZATION_CREATE',
   MsgActionOrganizationGet: 'ORGANIZATION_GET',
   MsgActionOrganizationUpdate: 'ORGANIZATION_UPDATE',
-  MsgActionOrganizationDelete: 'ORGANIZATION_DELETE'
+  MsgActionOrganizationDelete: 'ORGANIZATION_DELETE',
+  MsgActionOrganizationGetProjects: 'ORGANIZATION_GET_PROJECT'
 };
 
 /**
@@ -372,6 +382,21 @@ const organizationActions = {
 const projectActions = {
   MsgActionProjectGetAll: 'PROJECT_GET_ALL',
   MsgActionProjectCreate: 'PROJECT_CREATE'
+};
+
+/**
+ * @description TEAM ACTIONS
+ */
+const teamActions = {
+  MsgActionTeamGetAll: 'TEAM_GET_ALL',
+  MsgActionTeamCreate: 'TEAM_CREATE',
+  MsgActionTeamGet: 'TEAM_GET',
+  MsgActionTeamUpdate: 'TEAM_UPDATE',
+  MsgActionTeamDelete: 'TEAM_DELETE',
+  MsgActionTeamGetAllMemberInTeam: 'TEAM_GET_ALL_MEMBER_IN_TEAM',
+  MsgActionTeamGetAllMemberNotOnTeam: 'TEAM_GET_ALL_MEMBER_NOT_ON_TEAM',
+  MsgActionTeamAddMembersToTeam: 'TEAM_ADD_MEMBERS_TO_TEAM',
+  MsgActionTeamRemoveMembersFromTeam: 'TEAM_REMOVE_MEMBERS_FROM_TEAM'
 };
 
 /**
@@ -499,6 +524,7 @@ const actions = {
   ...HealthActions,
   ...organizationActions,
   ...projectActions,
+  ...teamActions,
   ...roleActions,
   ...permissionActions,
   ...userActions,

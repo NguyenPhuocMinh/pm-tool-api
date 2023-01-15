@@ -34,6 +34,11 @@ var organizationRouter = [{
   method: 'DELETE',
   methodName: 'deleteOrganization',
   controller: _controllers.organizationController.deleteOrganization
+}, {
+  pathName: '/organizations/:id/projects',
+  method: 'GET',
+  methodName: 'getProjectsInOrganization',
+  controller: _controllers.organizationController.getProjectsInOrganization
 }];
 var _default = organizationRouter;
 exports["default"] = _default;

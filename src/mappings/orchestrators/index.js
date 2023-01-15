@@ -10,6 +10,7 @@ import homeOrchestrator from './home-orchestrator';
 import healthOrchestrator from './health-orchestrator';
 import organizationOrchestrator from './organization-orchestrator';
 import projectOrchestrator from './project-orchestrator';
+import teamOrchestrator from './team-orchestrator';
 import roleOrchestrator from './role-orchestrator';
 import permissionOrchestrator from './permission-orchestrator';
 import userOrchestrator from './user-orchestrator';
@@ -142,6 +143,11 @@ const orchestratorOrganization = [
     type: constants.types.MsgTypeOrganization,
     action: constants.actions.MsgActionOrganizationDelete,
     orchestrator: organizationOrchestrator.deleteOrganization
+  },
+  {
+    type: constants.types.MsgTypeOrganization,
+    action: constants.actions.MsgActionOrganizationGetProjects,
+    orchestrator: organizationOrchestrator.getProjectsInOrganization
   }
 ];
 
@@ -159,6 +165,59 @@ const orchestratorProject = [
     action: constants.actions.MsgActionProjectCreate,
     orchestrator: projectOrchestrator.createProject,
     schema: 'projectSchema'
+  }
+];
+
+/**
+ * TEAM
+ */
+const orchestratorTeam = [
+  {
+    type: constants.types.MsgTypeTeam,
+    action: constants.actions.MsgActionTeamGetAll,
+    orchestrator: teamOrchestrator.getAllTeam
+  },
+  {
+    type: constants.types.MsgTypeTeam,
+    action: constants.actions.MsgActionTeamCreate,
+    orchestrator: teamOrchestrator.createTeam,
+    schema: 'teamSchema'
+  },
+  {
+    type: constants.types.MsgTypeTeam,
+    action: constants.actions.MsgActionTeamGet,
+    orchestrator: teamOrchestrator.getTeam
+  },
+  {
+    type: constants.types.MsgTypeTeam,
+    action: constants.actions.MsgActionTeamUpdate,
+    orchestrator: teamOrchestrator.updateTeam,
+    schema: 'teamSchema'
+  },
+  {
+    type: constants.types.MsgTypeTeam,
+    action: constants.actions.MsgActionTeamDelete,
+    orchestrator: teamOrchestrator.deleteTeam
+  },
+  {
+    type: constants.types.MsgTypeTeam,
+    action: constants.actions.MsgActionTeamGetAllMemberInTeam,
+    orchestrator: teamOrchestrator.getAllMemberInTeam
+  },
+  {
+    type: constants.types.MsgTypeTeam,
+    action: constants.actions.MsgActionTeamGetAllMemberNotOnTeam,
+    orchestrator: teamOrchestrator.getAllMemberNotOnTeam
+  },
+  {
+    type: constants.types.MsgTypeTeam,
+    action: constants.actions.MsgActionTeamAddMembersToTeam,
+    orchestrator: teamOrchestrator.addMembersToTeam
+  },
+  {
+    type: constants.types.MsgTypeTeam,
+    action: constants.actions.MsgActionTeamRemoveMembersFromTeam,
+    orchestrator: teamOrchestrator.removeMembersFromTeam
   }
 ];
 
@@ -457,6 +516,7 @@ const orchestrators = [
   ...orchestratorHealth,
   ...orchestratorOrganization,
   ...orchestratorProject,
+  ...orchestratorTeam,
   ...orchestratorRole,
   ...orchestratorPermission,
   ...orchestratorUser,

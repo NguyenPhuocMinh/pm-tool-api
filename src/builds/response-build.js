@@ -52,8 +52,7 @@ export const errorResponse = (toolBox, args) => {
   try {
     logger.log({
       level: constants.LOG_LEVELS.ERROR,
-      message: 'Function errorResponse has been start',
-      args
+      message: 'Function errorResponse has been start'
     });
     const { res } = toolBox;
 

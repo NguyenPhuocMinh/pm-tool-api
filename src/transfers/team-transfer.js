@@ -12,31 +12,31 @@ const loggerFactory = loggerManager(
   constants.STRUCT_TRANSFERS.PROJECT_TRANSFER
 );
 
-const projectTransfer = (data) => {
-  loggerFactory.data('Func projectTransfer has been start');
+const teamTransfer = (data) => {
+  loggerFactory.data('Func teamTransfer has been start');
   const response = {};
 
   if (!isEmpty(data)) {
     data = data.toJSON();
 
-    const { _id, name, description, startDay, endDay, activated, createdAt } =
+    const { _id, name, project, members, activated, createdAt, updatedAt } =
       data;
 
     response.id = _id;
     response.name = name;
-    response.description = description;
-    response.startDay = startDay;
-    response.endDay = endDay;
+    response.project = project;
+    response.members = members;
     response.activated = activated;
     response.createdAt = createdAt;
+    response.updatedAt = updatedAt;
 
-    loggerFactory.data('Func projectTransfer has data');
+    loggerFactory.data('Func teamTransfer has data');
 
     return response;
   }
 
-  loggerFactory.data('Func projectTransfer without data');
+  loggerFactory.data('Func teamTransfer without data');
   return response;
 };
 
-export default projectTransfer;
+export default teamTransfer;

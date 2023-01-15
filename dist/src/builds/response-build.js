@@ -45,8 +45,7 @@ var errorResponse = function errorResponse(toolBox, args) {
   try {
     logger.log({
       level: _constants["default"].LOG_LEVELS.ERROR,
-      message: 'Function errorResponse has been start',
-      args: args
+      message: 'Function errorResponse has been start'
     });
     var res = toolBox.res;
     var templateErrorResponse = _["default"].newErrorTemplate(toolBox, args);

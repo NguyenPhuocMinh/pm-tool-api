@@ -19,6 +19,7 @@ var _homeRouter = _interopRequireDefault(require("./home-router"));
 var _healthRouter = _interopRequireDefault(require("./health-router"));
 var _organizationRouter = _interopRequireDefault(require("./organization-router"));
 var _projectRouter = _interopRequireDefault(require("./project-router"));
+var _teamRouter = _interopRequireDefault(require("./team-router"));
 var _roleRouter = _interopRequireDefault(require("./role-router"));
 var _permissionRouter = _interopRequireDefault(require("./permission-router"));
 var _userRouter = _interopRequireDefault(require("./user-router"));
@@ -36,7 +37,7 @@ function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) return _arrayLikeToAr
 function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
 var router = _express["default"].Router();
 var logger = (0, _logger["default"])(_constants["default"].APP_NAME, _constants["default"].STRUCT_NAME_ROUTER);
-var routes = [].concat(_toConsumableArray(_testRouter["default"]), _toConsumableArray(_socketRouter["default"]), _toConsumableArray(_authRouter["default"]), _toConsumableArray(_configRouter["default"]), _toConsumableArray(_homeRouter["default"]), _toConsumableArray(_healthRouter["default"]), _toConsumableArray(_organizationRouter["default"]), _toConsumableArray(_projectRouter["default"]), _toConsumableArray(_roleRouter["default"]), _toConsumableArray(_permissionRouter["default"]), _toConsumableArray(_userRouter["default"]), _toConsumableArray(_userSessionRouter["default"]), _toConsumableArray(_userOnlineRouter["default"]), _toConsumableArray(_notifyRouter["default"]), _toConsumableArray(_notifyUserRouter["default"]), _toConsumableArray(_notifyTemplateRouter["default"]));
+var routes = [].concat(_toConsumableArray(_testRouter["default"]), _toConsumableArray(_socketRouter["default"]), _toConsumableArray(_authRouter["default"]), _toConsumableArray(_configRouter["default"]), _toConsumableArray(_homeRouter["default"]), _toConsumableArray(_healthRouter["default"]), _toConsumableArray(_organizationRouter["default"]), _toConsumableArray(_projectRouter["default"]), _toConsumableArray(_teamRouter["default"]), _toConsumableArray(_roleRouter["default"]), _toConsumableArray(_permissionRouter["default"]), _toConsumableArray(_userRouter["default"]), _toConsumableArray(_userSessionRouter["default"]), _toConsumableArray(_userOnlineRouter["default"]), _toConsumableArray(_notifyRouter["default"]), _toConsumableArray(_notifyUserRouter["default"]), _toConsumableArray(_notifyTemplateRouter["default"]));
 
 /**
  * @description Init layer router

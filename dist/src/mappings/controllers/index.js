@@ -75,6 +75,12 @@ Object.defineProperty(exports, "socketController", {
     return _socketController["default"];
   }
 });
+Object.defineProperty(exports, "teamController", {
+  enumerable: true,
+  get: function get() {
+    return _teamController["default"];
+  }
+});
 Object.defineProperty(exports, "testController", {
   enumerable: true,
   get: function get() {
@@ -108,6 +114,7 @@ var _homeController = _interopRequireDefault(require("./home-controller"));
 var _healthController = _interopRequireDefault(require("./health-controller"));
 var _organizationController = _interopRequireDefault(require("./organization-controller"));
 var _projectController = _interopRequireDefault(require("./project-controller"));
+var _teamController = _interopRequireDefault(require("./team-controller"));
 var _roleController = _interopRequireDefault(require("./role-controller"));
 var _permissionController = _interopRequireDefault(require("./permission-controller"));
 var _userController = _interopRequireDefault(require("./user-controller"));

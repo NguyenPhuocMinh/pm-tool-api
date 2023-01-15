@@ -322,6 +322,163 @@ paths:
         500:
           $ref: "#/components/responses/ServerError"
 
+  /teams:
+    get:
+      tags:
+        - team
+      security: []
+      summary: Team List
+      description: Team List
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/commonResponse"
+        400:
+          $ref: "#/components/responses/BadRequest"
+        401:
+          $ref: "#/components/responses/UnAuthorization"
+        403:
+          $ref: "#/components/responses/Forbidden"
+        404:
+          $ref: "#/components/responses/NotFound"
+        500:
+          $ref: "#/components/responses/ServerError"
+
+    post:
+      tags:
+        - team
+      security: []
+      summary: Team Create
+      description: Team Create
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/createTeam"
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/commonResponse"
+        400:
+          $ref: "#/components/responses/BadRequest"
+        401:
+          $ref: "#/components/responses/UnAuthorization"
+        403:
+          $ref: "#/components/responses/Forbidden"
+        404:
+          $ref: "#/components/responses/NotFound"
+        500:
+          $ref: "#/components/responses/ServerError"
+
+  /teams/{id}:
+    get:
+      tags:
+        - team
+      security:
+        - X-Access-Token: []
+      summary: Get team by id
+      description: Return item team
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+          description: Id of team
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/commonResponse"
+        400:
+          $ref: "#/components/responses/BadRequest"
+        401:
+          $ref: "#/components/responses/UnAuthorization"
+        403:
+          $ref: "#/components/responses/Forbidden"
+        404:
+          $ref: "#/components/responses/NotFound"
+        500:
+          $ref: "#/components/responses/ServerError"
+
+    put:
+      tags:
+        - team
+      security:
+        - X-Access-Token: []
+      summary: Update team by id
+      description: Return result update team
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/updateTeam"
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+          description: Id of team
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/commonResponse"
+        400:
+          $ref: "#/components/responses/BadRequest"
+        401:
+          $ref: "#/components/responses/UnAuthorization"
+        403:
+          $ref: "#/components/responses/Forbidden"
+        404:
+          $ref: "#/components/responses/NotFound"
+        500:
+          $ref: "#/components/responses/ServerError"
+
+    delete:
+      tags:
+        - role
+      security:
+        - X-Access-Token: []
+      summary: Delete team by id
+      description: Return result delete team
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+          description: Id of team
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/commonResponse"
+        400:
+          $ref: "#/components/responses/BadRequest"
+        401:
+          $ref: "#/components/responses/UnAuthorization"
+        403:
+          $ref: "#/components/responses/Forbidden"
+        404:
+          $ref: "#/components/responses/NotFound"
+        500:
+          $ref: "#/components/responses/ServerError"
+
   /roles:
     get:
       tags:
@@ -1011,7 +1168,7 @@ paths:
         500:
           $ref: "#/components/responses/ServerError"
 
-  /users/sessions:
+  /userSessions:
     post:
       tags:
         - user-session
@@ -1042,7 +1199,7 @@ paths:
         500:
           $ref: "#/components/responses/ServerError"
 
-  /users/sessions/{id}:
+  /userSessions/{id}:
     patch:
       tags:
         - user-session
@@ -1105,7 +1262,7 @@ paths:
         500:
           $ref: "#/components/responses/ServerError"
 
-  /notify/users:
+  /notifyUsers:
     get:
       tags:
         - notify-user
@@ -1145,7 +1302,7 @@ paths:
         500:
           $ref: "#/components/responses/ServerError"
 
-  /notify/users/{id}:
+  /notifyUsers/{id}:
     get:
       tags:
         - notify-user
@@ -1177,7 +1334,7 @@ paths:
         500:
           $ref: "#/components/responses/ServerError"
 
-  /notify/users-data:
+  /notifyUsersData:
     get:
       tags:
         - notify-user
@@ -1222,7 +1379,7 @@ paths:
         500:
           $ref: "#/components/responses/ServerError"
 
-  /notify/users-unread:
+  /notifyUsersUnread:
     get:
       tags:
         - notify-user
@@ -1262,7 +1419,7 @@ paths:
         500:
           $ref: "#/components/responses/ServerError"
 
-  /notify/users-read:
+  /notifyUsersRead:
     patch:
       tags:
         - notify-user
@@ -1292,7 +1449,7 @@ paths:
         500:
           $ref: "#/components/responses/ServerError"
 
-  /notify/users-reads:
+  /notifyUsersReads:
     patch:
       tags:
         - notify-user
@@ -1322,7 +1479,7 @@ paths:
         500:
           $ref: "#/components/responses/ServerError"
 
-  /notify/users-trash:
+  /notifyUsersTrash:
     patch:
       tags:
         - notify-user
@@ -1352,7 +1509,7 @@ paths:
         500:
           $ref: "#/components/responses/ServerError"
 
-  /notify/users-trashes:
+  /notifyUserTrashes:
     get:
       tags:
         - notify-user
@@ -1423,7 +1580,7 @@ paths:
         500:
           $ref: "#/components/responses/ServerError"
 
-  /notify/users-rollback:
+  /notifyUserRollback:
     delete:
       tags:
         - notify-user
@@ -1453,7 +1610,7 @@ paths:
         500:
           $ref: "#/components/responses/ServerError"
 
-  /notify/users-rollbacks:
+  /notifyUserRollbacks:
     delete:
       tags:
         - notify-user
@@ -1491,6 +1648,57 @@ paths:
         - X-Access-Token: []
       summary: Get All Template Notify
       description: Get All Template Notify
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/commonResponse"
+        400:
+          $ref: "#/components/responses/BadRequest"
+        404:
+          $ref: "#/components/responses/NotFound"
+        500:
+          $ref: "#/components/responses/ServerError"
+
+    post:
+      tags:
+        - notify-user
+      security: []
+      summary: Create Template Notify
+      description: Create Template Notify
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/notifyTemplateReqBody"
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/commonResponse"
+        400:
+          $ref: "#/components/responses/BadRequest"
+        401:
+          $ref: "#/components/responses/UnAuthorization"
+        403:
+          $ref: "#/components/responses/Forbidden"
+        404:
+          $ref: "#/components/responses/NotFound"
+        500:
+          $ref: "#/components/responses/ServerError"
+
+  /userOnline:
+    get:
+      tags:
+        - user-online
+      security:
+        - X-Access-Token: []
+      summary: Get All User Online
+      description: Get All User Online
       responses:
         200:
           description: OK
@@ -1694,6 +1902,31 @@ components:
           type: string
         endDay:
           type: string
+        activated:
+          type: boolean
+          default: true
+
+    ## Team schema
+    createTeam:
+      type: object
+      required:
+        - name
+      properties:
+        name:
+          type: string
+          default: team name
+        activated:
+          type: boolean
+          default: true
+    
+    updateTeam:
+      type: object
+      required:
+        - name
+      properties:
+        name:
+          type: string
+          default: team name
         activated:
           type: boolean
           default: true

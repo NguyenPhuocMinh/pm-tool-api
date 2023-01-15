@@ -8,6 +8,7 @@ require("source-map-support/register");
 var _authPermission = _interopRequireDefault(require("./auth-permission"));
 var _organizationPermission = _interopRequireDefault(require("./organization-permission"));
 var _projectPermission = _interopRequireDefault(require("./project-permission"));
+var _teamPermission = _interopRequireDefault(require("./team-permission"));
 var _rolePermission = _interopRequireDefault(require("./role-permission"));
 var _perPermission = _interopRequireDefault(require("./per-permission"));
 var _userPermission = _interopRequireDefault(require("./user-permission"));
@@ -20,6 +21,7 @@ var permissions = {
     auth: _authPermission["default"],
     organizations: _organizationPermission["default"],
     projects: _projectPermission["default"],
+    teams: _teamPermission["default"],
     roles: _rolePermission["default"],
     permissions: _perPermission["default"],
     users: _userPermission["default"],

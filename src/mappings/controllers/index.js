@@ -8,6 +8,7 @@ import homeController from './home-controller';
 import healthController from './health-controller';
 import organizationController from './organization-controller';
 import projectController from './project-controller';
+import teamController from './team-controller';
 import roleController from './role-controller';
 import permissionController from './permission-controller';
 import userController from './user-controller';
@@ -26,6 +27,7 @@ export {
   healthController,
   organizationController,
   projectController,
+  teamController,
   roleController,
   permissionController,
   userController,

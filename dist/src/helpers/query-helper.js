@@ -32,7 +32,7 @@ var queryHelper = function queryHelper() {
     searchAttributes.forEach(function (property) {
       var searchRegex = {};
       searchRegex[property] = {
-        $regexp: _search,
+        $regex: _search,
         $options: 'i'
       };
       // eslint-disable-next-line dot-notation

@@ -14,6 +14,7 @@ export default {
     isPasswordTemporary: { type: Boolean, default: false },
     refreshToken: { type: String },
     roles: [{ type: Schema.Types.ObjectId, ref: 'RoleModel' }],
+    team: { type: Schema.Types.ObjectId, ref: 'TeamModel' },
     locale: { type: String },
     picture: { type: String },
     // filter

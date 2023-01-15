@@ -3,14 +3,11 @@
 import { Schema } from 'mongoose';
 
 export default {
-  name: 'ProjectModel',
+  name: 'TeamModel',
   attributes: {
     name: { type: String },
-    description: { type: String },
-    startDay: { type: Date },
-    endDay: { type: Date },
-    organization: { type: Schema.Types.ObjectId, ref: 'OrganizationModel' },
-    teams: [{ type: Schema.Types.ObjectId, ref: 'TeamModel' }],
+    project: { type: Schema.Types.ObjectId, ref: 'ProjectModel' },
+    members: [{ type: Schema.Types.ObjectId, ref: 'UserModel' }],
     // filter
     slug: { type: String },
     deleted: { type: Boolean, default: false },
@@ -21,6 +18,6 @@ export default {
     updatedBy: { type: String }
   },
   options: {
-    collection: 'projects'
+    collection: 'teams'
   }
 };

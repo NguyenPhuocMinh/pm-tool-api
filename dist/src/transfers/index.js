@@ -8,6 +8,7 @@ require("source-map-support/register");
 var _authTransfer = _interopRequireDefault(require("./auth-transfer"));
 var _organizationTransfer = _interopRequireDefault(require("./organization-transfer"));
 var _projectTransfer = _interopRequireDefault(require("./project-transfer"));
+var _teamTransfer = _interopRequireDefault(require("./team-transfer"));
 var _roleTransfer = _interopRequireDefault(require("./role-transfer"));
 var _permissionTransfer = _interopRequireDefault(require("./permission-transfer"));
 var _userTransfer = _interopRequireDefault(require("./user-transfer"));
@@ -21,6 +22,7 @@ var _default = {
   authTransfer: _authTransfer["default"],
   organizationTransfer: _organizationTransfer["default"],
   projectTransfer: _projectTransfer["default"],
+  teamTransfer: _teamTransfer["default"],
   roleTransfer: _roleTransfer["default"],
   permissionTransfer: _permissionTransfer["default"],
   userTransfer: _userTransfer["default"],

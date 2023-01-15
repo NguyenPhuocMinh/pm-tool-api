@@ -14,6 +14,7 @@ var _homeOrchestrator = _interopRequireDefault(require("./home-orchestrator"));
 var _healthOrchestrator = _interopRequireDefault(require("./health-orchestrator"));
 var _organizationOrchestrator = _interopRequireDefault(require("./organization-orchestrator"));
 var _projectOrchestrator = _interopRequireDefault(require("./project-orchestrator"));
+var _teamOrchestrator = _interopRequireDefault(require("./team-orchestrator"));
 var _roleOrchestrator = _interopRequireDefault(require("./role-orchestrator"));
 var _permissionOrchestrator = _interopRequireDefault(require("./permission-orchestrator"));
 var _userOrchestrator = _interopRequireDefault(require("./user-orchestrator"));
@@ -124,6 +125,10 @@ var orchestratorOrganization = [{
   type: _constants["default"].types.MsgTypeOrganization,
   action: _constants["default"].actions.MsgActionOrganizationDelete,
   orchestrator: _organizationOrchestrator["default"].deleteOrganization
+}, {
+  type: _constants["default"].types.MsgTypeOrganization,
+  action: _constants["default"].actions.MsgActionOrganizationGetProjects,
+  orchestrator: _organizationOrchestrator["default"].getProjectsInOrganization
 }];
 
 /**
@@ -138,6 +143,49 @@ var orchestratorProject = [{
   action: _constants["default"].actions.MsgActionProjectCreate,
   orchestrator: _projectOrchestrator["default"].createProject,
   schema: 'projectSchema'
+}];
+
+/**
+ * TEAM
+ */
+var orchestratorTeam = [{
+  type: _constants["default"].types.MsgTypeTeam,
+  action: _constants["default"].actions.MsgActionTeamGetAll,
+  orchestrator: _teamOrchestrator["default"].getAllTeam
+}, {
+  type: _constants["default"].types.MsgTypeTeam,
+  action: _constants["default"].actions.MsgActionTeamCreate,
+  orchestrator: _teamOrchestrator["default"].createTeam,
+  schema: 'teamSchema'
+}, {
+  type: _constants["default"].types.MsgTypeTeam,
+  action: _constants["default"].actions.MsgActionTeamGet,
+  orchestrator: _teamOrchestrator["default"].getTeam
+}, {
+  type: _constants["default"].types.MsgTypeTeam,
+  action: _constants["default"].actions.MsgActionTeamUpdate,
+  orchestrator: _teamOrchestrator["default"].updateTeam,
+  schema: 'teamSchema'
+}, {
+  type: _constants["default"].types.MsgTypeTeam,
+  action: _constants["default"].actions.MsgActionTeamDelete,
+  orchestrator: _teamOrchestrator["default"].deleteTeam
+}, {
+  type: _constants["default"].types.MsgTypeTeam,
+  action: _constants["default"].actions.MsgActionTeamGetAllMemberInTeam,
+  orchestrator: _teamOrchestrator["default"].getAllMemberInTeam
+}, {
+  type: _constants["default"].types.MsgTypeTeam,
+  action: _constants["default"].actions.MsgActionTeamGetAllMemberNotOnTeam,
+  orchestrator: _teamOrchestrator["default"].getAllMemberNotOnTeam
+}, {
+  type: _constants["default"].types.MsgTypeTeam,
+  action: _constants["default"].actions.MsgActionTeamAddMembersToTeam,
+  orchestrator: _teamOrchestrator["default"].addMembersToTeam
+}, {
+  type: _constants["default"].types.MsgTypeTeam,
+  action: _constants["default"].actions.MsgActionTeamRemoveMembersFromTeam,
+  orchestrator: _teamOrchestrator["default"].removeMembersFromTeam
 }];
 
 /**
@@ -373,6 +421,6 @@ var orchestratorNotifyTemplate = [{
 /**
  * BASE
  */
-var orchestrators = [].concat(orchestratorTest, orchestratorSocket, orchestratorAuth, orchestratorConfig, orchestratorHome, orchestratorHealth, orchestratorOrganization, orchestratorProject, orchestratorRole, orchestratorPermission, orchestratorUser, orchestratorUserSession, orchestratorUserOnline, orchestratorNotify, orchestratorNotifyUser, orchestratorNotifyTemplate);
+var orchestrators = [].concat(orchestratorTest, orchestratorSocket, orchestratorAuth, orchestratorConfig, orchestratorHome, orchestratorHealth, orchestratorOrganization, orchestratorProject, orchestratorTeam, orchestratorRole, orchestratorPermission, orchestratorUser, orchestratorUserSession, orchestratorUserOnline, orchestratorNotify, orchestratorNotifyUser, orchestratorNotifyTemplate);
 var _default = orchestrators;
 exports["default"] = _default;

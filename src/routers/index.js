@@ -22,6 +22,7 @@ import homeRouter from './home-router';
 import healthRouter from './health-router';
 import organizationRouter from './organization-router';
 import projectRouter from './project-router';
+import teamRouter from './team-router';
 import roleRouter from './role-router';
 import permissionRouter from './permission-router';
 import userRouter from './user-router';
@@ -44,6 +45,7 @@ const routes = [
   ...healthRouter,
   ...organizationRouter,
   ...projectRouter,
+  ...teamRouter,
   ...roleRouter,
   ...permissionRouter,
   ...userRouter,

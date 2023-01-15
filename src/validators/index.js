@@ -3,6 +3,10 @@
 import { validatorLogin } from './auth-validator';
 import { validatorOrganization } from './organization-validator';
 import { validatorProject } from './project-validator';
+import {
+  validatorTeamCreateOrUpdate,
+  validatorAddMembersToTeam
+} from './team-validator';
 import { validatorRole } from './role-validator';
 import { validatorPermission } from './permission-validator';
 import {
@@ -17,11 +21,13 @@ export default {
   validatorLogin,
   validatorOrganization,
   validatorProject,
+  validatorTeamCreateOrUpdate,
   validatorUser,
   validatorUserSetPass,
   validatorUserResetPass,
   validatorUserChangePass,
   validatorRole,
   validatorPermission,
-  validatorNotifyTemplateCreate
+  validatorNotifyTemplateCreate,
+  validatorAddMembersToTeam
 };

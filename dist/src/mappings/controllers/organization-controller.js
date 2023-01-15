@@ -127,12 +127,36 @@ var deleteOrganization = function deleteOrganization(req, res, next) {
     message: 'Function deleteOrganization Controller has been end'
   });
 };
+
+/**
+ * @description Delete Organization By ID Controller
+ * @param {*} req
+ * @param {*} res
+ * @param {*} next
+ */
+var getProjectsInOrganization = function getProjectsInOrganization(req, res, next) {
+  logger.log({
+    level: _constants["default"].LOG_LEVELS.INFO,
+    message: 'Function getProjectsInOrganization Controller has been start'
+  });
+  var toolBox = {
+    req: req,
+    res: res,
+    next: next
+  };
+  (0, _baseController["default"])(toolBox, _constants["default"].types.MsgTypeOrganization, _constants["default"].actions.MsgActionOrganizationGetProjects);
+  logger.log({
+    level: _constants["default"].LOG_LEVELS.INFO,
+    message: 'Function getProjectsInOrganization Controller has been end'
+  });
+};
 var organizationController = {
   getAllOrganization: getAllOrganization,
   createOrganization: createOrganization,
   getOrganization: getOrganization,
   updateOrganization: updateOrganization,
-  deleteOrganization: deleteOrganization
+  deleteOrganization: deleteOrganization,
+  getProjectsInOrganization: getProjectsInOrganization
 };
 var _default = organizationController;
 exports["default"] = _default;

@@ -313,12 +313,93 @@ const deleteOrganization = async (toolBox) => {
   }
 };
 
+/**
+ * @description Get Projects In Organization Orchestrator
+ * @param {*} toolBox { req, res, next }
+ */
+const getProjectsInOrganization = async (toolBox) => {
+  const { req } = toolBox;
+  try {
+    logger.log({
+      level: constants.LOG_LEVELS.INFO,
+      message: 'Function getProjectsInOrganization Orchestrator has been start'
+    });
+
+    const { id } = req.params;
+
+    if (isEmpty(id)) {
+      throw commons.newError('organizationE003');
+    }
+
+    const { skip, limit } = helpers.paginationHelper(req.query);
+    const query = helpers.queryHelper(req.query, null, [
+      { deleted: false, activated: true }
+    ]);
+    const sort = helpers.sortHelper(req.query);
+
+    // eslint-disable-next-line dot-notation
+    query['$and'].push({
+      organization: id
+    });
+
+    const projects = await repository.findAll({
+      type: 'ProjectModel',
+      filter: query,
+      projection: {
+        id: 1,
+        firstName: 1,
+        lastName: 1,
+        email: 1
+      },
+      options: {
+        skip,
+        limit,
+        sort
+      }
+    });
+
+    const total = await repository.count({
+      type: 'ProjectModel',
+      filter: query
+    });
+
+    const result = await Promise.map(
+      projects,
+      (data) => {
+        return transfers.projectTransfer(data);
+      },
+      { concurrency: 5 }
+    );
+
+    logger.log({
+      level: constants.LOG_LEVELS.INFO,
+      message: 'Function getProjectsInOrganization Orchestrator has been end'
+    });
+
+    return {
+      result: {
+        data: result,
+        total
+      },
+      msg: 'organizationS006'
+    };
+  } catch (err) {
+    logger.log({
+      level: constants.LOG_LEVELS.ERROR,
+      message: 'Function getProjectsInOrganization Orchestrator has been error',
+      args: utils.parseError(err)
+    });
+    return Promise.reject(err);
+  }
+};
+
 const organizationOrchestrator = {
   getAllOrganization,
   createOrganization,
   getOrganization,
   updateOrganization,
-  deleteOrganization
+  deleteOrganization,
+  getProjectsInOrganization
 };
 
 export default organizationOrchestrator;

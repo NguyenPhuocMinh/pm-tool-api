@@ -45,6 +45,11 @@ var _default = [
   pathName: '/organizations/:id',
   method: 'DELETE',
   permission: _permissions["default"].admin.organizations.DELETE
+}, {
+  enable: true,
+  pathName: '/organizations/:id/projects',
+  method: 'GET',
+  permission: _permissions["default"].admin.organizations.GET_PROJECT
 },
 /**
  * PROJECT
@@ -64,6 +69,55 @@ var _default = [
   method: 'GET',
   pathName: '/projects/:id',
   permission: _permissions["default"].admin.projects.GET_ID
+},
+/**
+ * TEAM
+ */
+{
+  enable: true,
+  method: 'GET',
+  pathName: '/teams',
+  permission: _permissions["default"].admin.teams.GET_ALL
+}, {
+  enable: true,
+  method: 'POST',
+  pathName: '/teams',
+  permission: _permissions["default"].admin.teams.CREATE
+}, {
+  enable: true,
+  method: 'GET',
+  pathName: '/teams/:id',
+  permission: _permissions["default"].admin.teams.GET_ID
+}, {
+  enable: true,
+  method: 'PUT',
+  pathName: '/teams/:id',
+  permission: _permissions["default"].admin.teams.UPDATE
+}, {
+  enable: true,
+  method: 'DELETE',
+  pathName: '/teams/:id',
+  permission: _permissions["default"].admin.teams.DELETE
+}, {
+  enable: true,
+  method: 'GET',
+  pathName: '/teams/:id/membersInTeam',
+  permission: _permissions["default"].admin.teams.GET_MEMBER_IN_TEAM
+}, {
+  enable: true,
+  method: 'GET',
+  pathName: '/teams/:id/membersNotOnTeam',
+  permission: _permissions["default"].admin.teams.GET_MEMBER_NOT_TEAM
+}, {
+  enable: true,
+  method: 'PATCH',
+  pathName: '/teams/:id/addMembersToTeam',
+  permission: _permissions["default"].admin.teams.ADD_MEMBER_TO_TEAM
+}, {
+  enable: true,
+  method: 'PATCH',
+  pathName: '/teams/:id/removeMembersFromTeam',
+  permission: _permissions["default"].admin.teams.REMOVE_MEMBER_FROM_TEAM
 },
 /**
  * ROLES

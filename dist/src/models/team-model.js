@@ -7,27 +7,18 @@ exports["default"] = void 0;
 require("source-map-support/register");
 var _mongoose = require("mongoose");
 var _default = {
-  name: 'ProjectModel',
+  name: 'TeamModel',
   attributes: {
     name: {
       type: String
     },
-    description: {
-      type: String
-    },
-    startDay: {
-      type: Date
-    },
-    endDay: {
-      type: Date
-    },
-    organization: {
+    project: {
       type: _mongoose.Schema.Types.ObjectId,
-      ref: 'OrganizationModel'
+      ref: 'ProjectModel'
     },
-    teams: [{
+    members: [{
       type: _mongoose.Schema.Types.ObjectId,
-      ref: 'TeamModel'
+      ref: 'UserModel'
     }],
     // filter
     slug: {
@@ -55,7 +46,7 @@ var _default = {
     }
   },
   options: {
-    collection: 'projects'
+    collection: 'teams'
   }
 };
 exports["default"] = _default;

@@ -12,31 +12,31 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "d
 // core
 
 var loggerFactory = (0, _logger["default"])(_constants["default"].APP_NAME, _constants["default"].STRUCT_TRANSFERS.PROJECT_TRANSFER);
-var projectTransfer = function projectTransfer(data) {
-  loggerFactory.data('Func projectTransfer has been start');
+var teamTransfer = function teamTransfer(data) {
+  loggerFactory.data('Func teamTransfer has been start');
   var response = {};
   if (!(0, _lodash.isEmpty)(data)) {
     data = data.toJSON();
     var _data = data,
       _id = _data._id,
       name = _data.name,
-      description = _data.description,
-      startDay = _data.startDay,
-      endDay = _data.endDay,
+      project = _data.project,
+      members = _data.members,
       activated = _data.activated,
-      createdAt = _data.createdAt;
+      createdAt = _data.createdAt,
+      updatedAt = _data.updatedAt;
     response.id = _id;
     response.name = name;
-    response.description = description;
-    response.startDay = startDay;
-    response.endDay = endDay;
+    response.project = project;
+    response.members = members;
     response.activated = activated;
     response.createdAt = createdAt;
-    loggerFactory.data('Func projectTransfer has data');
+    response.updatedAt = updatedAt;
+    loggerFactory.data('Func teamTransfer has data');
     return response;
   }
-  loggerFactory.data('Func projectTransfer without data');
+  loggerFactory.data('Func teamTransfer without data');
   return response;
 };
-var _default = projectTransfer;
+var _default = teamTransfer;
 exports["default"] = _default;

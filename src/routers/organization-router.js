@@ -35,6 +35,12 @@ const organizationRouter = [
     method: 'DELETE',
     methodName: 'deleteOrganization',
     controller: organizationController.deleteOrganization
+  },
+  {
+    pathName: '/organizations/:id/projects',
+    method: 'GET',
+    methodName: 'getProjectsInOrganization',
+    controller: organizationController.getProjectsInOrganization
   }
 ];
 

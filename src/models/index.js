@@ -2,6 +2,7 @@
 
 import OrganizationModel from './organization-model';
 import ProjectModel from './project-model';
+import TeamModel from './team-model';
 import RoleModel from './role-model';
 import PermissionModel from './permission-model';
 import UserModel from './user-model';
@@ -13,6 +14,7 @@ import NotifyTemplateModel from './notify-template-model';
 const models = [
   OrganizationModel,
   ProjectModel,
+  TeamModel,
   RoleModel,
   PermissionModel,
   UserModel,

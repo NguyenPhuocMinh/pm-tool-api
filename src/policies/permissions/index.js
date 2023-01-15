@@ -3,7 +3,7 @@
 import authPermission from './auth-permission';
 import organizationPermission from './organization-permission';
 import projectPermission from './project-permission';
-
+import teamPermission from './team-permission';
 import rolePermission from './role-permission';
 import perPermission from './per-permission';
 import userPermission from './user-permission';
@@ -16,6 +16,7 @@ const permissions = {
     auth: authPermission,
     organizations: organizationPermission,
     projects: projectPermission,
+    teams: teamPermission,
     roles: rolePermission,
     permissions: perPermission,
     users: userPermission,

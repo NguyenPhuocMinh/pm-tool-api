@@ -3,6 +3,7 @@
 import { signInSchema, signOutSchema, refreshTokenSchema } from './auth-schema';
 import { organizationSchema } from './organization-schema';
 import { projectSchema } from './project-schema';
+import { teamSchema } from './team-schema';
 import { roleSchema } from './role-schema';
 import { permissionSchema } from './permission-schema';
 import {
@@ -20,6 +21,7 @@ const schemas = {
   refreshTokenSchema,
   organizationSchema,
   projectSchema,
+  teamSchema,
   roleSchema,
   permissionSchema,
   userCreateSchema,

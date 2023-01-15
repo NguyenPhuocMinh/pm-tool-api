@@ -39,6 +39,10 @@ var _default = {
       type: _mongoose.Schema.Types.ObjectId,
       ref: 'RoleModel'
     }],
+    team: {
+      type: _mongoose.Schema.Types.ObjectId,
+      ref: 'TeamModel'
+    },
     locale: {
       type: String
     },

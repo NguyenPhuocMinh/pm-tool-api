@@ -3,6 +3,7 @@
 import authTransfer from './auth-transfer';
 import organizationTransfer from './organization-transfer';
 import projectTransfer from './project-transfer';
+import teamTransfer from './team-transfer';
 import roleTransfer from './role-transfer';
 import permissionTransfer from './permission-transfer';
 import userTransfer from './user-transfer';
@@ -16,6 +17,7 @@ export default {
   authTransfer,
   organizationTransfer,
   projectTransfer,
+  teamTransfer,
   roleTransfer,
   permissionTransfer,
   userTransfer,

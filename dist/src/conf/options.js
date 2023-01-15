@@ -7,13 +7,12 @@ exports["default"] = void 0;
 require("source-map-support/register");
 var _uuid = require("uuid");
 var _nanoid = require("nanoid");
+var _expressSession = _interopRequireDefault(require("express-session"));
 var _profiles = _interopRequireDefault(require("./profiles"));
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
-// import session from 'express-session';
-
 var allowList = ['https://pm-tool-ui.netlify.app', 'https://pm-tool-ui.netlify.app/', 'https://pm-tool-ui.netlify.app/*', 'http://localhost:3500', 'http://localhost:3500/*'];
 var corsOptions = {
-  origin: allowList,
+  origin: _profiles["default"].APP_DOMAIN_PATH,
   credentials: true
 };
 var cookieOptions = {
@@ -22,17 +21,14 @@ var cookieOptions = {
   sameSite: 'strict',
   secure: _profiles["default"].APP_ENV === 'production'
 };
-
-// const memoryStore = new session.MemoryStore();
-
+var memoryStore = new _expressSession["default"].MemoryStore();
 var sessionOptions = {
   secret: _profiles["default"].APP_SECRET_KEY,
   maxAge: 1000 * 60 * 15,
   resave: false,
-  saveUninitialized: true
-  // store: memoryStore
+  saveUninitialized: true,
+  store: memoryStore
 };
-
 var loggerOptions = {
   symbols: {
     info: '\x1B[32mINFO\x1B[39m',

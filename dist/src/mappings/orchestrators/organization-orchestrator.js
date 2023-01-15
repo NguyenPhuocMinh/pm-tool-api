@@ -407,12 +407,111 @@ var deleteOrganization = /*#__PURE__*/function () {
     return _ref5.apply(this, arguments);
   };
 }();
+
+/**
+ * @description Get Projects In Organization Orchestrator
+ * @param {*} toolBox { req, res, next }
+ */
+var getProjectsInOrganization = /*#__PURE__*/function () {
+  var _ref6 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee6(toolBox) {
+    var req, id, _helpers$paginationHe2, skip, limit, query, sort, projects, total, result;
+    return _regeneratorRuntime().wrap(function _callee6$(_context6) {
+      while (1) {
+        switch (_context6.prev = _context6.next) {
+          case 0:
+            req = toolBox.req;
+            _context6.prev = 1;
+            logger.log({
+              level: _constants["default"].LOG_LEVELS.INFO,
+              message: 'Function getProjectsInOrganization Orchestrator has been start'
+            });
+            id = req.params.id;
+            if (!(0, _lodash.isEmpty)(id)) {
+              _context6.next = 6;
+              break;
+            }
+            throw _commons["default"].newError('organizationE003');
+          case 6:
+            _helpers$paginationHe2 = _helpers["default"].paginationHelper(req.query), skip = _helpers$paginationHe2.skip, limit = _helpers$paginationHe2.limit;
+            query = _helpers["default"].queryHelper(req.query, null, [{
+              deleted: false,
+              activated: true
+            }]);
+            sort = _helpers["default"].sortHelper(req.query); // eslint-disable-next-line dot-notation
+            query['$and'].push({
+              organization: id
+            });
+            _context6.next = 12;
+            return _repository["default"].findAll({
+              type: 'ProjectModel',
+              filter: query,
+              projection: {
+                id: 1,
+                firstName: 1,
+                lastName: 1,
+                email: 1
+              },
+              options: {
+                skip: skip,
+                limit: limit,
+                sort: sort
+              }
+            });
+          case 12:
+            projects = _context6.sent;
+            _context6.next = 15;
+            return _repository["default"].count({
+              type: 'ProjectModel',
+              filter: query
+            });
+          case 15:
+            total = _context6.sent;
+            _context6.next = 18;
+            return _bluebird["default"].map(projects, function (data) {
+              return _transfers["default"].projectTransfer(data);
+            }, {
+              concurrency: 5
+            });
+          case 18:
+            result = _context6.sent;
+            logger.log({
+              level: _constants["default"].LOG_LEVELS.INFO,
+              message: 'Function getProjectsInOrganization Orchestrator has been end'
+            });
+            return _context6.abrupt("return", {
+              result: {
+                data: result,
+                total: total
+              },
+              msg: 'organizationS006'
+            });
+          case 23:
+            _context6.prev = 23;
+            _context6.t0 = _context6["catch"](1);
+            logger.log({
+              level: _constants["default"].LOG_LEVELS.ERROR,
+              message: 'Function getProjectsInOrganization Orchestrator has been error',
+              args: _utils["default"].parseError(_context6.t0)
+            });
+            return _context6.abrupt("return", _bluebird["default"].reject(_context6.t0));
+          case 27:
+          case "end":
+            return _context6.stop();
+        }
+      }
+    }, _callee6, null, [[1, 23]]);
+  }));
+  return function getProjectsInOrganization(_x6) {
+    return _ref6.apply(this, arguments);
+  };
+}();
 var organizationOrchestrator = {
   getAllOrganization: getAllOrganization,
   createOrganization: createOrganization,
   getOrganization: getOrganization,
   updateOrganization: updateOrganization,
-  deleteOrganization: deleteOrganization
+  deleteOrganization: deleteOrganization,
+  getProjectsInOrganization: getProjectsInOrganization
 };
 var _default = organizationOrchestrator;
 exports["default"] = _default;

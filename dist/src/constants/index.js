@@ -55,6 +55,7 @@ var HOME_CONTROLLER = 'home-controller';
 var HEALTH_CONTROLLER = 'health-controller';
 var ORGANIZATION_CONTROLLER = 'organization-controller';
 var PROJECT_CONTROLLER = 'project-controller';
+var TEAM_CONTROLLER = 'team-controller';
 var ROLE_CONTROLLER = 'role-controller';
 var PERMISSION_CONTROLLER = 'permission-controller';
 var USER_CONTROLLER = 'user-controller';
@@ -73,6 +74,7 @@ var STRUCT_CONTROLLERS = {
   HEALTH_CONTROLLER: HEALTH_CONTROLLER,
   ORGANIZATION_CONTROLLER: ORGANIZATION_CONTROLLER,
   PROJECT_CONTROLLER: PROJECT_CONTROLLER,
+  TEAM_CONTROLLER: TEAM_CONTROLLER,
   ROLE_CONTROLLER: ROLE_CONTROLLER,
   PERMISSION_CONTROLLER: PERMISSION_CONTROLLER,
   USER_CONTROLLER: USER_CONTROLLER,
@@ -95,6 +97,7 @@ var HOME_ORCHESTRATOR = 'home-orchestrator';
 var HEALTH_ORCHESTRATOR = 'health-orchestrator';
 var ORGANIZATION_ORCHESTRATOR = 'organization-orchestrator';
 var PROJECT_ORCHESTRATOR = 'project-orchestrator';
+var TEAM_ORCHESTRATOR = 'team-orchestrator';
 var ROLE_ORCHESTRATOR = 'role-orchestrator';
 var PERMISSION_ORCHESTRATOR = 'permission-orchestrator';
 var USER_ORCHESTRATOR = 'user-orchestrator';
@@ -113,6 +116,7 @@ var STRUCT_ORCHESTRATORS = {
   HEALTH_ORCHESTRATOR: HEALTH_ORCHESTRATOR,
   ORGANIZATION_ORCHESTRATOR: ORGANIZATION_ORCHESTRATOR,
   PROJECT_ORCHESTRATOR: PROJECT_ORCHESTRATOR,
+  TEAM_ORCHESTRATOR: TEAM_ORCHESTRATOR,
   ROLE_ORCHESTRATOR: ROLE_ORCHESTRATOR,
   PERMISSION_ORCHESTRATOR: PERMISSION_ORCHESTRATOR,
   USER_ORCHESTRATOR: USER_ORCHESTRATOR,
@@ -129,6 +133,7 @@ var STRUCT_ORCHESTRATORS = {
 var AUTH_VALIDATOR = 'auth-validator';
 var ORGANIZATION_VALIDATOR = 'organization-validator';
 var PROJECT_VALIDATOR = 'project-validator';
+var TEAM_VALIDATOR = 'team-validator';
 var ROLE_VALIDATOR = 'role-validator';
 var PERMISSION_VALIDATOR = 'permission-validator';
 var USER_VALIDATOR = 'user-validator';
@@ -136,6 +141,7 @@ var STRUCT_VALIDATORS = {
   AUTH_VALIDATOR: AUTH_VALIDATOR,
   ORGANIZATION_VALIDATOR: ORGANIZATION_VALIDATOR,
   PROJECT_VALIDATOR: PROJECT_VALIDATOR,
+  TEAM_VALIDATOR: TEAM_VALIDATOR,
   ROLE_VALIDATOR: ROLE_VALIDATOR,
   PERMISSION_VALIDATOR: PERMISSION_VALIDATOR,
   USER_VALIDATOR: USER_VALIDATOR
@@ -147,6 +153,7 @@ var STRUCT_VALIDATORS = {
 var AUTH_TRANSFER = 'auth-transfer';
 var ORGANIZATION_TRANSFER = 'organization-transfer';
 var PROJECT_TRANSFER = 'project-transfer';
+var TEAM_TRANSFER = 'team-transfer';
 var ROLE_TRANSFER = 'role-transfer';
 var PERMISSION_TRANSFER = 'permission-transfer';
 var USER_TRANSFER = 'user-transfer';
@@ -159,6 +166,7 @@ var STRUCT_TRANSFERS = {
   AUTH_TRANSFER: AUTH_TRANSFER,
   ORGANIZATION_TRANSFER: ORGANIZATION_TRANSFER,
   PROJECT_TRANSFER: PROJECT_TRANSFER,
+  TEAM_TRANSFER: TEAM_TRANSFER,
   ROLE_TRANSFER: ROLE_TRANSFER,
   PERMISSION_TRANSFER: PERMISSION_TRANSFER,
   USER_TRANSFER: USER_TRANSFER,
@@ -291,6 +299,7 @@ var types = {
   MsgTypeHealth: 'HEALTH',
   MsgTypeOrganization: 'ORGANIZATION',
   MsgTypeProject: 'PROJECT',
+  MsgTypeTeam: 'TEAM',
   MsgTypeRole: 'ROLE',
   MsgTypePermission: 'PERMISSION',
   MsgTypeUser: 'USER',
@@ -357,7 +366,8 @@ var organizationActions = {
   MsgActionOrganizationCreate: 'ORGANIZATION_CREATE',
   MsgActionOrganizationGet: 'ORGANIZATION_GET',
   MsgActionOrganizationUpdate: 'ORGANIZATION_UPDATE',
-  MsgActionOrganizationDelete: 'ORGANIZATION_DELETE'
+  MsgActionOrganizationDelete: 'ORGANIZATION_DELETE',
+  MsgActionOrganizationGetProjects: 'ORGANIZATION_GET_PROJECT'
 };
 
 /**
@@ -366,6 +376,21 @@ var organizationActions = {
 var projectActions = {
   MsgActionProjectGetAll: 'PROJECT_GET_ALL',
   MsgActionProjectCreate: 'PROJECT_CREATE'
+};
+
+/**
+ * @description TEAM ACTIONS
+ */
+var teamActions = {
+  MsgActionTeamGetAll: 'TEAM_GET_ALL',
+  MsgActionTeamCreate: 'TEAM_CREATE',
+  MsgActionTeamGet: 'TEAM_GET',
+  MsgActionTeamUpdate: 'TEAM_UPDATE',
+  MsgActionTeamDelete: 'TEAM_DELETE',
+  MsgActionTeamGetAllMemberInTeam: 'TEAM_GET_ALL_MEMBER_IN_TEAM',
+  MsgActionTeamGetAllMemberNotOnTeam: 'TEAM_GET_ALL_MEMBER_NOT_ON_TEAM',
+  MsgActionTeamAddMembersToTeam: 'TEAM_ADD_MEMBERS_TO_TEAM',
+  MsgActionTeamRemoveMembersFromTeam: 'TEAM_REMOVE_MEMBERS_FROM_TEAM'
 };
 
 /**
@@ -480,7 +505,7 @@ var notifyTypes = {
 var senders = {
   SENDER_SYSTEM: 'SYSTEM'
 };
-var actions = _objectSpread(_objectSpread(_objectSpread(_objectSpread(_objectSpread(_objectSpread(_objectSpread(_objectSpread(_objectSpread(_objectSpread(_objectSpread(_objectSpread(_objectSpread(_objectSpread(_objectSpread(_objectSpread({}, testActions), socketActions), authActions), configActions), homeActions), HealthActions), organizationActions), projectActions), roleActions), permissionActions), userActions), userSessionActions), userOnlineActions), notifyActions), notifyUserActions), notifyTemplateActions);
+var actions = _objectSpread(_objectSpread(_objectSpread(_objectSpread(_objectSpread(_objectSpread(_objectSpread(_objectSpread(_objectSpread(_objectSpread(_objectSpread(_objectSpread(_objectSpread(_objectSpread(_objectSpread(_objectSpread(_objectSpread({}, testActions), socketActions), authActions), configActions), homeActions), HealthActions), organizationActions), projectActions), teamActions), roleActions), permissionActions), userActions), userSessionActions), userOnlineActions), notifyActions), notifyUserActions), notifyTemplateActions);
 var constants = {
   types: types,
   actions: actions,

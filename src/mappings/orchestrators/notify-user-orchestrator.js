@@ -832,10 +832,6 @@ const rollBackAllNotifyUser = async (toolBox) => {
  * @param {*} id
  */
 const getNotifyUserFunc = async (id) => {
-  console.log(
-    '🚀 ~ file: notify-user-orchestrator.js:836 ~ getNotifyUserFunc ~ id',
-    id
-  );
   try {
     if (isEmpty(id)) {
       throw commons.newError('notifyUserE001');

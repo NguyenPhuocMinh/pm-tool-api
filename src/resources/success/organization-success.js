@@ -30,5 +30,11 @@ export default {
     description: 'Delete Organization Success',
     returnCode: 1,
     statusCode: 200
+  },
+  organizationS006: {
+    message: 'resources.organizations.notifications.success.s006',
+    description: 'Get All Project In Organization Success',
+    returnCode: 1,
+    statusCode: 200
   }
 };
