@@ -8,7 +8,7 @@ import {
   formatErrorMsg,
   formatFullName
 } from './format-util';
-import { parseError } from './parse-util';
+import { parseError, parseDateTime } from './parse-util';
 
 export default {
   convertSecretKey,
@@ -18,5 +18,6 @@ export default {
   formatInfoLog,
   formatErrorMsg,
   formatFullName,
-  parseError
+  parseError,
+  parseDateTime
 };

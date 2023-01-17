@@ -143,6 +143,35 @@ var orchestratorProject = [{
   action: _constants["default"].actions.MsgActionProjectCreate,
   orchestrator: _projectOrchestrator["default"].createProject,
   schema: 'projectSchema'
+}, {
+  type: _constants["default"].types.MsgTypeProject,
+  action: _constants["default"].actions.MsgActionProjectGet,
+  orchestrator: _projectOrchestrator["default"].getProject
+}, {
+  type: _constants["default"].types.MsgTypeProject,
+  action: _constants["default"].actions.MsgActionProjectUpdate,
+  orchestrator: _projectOrchestrator["default"].updateProject,
+  schema: 'projectSchema'
+}, {
+  type: _constants["default"].types.MsgTypeProject,
+  action: _constants["default"].actions.MsgActionProjectDelete,
+  orchestrator: _projectOrchestrator["default"].deleteProject
+}, {
+  type: _constants["default"].types.MsgTypeProject,
+  action: _constants["default"].actions.MsgActionProjectGetAllTeamInProject,
+  orchestrator: _projectOrchestrator["default"].getAllTeamInProject
+}, {
+  type: _constants["default"].types.MsgTypeProject,
+  action: _constants["default"].actions.MsgActionProjectGetAllTeamNotOnProject,
+  orchestrator: _projectOrchestrator["default"].getAllTeamNotOnProject
+}, {
+  type: _constants["default"].types.MsgTypeProject,
+  action: _constants["default"].actions.MsgActionProjectAddTeamsToProject,
+  orchestrator: _projectOrchestrator["default"].addTeamsToProject
+}, {
+  type: _constants["default"].types.MsgTypeProject,
+  action: _constants["default"].actions.MsgActionProjectRemoveTeamsFromProject,
+  orchestrator: _projectOrchestrator["default"].removeTeamsFromProject
 }];
 
 /**

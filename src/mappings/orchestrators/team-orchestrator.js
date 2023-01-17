@@ -34,9 +34,7 @@ const getAllTeam = async (toolBox) => {
     });
 
     const { skip, limit } = helpers.paginationHelper(req.query);
-    const query = helpers.queryHelper(req.query, null, [
-      { deleted: false, activated: true }
-    ]);
+    const query = helpers.queryHelper(req.query, null, [{ deleted: false }]);
     const sort = helpers.sortHelper(req.query);
 
     const teams = await repository.findAll({
@@ -407,7 +405,7 @@ const getAllMemberNotOnTeam = async (toolBox) => {
         { deleted: false },
         { activated: true },
         { isAdmin: false },
-        { $or: [{ team: { $ne: id } }, { team: { $exists: false } }] }
+        { team: { $exists: false } }
       ]
     );
 
@@ -417,7 +415,12 @@ const getAllMemberNotOnTeam = async (toolBox) => {
       options: {
         sort,
         skip,
-        limit
+        limit,
+        populate: [
+          {
+            path: 'team'
+          }
+        ]
       }
     });
 

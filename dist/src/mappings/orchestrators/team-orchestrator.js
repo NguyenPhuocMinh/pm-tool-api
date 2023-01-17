@@ -44,8 +44,7 @@ var getAllTeam = /*#__PURE__*/function () {
             });
             _helpers$paginationHe = _helpers["default"].paginationHelper(req.query), skip = _helpers$paginationHe.skip, limit = _helpers$paginationHe.limit;
             query = _helpers["default"].queryHelper(req.query, null, [{
-              deleted: false,
-              activated: true
+              deleted: false
             }]);
             sort = _helpers["default"].sortHelper(req.query);
             _context.next = 8;
@@ -530,15 +529,9 @@ var getAllMemberNotOnTeam = /*#__PURE__*/function () {
             }, {
               isAdmin: false
             }, {
-              $or: [{
-                team: {
-                  $ne: id
-                }
-              }, {
-                team: {
-                  $exists: false
-                }
-              }]
+              team: {
+                $exists: false
+              }
             }]);
             _context7.next = 11;
             return _repository["default"].findAll({
@@ -547,7 +540,10 @@ var getAllMemberNotOnTeam = /*#__PURE__*/function () {
               options: {
                 sort: sort,
                 skip: skip,
-                limit: limit
+                limit: limit,
+                populate: [{
+                  path: 'team'
+                }]
               }
             });
           case 11:

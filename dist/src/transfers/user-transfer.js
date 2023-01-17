@@ -17,7 +17,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 var loggerFactory = (0, _logger["default"])(_constants["default"].APP_NAME, _constants["default"].STRUCT_TRANSFERS.USER_TRANSFER);
 var userTransfer = /*#__PURE__*/function () {
   var _ref = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee(data) {
-    var response, _data, _id, isAdmin, firstName, lastName, email, roles, isPasswordSet, isPasswordTemporary, createdAt, updatedAt, listRole, roleMap, listRoleMap;
+    var response, _data, _id, isAdmin, firstName, lastName, email, roles, team, isPasswordSet, isPasswordTemporary, createdAt, updatedAt, listRole, roleMap, listRoleMap;
     return _regeneratorRuntime().wrap(function _callee$(_context) {
       while (1) {
         switch (_context.prev = _context.next) {
@@ -25,21 +25,23 @@ var userTransfer = /*#__PURE__*/function () {
             loggerFactory.data('Func userTransfer has been start');
             response = {};
             if ((0, _lodash.isEmpty)(data)) {
-              _context.next = 23;
+              _context.next = 25;
               break;
             }
             data = data.toJSON();
-            _data = data, _id = _data._id, isAdmin = _data.isAdmin, firstName = _data.firstName, lastName = _data.lastName, email = _data.email, roles = _data.roles, isPasswordSet = _data.isPasswordSet, isPasswordTemporary = _data.isPasswordTemporary, createdAt = _data.createdAt, updatedAt = _data.updatedAt;
+            _data = data, _id = _data._id, isAdmin = _data.isAdmin, firstName = _data.firstName, lastName = _data.lastName, email = _data.email, roles = _data.roles, team = _data.team, isPasswordSet = _data.isPasswordSet, isPasswordTemporary = _data.isPasswordTemporary, createdAt = _data.createdAt, updatedAt = _data.updatedAt;
             response.id = _id;
             response.isAdmin = isAdmin;
             response.firstName = firstName;
             response.lastName = lastName;
             response.email = email;
+            response.teamId = team === null || team === void 0 ? void 0 : team._id;
+            response.teamName = team === null || team === void 0 ? void 0 : team.name;
             response.isPasswordSet = isPasswordSet;
             response.isPasswordTemporary = isPasswordTemporary;
             response.createdAt = createdAt;
             response.updatedAt = updatedAt;
-            _context.next = 16;
+            _context.next = 18;
             return _repository["default"].findAll({
               type: 'RoleModel',
               filter: {
@@ -51,7 +53,7 @@ var userTransfer = /*#__PURE__*/function () {
                 name: 1
               }
             });
-          case 16:
+          case 18:
             listRole = _context.sent;
             roleMap = roles.map(function (r) {
               return {
@@ -69,10 +71,10 @@ var userTransfer = /*#__PURE__*/function () {
             response.assignedRoles = roleMap;
             loggerFactory.data('Func userTransfer has data');
             return _context.abrupt("return", response);
-          case 23:
+          case 25:
             loggerFactory.data('Func userTransfer without data');
             return _context.abrupt("return", response);
-          case 25:
+          case 27:
           case "end":
             return _context.stop();
         }

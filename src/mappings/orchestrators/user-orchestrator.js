@@ -197,6 +197,10 @@ const getUser = async (toolBox) => {
           {
             path: 'roles',
             select: 'id name'
+          },
+          {
+            path: 'team',
+            select: 'id name'
           }
         ]
       }

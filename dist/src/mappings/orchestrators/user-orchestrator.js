@@ -240,6 +240,9 @@ var getUser = /*#__PURE__*/function () {
                 populate: [{
                   path: 'roles',
                   select: 'id name'
+                }, {
+                  path: 'team',
+                  select: 'id name'
                 }]
               }
             });

@@ -16,7 +16,9 @@ const queryHelper = (query = {}, attributes = [], fields = []) => {
     const querySearch = { $or: [] };
     const searchDefault = ['slug'];
 
-    const searchAttributes = [...searchDefault, ...attributes];
+    const searchAttributes = !isEmpty(attributes)
+      ? [...searchDefault, ...attributes]
+      : searchDefault;
 
     searchAttributes.forEach((property) => {
       const searchRegex = {};

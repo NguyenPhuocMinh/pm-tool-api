@@ -14,8 +14,7 @@ const allowList = [
 ];
 
 const corsOptions = {
-  origin: profiles.APP_DOMAIN_PATH,
-  credentials: true
+  origin: profiles.APP_DOMAIN_PATH
 };
 
 const cookieOptions = {

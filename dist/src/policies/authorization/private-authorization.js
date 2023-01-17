@@ -69,6 +69,36 @@ var _default = [
   method: 'GET',
   pathName: '/projects/:id',
   permission: _permissions["default"].admin.projects.GET_ID
+}, {
+  enable: true,
+  method: 'PUT',
+  pathName: '/projects/:id',
+  permission: _permissions["default"].admin.projects.UPDATE
+}, {
+  enable: true,
+  method: 'DELETE',
+  pathName: '/projects/:id',
+  permission: _permissions["default"].admin.projects.DELETE
+}, {
+  enable: true,
+  method: 'GET',
+  pathName: '/projects/:id/teams-in-projects',
+  permission: _permissions["default"].admin.projects.GET_TEAM_IN_PROJECT
+}, {
+  enable: true,
+  method: 'GET',
+  pathName: '/projects/:id/teams-not-on-projects',
+  permission: _permissions["default"].admin.projects.GET_TEAM_NOT_PROJECT
+}, {
+  enable: true,
+  method: 'PATCH',
+  pathName: '/projects/:id/add-teams-to-projects',
+  permission: _permissions["default"].admin.projects.ADD_TEAM_TO_PROJECT
+}, {
+  enable: true,
+  method: 'PATCH',
+  pathName: '/projects/:id/remove-teams-from-projects',
+  permission: _permissions["default"].admin.projects.REMOVE_TEAM_FROM_PROJECT
 },
 /**
  * TEAM

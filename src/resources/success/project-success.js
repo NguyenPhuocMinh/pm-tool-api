@@ -30,5 +30,29 @@ export default {
     description: 'Delete Project Success',
     returnCode: 1,
     statusCode: 200
+  },
+  projectS006: {
+    message: 'resources.projects.notifications.success.s006',
+    description: 'Get All Team In Project Success',
+    returnCode: 1,
+    statusCode: 200
+  },
+  projectS007: {
+    message: 'resources.projects.notifications.success.s007',
+    description: 'Get All Team Not On Project Success',
+    returnCode: 1,
+    statusCode: 200
+  },
+  projectS008: {
+    message: 'resources.projects.notifications.success.s008',
+    description: 'Add Teams To Project Success',
+    returnCode: 1,
+    statusCode: 200
+  },
+  projectS009: {
+    message: 'resources.projects.notifications.success.s009',
+    description: 'Remove Teams From Project Success',
+    returnCode: 1,
+    statusCode: 200
   }
 };

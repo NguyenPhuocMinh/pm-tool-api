@@ -165,6 +165,42 @@ const orchestratorProject = [
     action: constants.actions.MsgActionProjectCreate,
     orchestrator: projectOrchestrator.createProject,
     schema: 'projectSchema'
+  },
+  {
+    type: constants.types.MsgTypeProject,
+    action: constants.actions.MsgActionProjectGet,
+    orchestrator: projectOrchestrator.getProject
+  },
+  {
+    type: constants.types.MsgTypeProject,
+    action: constants.actions.MsgActionProjectUpdate,
+    orchestrator: projectOrchestrator.updateProject,
+    schema: 'projectSchema'
+  },
+  {
+    type: constants.types.MsgTypeProject,
+    action: constants.actions.MsgActionProjectDelete,
+    orchestrator: projectOrchestrator.deleteProject
+  },
+  {
+    type: constants.types.MsgTypeProject,
+    action: constants.actions.MsgActionProjectGetAllTeamInProject,
+    orchestrator: projectOrchestrator.getAllTeamInProject
+  },
+  {
+    type: constants.types.MsgTypeProject,
+    action: constants.actions.MsgActionProjectGetAllTeamNotOnProject,
+    orchestrator: projectOrchestrator.getAllTeamNotOnProject
+  },
+  {
+    type: constants.types.MsgTypeProject,
+    action: constants.actions.MsgActionProjectAddTeamsToProject,
+    orchestrator: projectOrchestrator.addTeamsToProject
+  },
+  {
+    type: constants.types.MsgTypeProject,
+    action: constants.actions.MsgActionProjectRemoveTeamsFromProject,
+    orchestrator: projectOrchestrator.removeTeamsFromProject
   }
 ];
 

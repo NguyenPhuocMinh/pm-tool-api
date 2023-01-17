@@ -12,8 +12,7 @@ var _profiles = _interopRequireDefault(require("./profiles"));
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 var allowList = ['https://pm-tool-ui.netlify.app', 'https://pm-tool-ui.netlify.app/', 'https://pm-tool-ui.netlify.app/*', 'http://localhost:3500', 'http://localhost:3500/*'];
 var corsOptions = {
-  origin: _profiles["default"].APP_DOMAIN_PATH,
-  credentials: true
+  origin: _profiles["default"].APP_DOMAIN_PATH
 };
 var cookieOptions = {
   maxAge: 1000 * 60 * 15,

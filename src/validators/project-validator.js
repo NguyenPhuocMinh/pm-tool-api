@@ -16,10 +16,10 @@ const schemaProject = Joi.object({
   name: Joi.string().required()
 });
 
-export const validatorProject = (data) => {
+export const validatorProjectCreateOrUpdate = (data) => {
   logger.log({
     level: constants.LOG_LEVELS.DEBUG,
-    message: 'Function validatorProject has been start with data',
+    message: 'Function validatorProjectCreateOrUpdate has been start with data',
     args: data
   });
 
@@ -30,7 +30,8 @@ export const validatorProject = (data) => {
   if (error) {
     logger.log({
       level: constants.LOG_LEVELS.ERROR,
-      message: 'Function validatorProject has been end with error',
+      message:
+        'Function validatorProjectCreateOrUpdate has been end with error',
       args: error
     });
 
@@ -39,7 +40,40 @@ export const validatorProject = (data) => {
 
   logger.log({
     level: constants.LOG_LEVELS.DEBUG,
-    message: 'Function validatorProject has been end without error'
+    message:
+      'Function validatorProjectCreateOrUpdate has been end without error'
+  });
+  return null;
+};
+
+const schemaAddTeamsToProject = Joi.object({
+  teams: Joi.array().required()
+});
+
+export const validatorAddTeamsToProject = (data) => {
+  logger.log({
+    level: constants.LOG_LEVELS.DEBUG,
+    message: 'Function validatorAddTeamsToProject has been start with data',
+    args: data
+  });
+
+  const { error } = schemaAddTeamsToProject.validate(data, {
+    allowUnknown: true
+  });
+
+  if (error) {
+    logger.log({
+      level: constants.LOG_LEVELS.ERROR,
+      message: 'Function validatorAddTeamsToProject has been end with error',
+      args: error
+    });
+
+    return error;
+  }
+
+  logger.log({
+    level: constants.LOG_LEVELS.DEBUG,
+    message: 'Function validatorAddMember has been end without error'
   });
   return null;
 };

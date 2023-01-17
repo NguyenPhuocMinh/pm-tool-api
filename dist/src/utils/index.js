@@ -17,6 +17,7 @@ var _default = {
   formatInfoLog: _formatUtil.formatInfoLog,
   formatErrorMsg: _formatUtil.formatErrorMsg,
   formatFullName: _formatUtil.formatFullName,
-  parseError: _parseUtil.parseError
+  parseError: _parseUtil.parseError,
+  parseDateTime: _parseUtil.parseDateTime
 };
 exports["default"] = _default;

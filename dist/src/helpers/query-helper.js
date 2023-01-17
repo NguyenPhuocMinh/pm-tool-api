@@ -28,7 +28,7 @@ var queryHelper = function queryHelper() {
       $or: []
     };
     var searchDefault = ['slug'];
-    var searchAttributes = [].concat(searchDefault, _toConsumableArray(attributes));
+    var searchAttributes = !(0, _lodash.isEmpty)(attributes) ? [].concat(searchDefault, _toConsumableArray(attributes)) : searchDefault;
     searchAttributes.forEach(function (property) {
       var searchRegex = {};
       searchRegex[property] = {

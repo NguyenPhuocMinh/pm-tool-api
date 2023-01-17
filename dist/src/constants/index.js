@@ -375,7 +375,14 @@ var organizationActions = {
  */
 var projectActions = {
   MsgActionProjectGetAll: 'PROJECT_GET_ALL',
-  MsgActionProjectCreate: 'PROJECT_CREATE'
+  MsgActionProjectCreate: 'PROJECT_CREATE',
+  MsgActionProjectGet: 'PROJECT_GET',
+  MsgActionProjectUpdate: 'PROJECT_UPDATE',
+  MsgActionProjectDelete: 'PROJECT_DELETE',
+  MsgActionProjectGetAllTeamInProject: 'PROJECT_GET_ALL_TEAM_IN_PROJECT',
+  MsgActionProjectGetAllTeamNotOnProject: 'PROJECT_GET_ALL_TEAM_NOT_ON_PROJECT',
+  MsgActionProjectAddTeamsToProject: 'PROJECT_ADD_TEAMS_TO_PROJECT',
+  MsgActionProjectRemoveTeamsFromProject: 'PROJECT_REMOVE_TEAMS_FROM_PROJECT'
 };
 
 /**

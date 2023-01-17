@@ -28,6 +28,7 @@ const userTransfer = async (data) => {
       lastName,
       email,
       roles,
+      team,
       isPasswordSet,
       isPasswordTemporary,
       createdAt,
@@ -39,6 +40,8 @@ const userTransfer = async (data) => {
     response.firstName = firstName;
     response.lastName = lastName;
     response.email = email;
+    response.teamId = team?._id;
+    response.teamName = team?.name;
     response.isPasswordSet = isPasswordSet;
     response.isPasswordTemporary = isPasswordTemporary;
     response.createdAt = createdAt;

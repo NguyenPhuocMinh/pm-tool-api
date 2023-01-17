@@ -2,7 +2,10 @@
 
 import { validatorLogin } from './auth-validator';
 import { validatorOrganization } from './organization-validator';
-import { validatorProject } from './project-validator';
+import {
+  validatorProjectCreateOrUpdate,
+  validatorAddTeamsToProject
+} from './project-validator';
 import {
   validatorTeamCreateOrUpdate,
   validatorAddMembersToTeam
@@ -20,7 +23,8 @@ import { validatorNotifyTemplateCreate } from './notify-template-validator';
 export default {
   validatorLogin,
   validatorOrganization,
-  validatorProject,
+  validatorProjectCreateOrUpdate,
+  validatorAddTeamsToProject,
   validatorTeamCreateOrUpdate,
   validatorUser,
   validatorUserSetPass,

@@ -3,7 +3,7 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.validatorProject = void 0;
+exports.validatorProjectCreateOrUpdate = exports.validatorAddTeamsToProject = void 0;
 require("source-map-support/register");
 var _joi = _interopRequireDefault(require("joi"));
 var _constants = _interopRequireDefault(require("../constants"));
@@ -15,10 +15,10 @@ var logger = (0, _logger["default"])(_constants["default"].APP_NAME, _constants[
 var schemaProject = _joi["default"].object({
   name: _joi["default"].string().required()
 });
-var validatorProject = function validatorProject(data) {
+var validatorProjectCreateOrUpdate = function validatorProjectCreateOrUpdate(data) {
   logger.log({
     level: _constants["default"].LOG_LEVELS.DEBUG,
-    message: 'Function validatorProject has been start with data',
+    message: 'Function validatorProjectCreateOrUpdate has been start with data',
     args: data
   });
   var _schemaProject$valida = schemaProject.validate(data, {
@@ -28,15 +28,43 @@ var validatorProject = function validatorProject(data) {
   if (error) {
     logger.log({
       level: _constants["default"].LOG_LEVELS.ERROR,
-      message: 'Function validatorProject has been end with error',
+      message: 'Function validatorProjectCreateOrUpdate has been end with error',
       args: error
     });
     return error;
   }
   logger.log({
     level: _constants["default"].LOG_LEVELS.DEBUG,
-    message: 'Function validatorProject has been end without error'
+    message: 'Function validatorProjectCreateOrUpdate has been end without error'
   });
   return null;
 };
-exports.validatorProject = validatorProject;
+exports.validatorProjectCreateOrUpdate = validatorProjectCreateOrUpdate;
+var schemaAddTeamsToProject = _joi["default"].object({
+  teams: _joi["default"].array().required()
+});
+var validatorAddTeamsToProject = function validatorAddTeamsToProject(data) {
+  logger.log({
+    level: _constants["default"].LOG_LEVELS.DEBUG,
+    message: 'Function validatorAddTeamsToProject has been start with data',
+    args: data
+  });
+  var _schemaAddTeamsToProj = schemaAddTeamsToProject.validate(data, {
+      allowUnknown: true
+    }),
+    error = _schemaAddTeamsToProj.error;
+  if (error) {
+    logger.log({
+      level: _constants["default"].LOG_LEVELS.ERROR,
+      message: 'Function validatorAddTeamsToProject has been end with error',
+      args: error
+    });
+    return error;
+  }
+  logger.log({
+    level: _constants["default"].LOG_LEVELS.DEBUG,
+    message: 'Function validatorAddMember has been end without error'
+  });
+  return null;
+};
+exports.validatorAddTeamsToProject = validatorAddTeamsToProject;

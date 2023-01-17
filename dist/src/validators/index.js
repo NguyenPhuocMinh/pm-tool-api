@@ -16,7 +16,8 @@ var _notifyTemplateValidator = require("./notify-template-validator");
 var _default = {
   validatorLogin: _authValidator.validatorLogin,
   validatorOrganization: _organizationValidator.validatorOrganization,
-  validatorProject: _projectValidator.validatorProject,
+  validatorProjectCreateOrUpdate: _projectValidator.validatorProjectCreateOrUpdate,
+  validatorAddTeamsToProject: _projectValidator.validatorAddTeamsToProject,
   validatorTeamCreateOrUpdate: _teamValidator.validatorTeamCreateOrUpdate,
   validatorUser: _userValidator.validatorUser,
   validatorUserSetPass: _userValidator.validatorUserSetPass,

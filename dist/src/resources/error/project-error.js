@@ -23,6 +23,12 @@ var _default = {
     description: 'ID Not Found',
     returnCode: 0,
     statusCode: 404
+  },
+  projectE004: {
+    message: 'resources.projects.notifications.errors.e004',
+    description: 'Please Remove All Team In Project',
+    returnCode: 0,
+    statusCode: 400
   }
 };
 exports["default"] = _default;

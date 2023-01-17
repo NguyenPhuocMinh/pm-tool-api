@@ -72,6 +72,42 @@ export default [
     pathName: '/projects/:id',
     permission: permissions.admin.projects.GET_ID
   },
+  {
+    enable: true,
+    method: 'PUT',
+    pathName: '/projects/:id',
+    permission: permissions.admin.projects.UPDATE
+  },
+  {
+    enable: true,
+    method: 'DELETE',
+    pathName: '/projects/:id',
+    permission: permissions.admin.projects.DELETE
+  },
+  {
+    enable: true,
+    method: 'GET',
+    pathName: '/projects/:id/teams-in-projects',
+    permission: permissions.admin.projects.GET_TEAM_IN_PROJECT
+  },
+  {
+    enable: true,
+    method: 'GET',
+    pathName: '/projects/:id/teams-not-on-projects',
+    permission: permissions.admin.projects.GET_TEAM_NOT_PROJECT
+  },
+  {
+    enable: true,
+    method: 'PATCH',
+    pathName: '/projects/:id/add-teams-to-projects',
+    permission: permissions.admin.projects.ADD_TEAM_TO_PROJECT
+  },
+  {
+    enable: true,
+    method: 'PATCH',
+    pathName: '/projects/:id/remove-teams-from-projects',
+    permission: permissions.admin.projects.REMOVE_TEAM_FROM_PROJECT
+  },
   /**
    * TEAM
    */
