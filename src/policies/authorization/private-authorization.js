@@ -36,8 +36,8 @@ export default [
   {
     enable: true,
     pathName: '/organizations/:id',
-    method: 'PATCH',
-    permission: permissions.admin.organizations.EDIT
+    method: 'PUT',
+    permission: permissions.admin.organizations.UPDATE
   },
   {
     enable: true,
@@ -47,9 +47,27 @@ export default [
   },
   {
     enable: true,
-    pathName: '/organizations/:id/projects',
+    pathName: '/organizations/:id/projects-in-organizations',
     method: 'GET',
-    permission: permissions.admin.organizations.GET_PROJECT
+    permission: permissions.admin.organizations.GET_PROJECT_IN_ORGANIZATION
+  },
+  {
+    enable: true,
+    pathName: '/organizations/:id/projects-not-on-organizations',
+    method: 'GET',
+    permission: permissions.admin.organizations.GET_PROJECT_NOT_ORGANIZATION
+  },
+  {
+    enable: true,
+    pathName: '/organizations/:id/add-projects-to-organizations',
+    method: 'PATCH',
+    permission: permissions.admin.organizations.ADD_PROJECT_TO_ORGANIZATION
+  },
+  {
+    enable: true,
+    pathName: '/organizations/:id/remove-projects-to-organizations',
+    method: 'PATCH',
+    permission: permissions.admin.organizations.REMOVE_PROJECT_FROM_ORGANIZATION
   },
   /**
    * PROJECT

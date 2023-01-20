@@ -128,25 +128,94 @@ const deleteOrganization = (req, res, next) => {
 };
 
 /**
- * @description Delete Organization By ID Controller
+ * @description Get All Project In Organization Controller
  * @param {*} req
  * @param {*} res
  * @param {*} next
  */
-const getProjectsInOrganization = (req, res, next) => {
+const getAllProjectInOrganization = (req, res, next) => {
   logger.log({
     level: constants.LOG_LEVELS.INFO,
-    message: 'Function getProjectsInOrganization Controller has been start'
+    message: 'Function getAllProjectInOrganization Controller has been start'
   });
   const toolBox = { req, res, next };
   baseController(
     toolBox,
     constants.types.MsgTypeOrganization,
-    constants.actions.MsgActionOrganizationGetProjects
+    constants.actions.MsgActionOrganizationGetAllProjectInOrganization
   );
   logger.log({
     level: constants.LOG_LEVELS.INFO,
-    message: 'Function getProjectsInOrganization Controller has been end'
+    message: 'Function getAllProjectInOrganization Controller has been end'
+  });
+};
+
+/**
+ * @description Get All Project Not On Organization Controller
+ * @param {*} req
+ * @param {*} res
+ * @param {*} next
+ */
+const getAllProjectNotOnOrganization = (req, res, next) => {
+  logger.log({
+    level: constants.LOG_LEVELS.INFO,
+    message: 'Function getAllProjectNotOnOrganization Controller has been start'
+  });
+  const toolBox = { req, res, next };
+  baseController(
+    toolBox,
+    constants.types.MsgTypeOrganization,
+    constants.actions.MsgActionOrganizationGetAllProjectNotOnOrganization
+  );
+  logger.log({
+    level: constants.LOG_LEVELS.INFO,
+    message: 'Function getAllProjectNotOnOrganization Controller has been end'
+  });
+};
+
+/**
+ * @description Add Projects To Organization Controller
+ * @param {*} req
+ * @param {*} res
+ * @param {*} next
+ */
+const addProjectsToOrganization = (req, res, next) => {
+  logger.log({
+    level: constants.LOG_LEVELS.INFO,
+    message: 'Function addProjectsToOrganization Controller has been start'
+  });
+  const toolBox = { req, res, next };
+  baseController(
+    toolBox,
+    constants.types.MsgTypeOrganization,
+    constants.actions.MsgActionOrganizationAddProjectsToOrganization
+  );
+  logger.log({
+    level: constants.LOG_LEVELS.INFO,
+    message: 'Function addProjectsToOrganization Controller has been end'
+  });
+};
+
+/**
+ * @description Remove Projects From Organization Controller
+ * @param {*} req
+ * @param {*} res
+ * @param {*} next
+ */
+const removeProjectsFromProject = (req, res, next) => {
+  logger.log({
+    level: constants.LOG_LEVELS.INFO,
+    message: 'Function removeProjectsFromProject Controller has been start'
+  });
+  const toolBox = { req, res, next };
+  baseController(
+    toolBox,
+    constants.types.MsgTypeOrganization,
+    constants.actions.MsgActionOrganizationRemoveProjectsToOrganization
+  );
+  logger.log({
+    level: constants.LOG_LEVELS.INFO,
+    message: 'Function removeProjectsFromProject Controller has been end'
   });
 };
 
@@ -156,7 +225,10 @@ const organizationController = {
   getOrganization,
   updateOrganization,
   deleteOrganization,
-  getProjectsInOrganization
+  getAllProjectInOrganization,
+  getAllProjectNotOnOrganization,
+  addProjectsToOrganization,
+  removeProjectsFromProject
 };
 
 export default organizationController;

@@ -212,13 +212,7 @@ var getOrganization = /*#__PURE__*/function () {
             throw _commons["default"].newError('organizationE003');
           case 6:
             _context3.next = 8;
-            return _repository["default"].getOne({
-              type: 'OrganizationModel',
-              id: id,
-              projection: {
-                __v: 0
-              }
-            });
+            return getOrganizationFuc(id);
           case 8:
             organization = _context3.sent;
             result = _transfers["default"].organizationTransfer(organization);
@@ -409,12 +403,12 @@ var deleteOrganization = /*#__PURE__*/function () {
 }();
 
 /**
- * @description Get Projects In Organization Orchestrator
+ * @description Get All Project In Organization Orchestrator
  * @param {*} toolBox { req, res, next }
  */
-var getProjectsInOrganization = /*#__PURE__*/function () {
+var getAllProjectInOrganization = /*#__PURE__*/function () {
   var _ref6 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee6(toolBox) {
-    var req, id, _helpers$paginationHe2, skip, limit, query, sort, projects, total, result;
+    var req, id, _helpers$paginationHe2, skip, limit, sort, query, projects, total, response;
     return _regeneratorRuntime().wrap(function _callee6$(_context6) {
       while (1) {
         switch (_context6.prev = _context6.next) {
@@ -423,86 +417,424 @@ var getProjectsInOrganization = /*#__PURE__*/function () {
             _context6.prev = 1;
             logger.log({
               level: _constants["default"].LOG_LEVELS.INFO,
-              message: 'Function getProjectsInOrganization Orchestrator has been start'
+              message: 'Function getAllProjectInOrganization Orchestrator has been start'
             });
             id = req.params.id;
             if (!(0, _lodash.isEmpty)(id)) {
               _context6.next = 6;
               break;
             }
-            throw _commons["default"].newError('organizationE003');
+            throw _commons["default"].newError('organization003');
           case 6:
             _helpers$paginationHe2 = _helpers["default"].paginationHelper(req.query), skip = _helpers$paginationHe2.skip, limit = _helpers$paginationHe2.limit;
+            sort = _helpers["default"].sortHelper(req.query);
             query = _helpers["default"].queryHelper(req.query, null, [{
-              deleted: false,
+              deleted: false
+            }, {
               activated: true
+            }, {
+              organization: {
+                $eq: id
+              }
             }]);
-            sort = _helpers["default"].sortHelper(req.query); // eslint-disable-next-line dot-notation
-            query['$and'].push({
-              organization: id
-            });
-            _context6.next = 12;
+            _context6.next = 11;
             return _repository["default"].findAll({
               type: 'ProjectModel',
               filter: query,
-              projection: {
-                id: 1,
-                firstName: 1,
-                lastName: 1,
-                email: 1
-              },
               options: {
+                sort: sort,
                 skip: skip,
-                limit: limit,
-                sort: sort
+                limit: limit
               }
             });
-          case 12:
+          case 11:
             projects = _context6.sent;
-            _context6.next = 15;
+            _context6.next = 14;
             return _repository["default"].count({
               type: 'ProjectModel',
               filter: query
             });
-          case 15:
+          case 14:
             total = _context6.sent;
-            _context6.next = 18;
+            _context6.next = 17;
             return _bluebird["default"].map(projects, function (data) {
-              return _transfers["default"].projectTransfer(data);
+              data = data.toJSON();
+              return {
+                id: data._id,
+                name: data.name
+              };
             }, {
               concurrency: 5
             });
-          case 18:
-            result = _context6.sent;
+          case 17:
+            response = _context6.sent;
             logger.log({
               level: _constants["default"].LOG_LEVELS.INFO,
-              message: 'Function getProjectsInOrganization Orchestrator has been end'
+              message: 'Function getAllProjectInOrganization Orchestrator has been end'
             });
             return _context6.abrupt("return", {
               result: {
-                data: result,
+                data: response,
                 total: total
               },
-              msg: 'organizationS006'
+              msg: 'organizationS007'
             });
-          case 23:
-            _context6.prev = 23;
+          case 22:
+            _context6.prev = 22;
             _context6.t0 = _context6["catch"](1);
             logger.log({
               level: _constants["default"].LOG_LEVELS.ERROR,
-              message: 'Function getProjectsInOrganization Orchestrator has been error',
+              message: 'Function getAllProjectInOrganization Orchestrator has been error',
               args: _utils["default"].parseError(_context6.t0)
             });
             return _context6.abrupt("return", _bluebird["default"].reject(_context6.t0));
-          case 27:
+          case 26:
           case "end":
             return _context6.stop();
         }
       }
-    }, _callee6, null, [[1, 23]]);
+    }, _callee6, null, [[1, 22]]);
   }));
-  return function getProjectsInOrganization(_x6) {
+  return function getAllProjectInOrganization(_x6) {
     return _ref6.apply(this, arguments);
+  };
+}();
+
+/**
+ * @description Get All Project Not On Organization Orchestrator
+ * @param {*} toolBox { req, res, next }
+ */
+var getAllProjectNotOnOrganization = /*#__PURE__*/function () {
+  var _ref7 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee7(toolBox) {
+    var req, id, _helpers$paginationHe3, skip, limit, sort, query, projects, total, response;
+    return _regeneratorRuntime().wrap(function _callee7$(_context7) {
+      while (1) {
+        switch (_context7.prev = _context7.next) {
+          case 0:
+            req = toolBox.req;
+            _context7.prev = 1;
+            logger.log({
+              level: _constants["default"].LOG_LEVELS.INFO,
+              message: 'Function getAllProjectNotOnOrganization Orchestrator has been start'
+            });
+            id = req.params.id;
+            if (!(0, _lodash.isEmpty)(id)) {
+              _context7.next = 6;
+              break;
+            }
+            throw _commons["default"].newError('organizationE003');
+          case 6:
+            _helpers$paginationHe3 = _helpers["default"].paginationHelper(req.query), skip = _helpers$paginationHe3.skip, limit = _helpers$paginationHe3.limit;
+            sort = _helpers["default"].sortHelper(req.query);
+            query = _helpers["default"].queryHelper(req.query, null, [{
+              deleted: false
+            }, {
+              activated: true
+            }, {
+              organization: {
+                $exists: false
+              }
+            }]);
+            _context7.next = 11;
+            return _repository["default"].findAll({
+              type: 'ProjectModel',
+              filter: query,
+              options: {
+                sort: sort,
+                skip: skip,
+                limit: limit
+              }
+            });
+          case 11:
+            projects = _context7.sent;
+            _context7.next = 14;
+            return _repository["default"].count({
+              type: 'ProjectModel',
+              filter: query
+            });
+          case 14:
+            total = _context7.sent;
+            _context7.next = 17;
+            return _bluebird["default"].map(projects, function (data) {
+              data = data.toJSON();
+              return {
+                id: data._id,
+                name: data.name,
+                activated: data.activated
+              };
+            }, {
+              concurrency: 5
+            });
+          case 17:
+            response = _context7.sent;
+            logger.log({
+              level: _constants["default"].LOG_LEVELS.INFO,
+              message: 'Function getAllProjectNotOnOrganization Orchestrator has been end'
+            });
+            return _context7.abrupt("return", {
+              result: {
+                data: response,
+                total: total
+              },
+              msg: 'organizationS007'
+            });
+          case 22:
+            _context7.prev = 22;
+            _context7.t0 = _context7["catch"](1);
+            logger.log({
+              level: _constants["default"].LOG_LEVELS.ERROR,
+              message: 'Function getAllProjectNotOnOrganization Orchestrator has been error',
+              args: _utils["default"].parseError(_context7.t0)
+            });
+            return _context7.abrupt("return", _bluebird["default"].reject(_context7.t0));
+          case 26:
+          case "end":
+            return _context7.stop();
+        }
+      }
+    }, _callee7, null, [[1, 22]]);
+  }));
+  return function getAllProjectNotOnOrganization(_x7) {
+    return _ref7.apply(this, arguments);
+  };
+}();
+
+/**
+ * @description Add Projects To Organization Orchestrator
+ * @param {*} toolBox { req, res, next }
+ */
+var addProjectsToOrganization = /*#__PURE__*/function () {
+  var _ref8 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee8(toolBox) {
+    var req, id, error, _helpers$attributeHel, updatedAt, updatedBy, projects, organization, response;
+    return _regeneratorRuntime().wrap(function _callee8$(_context8) {
+      while (1) {
+        switch (_context8.prev = _context8.next) {
+          case 0:
+            req = toolBox.req;
+            _context8.prev = 1;
+            logger.log({
+              level: _constants["default"].LOG_LEVELS.INFO,
+              message: 'Function addProjectsToOrganization Orchestrator has been start'
+            });
+            id = req.params.id; // validator inputs
+            error = _validators["default"].validatorAddProjectsToOrganization(req.body);
+            if (!error) {
+              _context8.next = 7;
+              break;
+            }
+            throw _commons["default"].newError('organizationE001');
+          case 7:
+            _helpers$attributeHel = _helpers["default"].attributeHelper(req, req.body), updatedAt = _helpers$attributeHel.updatedAt, updatedBy = _helpers$attributeHel.updatedBy, projects = _helpers$attributeHel.projects;
+            _context8.next = 10;
+            return getOrganizationFuc(id);
+          case 10:
+            organization = _context8.sent;
+            organization.projects.push(projects);
+            organization.updatedAt = updatedAt;
+            organization.updatedBy = updatedBy;
+            _context8.next = 16;
+            return organization.save();
+          case 16:
+            _context8.next = 18;
+            return _repository["default"].updateMany({
+              type: 'ProjectModel',
+              filter: {
+                _id: {
+                  $in: projects
+                }
+              },
+              doc: {
+                organization: id,
+                updatedAt: updatedAt,
+                updatedBy: updatedBy
+              }
+            });
+          case 18:
+            response = _transfers["default"].projectTransfer(organization);
+            logger.log({
+              level: _constants["default"].LOG_LEVELS.INFO,
+              message: 'Function addProjectsToOrganization Orchestrator has been end'
+            });
+            return _context8.abrupt("return", {
+              result: {
+                data: response
+              },
+              msg: 'organizationS008'
+            });
+          case 23:
+            _context8.prev = 23;
+            _context8.t0 = _context8["catch"](1);
+            logger.log({
+              level: _constants["default"].LOG_LEVELS.ERROR,
+              message: 'Function addProjectsToOrganization Orchestrator has been error',
+              args: _utils["default"].parseError(_context8.t0)
+            });
+            return _context8.abrupt("return", _bluebird["default"].reject(_context8.t0));
+          case 27:
+          case "end":
+            return _context8.stop();
+        }
+      }
+    }, _callee8, null, [[1, 23]]);
+  }));
+  return function addProjectsToOrganization(_x8) {
+    return _ref8.apply(this, arguments);
+  };
+}();
+
+/**
+ * @description Remove Projects From Organization Orchestrator
+ * @param {*} toolBox { req, res, next }
+ */
+var removeProjectsFromOrganization = /*#__PURE__*/function () {
+  var _ref9 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee9(toolBox) {
+    var req, id, error, _helpers$attributeHel2, updatedAt, updatedBy, projects, response;
+    return _regeneratorRuntime().wrap(function _callee9$(_context9) {
+      while (1) {
+        switch (_context9.prev = _context9.next) {
+          case 0:
+            req = toolBox.req;
+            _context9.prev = 1;
+            logger.log({
+              level: _constants["default"].LOG_LEVELS.INFO,
+              message: 'Function removeProjectsFromOrganization Orchestrator has been start'
+            });
+            id = req.params.id; // validator inputs
+            error = _validators["default"].validatorAddProjectsToOrganization(req.body);
+            if (!error) {
+              _context9.next = 7;
+              break;
+            }
+            throw _commons["default"].newError('organizationE001');
+          case 7:
+            _helpers$attributeHel2 = _helpers["default"].attributeHelper(req, req.body), updatedAt = _helpers$attributeHel2.updatedAt, updatedBy = _helpers$attributeHel2.updatedBy, projects = _helpers$attributeHel2.projects;
+            if (!(0, _lodash.isEmpty)(id)) {
+              _context9.next = 10;
+              break;
+            }
+            throw _commons["default"].newError('organizationE003');
+          case 10:
+            _context9.next = 12;
+            return _repository["default"].updateMany({
+              type: 'OrganizationModel',
+              filter: {
+                _id: id
+              },
+              doc: {
+                $pull: {
+                  projects: projects
+                },
+                updatedAt: updatedAt,
+                updatedBy: updatedBy
+              }
+            });
+          case 12:
+            response = _context9.sent;
+            _context9.next = 15;
+            return _repository["default"].updateMany({
+              type: 'ProjectModel',
+              filter: {
+                _id: {
+                  $in: projects
+                }
+              },
+              doc: {
+                $unset: {
+                  organization: 1
+                },
+                updatedAt: updatedAt,
+                updatedBy: updatedBy
+              }
+            });
+          case 15:
+            logger.log({
+              level: _constants["default"].LOG_LEVELS.INFO,
+              message: 'Function removeProjectsFromOrganization Orchestrator has been end'
+            });
+            return _context9.abrupt("return", {
+              result: {
+                data: response
+              },
+              msg: 'projectS009'
+            });
+          case 19:
+            _context9.prev = 19;
+            _context9.t0 = _context9["catch"](1);
+            logger.log({
+              level: _constants["default"].LOG_LEVELS.ERROR,
+              message: 'Function removeProjectsFromOrganization Orchestrator has been error',
+              args: _utils["default"].parseError(_context9.t0)
+            });
+            return _context9.abrupt("return", _bluebird["default"].reject(_context9.t0));
+          case 23:
+          case "end":
+            return _context9.stop();
+        }
+      }
+    }, _callee9, null, [[1, 19]]);
+  }));
+  return function removeProjectsFromOrganization(_x9) {
+    return _ref9.apply(this, arguments);
+  };
+}();
+
+/**
+ * @description Get Organization By Id Helper
+ * @param {*} id
+ */
+var getOrganizationFuc = /*#__PURE__*/function () {
+  var _ref10 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee10(id) {
+    var organization;
+    return _regeneratorRuntime().wrap(function _callee10$(_context10) {
+      while (1) {
+        switch (_context10.prev = _context10.next) {
+          case 0:
+            _context10.prev = 0;
+            if (!(0, _lodash.isEmpty)(id)) {
+              _context10.next = 3;
+              break;
+            }
+            throw _commons["default"].newError('organizationE003');
+          case 3:
+            _context10.next = 5;
+            return _repository["default"].getOne({
+              type: 'OrganizationModel',
+              id: id,
+              projection: {
+                __v: 0
+              },
+              options: {
+                populate: [{
+                  path: 'projects',
+                  select: 'id name description',
+                  populate: [{
+                    path: 'teams',
+                    select: 'id name'
+                  }]
+                }]
+              }
+            });
+          case 5:
+            organization = _context10.sent;
+            return _context10.abrupt("return", organization);
+          case 9:
+            _context10.prev = 9;
+            _context10.t0 = _context10["catch"](0);
+            logger.log({
+              level: _constants["default"].LOG_LEVELS.ERROR,
+              message: 'Function getOrganizationFuc has been error',
+              args: _utils["default"].parseError(_context10.t0)
+            });
+            return _context10.abrupt("return", _bluebird["default"].reject(_context10.t0));
+          case 13:
+          case "end":
+            return _context10.stop();
+        }
+      }
+    }, _callee10, null, [[0, 9]]);
+  }));
+  return function getOrganizationFuc(_x10) {
+    return _ref10.apply(this, arguments);
   };
 }();
 var organizationOrchestrator = {
@@ -511,7 +843,10 @@ var organizationOrchestrator = {
   getOrganization: getOrganization,
   updateOrganization: updateOrganization,
   deleteOrganization: deleteOrganization,
-  getProjectsInOrganization: getProjectsInOrganization
+  getAllProjectInOrganization: getAllProjectInOrganization,
+  getAllProjectNotOnOrganization: getAllProjectNotOnOrganization,
+  addProjectsToOrganization: addProjectsToOrganization,
+  removeProjectsFromOrganization: removeProjectsFromOrganization
 };
 var _default = organizationOrchestrator;
 exports["default"] = _default;

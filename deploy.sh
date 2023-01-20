@@ -20,7 +20,6 @@ echo "Sleep 10s..."
 sleep 10
 
 echo "Login aws...."
-
 aws ecr get-login-password --region $APP_AWS_REGION | helm registry login --username AWS --password-stdin $APP_AWS_ACCOUNT_ID.dkr.ecr.$APP_AWS_REGION.amazonaws.com
 
 echo "Helm install new version..."

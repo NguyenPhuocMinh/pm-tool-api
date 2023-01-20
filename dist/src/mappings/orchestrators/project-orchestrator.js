@@ -422,7 +422,7 @@ var getAllTeamInProject = /*#__PURE__*/function () {
               _context6.next = 6;
               break;
             }
-            throw _commons["default"].newError('project003');
+            throw _commons["default"].newError('projectE003');
           case 6:
             _helpers$paginationHe2 = _helpers["default"].paginationHelper(req.query), skip = _helpers$paginationHe2.skip, limit = _helpers$paginationHe2.limit;
             sort = _helpers["default"].sortHelper(req.query);
@@ -520,7 +520,7 @@ var getAllTeamNotOnProject = /*#__PURE__*/function () {
               _context7.next = 6;
               break;
             }
-            throw _commons["default"].newError('teamE003');
+            throw _commons["default"].newError('projectE003');
           case 6:
             _helpers$paginationHe3 = _helpers["default"].paginationHelper(req.query), skip = _helpers$paginationHe3.skip, limit = _helpers$paginationHe3.limit;
             sort = _helpers["default"].sortHelper(req.query);

@@ -1,7 +1,10 @@
 'use strict';
 
 import { validatorLogin } from './auth-validator';
-import { validatorOrganization } from './organization-validator';
+import {
+  validatorOrganization,
+  validatorAddProjectsToOrganization
+} from './organization-validator';
 import {
   validatorProjectCreateOrUpdate,
   validatorAddTeamsToProject
@@ -23,6 +26,7 @@ import { validatorNotifyTemplateCreate } from './notify-template-validator';
 export default {
   validatorLogin,
   validatorOrganization,
+  validatorAddProjectsToOrganization,
   validatorProjectCreateOrUpdate,
   validatorAddTeamsToProject,
   validatorTeamCreateOrUpdate,

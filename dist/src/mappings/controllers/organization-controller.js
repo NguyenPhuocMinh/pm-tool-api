@@ -129,25 +129,94 @@ var deleteOrganization = function deleteOrganization(req, res, next) {
 };
 
 /**
- * @description Delete Organization By ID Controller
+ * @description Get All Project In Organization Controller
  * @param {*} req
  * @param {*} res
  * @param {*} next
  */
-var getProjectsInOrganization = function getProjectsInOrganization(req, res, next) {
+var getAllProjectInOrganization = function getAllProjectInOrganization(req, res, next) {
   logger.log({
     level: _constants["default"].LOG_LEVELS.INFO,
-    message: 'Function getProjectsInOrganization Controller has been start'
+    message: 'Function getAllProjectInOrganization Controller has been start'
   });
   var toolBox = {
     req: req,
     res: res,
     next: next
   };
-  (0, _baseController["default"])(toolBox, _constants["default"].types.MsgTypeOrganization, _constants["default"].actions.MsgActionOrganizationGetProjects);
+  (0, _baseController["default"])(toolBox, _constants["default"].types.MsgTypeOrganization, _constants["default"].actions.MsgActionOrganizationGetAllProjectInOrganization);
   logger.log({
     level: _constants["default"].LOG_LEVELS.INFO,
-    message: 'Function getProjectsInOrganization Controller has been end'
+    message: 'Function getAllProjectInOrganization Controller has been end'
+  });
+};
+
+/**
+ * @description Get All Project Not On Organization Controller
+ * @param {*} req
+ * @param {*} res
+ * @param {*} next
+ */
+var getAllProjectNotOnOrganization = function getAllProjectNotOnOrganization(req, res, next) {
+  logger.log({
+    level: _constants["default"].LOG_LEVELS.INFO,
+    message: 'Function getAllProjectNotOnOrganization Controller has been start'
+  });
+  var toolBox = {
+    req: req,
+    res: res,
+    next: next
+  };
+  (0, _baseController["default"])(toolBox, _constants["default"].types.MsgTypeOrganization, _constants["default"].actions.MsgActionOrganizationGetAllProjectNotOnOrganization);
+  logger.log({
+    level: _constants["default"].LOG_LEVELS.INFO,
+    message: 'Function getAllProjectNotOnOrganization Controller has been end'
+  });
+};
+
+/**
+ * @description Add Projects To Organization Controller
+ * @param {*} req
+ * @param {*} res
+ * @param {*} next
+ */
+var addProjectsToOrganization = function addProjectsToOrganization(req, res, next) {
+  logger.log({
+    level: _constants["default"].LOG_LEVELS.INFO,
+    message: 'Function addProjectsToOrganization Controller has been start'
+  });
+  var toolBox = {
+    req: req,
+    res: res,
+    next: next
+  };
+  (0, _baseController["default"])(toolBox, _constants["default"].types.MsgTypeOrganization, _constants["default"].actions.MsgActionOrganizationAddProjectsToOrganization);
+  logger.log({
+    level: _constants["default"].LOG_LEVELS.INFO,
+    message: 'Function addProjectsToOrganization Controller has been end'
+  });
+};
+
+/**
+ * @description Remove Projects From Organization Controller
+ * @param {*} req
+ * @param {*} res
+ * @param {*} next
+ */
+var removeProjectsFromProject = function removeProjectsFromProject(req, res, next) {
+  logger.log({
+    level: _constants["default"].LOG_LEVELS.INFO,
+    message: 'Function removeProjectsFromProject Controller has been start'
+  });
+  var toolBox = {
+    req: req,
+    res: res,
+    next: next
+  };
+  (0, _baseController["default"])(toolBox, _constants["default"].types.MsgTypeOrganization, _constants["default"].actions.MsgActionOrganizationRemoveProjectsToOrganization);
+  logger.log({
+    level: _constants["default"].LOG_LEVELS.INFO,
+    message: 'Function removeProjectsFromProject Controller has been end'
   });
 };
 var organizationController = {
@@ -156,7 +225,10 @@ var organizationController = {
   getOrganization: getOrganization,
   updateOrganization: updateOrganization,
   deleteOrganization: deleteOrganization,
-  getProjectsInOrganization: getProjectsInOrganization
+  getAllProjectInOrganization: getAllProjectInOrganization,
+  getAllProjectNotOnOrganization: getAllProjectNotOnOrganization,
+  addProjectsToOrganization: addProjectsToOrganization,
+  removeProjectsFromProject: removeProjectsFromProject
 };
 var _default = organizationController;
 exports["default"] = _default;

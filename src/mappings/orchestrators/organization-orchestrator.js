@@ -166,13 +166,7 @@ const getOrganization = async (toolBox) => {
       throw commons.newError('organizationE003');
     }
 
-    const organization = await repository.getOne({
-      type: 'OrganizationModel',
-      id,
-      projection: {
-        __v: 0
-      }
-    });
+    const organization = await getOrganizationFuc(id);
 
     const result = transfers.organizationTransfer(organization);
 
@@ -314,15 +308,93 @@ const deleteOrganization = async (toolBox) => {
 };
 
 /**
- * @description Get Projects In Organization Orchestrator
+ * @description Get All Project In Organization Orchestrator
  * @param {*} toolBox { req, res, next }
  */
-const getProjectsInOrganization = async (toolBox) => {
+const getAllProjectInOrganization = async (toolBox) => {
   const { req } = toolBox;
   try {
     logger.log({
       level: constants.LOG_LEVELS.INFO,
-      message: 'Function getProjectsInOrganization Orchestrator has been start'
+      message:
+        'Function getAllProjectInOrganization Orchestrator has been start'
+    });
+
+    const { id } = req.params;
+
+    if (isEmpty(id)) {
+      throw commons.newError('organization003');
+    }
+
+    const { skip, limit } = helpers.paginationHelper(req.query);
+    const sort = helpers.sortHelper(req.query);
+    const query = helpers.queryHelper(req.query, null, [
+      { deleted: false },
+      { activated: true },
+      { organization: { $eq: id } }
+    ]);
+
+    const projects = await repository.findAll({
+      type: 'ProjectModel',
+      filter: query,
+      options: {
+        sort,
+        skip,
+        limit
+      }
+    });
+
+    const total = await repository.count({
+      type: 'ProjectModel',
+      filter: query
+    });
+
+    const response = await Promise.map(
+      projects,
+      (data) => {
+        data = data.toJSON();
+        return {
+          id: data._id,
+          name: data.name
+        };
+      },
+      { concurrency: 5 }
+    );
+
+    logger.log({
+      level: constants.LOG_LEVELS.INFO,
+      message: 'Function getAllProjectInOrganization Orchestrator has been end'
+    });
+
+    return {
+      result: {
+        data: response,
+        total
+      },
+      msg: 'organizationS007'
+    };
+  } catch (err) {
+    logger.log({
+      level: constants.LOG_LEVELS.ERROR,
+      message:
+        'Function getAllProjectInOrganization Orchestrator has been error',
+      args: utils.parseError(err)
+    });
+    return Promise.reject(err);
+  }
+};
+
+/**
+ * @description Get All Project Not On Organization Orchestrator
+ * @param {*} toolBox { req, res, next }
+ */
+const getAllProjectNotOnOrganization = async (toolBox) => {
+  const { req } = toolBox;
+  try {
+    logger.log({
+      level: constants.LOG_LEVELS.INFO,
+      message:
+        'Function getAllProjectNotOnOrganization Orchestrator has been start'
     });
 
     const { id } = req.params;
@@ -332,29 +404,20 @@ const getProjectsInOrganization = async (toolBox) => {
     }
 
     const { skip, limit } = helpers.paginationHelper(req.query);
-    const query = helpers.queryHelper(req.query, null, [
-      { deleted: false, activated: true }
-    ]);
     const sort = helpers.sortHelper(req.query);
-
-    // eslint-disable-next-line dot-notation
-    query['$and'].push({
-      organization: id
-    });
+    const query = helpers.queryHelper(req.query, null, [
+      { deleted: false },
+      { activated: true },
+      { organization: { $exists: false } }
+    ]);
 
     const projects = await repository.findAll({
       type: 'ProjectModel',
       filter: query,
-      projection: {
-        id: 1,
-        firstName: 1,
-        lastName: 1,
-        email: 1
-      },
       options: {
+        sort,
         skip,
-        limit,
-        sort
+        limit
       }
     });
 
@@ -363,30 +426,236 @@ const getProjectsInOrganization = async (toolBox) => {
       filter: query
     });
 
-    const result = await Promise.map(
+    const response = await Promise.map(
       projects,
       (data) => {
-        return transfers.projectTransfer(data);
+        data = data.toJSON();
+        return {
+          id: data._id,
+          name: data.name,
+          activated: data.activated
+        };
       },
       { concurrency: 5 }
     );
 
     logger.log({
       level: constants.LOG_LEVELS.INFO,
-      message: 'Function getProjectsInOrganization Orchestrator has been end'
+      message:
+        'Function getAllProjectNotOnOrganization Orchestrator has been end'
     });
 
     return {
       result: {
-        data: result,
+        data: response,
         total
       },
-      msg: 'organizationS006'
+      msg: 'organizationS007'
     };
   } catch (err) {
     logger.log({
       level: constants.LOG_LEVELS.ERROR,
-      message: 'Function getProjectsInOrganization Orchestrator has been error',
+      message:
+        'Function getAllProjectNotOnOrganization Orchestrator has been error',
+      args: utils.parseError(err)
+    });
+    return Promise.reject(err);
+  }
+};
+
+/**
+ * @description Add Projects To Organization Orchestrator
+ * @param {*} toolBox { req, res, next }
+ */
+const addProjectsToOrganization = async (toolBox) => {
+  const { req } = toolBox;
+  try {
+    logger.log({
+      level: constants.LOG_LEVELS.INFO,
+      message: 'Function addProjectsToOrganization Orchestrator has been start'
+    });
+
+    const { id } = req.params;
+
+    // validator inputs
+    const error = validators.validatorAddProjectsToOrganization(req.body);
+
+    if (error) {
+      throw commons.newError('organizationE001');
+    }
+
+    const { updatedAt, updatedBy, projects } = helpers.attributeHelper(
+      req,
+      req.body
+    );
+
+    const organization = await getOrganizationFuc(id);
+
+    organization.projects.push(projects);
+    organization.updatedAt = updatedAt;
+    organization.updatedBy = updatedBy;
+    await organization.save();
+
+    // update organization in project into db
+    await repository.updateMany({
+      type: 'ProjectModel',
+      filter: {
+        _id: {
+          $in: projects
+        }
+      },
+      doc: {
+        organization: id,
+        updatedAt: updatedAt,
+        updatedBy: updatedBy
+      }
+    });
+
+    const response = transfers.projectTransfer(organization);
+
+    logger.log({
+      level: constants.LOG_LEVELS.INFO,
+      message: 'Function addProjectsToOrganization Orchestrator has been end'
+    });
+
+    return {
+      result: {
+        data: response
+      },
+      msg: 'organizationS008'
+    };
+  } catch (err) {
+    logger.log({
+      level: constants.LOG_LEVELS.ERROR,
+      message: 'Function addProjectsToOrganization Orchestrator has been error',
+      args: utils.parseError(err)
+    });
+    return Promise.reject(err);
+  }
+};
+
+/**
+ * @description Remove Projects From Organization Orchestrator
+ * @param {*} toolBox { req, res, next }
+ */
+const removeProjectsFromOrganization = async (toolBox) => {
+  const { req } = toolBox;
+  try {
+    logger.log({
+      level: constants.LOG_LEVELS.INFO,
+      message:
+        'Function removeProjectsFromOrganization Orchestrator has been start'
+    });
+
+    const { id } = req.params;
+
+    // validator inputs
+    const error = validators.validatorAddProjectsToOrganization(req.body);
+
+    if (error) {
+      throw commons.newError('organizationE001');
+    }
+
+    const { updatedAt, updatedBy, projects } = helpers.attributeHelper(
+      req,
+      req.body
+    );
+
+    if (isEmpty(id)) {
+      throw commons.newError('organizationE003');
+    }
+
+    const response = await repository.updateMany({
+      type: 'OrganizationModel',
+      filter: {
+        _id: id
+      },
+      doc: {
+        $pull: {
+          projects: projects
+        },
+        updatedAt,
+        updatedBy
+      }
+    });
+
+    // unset organization in project into db
+    await repository.updateMany({
+      type: 'ProjectModel',
+      filter: {
+        _id: {
+          $in: projects
+        }
+      },
+      doc: {
+        $unset: {
+          organization: 1
+        },
+        updatedAt: updatedAt,
+        updatedBy: updatedBy
+      }
+    });
+
+    logger.log({
+      level: constants.LOG_LEVELS.INFO,
+      message:
+        'Function removeProjectsFromOrganization Orchestrator has been end'
+    });
+
+    return {
+      result: {
+        data: response
+      },
+      msg: 'projectS009'
+    };
+  } catch (err) {
+    logger.log({
+      level: constants.LOG_LEVELS.ERROR,
+      message:
+        'Function removeProjectsFromOrganization Orchestrator has been error',
+      args: utils.parseError(err)
+    });
+    return Promise.reject(err);
+  }
+};
+
+/**
+ * @description Get Organization By Id Helper
+ * @param {*} id
+ */
+const getOrganizationFuc = async (id) => {
+  try {
+    if (isEmpty(id)) {
+      throw commons.newError('organizationE003');
+    }
+
+    const organization = await repository.getOne({
+      type: 'OrganizationModel',
+      id,
+      projection: {
+        __v: 0
+      },
+      options: {
+        populate: [
+          {
+            path: 'projects',
+            select: 'id name description',
+            populate: [
+              {
+                path: 'teams',
+                select: 'id name'
+              }
+            ]
+          }
+        ]
+      }
+    });
+
+    return organization;
+  } catch (err) {
+    logger.log({
+      level: constants.LOG_LEVELS.ERROR,
+      message: 'Function getOrganizationFuc has been error',
       args: utils.parseError(err)
     });
     return Promise.reject(err);
@@ -399,7 +668,10 @@ const organizationOrchestrator = {
   getOrganization,
   updateOrganization,
   deleteOrganization,
-  getProjectsInOrganization
+  getAllProjectInOrganization,
+  getAllProjectNotOnOrganization,
+  addProjectsToOrganization,
+  removeProjectsFromOrganization
 };
 
 export default organizationOrchestrator;

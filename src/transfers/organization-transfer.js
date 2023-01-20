@@ -1,5 +1,6 @@
 'use strict';
 
+import moment from 'moment';
 import { isEmpty } from 'lodash';
 
 import constants from '@constants';
@@ -24,8 +25,8 @@ const organizationTransfer = (data) => {
     response.id = _id;
     response.name = name;
     response.activated = activated;
-    response.createdAt = createdAt;
-    response.updatedAt = updatedAt;
+    response.createdAt = moment(createdAt);
+    response.updatedAt = moment(updatedAt);
 
     loggerFactory.data('Func organizationTransfer has data');
 

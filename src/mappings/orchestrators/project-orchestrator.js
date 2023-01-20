@@ -322,7 +322,7 @@ const getAllTeamInProject = async (toolBox) => {
     const { id } = req.params;
 
     if (isEmpty(id)) {
-      throw commons.newError('project003');
+      throw commons.newError('projectE003');
     }
 
     const { skip, limit } = helpers.paginationHelper(req.query);
@@ -397,7 +397,7 @@ const getAllTeamNotOnProject = async (toolBox) => {
     const { id } = req.params;
 
     if (isEmpty(id)) {
-      throw commons.newError('teamE003');
+      throw commons.newError('projectE003');
     }
 
     const { skip, limit } = helpers.paginationHelper(req.query);

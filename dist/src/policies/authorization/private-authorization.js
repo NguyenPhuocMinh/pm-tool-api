@@ -38,8 +38,8 @@ var _default = [
 }, {
   enable: true,
   pathName: '/organizations/:id',
-  method: 'PATCH',
-  permission: _permissions["default"].admin.organizations.EDIT
+  method: 'PUT',
+  permission: _permissions["default"].admin.organizations.UPDATE
 }, {
   enable: true,
   pathName: '/organizations/:id',
@@ -47,9 +47,24 @@ var _default = [
   permission: _permissions["default"].admin.organizations.DELETE
 }, {
   enable: true,
-  pathName: '/organizations/:id/projects',
+  pathName: '/organizations/:id/projects-in-organizations',
   method: 'GET',
-  permission: _permissions["default"].admin.organizations.GET_PROJECT
+  permission: _permissions["default"].admin.organizations.GET_PROJECT_IN_ORGANIZATION
+}, {
+  enable: true,
+  pathName: '/organizations/:id/projects-not-on-organizations',
+  method: 'GET',
+  permission: _permissions["default"].admin.organizations.GET_PROJECT_NOT_ORGANIZATION
+}, {
+  enable: true,
+  pathName: '/organizations/:id/add-projects-to-organizations',
+  method: 'PATCH',
+  permission: _permissions["default"].admin.organizations.ADD_PROJECT_TO_ORGANIZATION
+}, {
+  enable: true,
+  pathName: '/organizations/:id/remove-projects-to-organizations',
+  method: 'PATCH',
+  permission: _permissions["default"].admin.organizations.REMOVE_PROJECT_FROM_ORGANIZATION
 },
 /**
  * PROJECT

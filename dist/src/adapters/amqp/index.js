@@ -88,6 +88,7 @@ var Init = /*#__PURE__*/function () {
  */
 var publisher = /*#__PURE__*/function () {
   var _ref2 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee2(queueName, messageType, correlationId, payload) {
+    var _channel;
     return _regeneratorRuntime().wrap(function _callee2$(_context2) {
       while (1) {
         switch (_context2.prev = _context2.next) {
@@ -103,7 +104,7 @@ var publisher = /*#__PURE__*/function () {
               }
             });
             _context2.next = 4;
-            return channel.assertQueue(queueName, {
+            return (_channel = channel) === null || _channel === void 0 ? void 0 : _channel.assertQueue(queueName, {
               durable: false
             });
           case 4:

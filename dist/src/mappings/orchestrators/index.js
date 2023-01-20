@@ -127,8 +127,20 @@ var orchestratorOrganization = [{
   orchestrator: _organizationOrchestrator["default"].deleteOrganization
 }, {
   type: _constants["default"].types.MsgTypeOrganization,
-  action: _constants["default"].actions.MsgActionOrganizationGetProjects,
-  orchestrator: _organizationOrchestrator["default"].getProjectsInOrganization
+  action: _constants["default"].actions.MsgActionOrganizationGetAllProjectInOrganization,
+  orchestrator: _organizationOrchestrator["default"].getAllProjectInOrganization
+}, {
+  type: _constants["default"].types.MsgTypeOrganization,
+  action: _constants["default"].actions.MsgActionOrganizationGetAllProjectNotOnOrganization,
+  orchestrator: _organizationOrchestrator["default"].getAllProjectNotOnOrganization
+}, {
+  type: _constants["default"].types.MsgTypeOrganization,
+  action: _constants["default"].actions.MsgActionOrganizationAddProjectsToOrganization,
+  orchestrator: _organizationOrchestrator["default"].addProjectsToOrganization
+}, {
+  type: _constants["default"].types.MsgTypeOrganization,
+  action: _constants["default"].actions.MsgActionOrganizationRemoveProjectsToOrganization,
+  orchestrator: _organizationOrchestrator["default"].removeProjectsFromOrganization
 }];
 
 /**

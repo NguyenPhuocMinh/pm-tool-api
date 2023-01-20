@@ -76,7 +76,7 @@ const publisher = async (queueName, messageType, correlationId, payload) => {
       }
     });
 
-    await channel.assertQueue(queueName, {
+    await channel?.assertQueue(queueName, {
       durable: false
     });
 

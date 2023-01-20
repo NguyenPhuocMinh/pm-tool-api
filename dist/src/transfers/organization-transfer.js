@@ -5,6 +5,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports["default"] = void 0;
 require("source-map-support/register");
+var _moment = _interopRequireDefault(require("moment"));
 var _lodash = require("lodash");
 var _constants = _interopRequireDefault(require("../constants"));
 var _logger = _interopRequireDefault(require("../core/logger"));
@@ -26,8 +27,8 @@ var organizationTransfer = function organizationTransfer(data) {
     response.id = _id;
     response.name = name;
     response.activated = activated;
-    response.createdAt = createdAt;
-    response.updatedAt = updatedAt;
+    response.createdAt = (0, _moment["default"])(createdAt);
+    response.updatedAt = (0, _moment["default"])(updatedAt);
     loggerFactory.data('Func organizationTransfer has data');
     return response;
   }

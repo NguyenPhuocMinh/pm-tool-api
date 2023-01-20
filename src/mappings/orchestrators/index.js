@@ -146,8 +146,24 @@ const orchestratorOrganization = [
   },
   {
     type: constants.types.MsgTypeOrganization,
-    action: constants.actions.MsgActionOrganizationGetProjects,
-    orchestrator: organizationOrchestrator.getProjectsInOrganization
+    action: constants.actions.MsgActionOrganizationGetAllProjectInOrganization,
+    orchestrator: organizationOrchestrator.getAllProjectInOrganization
+  },
+  {
+    type: constants.types.MsgTypeOrganization,
+    action:
+      constants.actions.MsgActionOrganizationGetAllProjectNotOnOrganization,
+    orchestrator: organizationOrchestrator.getAllProjectNotOnOrganization
+  },
+  {
+    type: constants.types.MsgTypeOrganization,
+    action: constants.actions.MsgActionOrganizationAddProjectsToOrganization,
+    orchestrator: organizationOrchestrator.addProjectsToOrganization
+  },
+  {
+    type: constants.types.MsgTypeOrganization,
+    action: constants.actions.MsgActionOrganizationRemoveProjectsToOrganization,
+    orchestrator: organizationOrchestrator.removeProjectsFromOrganization
   }
 ];
 

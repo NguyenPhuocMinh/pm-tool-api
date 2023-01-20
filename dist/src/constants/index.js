@@ -367,7 +367,10 @@ var organizationActions = {
   MsgActionOrganizationGet: 'ORGANIZATION_GET',
   MsgActionOrganizationUpdate: 'ORGANIZATION_UPDATE',
   MsgActionOrganizationDelete: 'ORGANIZATION_DELETE',
-  MsgActionOrganizationGetProjects: 'ORGANIZATION_GET_PROJECT'
+  MsgActionOrganizationGetAllProjectInOrganization: 'ORGANIZATION_GET_ALL_PROJECT_IN_ORGANIZATION',
+  MsgActionOrganizationGetAllProjectNotOnOrganization: 'ORGANIZATION_GET_ALL_PROJECT_NOT_ON_ORGANIZATION',
+  MsgActionOrganizationAddProjectsToOrganization: 'ORGANIZATION_ADD_PROJECTS_TO_ORGANIZATION',
+  MsgActionOrganizationRemoveProjectsToOrganization: 'ORGANIZATION_REMOVE_PROJECTS_TO_ORGANIZATION'
 };
 
 /**

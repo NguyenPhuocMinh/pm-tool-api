@@ -3,7 +3,7 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.validatorOrganization = void 0;
+exports.validatorOrganization = exports.validatorAddProjectsToOrganization = void 0;
 require("source-map-support/register");
 var _joi = _interopRequireDefault(require("joi"));
 var _constants = _interopRequireDefault(require("../constants"));
@@ -40,3 +40,31 @@ var validatorOrganization = function validatorOrganization(data) {
   return null;
 };
 exports.validatorOrganization = validatorOrganization;
+var schemaAddProjectsToOrganization = _joi["default"].object({
+  projects: _joi["default"].array().required()
+});
+var validatorAddProjectsToOrganization = function validatorAddProjectsToOrganization(data) {
+  logger.log({
+    level: _constants["default"].LOG_LEVELS.DEBUG,
+    message: 'Function validatorAddProjectsToOrganization has been start with data',
+    args: data
+  });
+  var _schemaAddProjectsToO = schemaAddProjectsToOrganization.validate(data, {
+      allowUnknown: true
+    }),
+    error = _schemaAddProjectsToO.error;
+  if (error) {
+    logger.log({
+      level: _constants["default"].LOG_LEVELS.ERROR,
+      message: 'Function validatorAddProjectsToOrganization has been end with error',
+      args: error
+    });
+    return error;
+  }
+  logger.log({
+    level: _constants["default"].LOG_LEVELS.DEBUG,
+    message: 'Function validatorAddProjectsToOrganization has been end without error'
+  });
+  return null;
+};
+exports.validatorAddProjectsToOrganization = validatorAddProjectsToOrganization;

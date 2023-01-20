@@ -26,7 +26,7 @@ var organizationRouter = [{
   controller: _controllers.organizationController.getOrganization
 }, {
   pathName: '/organizations/:id',
-  method: 'PATCH',
+  method: 'PUT',
   methodName: 'updateOrganization',
   controller: _controllers.organizationController.updateOrganization
 }, {
@@ -35,10 +35,25 @@ var organizationRouter = [{
   methodName: 'deleteOrganization',
   controller: _controllers.organizationController.deleteOrganization
 }, {
-  pathName: '/organizations/:id/projects',
+  pathName: '/organizations/:id/projects-in-organizations',
   method: 'GET',
-  methodName: 'getProjectsInOrganization',
-  controller: _controllers.organizationController.getProjectsInOrganization
+  methodName: 'getAllProjectInOrganization',
+  controller: _controllers.organizationController.getAllProjectInOrganization
+}, {
+  pathName: '/organizations/:id/projects-not-on-organizations',
+  method: 'GET',
+  methodName: 'getAllProjectNotOnOrganization',
+  controller: _controllers.organizationController.getAllProjectNotOnOrganization
+}, {
+  pathName: '/organizations/:id/add-projects-to-organizations',
+  method: 'PATCH',
+  methodName: 'addProjectsToOrganization',
+  controller: _controllers.organizationController.addProjectsToOrganization
+}, {
+  pathName: '/organizations/:id/remove-projects-from-organizations',
+  method: 'PATCH',
+  methodName: 'removeProjectsFromProject',
+  controller: _controllers.organizationController.removeProjectsFromProject
 }];
 var _default = organizationRouter;
 exports["default"] = _default;

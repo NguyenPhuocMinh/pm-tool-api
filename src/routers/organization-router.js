@@ -26,7 +26,7 @@ const organizationRouter = [
   },
   {
     pathName: '/organizations/:id',
-    method: 'PATCH',
+    method: 'PUT',
     methodName: 'updateOrganization',
     controller: organizationController.updateOrganization
   },
@@ -37,10 +37,28 @@ const organizationRouter = [
     controller: organizationController.deleteOrganization
   },
   {
-    pathName: '/organizations/:id/projects',
+    pathName: '/organizations/:id/projects-in-organizations',
     method: 'GET',
-    methodName: 'getProjectsInOrganization',
-    controller: organizationController.getProjectsInOrganization
+    methodName: 'getAllProjectInOrganization',
+    controller: organizationController.getAllProjectInOrganization
+  },
+  {
+    pathName: '/organizations/:id/projects-not-on-organizations',
+    method: 'GET',
+    methodName: 'getAllProjectNotOnOrganization',
+    controller: organizationController.getAllProjectNotOnOrganization
+  },
+  {
+    pathName: '/organizations/:id/add-projects-to-organizations',
+    method: 'PATCH',
+    methodName: 'addProjectsToOrganization',
+    controller: organizationController.addProjectsToOrganization
+  },
+  {
+    pathName: '/organizations/:id/remove-projects-from-organizations',
+    method: 'PATCH',
+    methodName: 'removeProjectsFromProject',
+    controller: organizationController.removeProjectsFromProject
   }
 ];
 

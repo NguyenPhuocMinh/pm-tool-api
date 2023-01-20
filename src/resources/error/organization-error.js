@@ -18,5 +18,11 @@ export default {
     description: 'ID Not Found',
     returnCode: 0,
     statusCode: 404
+  },
+  organizationE004: {
+    message: 'resources.organizations.notifications.errors.e004',
+    description: 'Please Project All Team In Organization',
+    returnCode: 0,
+    statusCode: 400
   }
 };

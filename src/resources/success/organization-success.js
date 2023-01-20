@@ -36,5 +36,23 @@ export default {
     description: 'Get All Project In Organization Success',
     returnCode: 1,
     statusCode: 200
+  },
+  organizationS007: {
+    message: 'resources.organizations.notifications.success.s007',
+    description: 'Get All Project Not On Organization Success',
+    returnCode: 1,
+    statusCode: 200
+  },
+  organizationS008: {
+    message: 'resources.organizations.notifications.success.s008',
+    description: 'Add Projects To Organization Success',
+    returnCode: 1,
+    statusCode: 200
+  },
+  organizationS009: {
+    message: 'resources.organizations.notifications.success.s009',
+    description: 'Remove Projects From Organization Success',
+    returnCode: 1,
+    statusCode: 200
   }
 };
