@@ -68,6 +68,7 @@ jobs:
     environment:
       APP_DOCKER_TAG: v0.2.6
       APP_HELM_TAG: 0.2.6
+      REGISTRY_ALIAS: k1f0w9h7
     steps:
       ## Build and push image to docker hub
       - setup_remote_docker
@@ -128,7 +129,7 @@ jobs:
               --username AWS \
               --password-stdin public.ecr.aws
             # Push to ecr public
-            helm push pm-tool-api-$APP_HELM_TAG.tgz oci://public.ecr.aws/k1f0w9h7
+            helm push pm-tool-api-$APP_HELM_TAG.tgz oci://public.ecr.aws/$REGISTRY_ALIAS
             echo "Store helm chart to ECR successfully!"
 
       # for private ECR
