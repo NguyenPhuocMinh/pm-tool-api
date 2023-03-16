@@ -24,5 +24,11 @@ export default {
     description: 'Schema Not Found',
     returnCode: 0,
     statusCode: 404
+  },
+  e005: {
+    message: 'common.notifications.errors.e005',
+    description: 'Phone Number Is Invalid',
+    returnCode: 0,
+    statusCode: 400
   }
 };

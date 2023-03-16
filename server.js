@@ -75,7 +75,7 @@ const main = async () => {
   app.use(routers);
 
   /**
-   * Router Not Found
+   * Not Found handler
    */
   app.use('*', routerMiddleware);
 

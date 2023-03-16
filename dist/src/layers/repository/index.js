@@ -156,7 +156,7 @@ var findOne = /*#__PURE__*/function () {
  *    id: '123'
  *    projection: { __v: 0 },
  *    options: {
- *        populates: [
+ *        populate: [
  *         {
  *           path: 'roles',
  *           select: 'name'

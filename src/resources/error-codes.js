@@ -2,6 +2,9 @@
 
 import authError from './error/auth-error';
 import commonError from './error/common-error';
+import categoryError from './error/category-error';
+import productError from './error/product-error';
+import customerError from './error/customer-error';
 import organizationError from './error/organization-error';
 import projectError from './error/project-error';
 import teamError from './error/team-error';
@@ -16,6 +19,9 @@ import notifyTemplateError from './error/notify-template-error';
 const errorCodes = {
   ...authError,
   ...commonError,
+  ...categoryError,
+  ...productError,
+  ...customerError,
   ...organizationError,
   ...projectError,
   ...teamError,

@@ -12,6 +12,9 @@ var _authOrchestrator = _interopRequireDefault(require("./auth-orchestrator"));
 var _configOrchestrator = _interopRequireDefault(require("./config-orchestrator"));
 var _homeOrchestrator = _interopRequireDefault(require("./home-orchestrator"));
 var _healthOrchestrator = _interopRequireDefault(require("./health-orchestrator"));
+var _categoryOrchestrator = _interopRequireDefault(require("./category-orchestrator"));
+var _productOrchestrator = _interopRequireDefault(require("./product-orchestrator"));
+var _customerOrchestrator = _interopRequireDefault(require("./customer-orchestrator"));
 var _organizationOrchestrator = _interopRequireDefault(require("./organization-orchestrator"));
 var _projectOrchestrator = _interopRequireDefault(require("./project-orchestrator"));
 var _teamOrchestrator = _interopRequireDefault(require("./team-orchestrator"));
@@ -98,6 +101,94 @@ var orchestratorHealth = [{
   type: _constants["default"].types.MsgTypeHealth,
   action: _constants["default"].actions.MsgActionHealthCheck,
   orchestrator: _healthOrchestrator["default"].healthCheck
+}];
+
+/**
+ * CATEGORY
+ */
+var orchestratorCategory = [{
+  type: _constants["default"].types.MsgTypeCategory,
+  action: _constants["default"].actions.MsgActionCategoryGetAll,
+  orchestrator: _categoryOrchestrator["default"].getAllCategory
+}, {
+  type: _constants["default"].types.MsgTypeCategory,
+  action: _constants["default"].actions.MsgActionCategoryCreate,
+  orchestrator: _categoryOrchestrator["default"].createCategory
+}, {
+  type: _constants["default"].types.MsgTypeCategory,
+  action: _constants["default"].actions.MsgActionCategoryGet,
+  orchestrator: _categoryOrchestrator["default"].getCategory
+}, {
+  type: _constants["default"].types.MsgTypeCategory,
+  action: _constants["default"].actions.MsgActionCategoryUpdate,
+  orchestrator: _categoryOrchestrator["default"].updateCategory
+}, {
+  type: _constants["default"].types.MsgTypeCategory,
+  action: _constants["default"].actions.MsgActionCategoryDelete,
+  orchestrator: _categoryOrchestrator["default"].deleteCategory
+}];
+
+/**
+ * PRODUCT
+ */
+var orchestratorProduct = [{
+  type: _constants["default"].types.MsgTypeProduct,
+  action: _constants["default"].actions.MsgActionProductGetAll,
+  orchestrator: _productOrchestrator["default"].getAllProduct
+}, {
+  type: _constants["default"].types.MsgTypeProduct,
+  action: _constants["default"].actions.MsgActionProductCreate,
+  orchestrator: _productOrchestrator["default"].createProduct,
+  schema: 'productSchema'
+}, {
+  type: _constants["default"].types.MsgTypeProduct,
+  action: _constants["default"].actions.MsgActionProductGet,
+  orchestrator: _productOrchestrator["default"].getProduct
+}, {
+  type: _constants["default"].types.MsgTypeProduct,
+  action: _constants["default"].actions.MsgActionProductUpdate,
+  orchestrator: _productOrchestrator["default"].updateProduct,
+  schema: 'productSchema'
+}, {
+  type: _constants["default"].types.MsgTypeProduct,
+  action: _constants["default"].actions.MsgActionProductDelete,
+  orchestrator: _productOrchestrator["default"].deleteProduct
+}];
+
+/**
+ * CUSTOMER
+ */
+var orchestratorCustomer = [{
+  type: _constants["default"].types.MsgTypeCustomer,
+  action: _constants["default"].actions.MsgActionCustomerRegister,
+  orchestrator: _customerOrchestrator["default"].registerCustomer,
+  schema: 'customerRegisterSchema'
+}, {
+  type: _constants["default"].types.MsgTypeCustomer,
+  action: _constants["default"].actions.MsgActionCustomerLogin,
+  orchestrator: _customerOrchestrator["default"].loginCustomer
+}, {
+  type: _constants["default"].types.MsgTypeCustomer,
+  action: _constants["default"].actions.MsgActionCustomerGetAll,
+  orchestrator: _customerOrchestrator["default"].getAllCustomer
+}, {
+  type: _constants["default"].types.MsgTypeCustomer,
+  action: _constants["default"].actions.MsgActionCustomerCreate,
+  orchestrator: _customerOrchestrator["default"].createCustomer,
+  schema: 'customerSchema'
+}, {
+  type: _constants["default"].types.MsgTypeCustomer,
+  action: _constants["default"].actions.MsgActionCustomerGet,
+  orchestrator: _customerOrchestrator["default"].getCustomer
+}, {
+  type: _constants["default"].types.MsgTypeCustomer,
+  action: _constants["default"].actions.MsgActionCustomerUpdate,
+  orchestrator: _customerOrchestrator["default"].updateCustomer,
+  schema: 'customerSchema'
+}, {
+  type: _constants["default"].types.MsgTypeCustomer,
+  action: _constants["default"].actions.MsgActionCustomerDelete,
+  orchestrator: _customerOrchestrator["default"].deleteCustomer
 }];
 
 /**
@@ -462,6 +553,6 @@ var orchestratorNotifyTemplate = [{
 /**
  * BASE
  */
-var orchestrators = [].concat(orchestratorTest, orchestratorSocket, orchestratorAuth, orchestratorConfig, orchestratorHome, orchestratorHealth, orchestratorOrganization, orchestratorProject, orchestratorTeam, orchestratorRole, orchestratorPermission, orchestratorUser, orchestratorUserSession, orchestratorUserOnline, orchestratorNotify, orchestratorNotifyUser, orchestratorNotifyTemplate);
+var orchestrators = [].concat(orchestratorTest, orchestratorSocket, orchestratorAuth, orchestratorConfig, orchestratorHome, orchestratorHealth, orchestratorCategory, orchestratorProduct, orchestratorCustomer, orchestratorOrganization, orchestratorProject, orchestratorTeam, orchestratorRole, orchestratorPermission, orchestratorUser, orchestratorUserSession, orchestratorUserOnline, orchestratorNotify, orchestratorNotifyUser, orchestratorNotifyTemplate);
 var _default = orchestrators;
 exports["default"] = _default;

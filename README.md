@@ -107,7 +107,7 @@ $ docker run -d -p 5672:5672 rabbitmq
 ```
 
 - **Run RabbitMQ Management**
-  
+
 ```sh
 $ $ docker run -d --hostname my-rabbit --name some-rabbit -p 8080:15672 rabbitmq:3-management
 ```
@@ -131,6 +131,8 @@ $ $ docker run -d --hostname my-rabbit --name some-rabbit -p 8080:15672 rabbitmq
   - APP_DOCKER_IMAGE
   - APP_REPO_URL
   - APP_SSH_FINGERPRINT
+  - APP_BASE_PATH_REST_API
+  - APP_MONGO_URI
 
 - **Context variables**
 
@@ -229,15 +231,21 @@ $ k apply -f new-ingress.yml
 - Helm package
 
 ```sh
-$ cd helm-charts && helm package pm-tool-api
+$ cd charts && helm package pm-tool-api
 ```
 
-- Login AWS ECR
+- Create Repository AWS ECR
 
 ```sh
 $ aws ecr create-repository \
     --repository-name <chart-name> \
     --region <region>
+```
+
+- Login AWS ECR
+
+```sh
+$ aws ecr get-login-password --region <region> | helm registry login --username AWS --password-stdin <aws_account_id>.dkr.ecr.<region>.amazonaws.com
 ```
 
 - Push helm to AWS ECR

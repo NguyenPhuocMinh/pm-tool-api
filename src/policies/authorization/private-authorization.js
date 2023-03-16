@@ -13,6 +13,72 @@ export default [
     permission: permissions.admin.auth.REVOKE_TOKEN
   },
   /**
+   * CATEGORY
+   */
+  {
+    enable: true,
+    method: 'GET',
+    pathName: '/categories',
+    permission: permissions.admin.categories.GET_ALL
+  },
+  {
+    enable: true,
+    method: 'POST',
+    pathName: '/categories',
+    permission: permissions.admin.roles.CREATE
+  },
+  {
+    enable: true,
+    method: 'GET',
+    pathName: '/categories/:id',
+    permission: permissions.admin.categories.GET_ID
+  },
+  {
+    enable: true,
+    pathName: '/categories/:id',
+    method: 'PUT',
+    permission: permissions.admin.categories.UPDATE
+  },
+  {
+    enable: true,
+    pathName: '/categories/:id',
+    method: 'DELETE',
+    permission: permissions.admin.categories.DELETE
+  },
+  /**
+   * PRODUCT
+   */
+  {
+    enable: true,
+    method: 'GET',
+    pathName: '/products',
+    permission: permissions.admin.products.GET_ALL
+  },
+  {
+    enable: true,
+    method: 'POST',
+    pathName: '/products',
+    permission: permissions.admin.products.CREATE
+  },
+  {
+    enable: true,
+    method: 'GET',
+    pathName: '/products/:id',
+    permission: permissions.admin.products.GET_ID
+  },
+  {
+    enable: true,
+    pathName: '/products/:id',
+    method: 'PUT',
+    permission: permissions.admin.products.UPDATE
+  },
+  {
+    enable: true,
+    pathName: '/products/:id',
+    method: 'DELETE',
+    permission: permissions.admin.products.DELETE
+  },
+  /**
    * ORGANIZATION
    */
   {

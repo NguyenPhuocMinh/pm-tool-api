@@ -53,6 +53,8 @@ var AUTH_CONTROLLER = 'auth-controller';
 var CONFIG_CONTROLLER = 'config-controller';
 var HOME_CONTROLLER = 'home-controller';
 var HEALTH_CONTROLLER = 'health-controller';
+var CATEGORY_CONTROLLER = 'category-controller';
+var PRODUCT_CONTROLLER = 'product-controller';
 var ORGANIZATION_CONTROLLER = 'organization-controller';
 var PROJECT_CONTROLLER = 'project-controller';
 var TEAM_CONTROLLER = 'team-controller';
@@ -64,6 +66,7 @@ var USER_ONLINE_CONTROLLER = 'user-online-controller';
 var NOTIFY_CONTROLLER = 'notify-controller';
 var NOTIFY_USER_CONTROLLER = 'notify-user-controller';
 var NOTIFY_TEMPLATE_CONTROLLER = 'notify-template-controller';
+var CUSTOMER_CONTROLLER = 'customer-controller';
 var STRUCT_CONTROLLERS = {
   BASE_CONTROLLER: BASE_CONTROLLER,
   TEST_CONTROLLER: TEST_CONTROLLER,
@@ -72,6 +75,8 @@ var STRUCT_CONTROLLERS = {
   CONFIG_CONTROLLER: CONFIG_CONTROLLER,
   HOME_CONTROLLER: HOME_CONTROLLER,
   HEALTH_CONTROLLER: HEALTH_CONTROLLER,
+  CATEGORY_CONTROLLER: CATEGORY_CONTROLLER,
+  PRODUCT_CONTROLLER: PRODUCT_CONTROLLER,
   ORGANIZATION_CONTROLLER: ORGANIZATION_CONTROLLER,
   PROJECT_CONTROLLER: PROJECT_CONTROLLER,
   TEAM_CONTROLLER: TEAM_CONTROLLER,
@@ -82,7 +87,8 @@ var STRUCT_CONTROLLERS = {
   USER_ONLINE_CONTROLLER: USER_ONLINE_CONTROLLER,
   NOTIFY_CONTROLLER: NOTIFY_CONTROLLER,
   NOTIFY_USER_CONTROLLER: NOTIFY_USER_CONTROLLER,
-  NOTIFY_TEMPLATE_CONTROLLER: NOTIFY_TEMPLATE_CONTROLLER
+  NOTIFY_TEMPLATE_CONTROLLER: NOTIFY_TEMPLATE_CONTROLLER,
+  CUSTOMER_CONTROLLER: CUSTOMER_CONTROLLER
 };
 
 /**
@@ -95,6 +101,9 @@ var AUTH_ORCHESTRATOR = 'auth-orchestrator';
 var CONFIG_ORCHESTRATOR = 'config-orchestrator';
 var HOME_ORCHESTRATOR = 'home-orchestrator';
 var HEALTH_ORCHESTRATOR = 'health-orchestrator';
+var CATEGORY_ORCHESTRATOR = 'category-orchestrator';
+var PRODUCT_ORCHESTRATOR = 'product-orchestrator';
+var CUSTOMER_ORCHESTRATOR = 'customer-orchestrator';
 var ORGANIZATION_ORCHESTRATOR = 'organization-orchestrator';
 var PROJECT_ORCHESTRATOR = 'project-orchestrator';
 var TEAM_ORCHESTRATOR = 'team-orchestrator';
@@ -114,6 +123,9 @@ var STRUCT_ORCHESTRATORS = {
   CONFIG_ORCHESTRATOR: CONFIG_ORCHESTRATOR,
   HOME_ORCHESTRATOR: HOME_ORCHESTRATOR,
   HEALTH_ORCHESTRATOR: HEALTH_ORCHESTRATOR,
+  CATEGORY_ORCHESTRATOR: CATEGORY_ORCHESTRATOR,
+  PRODUCT_ORCHESTRATOR: PRODUCT_ORCHESTRATOR,
+  CUSTOMER_ORCHESTRATOR: CUSTOMER_ORCHESTRATOR,
   ORGANIZATION_ORCHESTRATOR: ORGANIZATION_ORCHESTRATOR,
   PROJECT_ORCHESTRATOR: PROJECT_ORCHESTRATOR,
   TEAM_ORCHESTRATOR: TEAM_ORCHESTRATOR,
@@ -131,6 +143,8 @@ var STRUCT_ORCHESTRATORS = {
  * @description VALIDATORS
  */
 var AUTH_VALIDATOR = 'auth-validator';
+var CATEGORY_VALIDATOR = 'category-validator';
+var PRODUCT_VALIDATOR = 'product-validator';
 var ORGANIZATION_VALIDATOR = 'organization-validator';
 var PROJECT_VALIDATOR = 'project-validator';
 var TEAM_VALIDATOR = 'team-validator';
@@ -139,6 +153,8 @@ var PERMISSION_VALIDATOR = 'permission-validator';
 var USER_VALIDATOR = 'user-validator';
 var STRUCT_VALIDATORS = {
   AUTH_VALIDATOR: AUTH_VALIDATOR,
+  CATEGORY_VALIDATOR: CATEGORY_VALIDATOR,
+  PRODUCT_VALIDATOR: PRODUCT_VALIDATOR,
   ORGANIZATION_VALIDATOR: ORGANIZATION_VALIDATOR,
   PROJECT_VALIDATOR: PROJECT_VALIDATOR,
   TEAM_VALIDATOR: TEAM_VALIDATOR,
@@ -151,6 +167,9 @@ var STRUCT_VALIDATORS = {
  * @description TRANSFERS
  */
 var AUTH_TRANSFER = 'auth-transfer';
+var CATEGORY_TRANSFER = 'category-transfer';
+var PRODUCT_TRANSFER = 'product-transfer';
+var CUSTOMER_TRANSFER = 'customer-transfer';
 var ORGANIZATION_TRANSFER = 'organization-transfer';
 var PROJECT_TRANSFER = 'project-transfer';
 var TEAM_TRANSFER = 'team-transfer';
@@ -164,6 +183,9 @@ var NOTIFY_USER_TRANSFER = 'notify-user-transfer';
 var NOTIFY_TEMPLATE_TRANSFER = 'notify-template-transfer';
 var STRUCT_TRANSFERS = {
   AUTH_TRANSFER: AUTH_TRANSFER,
+  CATEGORY_TRANSFER: CATEGORY_TRANSFER,
+  PRODUCT_TRANSFER: PRODUCT_TRANSFER,
+  CUSTOMER_TRANSFER: CUSTOMER_TRANSFER,
   ORGANIZATION_TRANSFER: ORGANIZATION_TRANSFER,
   PROJECT_TRANSFER: PROJECT_TRANSFER,
   TEAM_TRANSFER: TEAM_TRANSFER,
@@ -223,8 +245,10 @@ var STRUCT_WORKER = {
  * @description SHARES
  */
 var VALIDATOR_SCHEMA = 'validator-schema';
+var VALIDATOR_PHONE = 'validator-phone';
 var STRUCT_SHARES = {
-  VALIDATOR_SCHEMA: VALIDATOR_SCHEMA
+  VALIDATOR_SCHEMA: VALIDATOR_SCHEMA,
+  VALIDATOR_PHONE: VALIDATOR_PHONE
 };
 
 /**
@@ -297,6 +321,9 @@ var types = {
   MsgTypeConfig: 'CONFIG',
   MsgTypeHome: 'HOME',
   MsgTypeHealth: 'HEALTH',
+  MsgTypeCategory: 'CATEGORY',
+  MsgTypeProduct: 'PRODUCT',
+  MsgTypeCustomer: 'CUSTOMER',
   MsgTypeOrganization: 'ORGANIZATION',
   MsgTypeProject: 'PROJECT',
   MsgTypeTeam: 'TEAM',
@@ -356,6 +383,41 @@ var homeActions = {
  */
 var HealthActions = {
   MsgActionHealthCheck: 'HEALTH_CHECK'
+};
+
+/**
+ * @description CATEGORY ACTIONS
+ */
+var categoryActions = {
+  MsgActionCategoryGetAll: 'CATEGORY_GET_ALL',
+  MsgActionCategoryCreate: 'CATEGORY_CREATE',
+  MsgActionCategoryGet: 'CATEGORY_GET',
+  MsgActionCategoryUpdate: 'CATEGORY_UPDATE',
+  MsgActionCategoryDelete: 'CATEGORY_DELETE'
+};
+
+/**
+ * @description PRODUCT ACTIONS
+ */
+var productActions = {
+  MsgActionProductGetAll: 'PRODUCT_GET_ALL',
+  MsgActionProductCreate: 'PRODUCT_CREATE',
+  MsgActionProductGet: 'PRODUCT_GET',
+  MsgActionProductUpdate: 'PRODUCT_UPDATE',
+  MsgActionProductDelete: 'PRODUCT_DELETE'
+};
+
+/**
+ * @description CUSTOMER ACTIONS
+ */
+var customerActions = {
+  MsgActionCustomerRegister: 'CUSTOMER_REGISTER',
+  MsgActionCustomerLogin: 'CUSTOMER_LOGIN',
+  MsgActionCustomerGetAll: 'CUSTOMER_GET_ALL',
+  MsgActionCustomerCreate: 'CUSTOMER_CREATE',
+  MsgActionCustomerGet: 'CUSTOMER_GET',
+  MsgActionCustomerUpdate: 'CUSTOMER_UPDATE',
+  MsgActionCustomerDelete: 'CUSTOMER_DELETE'
 };
 
 /**
@@ -515,7 +577,7 @@ var notifyTypes = {
 var senders = {
   SENDER_SYSTEM: 'SYSTEM'
 };
-var actions = _objectSpread(_objectSpread(_objectSpread(_objectSpread(_objectSpread(_objectSpread(_objectSpread(_objectSpread(_objectSpread(_objectSpread(_objectSpread(_objectSpread(_objectSpread(_objectSpread(_objectSpread(_objectSpread(_objectSpread({}, testActions), socketActions), authActions), configActions), homeActions), HealthActions), organizationActions), projectActions), teamActions), roleActions), permissionActions), userActions), userSessionActions), userOnlineActions), notifyActions), notifyUserActions), notifyTemplateActions);
+var actions = _objectSpread(_objectSpread(_objectSpread(_objectSpread(_objectSpread(_objectSpread(_objectSpread(_objectSpread(_objectSpread(_objectSpread(_objectSpread(_objectSpread(_objectSpread(_objectSpread(_objectSpread(_objectSpread(_objectSpread(_objectSpread(_objectSpread(_objectSpread({}, testActions), socketActions), authActions), configActions), homeActions), HealthActions), categoryActions), productActions), customerActions), organizationActions), projectActions), teamActions), roleActions), permissionActions), userActions), userSessionActions), userOnlineActions), notifyActions), notifyUserActions), notifyTemplateActions);
 var constants = {
   types: types,
   actions: actions,

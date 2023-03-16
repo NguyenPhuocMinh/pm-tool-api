@@ -4,7 +4,7 @@ function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" =
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.dataResponsesMapper = exports.dataResponseMapper = void 0;
+exports.dataResponsesMapper = exports.dataResponseMapper = exports.dataInputMapper = void 0;
 require("source-map-support/register");
 var _bluebird = _interopRequireDefault(require("bluebird"));
 var _lodash = require("lodash");
@@ -100,3 +100,10 @@ var dataResponseMapper = /*#__PURE__*/function () {
   };
 }();
 exports.dataResponseMapper = dataResponseMapper;
+var dataInputMapper = function dataInputMapper() {
+  var data = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+  (0, _lodash.forOwn)(data, function (value, key) {
+    data[key] = value;
+  });
+};
+exports.dataInputMapper = dataInputMapper;

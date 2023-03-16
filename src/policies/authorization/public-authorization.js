@@ -159,5 +159,18 @@ export default [
     enable: true,
     method: 'PATCH',
     pathName: '/notifyUsersRollbacks'
+  },
+  /**
+   * CUSTOMER
+   */
+  {
+    enable: false,
+    method: 'POST',
+    pathName: '/customers/register'
+  },
+  {
+    enable: false,
+    method: 'POST',
+    pathName: '/customers/login'
   }
 ];

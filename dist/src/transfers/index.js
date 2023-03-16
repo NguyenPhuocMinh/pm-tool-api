@@ -6,6 +6,9 @@ Object.defineProperty(exports, "__esModule", {
 exports["default"] = void 0;
 require("source-map-support/register");
 var _authTransfer = _interopRequireDefault(require("./auth-transfer"));
+var _categoryTransfer = _interopRequireDefault(require("./category-transfer"));
+var _productTransfer = _interopRequireDefault(require("./product-transfer"));
+var _customerTransfer = _interopRequireDefault(require("./customer-transfer"));
 var _organizationTransfer = _interopRequireDefault(require("./organization-transfer"));
 var _projectTransfer = _interopRequireDefault(require("./project-transfer"));
 var _teamTransfer = _interopRequireDefault(require("./team-transfer"));
@@ -20,6 +23,9 @@ var _notifyTemplateTransfer = _interopRequireDefault(require("./notify-template-
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 var _default = {
   authTransfer: _authTransfer["default"],
+  categoryTransfer: _categoryTransfer["default"],
+  productTransfer: _productTransfer["default"],
+  customerTransfer: _customerTransfer["default"],
   organizationTransfer: _organizationTransfer["default"],
   projectTransfer: _projectTransfer["default"],
   teamTransfer: _teamTransfer["default"],

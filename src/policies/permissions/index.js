@@ -1,6 +1,8 @@
 'use strict';
 
 import authPermission from './auth-permission';
+import categoryPermission from './category-permission';
+import productPermission from './product-permission';
 import organizationPermission from './organization-permission';
 import projectPermission from './project-permission';
 import teamPermission from './team-permission';
@@ -14,6 +16,8 @@ import notifyTemplatePermission from './notify-template-permission';
 const permissions = {
   admin: {
     auth: authPermission,
+    categories: categoryPermission,
+    products: productPermission,
     organizations: organizationPermission,
     projects: projectPermission,
     teams: teamPermission,

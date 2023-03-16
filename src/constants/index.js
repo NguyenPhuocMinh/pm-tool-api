@@ -48,6 +48,8 @@ const AUTH_CONTROLLER = 'auth-controller';
 const CONFIG_CONTROLLER = 'config-controller';
 const HOME_CONTROLLER = 'home-controller';
 const HEALTH_CONTROLLER = 'health-controller';
+const CATEGORY_CONTROLLER = 'category-controller';
+const PRODUCT_CONTROLLER = 'product-controller';
 const ORGANIZATION_CONTROLLER = 'organization-controller';
 const PROJECT_CONTROLLER = 'project-controller';
 const TEAM_CONTROLLER = 'team-controller';
@@ -59,6 +61,7 @@ const USER_ONLINE_CONTROLLER = 'user-online-controller';
 const NOTIFY_CONTROLLER = 'notify-controller';
 const NOTIFY_USER_CONTROLLER = 'notify-user-controller';
 const NOTIFY_TEMPLATE_CONTROLLER = 'notify-template-controller';
+const CUSTOMER_CONTROLLER = 'customer-controller';
 
 const STRUCT_CONTROLLERS = {
   BASE_CONTROLLER,
@@ -68,6 +71,8 @@ const STRUCT_CONTROLLERS = {
   CONFIG_CONTROLLER,
   HOME_CONTROLLER,
   HEALTH_CONTROLLER,
+  CATEGORY_CONTROLLER,
+  PRODUCT_CONTROLLER,
   ORGANIZATION_CONTROLLER,
   PROJECT_CONTROLLER,
   TEAM_CONTROLLER,
@@ -78,7 +83,8 @@ const STRUCT_CONTROLLERS = {
   USER_ONLINE_CONTROLLER,
   NOTIFY_CONTROLLER,
   NOTIFY_USER_CONTROLLER,
-  NOTIFY_TEMPLATE_CONTROLLER
+  NOTIFY_TEMPLATE_CONTROLLER,
+  CUSTOMER_CONTROLLER
 };
 
 /**
@@ -91,6 +97,9 @@ const AUTH_ORCHESTRATOR = 'auth-orchestrator';
 const CONFIG_ORCHESTRATOR = 'config-orchestrator';
 const HOME_ORCHESTRATOR = 'home-orchestrator';
 const HEALTH_ORCHESTRATOR = 'health-orchestrator';
+const CATEGORY_ORCHESTRATOR = 'category-orchestrator';
+const PRODUCT_ORCHESTRATOR = 'product-orchestrator';
+const CUSTOMER_ORCHESTRATOR = 'customer-orchestrator';
 const ORGANIZATION_ORCHESTRATOR = 'organization-orchestrator';
 const PROJECT_ORCHESTRATOR = 'project-orchestrator';
 const TEAM_ORCHESTRATOR = 'team-orchestrator';
@@ -111,6 +120,9 @@ const STRUCT_ORCHESTRATORS = {
   CONFIG_ORCHESTRATOR,
   HOME_ORCHESTRATOR,
   HEALTH_ORCHESTRATOR,
+  CATEGORY_ORCHESTRATOR,
+  PRODUCT_ORCHESTRATOR,
+  CUSTOMER_ORCHESTRATOR,
   ORGANIZATION_ORCHESTRATOR,
   PROJECT_ORCHESTRATOR,
   TEAM_ORCHESTRATOR,
@@ -128,6 +140,8 @@ const STRUCT_ORCHESTRATORS = {
  * @description VALIDATORS
  */
 const AUTH_VALIDATOR = 'auth-validator';
+const CATEGORY_VALIDATOR = 'category-validator';
+const PRODUCT_VALIDATOR = 'product-validator';
 const ORGANIZATION_VALIDATOR = 'organization-validator';
 const PROJECT_VALIDATOR = 'project-validator';
 const TEAM_VALIDATOR = 'team-validator';
@@ -137,6 +151,8 @@ const USER_VALIDATOR = 'user-validator';
 
 const STRUCT_VALIDATORS = {
   AUTH_VALIDATOR,
+  CATEGORY_VALIDATOR,
+  PRODUCT_VALIDATOR,
   ORGANIZATION_VALIDATOR,
   PROJECT_VALIDATOR,
   TEAM_VALIDATOR,
@@ -149,6 +165,9 @@ const STRUCT_VALIDATORS = {
  * @description TRANSFERS
  */
 const AUTH_TRANSFER = 'auth-transfer';
+const CATEGORY_TRANSFER = 'category-transfer';
+const PRODUCT_TRANSFER = 'product-transfer';
+const CUSTOMER_TRANSFER = 'customer-transfer';
 const ORGANIZATION_TRANSFER = 'organization-transfer';
 const PROJECT_TRANSFER = 'project-transfer';
 const TEAM_TRANSFER = 'team-transfer';
@@ -163,6 +182,9 @@ const NOTIFY_TEMPLATE_TRANSFER = 'notify-template-transfer';
 
 const STRUCT_TRANSFERS = {
   AUTH_TRANSFER,
+  CATEGORY_TRANSFER,
+  PRODUCT_TRANSFER,
+  CUSTOMER_TRANSFER,
   ORGANIZATION_TRANSFER,
   PROJECT_TRANSFER,
   TEAM_TRANSFER,
@@ -226,9 +248,11 @@ const STRUCT_WORKER = {
  * @description SHARES
  */
 const VALIDATOR_SCHEMA = 'validator-schema';
+const VALIDATOR_PHONE = 'validator-phone';
 
 const STRUCT_SHARES = {
-  VALIDATOR_SCHEMA
+  VALIDATOR_SCHEMA,
+  VALIDATOR_PHONE
 };
 
 /**
@@ -303,6 +327,9 @@ const types = {
   MsgTypeConfig: 'CONFIG',
   MsgTypeHome: 'HOME',
   MsgTypeHealth: 'HEALTH',
+  MsgTypeCategory: 'CATEGORY',
+  MsgTypeProduct: 'PRODUCT',
+  MsgTypeCustomer: 'CUSTOMER',
   MsgTypeOrganization: 'ORGANIZATION',
   MsgTypeProject: 'PROJECT',
   MsgTypeTeam: 'TEAM',
@@ -362,6 +389,41 @@ const homeActions = {
  */
 const HealthActions = {
   MsgActionHealthCheck: 'HEALTH_CHECK'
+};
+
+/**
+ * @description CATEGORY ACTIONS
+ */
+const categoryActions = {
+  MsgActionCategoryGetAll: 'CATEGORY_GET_ALL',
+  MsgActionCategoryCreate: 'CATEGORY_CREATE',
+  MsgActionCategoryGet: 'CATEGORY_GET',
+  MsgActionCategoryUpdate: 'CATEGORY_UPDATE',
+  MsgActionCategoryDelete: 'CATEGORY_DELETE'
+};
+
+/**
+ * @description PRODUCT ACTIONS
+ */
+const productActions = {
+  MsgActionProductGetAll: 'PRODUCT_GET_ALL',
+  MsgActionProductCreate: 'PRODUCT_CREATE',
+  MsgActionProductGet: 'PRODUCT_GET',
+  MsgActionProductUpdate: 'PRODUCT_UPDATE',
+  MsgActionProductDelete: 'PRODUCT_DELETE'
+};
+
+/**
+ * @description CUSTOMER ACTIONS
+ */
+const customerActions = {
+  MsgActionCustomerRegister: 'CUSTOMER_REGISTER',
+  MsgActionCustomerLogin: 'CUSTOMER_LOGIN',
+  MsgActionCustomerGetAll: 'CUSTOMER_GET_ALL',
+  MsgActionCustomerCreate: 'CUSTOMER_CREATE',
+  MsgActionCustomerGet: 'CUSTOMER_GET',
+  MsgActionCustomerUpdate: 'CUSTOMER_UPDATE',
+  MsgActionCustomerDelete: 'CUSTOMER_DELETE'
 };
 
 /**
@@ -536,6 +598,9 @@ const actions = {
   ...configActions,
   ...homeActions,
   ...HealthActions,
+  ...categoryActions,
+  ...productActions,
+  ...customerActions,
   ...organizationActions,
   ...projectActions,
   ...teamActions,

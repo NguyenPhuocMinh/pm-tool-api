@@ -6,6 +6,9 @@ Object.defineProperty(exports, "__esModule", {
 exports["default"] = void 0;
 require("source-map-support/register");
 var _authValidator = require("./auth-validator");
+var _categoryValidator = require("./category-validator");
+var _productValidator = require("./product-validator");
+var _customerValidator = require("./customer-validator");
 var _organizationValidator = require("./organization-validator");
 var _projectValidator = require("./project-validator");
 var _teamValidator = require("./team-validator");
@@ -16,6 +19,9 @@ var _notifyTemplateValidator = require("./notify-template-validator");
 var _default = {
   validatorLogin: _authValidator.validatorLogin,
   validatorOrganization: _organizationValidator.validatorOrganization,
+  validatorCategory: _categoryValidator.validatorCategory,
+  validatorProduct: _productValidator.validatorProduct,
+  validatorCustomerRegister: _customerValidator.validatorCustomerRegister,
   validatorAddProjectsToOrganization: _organizationValidator.validatorAddProjectsToOrganization,
   validatorProjectCreateOrUpdate: _projectValidator.validatorProjectCreateOrUpdate,
   validatorAddTeamsToProject: _projectValidator.validatorAddTeamsToProject,

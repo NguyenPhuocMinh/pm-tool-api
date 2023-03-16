@@ -1,0 +1,46 @@
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports["default"] = void 0;
+require("source-map-support/register");
+var _default = {
+  name: 'CategoryModel',
+  attributes: {
+    name: {
+      type: String
+    },
+    image: {
+      type: String
+    },
+    // filter
+    slug: {
+      type: String
+    },
+    activated: {
+      type: Boolean,
+      "default": true
+    },
+    deleted: {
+      type: Boolean,
+      "default": false
+    },
+    createdAt: {
+      type: Date
+    },
+    createdBy: {
+      type: String
+    },
+    updatedAt: {
+      type: Date
+    },
+    updatedBy: {
+      type: String
+    }
+  },
+  options: {
+    collection: 'categories'
+  }
+};
+exports["default"] = _default;

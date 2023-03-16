@@ -6,6 +6,8 @@ Object.defineProperty(exports, "__esModule", {
 exports["default"] = void 0;
 require("source-map-support/register");
 var _authPermission = _interopRequireDefault(require("./auth-permission"));
+var _categoryPermission = _interopRequireDefault(require("./category-permission"));
+var _productPermission = _interopRequireDefault(require("./product-permission"));
 var _organizationPermission = _interopRequireDefault(require("./organization-permission"));
 var _projectPermission = _interopRequireDefault(require("./project-permission"));
 var _teamPermission = _interopRequireDefault(require("./team-permission"));
@@ -19,6 +21,8 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "d
 var permissions = {
   admin: {
     auth: _authPermission["default"],
+    categories: _categoryPermission["default"],
+    products: _productPermission["default"],
     organizations: _organizationPermission["default"],
     projects: _projectPermission["default"],
     teams: _teamPermission["default"],

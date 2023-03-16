@@ -20,6 +20,8 @@ import authRouter from './auth-router';
 import configRouter from './config-router';
 import homeRouter from './home-router';
 import healthRouter from './health-router';
+import categoryRouter from './category-router';
+import productRouter from './product-router';
 import organizationRouter from './organization-router';
 import projectRouter from './project-router';
 import teamRouter from './team-router';
@@ -32,6 +34,9 @@ import notifyRouter from './notify-router';
 import notifyUserRouter from './notify-user-router';
 import notifyTemplateRouter from './notify-template-router';
 
+// client
+import customerRouter from './customer-router';
+
 const router = express.Router();
 
 const logger = loggerManager(constants.APP_NAME, constants.STRUCT_NAME_ROUTER);
@@ -43,6 +48,8 @@ const routes = [
   ...configRouter,
   ...homeRouter,
   ...healthRouter,
+  ...categoryRouter,
+  ...productRouter,
   ...organizationRouter,
   ...projectRouter,
   ...teamRouter,
@@ -53,7 +60,8 @@ const routes = [
   ...userOnlineRouter,
   ...notifyRouter,
   ...notifyUserRouter,
-  ...notifyTemplateRouter
+  ...notifyTemplateRouter,
+  ...customerRouter
 ];
 
 /**

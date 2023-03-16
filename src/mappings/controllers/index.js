@@ -6,6 +6,8 @@ import authController from './auth-controller';
 import configController from './config-controller';
 import homeController from './home-controller';
 import healthController from './health-controller';
+import categoryController from './category-controller';
+import productController from './product-controller';
 import organizationController from './organization-controller';
 import projectController from './project-controller';
 import teamController from './team-controller';
@@ -17,6 +19,7 @@ import userOnlineController from './user-online-controller';
 import notifyController from './notify-controller';
 import notifyUserController from './notify-user-controller';
 import notifyTemplateController from './notify-template-controller';
+import customerController from './customer-controller';
 
 export {
   testController,
@@ -25,6 +28,8 @@ export {
   configController,
   homeController,
   healthController,
+  categoryController,
+  productController,
   organizationController,
   projectController,
   teamController,
@@ -35,5 +40,6 @@ export {
   userOnlineController,
   notifyController,
   notifyUserController,
-  notifyTemplateController
+  notifyTemplateController,
+  customerController
 };

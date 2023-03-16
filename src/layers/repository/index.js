@@ -114,7 +114,7 @@ const findOne = async ({ type, filter = {}, projection = {}, options }) => {
  *    id: '123'
  *    projection: { __v: 0 },
  *    options: {
- *        populates: [
+ *        populate: [
  *         {
  *           path: 'roles',
  *           select: 'name'

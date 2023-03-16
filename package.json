@@ -1,6 +1,6 @@
 {
   "name": "pm-tool-api",
-  "version": "0.2.5",
+  "version": "0.2.6",
   "description": "Building pm-tool-api",
   "main": "server.js",
   "scripts": {
@@ -35,6 +35,7 @@
     "helmet": "^6.0.0",
     "joi": "^17.7.0",
     "jsonwebtoken": "^8.5.1",
+    "libphonenumber-js": "^1.10.18",
     "lodash": "^4.17.21",
     "mocha": "^10.0.0",
     "moment": "^2.29.4",

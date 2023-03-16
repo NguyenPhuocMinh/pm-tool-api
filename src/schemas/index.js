@@ -1,6 +1,8 @@
 'use strict';
 
 import { signInSchema, signOutSchema, refreshTokenSchema } from './auth-schema';
+import { productSchema } from './product-schema';
+import { customerRegisterSchema } from './customer-schema';
 import { organizationSchema } from './organization-schema';
 import { projectSchema } from './project-schema';
 import { teamSchema } from './team-schema';
@@ -19,6 +21,8 @@ const schemas = {
   signInSchema,
   signOutSchema,
   refreshTokenSchema,
+  productSchema,
+  customerRegisterSchema,
   organizationSchema,
   projectSchema,
   teamSchema,

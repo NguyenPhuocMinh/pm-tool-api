@@ -76,7 +76,7 @@ var main = /*#__PURE__*/function () {
             app.use(_routers["default"]);
 
             /**
-             * Router Not Found
+             * Not Found handler
              */
             app.use('*', _middleware.routerMiddleware);
 

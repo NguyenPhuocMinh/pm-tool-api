@@ -6,6 +6,8 @@ Object.defineProperty(exports, "__esModule", {
 exports["default"] = void 0;
 require("source-map-support/register");
 var _authSchema = require("./auth-schema");
+var _productSchema = require("./product-schema");
+var _customerSchema = require("./customer-schema");
 var _organizationSchema = require("./organization-schema");
 var _projectSchema = require("./project-schema");
 var _teamSchema = require("./team-schema");
@@ -17,6 +19,8 @@ var schemas = {
   signInSchema: _authSchema.signInSchema,
   signOutSchema: _authSchema.signOutSchema,
   refreshTokenSchema: _authSchema.refreshTokenSchema,
+  productSchema: _productSchema.productSchema,
+  customerRegisterSchema: _customerSchema.customerRegisterSchema,
   organizationSchema: _organizationSchema.organizationSchema,
   projectSchema: _projectSchema.projectSchema,
   teamSchema: _teamSchema.teamSchema,

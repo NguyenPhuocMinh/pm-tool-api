@@ -10,6 +10,7 @@ var _mapperCommon = require("./mapper-common");
 var _default = {
   newError: _errorCommon.newError,
   dataResponsesMapper: _mapperCommon.dataResponsesMapper,
-  dataResponseMapper: _mapperCommon.dataResponseMapper
+  dataResponseMapper: _mapperCommon.dataResponseMapper,
+  dataInputMapper: _mapperCommon.dataInputMapper
 };
 exports["default"] = _default;

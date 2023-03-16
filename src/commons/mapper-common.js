@@ -1,7 +1,7 @@
 'use strict';
 
 import Promise from 'bluebird';
-import { isEmpty } from 'lodash';
+import { isEmpty, forOwn } from 'lodash';
 
 import constants from '@constants';
 
@@ -63,4 +63,10 @@ export const dataResponseMapper = async (data = {}) => {
   });
 
   return Promise.resolve();
+};
+
+export const dataInputMapper = (data = {}) => {
+  forOwn(data, (value, key) => {
+    data[key] = value;
+  });
 };

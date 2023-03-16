@@ -1,6 +1,9 @@
 'use strict';
 
 import { validatorLogin } from './auth-validator';
+import { validatorCategory } from './category-validator';
+import { validatorProduct } from './product-validator';
+import { validatorCustomerRegister } from './customer-validator';
 import {
   validatorOrganization,
   validatorAddProjectsToOrganization
@@ -26,6 +29,9 @@ import { validatorNotifyTemplateCreate } from './notify-template-validator';
 export default {
   validatorLogin,
   validatorOrganization,
+  validatorCategory,
+  validatorProduct,
+  validatorCustomerRegister,
   validatorAddProjectsToOrganization,
   validatorProjectCreateOrUpdate,
   validatorAddTeamsToProject,

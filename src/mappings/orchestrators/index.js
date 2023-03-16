@@ -8,6 +8,9 @@ import authOrchestrator from './auth-orchestrator';
 import configOrchestrator from './config-orchestrator';
 import homeOrchestrator from './home-orchestrator';
 import healthOrchestrator from './health-orchestrator';
+import categoryOrchestrator from './category-orchestrator';
+import productOrchestrator from './product-orchestrator';
+import customerOrchestrator from './customer-orchestrator';
 import organizationOrchestrator from './organization-orchestrator';
 import projectOrchestrator from './project-orchestrator';
 import teamOrchestrator from './team-orchestrator';
@@ -110,6 +113,114 @@ const orchestratorHealth = [
     type: constants.types.MsgTypeHealth,
     action: constants.actions.MsgActionHealthCheck,
     orchestrator: healthOrchestrator.healthCheck
+  }
+];
+
+/**
+ * CATEGORY
+ */
+const orchestratorCategory = [
+  {
+    type: constants.types.MsgTypeCategory,
+    action: constants.actions.MsgActionCategoryGetAll,
+    orchestrator: categoryOrchestrator.getAllCategory
+  },
+  {
+    type: constants.types.MsgTypeCategory,
+    action: constants.actions.MsgActionCategoryCreate,
+    orchestrator: categoryOrchestrator.createCategory
+  },
+  {
+    type: constants.types.MsgTypeCategory,
+    action: constants.actions.MsgActionCategoryGet,
+    orchestrator: categoryOrchestrator.getCategory
+  },
+  {
+    type: constants.types.MsgTypeCategory,
+    action: constants.actions.MsgActionCategoryUpdate,
+    orchestrator: categoryOrchestrator.updateCategory
+  },
+  {
+    type: constants.types.MsgTypeCategory,
+    action: constants.actions.MsgActionCategoryDelete,
+    orchestrator: categoryOrchestrator.deleteCategory
+  }
+];
+
+/**
+ * PRODUCT
+ */
+const orchestratorProduct = [
+  {
+    type: constants.types.MsgTypeProduct,
+    action: constants.actions.MsgActionProductGetAll,
+    orchestrator: productOrchestrator.getAllProduct
+  },
+  {
+    type: constants.types.MsgTypeProduct,
+    action: constants.actions.MsgActionProductCreate,
+    orchestrator: productOrchestrator.createProduct,
+    schema: 'productSchema'
+  },
+  {
+    type: constants.types.MsgTypeProduct,
+    action: constants.actions.MsgActionProductGet,
+    orchestrator: productOrchestrator.getProduct
+  },
+  {
+    type: constants.types.MsgTypeProduct,
+    action: constants.actions.MsgActionProductUpdate,
+    orchestrator: productOrchestrator.updateProduct,
+    schema: 'productSchema'
+  },
+  {
+    type: constants.types.MsgTypeProduct,
+    action: constants.actions.MsgActionProductDelete,
+    orchestrator: productOrchestrator.deleteProduct
+  }
+];
+
+/**
+ * CUSTOMER
+ */
+const orchestratorCustomer = [
+  {
+    type: constants.types.MsgTypeCustomer,
+    action: constants.actions.MsgActionCustomerRegister,
+    orchestrator: customerOrchestrator.registerCustomer,
+    schema: 'customerRegisterSchema'
+  },
+  {
+    type: constants.types.MsgTypeCustomer,
+    action: constants.actions.MsgActionCustomerLogin,
+    orchestrator: customerOrchestrator.loginCustomer
+  },
+  {
+    type: constants.types.MsgTypeCustomer,
+    action: constants.actions.MsgActionCustomerGetAll,
+    orchestrator: customerOrchestrator.getAllCustomer
+  },
+  {
+    type: constants.types.MsgTypeCustomer,
+    action: constants.actions.MsgActionCustomerCreate,
+    orchestrator: customerOrchestrator.createCustomer,
+    schema: 'customerSchema'
+  },
+  {
+    type: constants.types.MsgTypeCustomer,
+    action: constants.actions.MsgActionCustomerGet,
+    orchestrator: customerOrchestrator.getCustomer
+  },
+  {
+    type: constants.types.MsgTypeCustomer,
+    action: constants.actions.MsgActionCustomerUpdate,
+    orchestrator: customerOrchestrator.updateCustomer,
+    schema: 'customerSchema'
+  },
+  {
+    type: constants.types.MsgTypeCustomer,
+    action: constants.actions.MsgActionCustomerDelete,
+    orchestrator: customerOrchestrator.deleteCustomer
   }
 ];
 
@@ -566,6 +677,9 @@ const orchestrators = [
   ...orchestratorConfig,
   ...orchestratorHome,
   ...orchestratorHealth,
+  ...orchestratorCategory,
+  ...orchestratorProduct,
+  ...orchestratorCustomer,
   ...orchestratorOrganization,
   ...orchestratorProject,
   ...orchestratorTeam,
