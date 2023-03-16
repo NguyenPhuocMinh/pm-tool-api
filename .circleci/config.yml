@@ -126,17 +126,17 @@ jobs:
             # Login aws ecr public
             echo "Login Aws ECR..."
             aws ecr-public get-login-password \
-                --region $APP_AWS_REGION | helm registry login \
-                --username AWS \
-                --password-stdin public.ecr.aws
+              --region $APP_AWS_REGION | helm registry login \
+              --username AWS \
+              --password-stdin public.ecr.aws
             # Push to ecr public
             echo "Push helm chart to ECR Public..."
             helm push pm-tool-api-$APP_HELM_TAG.tgz oci://public.ecr.aws/$REGISTRY_ALIAS
             # Describe helm chart
             echo "Describe helm chart"
             aws ecr-public describe-images \
-                --repository-name pm-tool-api \
-                --region $APP_AWS_REGION
+              --repository-name pm-tool-api \
+              --region $APP_AWS_REGION
             echo "Store helm chart to ECR successfully!"
 
       # for private ECR
