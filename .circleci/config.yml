@@ -124,6 +124,7 @@ jobs:
             # Create package helm chart
             helm package pm-tool-api
             # Login aws ecr public
+            echo "Login Aws ECR..."
             aws ecr-public get-login-password \
                 --region $APP_AWS_REGION | helm registry login \
                 --username AWS \
