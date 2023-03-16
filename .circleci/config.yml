@@ -126,7 +126,7 @@ jobs:
             # Login aws ecr public
             echo "Login Aws ECR..."
             aws ecr-public get-login-password \
-              --region $APP_AWS_REGION | helm registry login \
+              --region us-east-1 | helm registry login \
               --username AWS \
               --password-stdin public.ecr.aws
             # Push to ecr public
@@ -136,7 +136,7 @@ jobs:
             echo "Describe helm chart"
             aws ecr-public describe-images \
               --repository-name pm-tool-api \
-              --region $APP_AWS_REGION
+              --region us-east-1
             echo "Store helm chart to ECR successfully!"
 
       # for private ECR
