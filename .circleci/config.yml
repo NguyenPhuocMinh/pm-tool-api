@@ -114,6 +114,7 @@ jobs:
             aws configure set aws_secret_access_key $APP_AWS_SECRET_KEY
             aws configure set default.region $APP_AWS_REGION
 
+      # For public ECR
       - run:
           name: Store helm chart to ECR
           command: |
@@ -121,14 +122,33 @@ jobs:
             cd charts
             # Create package helm chart
             helm package pm-tool-api
-            # Login aws ecr
-            aws ecr get-login-password \
+            # Login aws ecr public
+            aws ecr-public get-login-password \
               --region $APP_AWS_REGION | helm registry login \
               --username AWS \
-              --password-stdin $APP_AWS_ACCOUNT_ID.dkr.ecr.$APP_AWS_REGION.amazonaws.com
-            # Push to ecr
-            helm push pm-tool-api-$APP_HELM_TAG.tgz oci://$APP_AWS_ACCOUNT_ID.dkr.ecr.$APP_AWS_REGION.amazonaws.com/
+              --password-stdin public.ecr.aws
+            # Push to ecr public
+            helm push pm-tool-api-$APP_HELM_TAG.tgz oci://public.ecr.aws/k1f0w9h7
             echo "Store helm chart to ECR successfully!"
+
+      # for private ECR
+      # - run:
+      #     name: Store helm chart to ECR
+      #     command: |
+      #       echo "Store helm chart to ECR start..."
+      #       cd charts
+      #       # Create package helm chart
+      #       helm package pm-tool-api
+      #       # Login aws ecr
+      #       aws ecr get-login-password \
+      #         --region $APP_AWS_REGION | helm registry login \
+      #         --username AWS \
+      #         --password-stdin $APP_AWS_ACCOUNT_ID.dkr.ecr.$APP_AWS_REGION.amazonaws.com
+      #       # Push to ecr
+      #       helm push pm-tool-api-$APP_HELM_TAG.tgz oci://$APP_AWS_ACCOUNT_ID.dkr.ecr.$APP_AWS_REGION.amazonaws.com/
+      #       echo "Store helm chart to ECR successfully!"
+
+      
 
   deploy:
     executor: docker/docker
